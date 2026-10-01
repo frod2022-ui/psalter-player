@@ -10,3 +10,25 @@ organ/     Pipe organ - VCSL "Aerophones/Edge-blown Aerophones/Pipe Organ/Loud" 
 piano/     Grand piano - Salamander Grand Piano V3 (Yamaha C5) by Alexander Holm, FreePats SFZ+FLAC edition (velocity layer 10)
            https://freepats.zenvoid.org/Piano/acoustic-grand-piano.html - License: Creative Commons Attribution 3.0 (CC BY 3.0)
            https://creativecommons.org/licenses/by/3.0/  Changes: trimmed to 5.5 s, faded, level-matched, re-encoded to MP3.
+choir/     Choir singing "ah" - FluidR3_GM soundfont 3.1, preset "Ahh Choir" (GM program 53), by Frank Wen,
+           from the Debian package fluid-soundfont-gm 3.1 (https://packages.debian.org/source/sid/fluid-soundfont)
+           License: MIT. Changes: extracted from the SF2, resampled to 44.1 kHz, onsets trimmed, retuned,
+           sustain loops crossfaded, level-matched, re-encoded to MP3.
+
+           Copyright (c) 2000-2002, 2008 Frank Wen
+           Copyright (c) 2008 Toby Smithe
+
+           Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+           associated documentation files (the "Software"), to deal in the Software without restriction,
+           including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
+           and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
+           subject to the following conditions:
+
+           The above copyright notice and this permission notice shall be included in all copies or substantial
+           portions of the Software.
+
+           THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
+           LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+           NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+           WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+           SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
