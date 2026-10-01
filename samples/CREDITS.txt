@@ -1,0 +1,12 @@
+Instrument samples used by the Psalms & Hymns melody player
+(trimmed, level-matched, tuned and re-encoded as 128 kbit/s MP3; one file per sampled note, named by MIDI note number)
+
+psaltery/  Plucked psaltery - Versilian Community Sample Library (VCSL), "Chordophones/Zithers/Psaltery, Bowed and Plucked/Pluck"
+           https://github.com/sgossner/VCSL  - License: CC0 1.0 Universal (public domain)
+harp/      Concert harp - VCSL "Chordophones/Composite Chordophones/Concert Harp" (KSHarp, also in VSCO 2 Community Edition)
+           https://github.com/sgossner/VCSL  - License: CC0 1.0 Universal (public domain)
+organ/     Pipe organ - VCSL "Aerophones/Edge-blown Aerophones/Pipe Organ/Loud" (Rode_Man3Open), sampled by Simon Dalzell of Ivy Audio
+           https://github.com/sgossner/VCSL  - License: CC0 1.0 Universal (public domain)
+piano/     Grand piano - Salamander Grand Piano V3 (Yamaha C5) by Alexander Holm, FreePats SFZ+FLAC edition (velocity layer 10)
+           https://freepats.zenvoid.org/Piano/acoustic-grand-piano.html - License: Creative Commons Attribution 3.0 (CC BY 3.0)
+           https://creativecommons.org/licenses/by/3.0/  Changes: trimmed to 5.5 s, faded, level-matched, re-encoded to MP3.

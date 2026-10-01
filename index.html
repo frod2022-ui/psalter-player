@@ -212,6 +212,36 @@ textarea#abc:focus{border-color:var(--accent-2);outline:none}
 .tap-hint{font-size:14px;color:var(--muted);text-align:center;margin-top:6px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
+/* instruments, settings sheet, credits */
+.ctrl.voice{grid-column:span 2}
+.ctrl-row{flex-direction:row;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.set-btn{min-height:44px;font-size:15.5px;padding:0 14px;gap:8px}
+.set-btn svg{width:20px;height:20px}
+.loadrow{grid-column:1/-1;display:flex;align-items:center;gap:12px;font-size:15px;font-weight:600;color:var(--text2)}
+.loadrow[hidden]{display:none}
+.loadrow span{flex:none;max-width:70%}
+.loadrow.err{color:var(--danger)}
+.loadrow.err .lbar{display:none}
+.lbar{flex:1;height:8px;border-radius:8px;background:var(--bg2);overflow:hidden;min-width:60px}
+.lbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-2));border-radius:8px;transition:width .2s ease}
+.modal{position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,0);transition:background .25s}
+.modal[hidden]{display:none}
+.modal.show{background:rgba(0,0,0,.4)}
+.sheet{width:min(560px,100%);max-height:calc(100vh - 32px);overflow:auto;display:flex;flex-direction:column;gap:18px;transform:translateY(16px);opacity:0;transition:transform .28s cubic-bezier(.2,.8,.2,1),opacity .2s}
+.modal.show .sheet{transform:none;opacity:1}
+.sheet-head{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.sheet-head h2{margin:0;font-size:24px}
+.sheet .ctrl{gap:8px}
+.sheet .hint{margin:0;font-size:14.5px;color:var(--muted);line-height:1.35}
+.wide-btn{justify-content:center;min-height:50px}
+.credits p{margin:0 0 6px;font-size:16px;color:var(--text2)}
+.credits h3{margin:10px 0 4px;font-size:18px}
+.credits h3 small{font-weight:500;color:var(--muted);font-size:14.5px}
+.credits a{color:var(--accent)}
+.cred{border-top:1px solid var(--line);padding-top:8px}
+@media (max-width:899.98px){.ctrl-row{grid-column:1/-1}}
+@media (max-width:560px){.modal{align-items:flex-end;padding:0}.sheet{width:100%;border-radius:22px 22px 0 0;max-height:88vh;padding-bottom:calc(20px + env(safe-area-inset-bottom))}}
+
 </style>
 </head>
 <body>
@@ -305,6 +335,7 @@ textarea#abc:focus{border-color:var(--accent-2);outline:none}
 
 <div class="transport" id="transport">
   <div class="tr-in">
+    <div class="loadrow" id="loadRow" hidden role="status" aria-live="polite"><span id="loadTxt">Loading sounds…</span><div class="lbar" role="progressbar" aria-label="Loading instrument sounds" aria-valuemin="0" aria-valuemax="100" id="loadBar"><i id="loadFill"></i></div></div>
     <div class="progress" id="progress" title="Position in the tune"><i id="progressBar"></i></div>
     <div class="tr-main">
       <button class="round" id="stopBtn" aria-label="Stop and go back to the start" title="Stop"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2.5"/></svg></button>
@@ -329,16 +360,54 @@ textarea#abc:focus{border-color:var(--accent-2);outline:none}
       <div class="ctrl voice">
         <div class="cap"><span>Sound</span></div>
         <div class="seg" id="voiceSeg" role="group" aria-label="Instrument">
-          <button data-v="psaltery" aria-pressed="true">Psaltery</button><button data-v="organ" aria-pressed="false">Organ</button><button data-v="piano" aria-pressed="false">Piano</button>
+          <button data-v="psaltery" aria-pressed="true">Psaltery</button><button data-v="harp" aria-pressed="false">Harp</button><button data-v="organ" aria-pressed="false">Organ</button><button data-v="piano" aria-pressed="false">Piano</button>
         </div>
       </div>
-      <div class="ctrl">
+      <div class="ctrl ctrl-row">
         <label class="toggle"><input type="checkbox" id="allVerses"> Sing all verses</label>
+        <button class="pill-btn set-btn" id="settingsBtn" aria-haspopup="dialog" title="Tuning, reverb and credits"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2.2"/><circle cx="10" cy="17" r="2.2"/></svg><span id="tuneSummary">A = 440 Hz</span></button>
       </div>
     </div>
   </div>
 </div>
 <div class="toast" id="toast"></div>
+
+<div class="modal" id="setSheet" role="dialog" aria-modal="true" aria-labelledby="setTitle" hidden>
+  <div class="sheet card">
+    <div class="sheet-head"><h2 id="setTitle">Sound settings</h2><button class="pill-btn" data-close>Done</button></div>
+    <div class="ctrl">
+      <div class="cap"><span>Instrument</span></div>
+      <div class="seg" id="voiceSeg2" role="group" aria-label="Instrument">
+        <button data-v="psaltery">Psaltery</button><button data-v="harp">Harp</button><button data-v="organ">Organ</button><button data-v="piano">Piano</button>
+      </div>
+    </div>
+    <div class="ctrl">
+      <div class="cap"><span>Tuning</span><output id="tuneOut">A = 440 Hz</output></div>
+      <div class="seg" id="tuneSeg" role="group" aria-label="Tuning preset">
+        <button data-hz="440">A = 440</button><button data-hz="432">A = 432</button>
+      </div>
+      <div class="stepper"><button id="tuneDown" aria-label="Lower the tuning by 1 hertz">−</button><input type="range" id="tune" min="415" max="466" step="1" value="440" aria-label="Tuning: frequency of A in hertz" style="flex:1;min-width:0"><button id="tuneUp" aria-label="Raise the tuning by 1 hertz">+</button></div>
+      <p class="hint">Changes the pitch of every instrument. 440 Hz is modern concert pitch; 415 Hz is Baroque pitch.</p>
+    </div>
+    <div class="ctrl">
+      <div class="cap"><span>Reverb (church echo)</span><output id="revOut">35%</output></div>
+      <div class="stepper" style="padding:0 14px"><input type="range" id="reverb" min="0" max="100" step="1" value="35" aria-label="Reverb amount"></div>
+    </div>
+    <button class="pill-btn wide-btn" id="creditsBtn" aria-haspopup="dialog">Credits &amp; licenses</button>
+  </div>
+</div>
+
+<div class="modal" id="credSheet" role="dialog" aria-modal="true" aria-labelledby="credTitle" hidden>
+  <div class="sheet card credits">
+    <div class="sheet-head"><h2 id="credTitle">Credits &amp; licenses</h2><button class="pill-btn" data-close>Done</button></div>
+    <p>Every instrument is a real recording of a real instrument. The sounds are stored inside the app, so they also work offline.</p>
+    <div id="credList"></div>
+    <h3>Reverb</h3>
+    <p>The church echo is made by the app itself (no recording needed).</p>
+    <h3>Music and words</h3>
+    <p>Tunes and texts are in the public domain. Where each one comes from is shown under <b>How to type notes → About this tune</b>.</p>
+  </div>
+</div>
 
 <script id="hp-core">
 /* ===== Hymn Player core: ABC parser, lyrics, MIDI & MusicXML import, spelling ===== */
@@ -1228,6 +1297,9 @@ textarea#abc:focus{border-color:var(--accent-2);outline:none}
 })(typeof window !== 'undefined' ? window : globalThis);
 
 </script>
+<script id="hp-samples">
+window.HP_SAMPLES = {"psaltery":[{"m":58,"f":"psaltery/58.mp3","c":-1.0},{"m":60,"f":"psaltery/60.mp3","c":-1.5},{"m":62,"f":"psaltery/62.mp3","c":1.1},{"m":64,"f":"psaltery/64.mp3","c":-2.7},{"m":66,"f":"psaltery/66.mp3","c":-0.8},{"m":68,"f":"psaltery/68.mp3","c":-0.2},{"m":70,"f":"psaltery/70.mp3","c":-0.6},{"m":72,"f":"psaltery/72.mp3","c":-0.1},{"m":74,"f":"psaltery/74.mp3","c":-0.6},{"m":76,"f":"psaltery/76.mp3","c":-0.8},{"m":78,"f":"psaltery/78.mp3","c":-1.9}],"harp":[{"m":38,"f":"harp/38.mp3","c":-5.6},{"m":41,"f":"harp/41.mp3","c":-7.7},{"m":45,"f":"harp/45.mp3","c":-6.3},{"m":48,"f":"harp/48.mp3","c":-3.0},{"m":52,"f":"harp/52.mp3","c":-5.2},{"m":55,"f":"harp/55.mp3","c":-9.8},{"m":59,"f":"harp/59.mp3","c":-13.5},{"m":62,"f":"harp/62.mp3","c":-12.6},{"m":65,"f":"harp/65.mp3","c":-1.2},{"m":69,"f":"harp/69.mp3","c":-10.8},{"m":72,"f":"harp/72.mp3","c":-11.1},{"m":76,"f":"harp/76.mp3","c":-12.9},{"m":79,"f":"harp/79.mp3","c":-3.8},{"m":83,"f":"harp/83.mp3","c":-8.4},{"m":86,"f":"harp/86.mp3","c":-6.9},{"m":89,"f":"harp/89.mp3","c":-6.3},{"m":93,"f":"harp/93.mp3","c":-18.9},{"m":95,"f":"harp/95.mp3","c":-10.2}],"piano":[{"m":36,"f":"piano/36.mp3","c":9},{"m":39,"f":"piano/39.mp3","c":11},{"m":42,"f":"piano/42.mp3","c":7},{"m":45,"f":"piano/45.mp3","c":4},{"m":48,"f":"piano/48.mp3","c":0},{"m":51,"f":"piano/51.mp3","c":6},{"m":54,"f":"piano/54.mp3","c":3},{"m":57,"f":"piano/57.mp3","c":3},{"m":60,"f":"piano/60.mp3","c":6},{"m":63,"f":"piano/63.mp3","c":3},{"m":66,"f":"piano/66.mp3","c":0},{"m":69,"f":"piano/69.mp3","c":4},{"m":72,"f":"piano/72.mp3","c":8},{"m":75,"f":"piano/75.mp3","c":8},{"m":78,"f":"piano/78.mp3","c":5},{"m":81,"f":"piano/81.mp3","c":7},{"m":84,"f":"piano/84.mp3","c":8},{"m":87,"f":"piano/87.mp3","c":12},{"m":90,"f":"piano/90.mp3","c":13}],"organ":[{"m":39,"f":"organ/39.mp3","c":0.1,"loop":[1.6,4.4]},{"m":42,"f":"organ/42.mp3","c":8.4,"loop":[1.6,4.4]},{"m":45,"f":"organ/45.mp3","c":-3.3,"loop":[1.6,4.4]},{"m":48,"f":"organ/48.mp3","c":-3.8,"loop":[1.6,4.4]},{"m":51,"f":"organ/51.mp3","c":-1.3,"loop":[1.6,4.4]},{"m":54,"f":"organ/54.mp3","c":-0.1,"loop":[1.6,4.4]},{"m":57,"f":"organ/57.mp3","c":-1.8,"loop":[1.6,4.4]},{"m":60,"f":"organ/60.mp3","c":-1.3,"loop":[1.6,4.4]},{"m":63,"f":"organ/63.mp3","c":-3.0,"loop":[1.6,4.4]},{"m":66,"f":"organ/66.mp3","c":-0.3,"loop":[1.6,4.4]},{"m":69,"f":"organ/69.mp3","c":2.3,"loop":[1.6,4.4]},{"m":72,"f":"organ/72.mp3","c":0.8,"loop":[1.6,4.4]},{"m":75,"f":"organ/75.mp3","c":-0.9,"loop":[1.6,4.4]},{"m":78,"f":"organ/78.mp3","c":0.8,"loop":[1.6,4.4]},{"m":81,"f":"organ/81.mp3","c":-3.6,"loop":[1.6,4.4]},{"m":84,"f":"organ/84.mp3","c":-4.0,"loop":[1.6,4.4]}]};
+</script>
 <script id="hp-songs">
 window.HYMN_SONGS = [
  {
@@ -1419,9 +1491,25 @@ window.HYMN_SONGS = [
              set: function (k, v) { try { localStorage.setItem('hp.' + k, JSON.stringify(v)); } catch (e) {} } };
 
   /* =================== AUDIO =================== */
+  /* Real sampled instruments (see HP_SAMPLES / credits). Each instrument has a recording about every
+     2nd–3rd semitone; the notes in between are made by changing the playback speed of the nearest one. */
+  var INST = {
+    psaltery: { label: 'Psaltery', gain: 1.05, wet: 1.0, ring: 0.45, tau: 0.16 },
+    harp:     { label: 'Harp',     gain: 1.0,  wet: 1.0, ring: 1.1,  tau: 0.35 },
+    organ:    { label: 'Organ',    gain: 0.62, wet: 1.25, sustain: true, tau: 0.07 },
+    piano:    { label: 'Piano',    gain: 0.95, wet: 0.75, damper: true, tau: 0.11 }
+  };
+  var CREDITS = {
+    psaltery: { what: 'plucked psaltery', src: 'Versilian Community Sample Library (VCSL) — “Psaltery, Bowed and Plucked”, by Versilian Studios', lic: 'CC0 1.0 (public domain)', licUrl: 'https://creativecommons.org/publicdomain/zero/1.0/', url: 'https://github.com/sgossner/VCSL' },
+    harp:     { what: 'concert harp', src: 'Versilian Community Sample Library (VCSL) — “Concert Harp” (also in VSCO 2 Community Edition), by Versilian Studios', lic: 'CC0 1.0 (public domain)', licUrl: 'https://creativecommons.org/publicdomain/zero/1.0/', url: 'https://github.com/sgossner/VCSL' },
+    organ:    { what: 'pipe organ', src: 'Versilian Community Sample Library (VCSL) — “Pipe Organ” (loud manual registration), sampled by Simon Dalzell of Ivy Audio', lic: 'CC0 1.0 (public domain)', licUrl: 'https://creativecommons.org/publicdomain/zero/1.0/', url: 'https://github.com/sgossner/VCSL' },
+    piano:    { what: 'grand piano', src: 'Salamander Grand Piano V3 (Yamaha C5) by Alexander Holm, FreePats edition. Changes: one velocity layer, shortened, level-matched and compressed to MP3 for this app', lic: 'CC BY 3.0', licUrl: 'https://creativecommons.org/licenses/by/3.0/', url: 'https://freepats.zenvoid.org/Piano/acoustic-grand-piano.html' }
+  };
   var Audio = (function () {
-    var ctx = null, master, dry, wet, conv, comp, voice = LS.get('voice', 'psaltery'), volume = LS.get('volume', 80) / 100;
-    var ksCache = {}, waves = {}, live = [];
+    var ctx = null, master, dry, wet, conv, comp, dctx = null;
+    var voice = LS.get('voice', 'psaltery'); if (!INST[voice]) voice = 'psaltery';
+    var volume = LS.get('volume', 80) / 100, reverb = LS.get('reverb', 35) / 100, aRef = LS.get('aref', 440);
+    var MAN = window.HP_SAMPLES || {}, sets = {}, loading = {}, live = [], listeners = [];
     function ensure() {
       if (ctx) { if (ctx.state === 'suspended') ctx.resume(); return ctx; }
       var AC = window.AudioContext || window.webkitAudioContext;
@@ -1431,122 +1519,126 @@ window.HYMN_SONGS = [
       comp = ctx.createDynamicsCompressor(); comp.threshold.value = -14; comp.knee.value = 12; comp.ratio.value = 3; comp.attack.value = 0.004; comp.release.value = 0.25;
       master = ctx.createGain(); master.gain.value = volume * volume;
       dry = ctx.createGain(); wet = ctx.createGain();
-      conv = ctx.createConvolver(); conv.buffer = impulse(2.8, 2.6);
+      conv = ctx.createConvolver(); conv.buffer = impulse(3.0, 2.4);
       master.connect(dry); master.connect(conv); conv.connect(wet);
       dry.connect(comp); wet.connect(comp); comp.connect(ctx.destination);
-      setVoiceMix();
+      setMix();
       // iOS: unlock with a silent buffer
       var b = ctx.createBuffer(1, 1, ctx.sampleRate), s = ctx.createBufferSource(); s.buffer = b; s.connect(ctx.destination); s.start(0);
       return ctx;
     }
+    /* Algorithmic church reverb: stereo decaying noise, darker as it fades, with a few early reflections. */
     function impulse(seconds, decay) {
       var sr = ctx.sampleRate, len = Math.floor(sr * seconds), buf = ctx.createBuffer(2, len, sr);
       for (var ch = 0; ch < 2; ch++) {
         var d = buf.getChannelData(ch), lp = 0;
         for (var i = 0; i < len; i++) {
           var t = i / sr, n = Math.random() * 2 - 1;
-          lp += (n - lp) * (0.18 + 0.5 * Math.exp(-t * 3)); // darker tail
-          var env = Math.pow(1 - i / len, decay) * Math.exp(-t * 1.3);
-          d[i] = lp * env * (t < 0.012 ? t / 0.012 : 1);
+          lp += (n - lp) * (0.16 + 0.5 * Math.exp(-t * 3));
+          var env = Math.pow(1 - i / len, decay) * Math.exp(-t * 1.2);
+          d[i] = lp * env * (t < 0.018 ? t / 0.018 : 1);
         }
-        // early reflections
-        [0.013, 0.021, 0.034, 0.047, 0.061].forEach(function (er, k) { var p = Math.floor((er + ch * 0.003) * sr); if (p < len) d[p] += (0.5 - k * 0.07) * (k % 2 ? -1 : 1); });
+        [0.015, 0.023, 0.037, 0.051, 0.066].forEach(function (er, k) { var p = Math.floor((er + ch * 0.004) * sr); if (p < len) d[p] += (0.45 - k * 0.07) * (k % 2 ? -1 : 1); });
       }
       return buf;
     }
-    function setVoiceMix() {
+    function setMix() {
       if (!ctx) return;
-      var w = voice === 'organ' ? 0.42 : voice === 'piano' ? 0.26 : 0.34;
-      wet.gain.setTargetAtTime(w, ctx.currentTime, 0.05); dry.gain.setTargetAtTime(voice === 'organ' ? 0.78 : 0.9, ctx.currentTime, 0.05);
+      var k = INST[voice].wet, w = reverb * k * 1.05, dr = 0.95 - reverb * 0.25;
+      wet.gain.setTargetAtTime(w, ctx.currentTime, 0.05); dry.gain.setTargetAtTime(dr, ctx.currentTime, 0.05);
     }
-    function freq(m) { return 440 * Math.pow(2, (m - 69) / 12); }
-    /* Karplus–Strong plucked string, rendered once per pitch */
-    function ksBuffer(m) {
-      if (ksCache[m]) return ksCache[m];
-      var sr = ctx.sampleRate, f = freq(m), P = sr / f, N = Math.max(2, Math.floor(P - 0.5));
-      var rate = f / (sr / (N + 0.5));
-      var T60 = Math.max(1.4, Math.min(4.2, 4.2 - (m - 55) * 0.07)), secs = Math.min(4.5, T60 + 0.4), len = Math.floor(sr * secs);
-      var y = new Float32Array(len), rho = Math.pow(0.001, 1 / (f * T60)), S = 0.36;
-      // excitation: bright noise with a pluck-position comb, plus a little triangle for body
-      var pos = Math.max(1, Math.round(N * 0.13)), exc = new Float32Array(N), i;
-      for (i = 0; i < N; i++) exc[i] = (Math.random() * 2 - 1) * 0.8 + (1 - Math.abs(2 * i / N - 1)) * 0.6 - 0.3;
-      for (i = 0; i < N; i++) y[i] = exc[i] - (i >= pos ? exc[i - pos] : 0) * 0.85;
-      for (i = N; i < len; i++) y[i] = rho * ((1 - S) * y[i - N] + S * y[i - N - 1 < 0 ? 0 : i - N - 1]);
-      // DC block + normalise + tiny fade-in/out
-      var prevX = 0, prevY = 0, peak = 0;
-      for (i = 0; i < len; i++) { var x = y[i], o = x - prevX + 0.995 * prevY; prevX = x; prevY = o; y[i] = o; if (Math.abs(o) > peak) peak = Math.abs(o); }
-      var g = 0.85 / (peak || 1), fi = Math.floor(sr * 0.0015), fo = Math.floor(sr * 0.3);
-      for (i = 0; i < len; i++) { var e = g; if (i < fi) e *= i / fi; if (i > len - fo) e *= (len - i) / fo; y[i] *= e; }
-      var buf = ctx.createBuffer(1, len, sr); buf.getChannelData(0).set(y);
-      return (ksCache[m] = { buf: buf, rate: rate });
+    function emit() { var st = status(); listeners.forEach(function (f) { try { f(st); } catch (e) {} }); }
+    var prog = {};
+    function status() { var p = prog[voice]; return { voice: voice, label: INST[voice].label, ready: !!sets[voice], loading: !!loading[voice] && !sets[voice], done: p ? p.done : 0, total: p ? p.total : 0, error: p && p.error }; }
+    function decoder() {
+      if (dctx) return dctx;
+      var OAC = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+      dctx = new OAC(2, 44100, 44100); // decoding needs no user gesture and no running audio
+      return dctx;
     }
-    function wave(kind) {
-      if (waves[kind]) return waves[kind];
-      var h = kind === 'organ' ? [0, 1, 0.62, 0.28, 0.36, 0.08, 0.16, 0.03, 0.12, 0.02, 0.04, 0, 0.05] : [0, 1, 0.5, 0.28, 0.16, 0.1, 0.06, 0.04, 0.025, 0.015];
-      var re = new Float32Array(h.length), im = new Float32Array(h.length);
-      for (var i = 1; i < h.length; i++) im[i] = h[i];
-      return (waves[kind] = ctx.createPeriodicWave(re, im));
+    function decode(ab) {
+      return new Promise(function (res, rej) { var p = decoder().decodeAudioData(ab, res, rej); if (p && p.then) p.then(res, rej); });
+    }
+    function load(name) {
+      name = name || voice;
+      if (sets[name]) return Promise.resolve(sets[name]);
+      if (loading[name]) return loading[name];
+      var list = MAN[name] || [], out = new Array(list.length), next = 0;
+      prog[name] = { done: 0, total: list.length, error: null };
+      function worker() {
+        if (next >= list.length) return Promise.resolve();
+        var i = next++, s = list[i];
+        return fetch('samples/' + s.f).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.arrayBuffer(); })
+          .then(decode).then(function (buf) {
+            out[i] = { m: s.m, c: s.c || 0, loop: s.loop, buf: buf };
+            prog[name].done++; if (name === voice) emit();
+          }).then(worker);
+      }
+      var p = Promise.all([worker(), worker(), worker(), worker()]).then(function () {
+        sets[name] = out; delete loading[name]; if (name === voice) emit(); return out;
+      }, function (e) {
+        delete loading[name]; prog[name].error = e; if (name === voice) emit(); throw e;
+      });
+      loading[name] = p; if (name === voice) emit();
+      return p;
+    }
+    function nearest(set, m) {
+      var best = set[0];
+      for (var i = 1; i < set.length; i++) if (Math.abs(set[i].m - m) < Math.abs(best.m - m)) best = set[i];
+      return best;
+    }
+    /* which recording to use for a note, and how much to speed it up or slow it down (tuning included) */
+    function plan(midi, v) {
+      var set = sets[v || voice]; if (!set) return null;
+      var s = nearest(set, midi);
+      return { s: s, buffer: s.buf, sampleMidi: s.m, rate: Math.pow(2, (midi - s.m - s.c / 100) / 12) * (aRef / 440) };
     }
     function track(nodes, end) { live.push({ nodes: nodes, end: end }); if (live.length > 80) live = live.filter(function (x) { return x.end > ctx.currentTime - 0.5; }); }
     function note(midi, t, dur, vel) {
       if (!ctx || midi === null || midi === undefined) return;
-      vel = vel || 1;
-      var out = ctx.createGain(); out.connect(master);
-      if (voice === 'psaltery') {
-        var ks = ksBuffer(midi), ringEnd = t + dur + 0.35;
-        var srcs = [], pans = [-0.22, 0.24], dets = [0, 7], gains = [0.62, 0.32];
-        for (var k = 0; k < 2; k++) {
-          var s = ctx.createBufferSource(); s.buffer = ks.buf; s.playbackRate.value = ks.rate; s.detune.value = dets[k];
-          var g = ctx.createGain(); g.gain.value = gains[k] * vel;
-          var p = ctx.createStereoPanner ? ctx.createStereoPanner() : null;
-          s.connect(g); if (p) { p.pan.value = pans[k]; g.connect(p); p.connect(out); } else g.connect(out);
-          s.start(t + k * 0.006); s.stop(ringEnd + 0.4); srcs.push(s);
-        }
-        // shimmer: soft octave sine that fades quickly
-        var o = ctx.createOscillator(), og = ctx.createGain(); o.type = 'sine'; o.frequency.value = freq(midi) * 2;
-        og.gain.setValueAtTime(0, t); og.gain.linearRampToValueAtTime(0.05 * vel, t + 0.004); og.gain.exponentialRampToValueAtTime(0.0005, t + 0.6);
-        o.connect(og); og.connect(out); o.start(t); o.stop(t + 0.7); srcs.push(o);
-        out.gain.setValueAtTime(1, t); out.gain.setValueAtTime(1, ringEnd); out.gain.setTargetAtTime(0, ringEnd, 0.12);
-        track(srcs.concat([out]), ringEnd + 0.8);
-      } else if (voice === 'organ') {
-        var lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 5200; lp.Q.value = 0.3; lp.connect(out);
-        var nodes = [];
-        [0, 5].forEach(function (cents, k) {
-          var os = ctx.createOscillator(); os.setPeriodicWave(wave('organ')); os.frequency.value = freq(midi); os.detune.value = cents;
-          var gg = ctx.createGain(); gg.gain.value = k ? 0.32 : 0.5; os.connect(gg); gg.connect(lp); os.start(t); os.stop(t + dur + 0.6); nodes.push(os);
-        });
-        var sub = ctx.createOscillator(), sg = ctx.createGain(); sub.type = 'sine'; sub.frequency.value = freq(midi) / 2; sg.gain.value = 0.12; sub.connect(sg); sg.connect(lp); sub.start(t); sub.stop(t + dur + 0.6); nodes.push(sub);
-        var end = t + Math.max(0.05, dur - 0.03);
-        out.gain.setValueAtTime(0, t); out.gain.linearRampToValueAtTime(0.42 * vel, t + 0.035); out.gain.setTargetAtTime(0.36 * vel, t + 0.035, 0.15);
-        out.gain.setValueAtTime(0.36 * vel, end); out.gain.setTargetAtTime(0, end, 0.06);
-        track(nodes.concat([out]), end + 0.6);
+      var set = sets[voice]; if (!set || !set.length) return;
+      var I = INST[voice], pl = plan(midi), s = pl.s, g0 = (vel || 1) * I.gain;
+      var src = ctx.createBufferSource(), g = ctx.createGain();
+      src.buffer = s.buf;
+      src.playbackRate.value = pl.rate;
+      src.connect(g); g.connect(master);
+      var end, stopAt;
+      if (I.sustain) {
+        src.loop = true; src.loopStart = s.loop[0]; src.loopEnd = s.loop[1];
+        end = t + Math.max(0.06, dur - 0.03);
+        g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(g0, t + 0.012);
+        g.gain.setValueAtTime(g0, end); g.gain.setTargetAtTime(0, end, I.tau);
+        stopAt = end + I.tau * 8;
+      } else if (I.damper) {
+        end = t + Math.max(0.08, dur);
+        g.gain.setValueAtTime(g0, t); g.gain.setValueAtTime(g0, end); g.gain.setTargetAtTime(0, end, I.tau);
+        stopAt = end + I.tau * 8;
       } else {
-        var f = freq(midi), lp2 = ctx.createBiquadFilter(); lp2.type = 'lowpass'; lp2.Q.value = 0.5; lp2.connect(out);
-        lp2.frequency.setValueAtTime(Math.min(9000, f * 14), t); lp2.frequency.setTargetAtTime(Math.min(4000, f * 4), t, 0.35);
-        var pn = [];
-        [[0, 0.5], [3, 0.3], [-4, 0.22]].forEach(function (d) {
-          var os2 = ctx.createOscillator(); os2.setPeriodicWave(wave('piano')); os2.frequency.value = f; os2.detune.value = d[0];
-          var g2 = ctx.createGain(); g2.gain.value = d[1]; os2.connect(g2); g2.connect(lp2); os2.start(t); os2.stop(t + dur + 1.2); pn.push(os2);
-        });
-        var tau = Math.max(0.35, 1.6 - (midi - 48) * 0.03), endp = t + dur;
-        out.gain.setValueAtTime(0, t); out.gain.linearRampToValueAtTime(0.55 * vel, t + 0.005); out.gain.setTargetAtTime(0.0001, t + 0.005, tau);
-        out.gain.setTargetAtTime(0, endp, 0.09);
-        track(pn.concat([out]), endp + 1.2);
+        end = t + dur + I.ring;
+        g.gain.setValueAtTime(g0, t); g.gain.setValueAtTime(g0, end); g.gain.setTargetAtTime(0, end, I.tau);
+        stopAt = end + I.tau * 7;
       }
+      src.start(t); src.stop(stopAt);
+      track([src, g], stopAt);
     }
     function silence() {
       if (!ctx) return;
       var now = ctx.currentTime;
-      live.forEach(function (x) { x.nodes.forEach(function (n) { try { if (n.gain) { n.gain.cancelScheduledValues(now); n.gain.setTargetAtTime(0, now, 0.03); } else if (n.stop) n.stop(now + 0.15); } catch (e) {} }); });
+      live.forEach(function (x) { x.nodes.forEach(function (n) { try { if (n.gain) { n.gain.cancelScheduledValues(now); n.gain.setValueAtTime(n.gain.value, now); n.gain.setTargetAtTime(0, now, 0.03); } else if (n.stop) n.stop(now + 0.15); } catch (e) {} }); });
       live = [];
     }
+    function allUrls() { var u = []; Object.keys(MAN).forEach(function (k) { MAN[k].forEach(function (s) { u.push('samples/' + s.f); }); }); return u; }
     return {
-      ensure: ensure, note: note, silence: silence,
+      ensure: ensure, note: note, silence: silence, load: load, plan: plan, status: status, allUrls: allUrls,
+      onStatus: function (f) { listeners.push(f); },
+      isReady: function (v) { return !!sets[v || voice]; },
       now: function () { return ctx ? ctx.currentTime : 0; },
       latency: function () { return ctx ? (ctx.outputLatency || ctx.baseLatency || 0) : 0; },
       setVolume: function (v) { volume = v; LS.set('volume', Math.round(v * 100)); if (master) master.gain.setTargetAtTime(v * v, ctx.currentTime, 0.04); },
-      setVoice: function (v) { voice = v; LS.set('voice', v); setVoiceMix(); },
-      get voice() { return voice; }, get volume() { return volume; }
+      setVoice: function (v) { if (!INST[v]) return; voice = v; LS.set('voice', v); setMix(); emit(); return load(v); },
+      setReverb: function (r) { reverb = Math.max(0, Math.min(1, r)); LS.set('reverb', Math.round(reverb * 100)); setMix(); },
+      setTuning: function (hz) { aRef = Math.max(415, Math.min(466, Math.round(hz))); LS.set('aref', aRef); return aRef; },
+      get voice() { return voice; }, get volume() { return volume; }, get reverb() { return reverb; }, get tuning() { return aRef; }
     };
   })();
 
@@ -1951,6 +2043,13 @@ window.HYMN_SONGS = [
   function play() {
     if (!S.res || !S.res.notes.length) return;
     try { Audio.ensure(); } catch (e) { toast(e.message); return; }
+    if (!Audio.isReady()) {
+      // sounds still downloading: start as soon as they are ready
+      var want = Audio.voice; S.waiting = true; $('nowState').textContent = 'Loading ' + INST[want].label.toLowerCase() + '…';
+      Audio.load(want).then(function () { if (S.waiting && Audio.voice === want) { S.waiting = false; play(); } }, function () { S.waiting = false; $('nowState').textContent = 'Ready'; });
+      return;
+    }
+    S.waiting = false;
     build();
     var from = S.pausedBeat || 0;
     if (from >= S.total - 1e-6) from = 0;
@@ -1983,6 +2082,7 @@ window.HYMN_SONGS = [
     $('nowState').textContent = 'Playing · verse ' + (S.verse + 1);
   }
   function pause() {
+    S.waiting = false;
     if (!S.playing) return;
     S.pausedBeat = Math.max(0, Math.min(S.total, currentBeat()));
     // snap to the start of the current note
@@ -1990,10 +2090,10 @@ window.HYMN_SONGS = [
     S.playing = false; clearInterval(S.timer); Audio.silence(); setPlayIcon(); $('nowState').textContent = 'Paused';
   }
   function stop() {
-    S.playing = false; clearInterval(S.timer); cancelAnimationFrame(S.raf); Audio.silence();
+    S.waiting = false; S.playing = false; clearInterval(S.timer); cancelAnimationFrame(S.raf); Audio.silence();
     S.pausedBeat = 0; setPlayIcon(); clearHighlight(); $('nowState').textContent = 'Ready'; $('progressBar').style.width = '0%';
   }
-  function toggle() { if (S.playing) pause(); else play(); }
+  function toggle() { if (S.playing || S.waiting) pause(); else play(); }
   function seekToNote(i) {
     build();
     var ev = S.events.filter(function (e) { return e.n === i; })[0]; if (!ev) return;
@@ -2138,14 +2238,53 @@ window.HYMN_SONGS = [
     $('transUp').onclick = function () { setTranspose(S.transpose + 1); };
     var vol = $('volume'); vol.value = Math.round(Audio.volume * 100); $('volOut').textContent = vol.value + '%'; fill(vol);
     vol.oninput = function () { Audio.setVolume(this.value / 100); $('volOut').textContent = this.value + '%'; fill(this); };
-    Array.prototype.forEach.call($('voiceSeg').querySelectorAll('button'), function (b) {
-      b.setAttribute('aria-pressed', b.dataset.v === Audio.voice ? 'true' : 'false');
+    function voiceButtons() { return Array.prototype.slice.call(document.querySelectorAll('#voiceSeg button, #voiceSeg2 button')); }
+    function showVoice() { voiceButtons().forEach(function (x) { x.setAttribute('aria-pressed', x.dataset.v === Audio.voice ? 'true' : 'false'); }); }
+    showVoice();
+    voiceButtons().forEach(function (b) {
       b.onclick = function () {
-        Audio.setVoice(b.dataset.v);
-        Array.prototype.forEach.call($('voiceSeg').querySelectorAll('button'), function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
-        if (!S.playing) { try { Audio.ensure(); var m = (S.res.notes.filter(function (n) { return !n.rest; })[0] || {}).midi; if (m) Audio.note(m + S.transpose, Audio.now() + 0.03, 0.6, 0.8); } catch (e) {} }
+        var v = b.dataset.v; try { Audio.ensure(); } catch (e) {}
+        Audio.setVoice(v).then(function () {
+          if (!S.playing && !S.waiting && Audio.voice === v && S.res) { var m = (S.res.notes.filter(function (n) { return !n.rest; })[0] || {}).midi; if (m) { try { Audio.ensure(); Audio.note(m + S.transpose, Audio.now() + 0.03, 0.6, 0.8); } catch (e) {} } }
+        }, function () {});
+        showVoice();
       };
     });
+    // loading progress for the instrument sounds
+    Audio.onStatus(function (st) {
+      var row = $('loadRow');
+      if (st.error) { row.hidden = false; row.classList.add('err'); $('loadTxt').textContent = 'Could not load the ' + st.label.toLowerCase() + ' sounds. Check the internet connection, then tap the instrument again.'; $('loadFill').style.width = '0%'; return; }
+      row.classList.remove('err');
+      if (st.ready || !st.loading) { if (!row.hidden) { $('loadFill').style.width = '100%'; setTimeout(function () { if (Audio.status().ready) row.hidden = true; }, 350); } return; }
+      var pct = st.total ? Math.round(st.done / st.total * 100) : 0;
+      row.hidden = false; $('loadTxt').textContent = 'Loading ' + st.label.toLowerCase() + ' sounds… ' + pct + '%';
+      $('loadFill').style.width = pct + '%'; $('loadBar').setAttribute('aria-valuenow', pct);
+    });
+    // sound settings sheet: tuning, reverb, credits
+    function openSheet(id) { var m = $(id); m.hidden = false; requestAnimationFrame(function () { m.classList.add('show'); }); var f = m.querySelector('[data-close]'); if (f) f.focus(); }
+    function closeSheet(m) { m.classList.remove('show'); m.hidden = true; }
+    Array.prototype.forEach.call(document.querySelectorAll('.modal'), function (m) {
+      m.addEventListener('click', function (e) { if (e.target === m || e.target.hasAttribute('data-close')) closeSheet(m); });
+    });
+    $('settingsBtn').onclick = function () { openSheet('setSheet'); };
+    $('creditsBtn').onclick = function () { openSheet('credSheet'); };
+    function showTuning() {
+      var hz = Audio.tuning, t = $('tune'); t.value = hz; fill(t);
+      $('tuneOut').textContent = 'A = ' + hz + ' Hz'; $('tuneSummary').textContent = 'A = ' + hz + ' Hz';
+      Array.prototype.forEach.call($('tuneSeg').querySelectorAll('button'), function (b) { b.setAttribute('aria-pressed', +b.dataset.hz === hz ? 'true' : 'false'); });
+    }
+    function setTuning(hz) { Audio.setTuning(hz); showTuning(); }
+    showTuning();
+    $('tune').oninput = function () { setTuning(+this.value); };
+    $('tuneDown').onclick = function () { setTuning(Audio.tuning - 1); };
+    $('tuneUp').onclick = function () { setTuning(Audio.tuning + 1); };
+    Array.prototype.forEach.call($('tuneSeg').querySelectorAll('button'), function (b) { b.onclick = function () { setTuning(+b.dataset.hz); }; });
+    var rv = $('reverb'); rv.value = Math.round(Audio.reverb * 100); $('revOut').textContent = rv.value + '%'; fill(rv);
+    rv.oninput = function () { Audio.setReverb(this.value / 100); $('revOut').textContent = this.value + '%'; fill(this); };
+    $('credList').innerHTML = Object.keys(CREDITS).map(function (k) {
+      var c = CREDITS[k];
+      return '<div class="cred"><h3>' + esc(INST[k].label) + ' <small>' + esc(c.what) + '</small></h3><p>' + esc(c.src) + '</p><p>License: <a href="' + c.licUrl + '" target="_blank" rel="noopener">' + esc(c.lic) + '</a> · <a href="' + c.url + '" target="_blank" rel="noopener">Source</a></p></div>';
+    }).join('');
     $('progress').onclick = function (ev) {
       var r = this.getBoundingClientRect(), beat = (ev.clientX - r.left) / r.width * (S.total || (build(), S.total));
       var e = S.events.filter(function (x) { return x.start <= beat; }).pop(); if (e) seekToNote(e.n);
@@ -2173,7 +2312,7 @@ window.HYMN_SONGS = [
     document.addEventListener('keydown', function (e) {
       if (/^(TEXTAREA|INPUT|SELECT)$/.test(e.target.tagName) && e.target.type !== 'range' && e.target.type !== 'checkbox') return;
       if (e.code === 'Space') { e.preventDefault(); toggle(); }
-      if (e.key === 'Escape') closeLib();
+      if (e.key === 'Escape') { closeLib(); Array.prototype.forEach.call(document.querySelectorAll('.modal.show'), closeSheet); }
     });
     var rw; window.addEventListener('resize', function () { clearTimeout(rw); rw = setTimeout(function () { if (S.res) render(); }, 150); });
     document.addEventListener('visibilitychange', function () { if (document.hidden && S.playing) { /* keep playing in background where allowed */ } });
@@ -2181,7 +2320,12 @@ window.HYMN_SONGS = [
     var deferred = null;
     window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); deferred = e; $('installBtn').hidden = false; });
     $('installBtn').onclick = function () { if (deferred) { deferred.prompt(); deferred = null; $('installBtn').hidden = true; } };
-    if ('serviceWorker' in navigator && /^https?:/.test(location.protocol)) navigator.serviceWorker.register('sw.js').catch(function () {});
+    var swOk = 'serviceWorker' in navigator && /^https?:/.test(location.protocol);
+    if (swOk) navigator.serviceWorker.register('sw.js').catch(function () {});
+    // fetch the chosen instrument now; afterwards let the service worker keep every instrument for offline use
+    Audio.load().then(function () {
+      if (swOk) navigator.serviceWorker.ready.then(function (reg) { if (reg.active) reg.active.postMessage({ type: 'cache-samples', urls: Audio.allUrls() }); }).catch(function () {});
+    }, function () {});
     var params = new URLSearchParams(location.search);
     loadSong(params.get('song') || LS.get('song', builtIn[0] && builtIn[0].id));
   }
