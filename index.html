@@ -169,6 +169,7 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
   .tr-ctrls{grid-template-columns:1fr 1fr;display:none}
   .transport.expanded .tr-ctrls{display:grid;animation:rise .28s cubic-bezier(.2,.8,.2,1)}
   .ctrl.voice{grid-column:1/-1}
+  .tr-ctrls .seg{min-height:40px}.tr-ctrls .seg button{min-height:34px;font-size:15px}.tr-ctrls .stepper,.tr-ctrls .stepper button{min-height:44px}
 }
 @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @media (max-width:560px){
@@ -325,9 +326,53 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
 .sc-info{font-size:12px;white-space:pre-wrap;background:rgba(0,0,0,.04);padding:10px;border-radius:10px;margin:0}
 .seg.seg-wrap{flex-wrap:wrap}
 
+/* phones in portrait: ask to turn sideways (iPhone ignores the manifest orientation) */
+.rotate-card{display:none}
+@media (orientation:portrait) and (max-width:600px) and (pointer:coarse){
+  .rotate-card{display:flex;position:fixed;inset:0;z-index:1000;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:32px;text-align:center;background:var(--bg,#f2f2f7);color:var(--text,#1c1c1e);-webkit-user-select:none;user-select:none}
+  .rotate-card svg{width:88px;height:88px;color:var(--accent,#8a4b16)}
+  .rotate-card .rc-phone{transform-origin:32px 32px;transform-box:view-box;animation:rc-turn 2.4s ease-in-out infinite}
+  .rotate-card p{margin:0;font-size:22px;font-weight:700;letter-spacing:-.01em}
+  .rotate-card small{max-width:280px;font-size:15px;line-height:1.4;color:var(--muted,#8e8e93)}
+  body{overflow:hidden}
+}
+@keyframes rc-turn{0%,25%{transform:rotate(0)}55%,100%{transform:rotate(-90deg)}}
+@media (prefers-reduced-motion:reduce){.rotate-card .rc-phone{animation:none;transform:rotate(-90deg)}}
+
+/* phones held sideways (short landscape screens): compact header and a one-row dock so the score stays in view */
+@media (orientation:landscape) and (max-height:500px){
+  .topbar{position:relative;padding-top:max(6px,env(safe-area-inset-top));padding-bottom:6px}
+  .brand img{width:34px;height:34px;border-radius:9px}
+  .brand h1{font-size:19px}.brand small{display:none}
+  .topbar .pill-btn{min-height:40px}
+  .wrap{padding:10px max(14px,env(safe-area-inset-left)) 10px max(14px,env(safe-area-inset-right));gap:10px}
+  .card{padding:12px 16px}
+  .song-head h2{font-size:24px}
+  body{padding-bottom:calc(84px + env(safe-area-inset-bottom))}
+  .transport{padding-top:6px;padding-bottom:calc(6px + env(safe-area-inset-bottom))}
+  .tr-in{grid-template-columns:1fr;gap:6px}
+  .loadrow{font-size:13px}
+  .tr-main{justify-content:center;gap:14px}
+  .now{display:none}
+  .round{width:46px;height:46px}
+  .play{width:56px;height:56px}
+  .play svg{width:26px;height:26px}
+  .round.more{display:grid}
+  .transport.expanded .round.more{background:var(--accent-soft);color:var(--accent)}
+  .tr-ctrls{display:none;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 14px;max-height:calc(100vh - 120px);max-height:calc(100dvh - 120px);overflow-y:auto;-webkit-overflow-scrolling:touch}
+  .transport.expanded .tr-ctrls{display:grid;animation:rise .28s cubic-bezier(.2,.8,.2,1)}
+  .ctrl.voice{grid-column:1/-1}
+  .tr-ctrls .seg{min-height:40px}.tr-ctrls .seg button{min-height:34px;font-size:15px}.tr-ctrls .stepper,.tr-ctrls .stepper button{min-height:44px}
+}
+
 </style>
 </head>
 <body>
+<div class="rotate-card" id="rotateCard" role="alert" aria-live="polite">
+  <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g class="rc-phone"><rect x="22" y="14" width="20" height="36" rx="4"/><path d="M29 45h6"/></g><path class="rc-arrow" d="M44 6a20 20 0 0 1 14 14M58 20l-6-1M58 20l1-6" stroke-width="2.5"/></svg>
+  <p>Turn your phone sideways</p>
+  <small>The music scrolls across the screen, so the Psalter Player works in landscape.</small>
+</div>
 <header class="topbar">
   <div class="topbar-in">
     <div class="brand">
@@ -366,7 +411,7 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
     </section>
 
     <section class="card staff-card" aria-label="Music and words">
-      <div class="staff-top"><span id="keyInfo"></span><button class="pill-btn pipe-mini" id="pipeBtn2" title="Sound the first note of the tune">♪ Give me the note</button><button class="pill-btn pipe-mini satb-mini" id="satbBtn2" aria-pressed="false" title="Four-part harmony: soprano, alto, tenor, bass">SATB</button><span class="seg seg-sm" id="rollSeg" role="group" aria-label="How the music moves"><button data-r="x" aria-pressed="true">Sideways</button><button data-r="y" aria-pressed="false">Up</button></span></div>
+      <div class="staff-top"><span id="keyInfo"></span><button class="pill-btn pipe-mini" id="pipeBtn2" title="Sound the first note of the tune">♪ Give me the note</button><button class="pill-btn pipe-mini satb-mini" id="satbBtn2" aria-pressed="false" title="Four-part harmony: soprano, alto, tenor, bass">SATB</button></div>
       <div id="staff"></div>
       <p class="chord-note" id="chordNote" hidden></p>
     </section>
@@ -380,7 +425,7 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
       </div>
       <div class="sing-row">
         <div class="seg" id="modeSeg" role="group" aria-label="How to practise">
-          <button data-m="along" aria-pressed="true" title="The melody plays while you sing along">Sing along</button><button data-m="lines" aria-pressed="false" title="Hear a line, then sing it back">Line by line</button><button data-m="off" aria-pressed="false" title="No melody: you sing alone while the music and words keep time">Melody off</button>
+          <button data-m="along" aria-pressed="true" title="The melody plays while you sing along">Sing along</button><button data-m="off" aria-pressed="false" title="No melody: you sing alone while the music and words keep time">Melody off</button>
         </div>
       </div>
       <div class="sing-row">
@@ -414,14 +459,6 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
             <input type="range" class="mix-vol" min="0" max="100" value="100" aria-label="Bass volume">
           </div>
         </div>
-        <div class="sing-row">
-          <span class="lbl">Show</span>
-          <div class="seg seg-sm" id="viewSeg" role="group" aria-label="How the parts are shown"><button data-v="tog">Hymnal (two staves)</button><button data-v="sep">Each part on its own staff</button><button data-v="one">Soprano only</button></div>
-        </div>
-      </div>
-      <div class="sing-row" id="lineOpts" hidden>
-        <span class="lbl">Repeat each line</span>
-        <div class="seg seg-sm" id="repSeg" role="group" aria-label="How many times to practise each line"><button data-r="1">1×</button><button data-r="2">2×</button><button data-r="3">3×</button></div>
       </div>
       <div class="sing-row">
         <span class="lbl">Practice speed</span>
@@ -510,7 +547,7 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
       <div class="ctrl voice">
         <div class="cap"><span>Sound</span></div>
         <div class="seg" id="voiceSeg" role="group" aria-label="Instrument">
-          <button data-v="choir" aria-pressed="false">Choir (real)</button><button data-v="voice" aria-pressed="false">Voice</button><button data-v="pure" aria-pressed="false">Pure</button><button data-v="psaltery" aria-pressed="true">Psaltery</button><button data-v="harp" aria-pressed="false">Harp</button><button data-v="organ" aria-pressed="false">Organ</button><button data-v="piano" aria-pressed="false">Piano</button>
+          <button data-v="choir" aria-pressed="false">Choir (real)</button><button data-v="voice" aria-pressed="false">Voice</button><button data-v="pure" aria-pressed="false">Pure</button><button data-v="psaltery" aria-pressed="true">Psaltery</button><button data-v="harp" aria-pressed="false">Harp</button><button data-v="organ" aria-pressed="false">Organ</button><button data-v="piano" aria-pressed="false">Piano</button><button data-v="flute" aria-pressed="false">Flute</button><button data-v="vibes" aria-pressed="false">Vibraphone</button>
         </div>
       </div>
       <div class="ctrl ctrl-row">
@@ -529,7 +566,7 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
     <div class="ctrl">
       <div class="cap"><span>Instrument</span></div>
       <div class="seg" id="voiceSeg2" role="group" aria-label="Instrument">
-        <button data-v="choir">Choir (real)</button><button data-v="voice">Voice (synth)</button><button data-v="pure">Pure tone</button><button data-v="psaltery">Psaltery</button><button data-v="harp">Harp</button><button data-v="organ">Organ</button><button data-v="piano">Piano</button>
+        <button data-v="choir">Choir (real)</button><button data-v="voice">Voice (synth)</button><button data-v="pure">Pure tone</button><button data-v="psaltery">Psaltery</button><button data-v="harp">Harp</button><button data-v="organ">Organ</button><button data-v="piano">Piano</button><button data-v="flute">Flute</button><button data-v="vibes">Vibraphone</button>
       </div>
     </div>
     <div class="ctrl">
@@ -2000,7 +2037,7 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
 
 </script>
 <script id="hp-samples">
-window.HP_SAMPLES = {"psaltery":[{"m":58,"f":"psaltery/58.mp3","c":-1.0},{"m":60,"f":"psaltery/60.mp3","c":-1.5},{"m":62,"f":"psaltery/62.mp3","c":1.1},{"m":64,"f":"psaltery/64.mp3","c":-2.7},{"m":66,"f":"psaltery/66.mp3","c":-0.8},{"m":68,"f":"psaltery/68.mp3","c":-0.2},{"m":70,"f":"psaltery/70.mp3","c":-0.6},{"m":72,"f":"psaltery/72.mp3","c":-0.1},{"m":74,"f":"psaltery/74.mp3","c":-0.6},{"m":76,"f":"psaltery/76.mp3","c":-0.8},{"m":78,"f":"psaltery/78.mp3","c":-1.9}],"harp":[{"m":38,"f":"harp/38.mp3","c":-5.6},{"m":41,"f":"harp/41.mp3","c":-7.7},{"m":45,"f":"harp/45.mp3","c":-6.3},{"m":48,"f":"harp/48.mp3","c":-3.0},{"m":52,"f":"harp/52.mp3","c":-5.2},{"m":55,"f":"harp/55.mp3","c":-9.8},{"m":59,"f":"harp/59.mp3","c":-13.5},{"m":62,"f":"harp/62.mp3","c":-12.6},{"m":65,"f":"harp/65.mp3","c":-1.2},{"m":69,"f":"harp/69.mp3","c":-10.8},{"m":72,"f":"harp/72.mp3","c":-11.1},{"m":76,"f":"harp/76.mp3","c":-12.9},{"m":79,"f":"harp/79.mp3","c":-3.8},{"m":83,"f":"harp/83.mp3","c":-8.4},{"m":86,"f":"harp/86.mp3","c":-6.9},{"m":89,"f":"harp/89.mp3","c":-6.3},{"m":93,"f":"harp/93.mp3","c":-18.9},{"m":95,"f":"harp/95.mp3","c":-10.2}],"piano":[{"m":36,"f":"piano/36.mp3","c":9},{"m":39,"f":"piano/39.mp3","c":11},{"m":42,"f":"piano/42.mp3","c":7},{"m":45,"f":"piano/45.mp3","c":4},{"m":48,"f":"piano/48.mp3","c":0},{"m":51,"f":"piano/51.mp3","c":6},{"m":54,"f":"piano/54.mp3","c":3},{"m":57,"f":"piano/57.mp3","c":3},{"m":60,"f":"piano/60.mp3","c":6},{"m":63,"f":"piano/63.mp3","c":3},{"m":66,"f":"piano/66.mp3","c":0},{"m":69,"f":"piano/69.mp3","c":4},{"m":72,"f":"piano/72.mp3","c":8},{"m":75,"f":"piano/75.mp3","c":8},{"m":78,"f":"piano/78.mp3","c":5},{"m":81,"f":"piano/81.mp3","c":7},{"m":84,"f":"piano/84.mp3","c":8},{"m":87,"f":"piano/87.mp3","c":12},{"m":90,"f":"piano/90.mp3","c":13}],"organ":[{"m":39,"f":"organ/39.mp3","c":0.1,"loop":[1.6,4.4]},{"m":42,"f":"organ/42.mp3","c":8.4,"loop":[1.6,4.4]},{"m":45,"f":"organ/45.mp3","c":-3.3,"loop":[1.6,4.4]},{"m":48,"f":"organ/48.mp3","c":-3.8,"loop":[1.6,4.4]},{"m":51,"f":"organ/51.mp3","c":-1.3,"loop":[1.6,4.4]},{"m":54,"f":"organ/54.mp3","c":-0.1,"loop":[1.6,4.4]},{"m":57,"f":"organ/57.mp3","c":-1.8,"loop":[1.6,4.4]},{"m":60,"f":"organ/60.mp3","c":-1.3,"loop":[1.6,4.4]},{"m":63,"f":"organ/63.mp3","c":-3.0,"loop":[1.6,4.4]},{"m":66,"f":"organ/66.mp3","c":-0.3,"loop":[1.6,4.4]},{"m":69,"f":"organ/69.mp3","c":2.3,"loop":[1.6,4.4]},{"m":72,"f":"organ/72.mp3","c":0.8,"loop":[1.6,4.4]},{"m":75,"f":"organ/75.mp3","c":-0.9,"loop":[1.6,4.4]},{"m":78,"f":"organ/78.mp3","c":0.8,"loop":[1.6,4.4]},{"m":81,"f":"organ/81.mp3","c":-3.6,"loop":[1.6,4.4]},{"m":84,"f":"organ/84.mp3","c":-4.0,"loop":[1.6,4.4]}],"choir":[{"m":39,"f":"choir/39.mp3","c":-42.0,"loop":[1.18678,2.038231]},{"m":42,"f":"choir/42.mp3","c":-29.0,"loop":[0.650249,2.260635]},{"m":45,"f":"choir/45.mp3","c":-16.0,"loop":[0.826009,2.702857]},{"m":48,"f":"choir/48.mp3","c":-16.5,"loop":[1.415669,3.006689]},{"m":51,"f":"choir/51.mp3","c":-42.0,"loop":[1.313673,3.08229]},{"m":54,"f":"choir/54.mp3","c":-33.0,"loop":[1.02059,2.986304]},{"m":57,"f":"choir/57.mp3","c":-22.0,"loop":[0.841474,2.536054]},{"m":60,"f":"choir/60.mp3","c":-9.0,"loop":[1.27712,2.533175]},{"m":63,"f":"choir/63.mp3","c":-32.0,"loop":[1.005624,2.414127]},{"m":66,"f":"choir/66.mp3","c":-14.0,"loop":[0.552698,2.74263]},{"m":69,"f":"choir/69.mp3","c":-3.5,"loop":[0.619569,2.387211]},{"m":72,"f":"choir/72.mp3","c":-7.5,"loop":[0.537438,1.635397]},{"m":75,"f":"choir/75.mp3","c":-21.5,"loop":[0.69,2.249615]},{"m":78,"f":"choir/78.mp3","c":4.5,"loop":[0.426032,1.68254]},{"m":81,"f":"choir/81.mp3","c":-4.0,"loop":[0.755079,2.244422]}]};
+window.HP_SAMPLES = {"psaltery":[{"m":58,"f":"psaltery/58.mp3","c":-1.0},{"m":60,"f":"psaltery/60.mp3","c":-1.5},{"m":62,"f":"psaltery/62.mp3","c":1.1},{"m":64,"f":"psaltery/64.mp3","c":-2.7},{"m":66,"f":"psaltery/66.mp3","c":-0.8},{"m":68,"f":"psaltery/68.mp3","c":-0.2},{"m":70,"f":"psaltery/70.mp3","c":-0.6},{"m":72,"f":"psaltery/72.mp3","c":-0.1},{"m":74,"f":"psaltery/74.mp3","c":-0.6},{"m":76,"f":"psaltery/76.mp3","c":-0.8},{"m":78,"f":"psaltery/78.mp3","c":-1.9}],"harp":[{"m":38,"f":"harp/38.mp3","c":-5.6},{"m":41,"f":"harp/41.mp3","c":-7.7},{"m":45,"f":"harp/45.mp3","c":-6.3},{"m":48,"f":"harp/48.mp3","c":-3.0},{"m":52,"f":"harp/52.mp3","c":-5.2},{"m":55,"f":"harp/55.mp3","c":-9.8},{"m":59,"f":"harp/59.mp3","c":-13.5},{"m":62,"f":"harp/62.mp3","c":-12.6},{"m":65,"f":"harp/65.mp3","c":-1.2},{"m":69,"f":"harp/69.mp3","c":-10.8},{"m":72,"f":"harp/72.mp3","c":-11.1},{"m":76,"f":"harp/76.mp3","c":-12.9},{"m":79,"f":"harp/79.mp3","c":-3.8},{"m":83,"f":"harp/83.mp3","c":-8.4},{"m":86,"f":"harp/86.mp3","c":-6.9},{"m":89,"f":"harp/89.mp3","c":-6.3},{"m":93,"f":"harp/93.mp3","c":-18.9},{"m":95,"f":"harp/95.mp3","c":-10.2}],"piano":[{"m":36,"f":"piano/36.mp3","c":9},{"m":39,"f":"piano/39.mp3","c":11},{"m":42,"f":"piano/42.mp3","c":7},{"m":45,"f":"piano/45.mp3","c":4},{"m":48,"f":"piano/48.mp3","c":0},{"m":51,"f":"piano/51.mp3","c":6},{"m":54,"f":"piano/54.mp3","c":3},{"m":57,"f":"piano/57.mp3","c":3},{"m":60,"f":"piano/60.mp3","c":6},{"m":63,"f":"piano/63.mp3","c":3},{"m":66,"f":"piano/66.mp3","c":0},{"m":69,"f":"piano/69.mp3","c":4},{"m":72,"f":"piano/72.mp3","c":8},{"m":75,"f":"piano/75.mp3","c":8},{"m":78,"f":"piano/78.mp3","c":5},{"m":81,"f":"piano/81.mp3","c":7},{"m":84,"f":"piano/84.mp3","c":8},{"m":87,"f":"piano/87.mp3","c":12},{"m":90,"f":"piano/90.mp3","c":13}],"organ":[{"m":39,"f":"organ/39.mp3","c":0.1,"loop":[1.6,4.4]},{"m":42,"f":"organ/42.mp3","c":8.4,"loop":[1.6,4.4]},{"m":45,"f":"organ/45.mp3","c":-3.3,"loop":[1.6,4.4]},{"m":48,"f":"organ/48.mp3","c":-3.8,"loop":[1.6,4.4]},{"m":51,"f":"organ/51.mp3","c":-1.3,"loop":[1.6,4.4]},{"m":54,"f":"organ/54.mp3","c":-0.1,"loop":[1.6,4.4]},{"m":57,"f":"organ/57.mp3","c":-1.8,"loop":[1.6,4.4]},{"m":60,"f":"organ/60.mp3","c":-1.3,"loop":[1.6,4.4]},{"m":63,"f":"organ/63.mp3","c":-3.0,"loop":[1.6,4.4]},{"m":66,"f":"organ/66.mp3","c":-0.3,"loop":[1.6,4.4]},{"m":69,"f":"organ/69.mp3","c":2.3,"loop":[1.6,4.4]},{"m":72,"f":"organ/72.mp3","c":0.8,"loop":[1.6,4.4]},{"m":75,"f":"organ/75.mp3","c":-0.9,"loop":[1.6,4.4]},{"m":78,"f":"organ/78.mp3","c":0.8,"loop":[1.6,4.4]},{"m":81,"f":"organ/81.mp3","c":-3.6,"loop":[1.6,4.4]},{"m":84,"f":"organ/84.mp3","c":-4.0,"loop":[1.6,4.4]}],"choir":[{"m":39,"f":"choir/39.mp3","c":-42.0,"loop":[1.18678,2.038231]},{"m":42,"f":"choir/42.mp3","c":-29.0,"loop":[0.650249,2.260635]},{"m":45,"f":"choir/45.mp3","c":-16.0,"loop":[0.826009,2.702857]},{"m":48,"f":"choir/48.mp3","c":-16.5,"loop":[1.415669,3.006689]},{"m":51,"f":"choir/51.mp3","c":-42.0,"loop":[1.313673,3.08229]},{"m":54,"f":"choir/54.mp3","c":-33.0,"loop":[1.02059,2.986304]},{"m":57,"f":"choir/57.mp3","c":-22.0,"loop":[0.841474,2.536054]},{"m":60,"f":"choir/60.mp3","c":-9.0,"loop":[1.27712,2.533175]},{"m":63,"f":"choir/63.mp3","c":-32.0,"loop":[1.005624,2.414127]},{"m":66,"f":"choir/66.mp3","c":-14.0,"loop":[0.552698,2.74263]},{"m":69,"f":"choir/69.mp3","c":-3.5,"loop":[0.619569,2.387211]},{"m":72,"f":"choir/72.mp3","c":-7.5,"loop":[0.537438,1.635397]},{"m":75,"f":"choir/75.mp3","c":-21.5,"loop":[0.69,2.249615]},{"m":78,"f":"choir/78.mp3","c":4.5,"loop":[0.426032,1.68254]},{"m":81,"f":"choir/81.mp3","c":-4.0,"loop":[0.755079,2.244422]}],"flute":[{"m":54,"f":"flute/54.mp3","c":0.5,"loop":[0.872063,2.972063]},{"m":56,"f":"flute/56.mp3","c":-4.5,"loop":[0.877052,2.977052]},{"m":58,"f":"flute/58.mp3","c":-2.0,"loop":[0.867075,2.967075]},{"m":60,"f":"flute/60.mp3","c":3.0,"loop":[0.852109,2.952109]},{"m":61,"f":"flute/61.mp3","c":10.0,"loop":[0.606395,0.858277]},{"m":64,"f":"flute/64.mp3","c":1.5,"loop":[0.685828,0.935624]},{"m":67,"f":"flute/67.mp3","c":10.5,"loop":[0.614218,0.840748]},{"m":71,"f":"flute/71.mp3","c":8.5,"loop":[0.361451,0.596077]},{"m":74,"f":"flute/74.mp3","c":7.5,"loop":[0.989728,1.227687]},{"m":78,"f":"flute/78.mp3","c":7.0,"loop":[0.418435,0.656916]},{"m":80,"f":"flute/80.mp3","c":19.5,"loop":[0.221406,0.465057]},{"m":84,"f":"flute/84.mp3","c":20.5,"loop":[0.486508,0.712902]},{"m":90,"f":"flute/90.mp3","c":37.5,"loop":[0.377029,0.630658]}],"vibes":[{"m":53,"f":"vibes/53.mp3","c":0.9},{"m":57,"f":"vibes/57.mp3","c":0.0},{"m":60,"f":"vibes/60.mp3","c":-0.5},{"m":64,"f":"vibes/64.mp3","c":-0.1},{"m":67,"f":"vibes/67.mp3","c":-0.1},{"m":71,"f":"vibes/71.mp3","c":-0.0},{"m":74,"f":"vibes/74.mp3","c":-0.0},{"m":77,"f":"vibes/77.mp3","c":0.1},{"m":81,"f":"vibes/81.mp3","c":0.0},{"m":84,"f":"vibes/84.mp3","c":0.0},{"m":88,"f":"vibes/88.mp3","c":0.0}]};
 </script>
 <script id="hp-songs">
 window.HYMN_SONGS = [
@@ -5007,12 +5044,16 @@ window.HYMN_SONGS = [
     harp:     { label: 'Harp',     gain: 1.0,  wet: 1.0, ring: 1.1,  tau: 0.35 },
     organ:    { label: 'Organ',    gain: 0.62, wet: 1.25, sustain: true, tau: 0.07 },
     piano:    { label: 'Piano',    gain: 0.95, wet: 0.75, damper: true, tau: 0.11 },
+    flute:    { label: 'Flute',    gain: 0.72, wet: 1.1, sustain: true, tau: 0.08 },
+    vibes:    { label: 'Vibraphone', gain: 1.0, wet: 0.9, ring: 0.9, tau: 0.25 },
     // made by the app itself (no recordings): a sung "oh" vowel, and a clean tone for learning pitch
     choir:    { label: 'Choir (real)', gain: 0.75, wet: 1.1, sustain: true, tau: 0.12 },
     voice:    { label: 'Voice',    gain: 0.95, wet: 1.1, sustain: true, tau: 0.09, synth: 'voice' },
     pure:     { label: 'Pure tone', gain: 0.85, wet: 0.5, sustain: true, tau: 0.05, synth: 'pure' }
   };
   var CREDITS = {
+    flute:    { what: 'flute (bass recorder F♯3–C4)', src: 'FluidR3_GM soundfont, “Flute” (program 74), by Frank Wen — Copyright © 2000-2002, 2008 Frank Wen; from the Debian fluid-soundfont-gm 3.1 package (MIT; licence text in samples/CREDITS.txt), for C♯4 and up. From F♯3 to C4, where a flute cannot play, the Baroque Bass Recorder (sustain) from the Versilian Community Sample Library (VCSL), CC0; lower notes (tenor and bass parts) are pitch-shifted from F♯3. Changes: extracted, resampled, onsets trimmed, retuned, loops crossfaded, level-matched and compressed to MP3 for this app', lic: 'MIT + CC0 1.0', licUrl: 'samples/CREDITS.txt', url: 'https://packages.debian.org/source/sid/fluid-soundfont' },
+    vibes:    { what: 'vibraphone (soft mallets)', src: 'Versilian Community Sample Library (VCSL) — “Vibraphone”, soft mallets, by Versilian Studios. Changes: trimmed, faded, level-matched, compressed to MP3 (and filed at their measured pitch: the library’s note names are an octave low)', lic: 'CC0 1.0 (public domain)', licUrl: 'https://creativecommons.org/publicdomain/zero/1.0/', url: 'https://github.com/sgossner/VCSL' },
     choir:    { what: 'recorded choir singing “ah”', src: 'FluidR3_GM soundfont, “Ahh Choir” (program 53), by Frank Wen — Copyright © 2000-2002, 2008 Frank Wen; from the Debian fluid-soundfont-gm 3.1 package. Changes: extracted, resampled, onsets trimmed, retuned, loops crossfaded, level-matched and compressed to MP3 for this app. The MIT license text is in samples/CREDITS.txt', lic: 'MIT', licUrl: 'samples/CREDITS.txt', url: 'https://packages.debian.org/source/sid/fluid-soundfont' },
     voice:    { what: 'sung “oh” vowel (synthesized)', self: 'Made by this app (formant synthesis of a singing voice); no recordings are used.' },
     pure:     { what: 'clean tone for pitch', self: 'Made by this app (a sine tone with two soft overtones).' },
@@ -5221,8 +5262,8 @@ window.HYMN_SONGS = [
   var mySongs = LS.get('mySongs', []);
   var S = { song: null, res: null, disp: null, verse: 0, transpose: 0, bpm: 90, loop: LS.get('loop', false), allVerses: LS.get('allVerses', false),
             playing: false, events: [], total: 0, idx: 0, anchorTime: 0, anchorBeat: 0, pausedBeat: 0, timer: null, raf: 0, cur: -1, layout: null, edited: false,
-            mode: LS.get('mode', 'along'), reps: LS.get('reps', 1), speed: LS.get('speed', 1), tickOn: LS.get('tick', true), metro: LS.get('metro', false), pipe: false, chords: false, bigWords: false, grid: [], lines: [], gi: 0,
-            satb: LS.get('satb', false), part: LS.get('part', 'mel'), view: LS.get('view', 'tog'),
+            mode: LS.get('mode', 'along') === 'off' ? 'off' : 'along', speed: LS.get('speed', 1), tickOn: LS.get('tick', true), metro: LS.get('metro', false), pipe: false, chords: false, bigWords: false, grid: [], lines: [], gi: 0,
+            satb: LS.get('satb', false), part: LS.get('part', 'mel'), view: 'tog', // SATB always in the hymnal layout (S+A treble, T+B bass)
             mix: Object.assign({ mel: { vol: 1, mute: false, solo: false }, alto: { vol: 1, mute: false, solo: false }, tenor: { vol: 1, mute: false, solo: false }, bass: { vol: 1, mute: false, solo: false } }, LS.get('mix', null) || {}) };
 
   function allSongs() { return builtIn.concat(mySongs.map(function (m) { return Object.assign({ section: 'My Songs' }, m); })); }
@@ -5411,6 +5452,7 @@ window.HYMN_SONGS = [
     var r = S.res;
     W = Math.max(300, W || 800);
     var sp = W < 520 ? 10.5 : W < 800 ? 12 : 13.5;           // staff space in px
+    if (shortLandscape()) sp = Math.min(sp, window.innerHeight < 415 ? 8.25 : 9.25);             // phone held sideways: keep both staves on screen
     var lyrPx = Math.round(sp * (W < 520 ? 1.75 : 1.65));
     S.disp = C.displayNotes(r, S.transpose);
     var dn = S.disp.notes;
@@ -5684,8 +5726,7 @@ window.HYMN_SONGS = [
     return { svg: svg, layout: layout };
   }
   /* ---------- the smooth roll ---------- */
-  function rollAxis() { var v = LS.get('roll', null); return v === 'x' || v === 'y' ? v : (window.innerWidth >= 700 ? 'x' : 'y'); }
-  function showRollSeg() { var ax = rollAxis(); Array.prototype.forEach.call(document.querySelectorAll('#rollSeg button'), function (b) { b.setAttribute('aria-pressed', b.dataset.r === ax ? 'true' : 'false'); }); }
+  function rollAxis() { return 'x'; } // sideways only (phones are used in landscape)
   function verseCount() { return Math.max(1, (S.res && S.res.verseCount) || 1); }
   function rolls() { return S.loop || (S.allVerses && verseCount() > 1); }
   // which verse the k-th copy after (k>0) or before (k<0) this one shows
@@ -5752,7 +5793,7 @@ window.HYMN_SONGS = [
     PARTS.forEach(function (q) { S.mix[q].solo = !alone && q === p; });
     S.mix[p].mute = false; S.part = p; LS.set('part', p); saveMix(); render(); syncSingUI();
   }
-  function partVoice() { return Audio.voice === 'pure' || Audio.voice === 'voice' ? Audio.voice : 'choir'; }
+  function partVoice() { return Audio.voice; } // SATB uses the chosen sound (choir by default for Puritan songs; piano, organ… all work)
   function showChordNote() {
     var n = $('chordNote'); if (!n) return;
     n.hidden = !S.chords || !S.res || !S.res.notes.length;
@@ -5798,8 +5839,7 @@ window.HYMN_SONGS = [
   function showVoiceUI() { Array.prototype.forEach.call(document.querySelectorAll('#voiceSeg button, #voiceSeg2 button'), function (x) { x.setAttribute('aria-pressed', x.dataset.v === Audio.voice ? 'true' : 'false'); }); }
   function syncSingUI() {
     var pr = function (sel, attr, val) { Array.prototype.forEach.call(document.querySelectorAll(sel), function (b) { b.setAttribute('aria-pressed', String(b.dataset[attr]) === String(val) ? 'true' : 'false'); }); };
-    pr('#modeSeg button', 'm', S.mode); pr('#repSeg button', 'r', S.reps); pr('#speedSeg button', 's', S.speed);
-    if ($('lineOpts')) $('lineOpts').hidden = S.mode !== 'lines';
+    pr('#modeSeg button', 'm', S.mode); pr('#speedSeg button', 's', S.speed);
     if ($('pipeOn')) { $('pipeOn').checked = !!S.pipe; $('tickOn').checked = !!S.tickOn; $('chordsOn').checked = !!S.chords; }
     document.body.classList.toggle('big-words', !!S.bigWords);
     var sn = S.res && S.res.notes.length ? startNote() : null;
@@ -5818,7 +5858,6 @@ window.HYMN_SONGS = [
       row.querySelector('.mute').setAttribute('aria-pressed', m.mute ? 'true' : 'false');
       var v = row.querySelector('.mix-vol'); if (+v.value !== Math.round(m.vol * 100)) v.value = Math.round(m.vol * 100); fill(v);
     });
-    Array.prototype.forEach.call(document.querySelectorAll('#viewSeg button'), function (b) { b.setAttribute('aria-pressed', b.dataset.v === S.view ? 'true' : 'false'); });
     var off = document.querySelector('#modeSeg [data-m="off"]'); if (off) off.textContent = S.satb ? 'My part off' : 'Melody off';
     var tp = S.satb ? satbParts() : null, ti = $('satbInfo');
     ti.textContent = !S.satb ? '' : !tp ? 'No harmony for this song.' : (tp.src === 'real' ? (tp.tenorSrc === 'real' ? 'Real alto, tenor and bass' : 'Real alto and bass (tenor auto-generated to fit them)') + ' \u2014 ' + tp.note + '.' : 'Alto, tenor and bass auto-generated from the melody and its chords (four-part hymn harmony).') + rangeWarn(tp);
@@ -5834,10 +5873,10 @@ window.HYMN_SONGS = [
   function octOf(m) { return String(Math.floor(m / 12) - 1); }
   function setSatb(on) { S.satb = !!on; LS.set('satb', S.satb); S.tp = S.satb ? satbParts() : null; if (S.satb && !Audio.isReady(partVoice())) Audio.load(partVoice()); render(); syncSingUI(); }
   function setPart(p) { if (PARTS.indexOf(p) < 0) return; S.part = p; LS.set('part', p); render(); syncSingUI(); }
-  function setView(v) { if (['one', 'sep', 'tog'].indexOf(v) < 0) return; S.view = v; LS.set('view', v); render(); syncSatbUI(); }
+  function setView(v) { if (['one', 'sep', 'tog'].indexOf(v) < 0) return; S.view = v; render(); syncSatbUI(); } // test hook only: no layout buttons in the app
   function render() {
     var host = $('staff'); if (!S.res) return;
-    var axis = rollAxis(); showRollSeg();
+    var axis = rollAxis();
     if (S.roll) { S.roll.destroy(); S.roll = null; }
     host.innerHTML = '';
     var W = host.clientWidth || 800, strip = axis === 'x';
@@ -5904,9 +5943,6 @@ window.HYMN_SONGS = [
       if (S.playing || !S.roll) return; var dd = S.roll.axis === 'x' ? (Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : (e.shiftKey ? e.deltaY : 0)) : e.deltaY;
       if (!dd) return; var np = clampPos(S.roll.pos + dd); if (np === S.roll.pos) return; e.preventDefault(); S.roll.set(np);
     }, { passive: false });
-    Array.prototype.forEach.call(document.querySelectorAll('#rollSeg button'), function (b) {
-      b.onclick = function () { LS.set('roll', b.dataset.r); render(); };
-    });
   }
   function clampPos(p) { var L = S.layout; if (!L) return p; var max = S.posOf ? S.posOf(S.total) : 0; return Math.max(0, Math.min(max, p)); }
   function drawClef(el, x, yG, sp) {
@@ -6019,6 +6055,7 @@ window.HYMN_SONGS = [
   }
   function play() {
     if (!S.res || !S.res.notes.length) return;
+    if (shortLandscape()) { try { var sc = $('staff').closest('.card') || $('staff'), sb = $('staff').getBoundingClientRect().bottom, dt = $('transport').getBoundingClientRect().top, dy = Math.max(sc.getBoundingClientRect().top - 8, sb - (dt - 4)); if (Math.abs(dy) > 4) window.scrollBy({ top: dy, behavior: 'smooth' }); } catch (e) {} } // phone sideways: bring the score into view
     try { Audio.ensure(); } catch (e) { toast(e.message); return; }
     var want = S.satb ? partVoice() : Audio.voice;
     if (!Audio.isReady(want)) {
@@ -6033,13 +6070,12 @@ window.HYMN_SONGS = [
     var from = S.pausedBeat || 0;
     if (from >= S.total - 1e-6) from = 0;
     var P;
-    if (S.mode === 'lines' && S.lines.length) { var li = lineAt(from); P = linePass(S.verse, li, 'listen', 0, 0); from = P.from; }
-    else { var i0 = 0; while (i0 < S.events.length && S.events[i0].start < from - 1e-6) i0++; P = makePass({ verse: S.verse, i0: i0, i1: S.events.length, mute: S.mode === 'off', gap: 0, fromBeat: from }); }
+    { var i0 = 0; while (i0 < S.events.length && S.events[i0].start < from - 1e-6) i0++; P = makePass({ verse: S.verse, i0: i0, i1: S.events.length, mute: S.mode === 'off', gap: 0, fromBeat: from }); }
     S.pass = P; S.idx = P.i0; S.gi = firstGrid(from);
     var t0 = Audio.now() + 0.12;
     // the pitch pipe: the starting note first, then a breath, then the song
     S.pipeUntil = 0;
-    if (S.pipe && (from === 0 || S.mode === 'lines')) { var pd = pitchPipe(false, t0); if (pd) { S.pipeUntil = t0 + pd; t0 += pd + Math.max(0.5, spb()); } }
+    if (S.pipe && from === 0) { var pd = pitchPipe(false, t0); if (pd) { S.pipeUntil = t0 + pd; t0 += pd + Math.max(0.5, spb()); } }
     S.anchorTime = t0; S.anchorBeat = from; S.schedVerse = S.verse;
     S.rounds = [{ at: S.anchorTime, ab: from, verse: S.verse, n: 0, spb0: spb(), segs: [{ at: S.anchorTime, ab: from, spb: spb() }], pass: P }]; S.stats = { shifts: 0, notes: 0 };
     clock.reset(); S.shownRound = S.rounds[0];
@@ -6085,7 +6121,7 @@ window.HYMN_SONGS = [
       var ticking = (S.tickOn && P.mute) || S.metro, loud = S.metro && !P.mute ? 1.6 : 1;
       while (S.gi < S.grid.length && S.grid[S.gi].b < P.to - 1e-6 && timeOf(S.grid[S.gi].b) < horizon) { if (ticking && S.grid[S.gi].b >= P.from - 1e-6) { Audio.click(timeOf(S.grid[S.gi].b), S.grid[S.gi].acc, loud); S.stats && (S.stats.clicks = (S.stats.clicks || 0) + 1); } S.gi++; }
       if (S.idx < P.i1 || (S.gi < S.grid.length && S.grid[S.gi].b < P.to - 1e-6)) break;
-      // end of this pass: plan the next one right away (next verse, or the next step of line-by-line practice)
+      // end of this pass: plan the next one right away (the next verse, or the loop)
       var np = nextPass(P);
       if (!np) break;
       var at = timeOf(P.to) + np.gap * spb();
@@ -6247,24 +6283,14 @@ window.HYMN_SONGS = [
     if (txt !== S.bcTxt) { S.bcTxt = txt; el.textContent = txt; el.hidden = !txt; }
   }
   function firstGrid(beat) { var g = S.grid || [], i = 0; while (i < g.length && g[i].b < beat - 1e-6) i++; return i; }
-  function lineAt(beat) { var L = S.lines || []; for (var i = L.length - 1; i >= 0; i--) if (L[i].from <= beat + 1e-6) return i; return 0; }
   function makePass(o) {
     var N = S.events.length; o.from = o.i0 < N ? S.events[o.i0].start : S.total; o.to = o.i1 < N ? S.events[o.i1].start : S.total;
     if (o.fromBeat !== undefined) o.from = o.fromBeat;
-    if (o.line !== undefined) o.label = 'Line ' + (o.line + 1) + ' of ' + S.lines.length + (o.phase === 'sing' ? ' · your turn' + (S.reps > 1 ? ' (' + (o.rep + 1) + ' of ' + S.reps + ')' : '') : ' · listen');
-    else o.label = (o.mute ? 'Singing alone' : 'Playing') + ' · verse ' + (o.verse + 1);
+    o.label = (o.mute ? 'Singing alone' : 'Playing') + ' · verse ' + (o.verse + 1);
     return o;
   }
-  function linePass(verse, line, phase, rep, gap) { var l = S.lines[line]; return makePass({ verse: verse, i0: l.i0, i1: l.i1, line: line, phase: phase, rep: rep, mute: phase === 'sing', gap: gap }); }
   // what comes after a pass (pure: depends only on the pass and the settings)
   function nextPass(P) {
-    if (P.line !== undefined) {
-      if (P.phase === 'listen') return linePass(P.verse, P.line, 'sing', P.rep, 1);
-      if (P.rep + 1 < S.reps) return linePass(P.verse, P.line, 'listen', P.rep + 1, 2);
-      if (P.line + 1 < S.lines.length) return linePass(P.verse, P.line + 1, 'listen', 0, 2);
-      var n = verseCount(), nv = S.allVerses && P.verse < n - 1 ? P.verse + 1 : S.loop ? (S.allVerses ? 0 : P.verse) : null;
-      return nv === null ? null : linePass(nv, 0, 'listen', 0, 3);
-    }
     var nv2 = nextVerse(); if (nv2 === null) return null;
     return makePass({ verse: nv2, i0: 0, i1: S.events.length, mute: S.mode === 'off', gap: 1 });
   }
@@ -6404,9 +6430,18 @@ window.HYMN_SONGS = [
 
   /* =================== UI WIRING =================== */
   function toast(t) { var e = $('toast'); e.textContent = t; e.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(function () { e.classList.remove('show'); }, 3200); }
+  /* phones: landscape only. The manifest asks for it; where the browser allows (installed Android apps, full screen)
+     lock it too, silently. iPhone ignores both, so a full-screen "turn your phone sideways" card covers portrait (CSS). */
+  function shortLandscape() { return window.innerHeight <= 500 && window.innerWidth > window.innerHeight; }
+  function lockLandscape() {
+    function tryLock() { try { var o = screen.orientation; if (o && o.lock) { var p = o.lock('landscape'); if (p && p.catch) p.catch(function () {}); } } catch (e) {} }
+    var coarse = window.matchMedia && matchMedia('(pointer: coarse)').matches; if (!coarse) return;
+    tryLock(); document.addEventListener('pointerdown', function once() { document.removeEventListener('pointerdown', once, true); tryLock(); }, true);
+  }
   function init() {
+    lockLandscape();
     // drop stored settings of features that no longer exist (every setting the app uses is listed here)
-    (function () { var keep = 'allVerses aref cat loop metro mix mode mySongs part reps reverb roll satb song speed syncMs tick view voice voiceGen volume vrange'.split(' ');
+    (function () { var keep = 'allVerses aref cat loop metro mix mode mySongs part reverb satb song speed syncMs tick voice voiceGen volume vrange'.split(' ');
       try { for (var i = localStorage.length - 1; i >= 0; i--) { var k = localStorage.key(i); if (k && k.indexOf('hp.') === 0) { var n = k.slice(3); if (keep.indexOf(n) < 0 && n.indexOf('prefs.') !== 0) localStorage.removeItem(k); } } } catch (e) {} })();
     $('playBtn').onclick = toggle;
     $('stopBtn').onclick = stop;
@@ -6501,10 +6536,9 @@ window.HYMN_SONGS = [
     Array.prototype.forEach.call(document.querySelectorAll('#modeSeg button'), function (b) { b.onclick = function () {
       var was = S.playing; if (was) pause();
       S.mode = b.dataset.m; LS.set('mode', S.mode); syncSingUI();
-      toast(S.mode === 'lines' ? 'Line by line: listen to a line, then sing it back' : S.mode === 'off' ? 'Melody off: sing on your own; the words keep time' : 'Sing along with the melody');
+      toast(S.mode === 'off' ? 'Melody off: sing on your own; the words keep time' : 'Sing along with the melody');
       if (was) play();
     }; });
-    Array.prototype.forEach.call(document.querySelectorAll('#repSeg button'), function (b) { b.onclick = function () { S.reps = +b.dataset.r; LS.set('reps', S.reps); syncSingUI(); }; });
     Array.prototype.forEach.call(document.querySelectorAll('#speedSeg button'), function (b) { b.onclick = function () { setSpeed(+b.dataset.s); }; });
     $('pipeOn').onchange = function () { S.pipe = this.checked; setPref('pipe', S.pipe); };
     $('tickOn').onchange = function () { S.tickOn = this.checked; LS.set('tick', S.tickOn); };
@@ -6524,7 +6558,6 @@ window.HYMN_SONGS = [
       row.querySelector('.mute').onclick = function () { S.mix[p].mute = !S.mix[p].mute; saveMix(); };
       row.querySelector('.mix-vol').oninput = function () { S.mix[p].vol = Math.max(0, Math.min(1, this.value / 100)); fill(this); LS.set('mix', S.mix); };
     });
-    Array.prototype.forEach.call(document.querySelectorAll('#viewSeg button'), function (b) { b.onclick = function () { setView(b.dataset.v); }; });
     $('chordsOn').onchange = function () { S.chords = this.checked; setPref('chords', S.chords); render(); syncSingUI(); };
     $('tempo').oninput = function () { setTempo(+this.value); };
     $('tempoDown').onclick = function () { setTempo(S.bpm - 4); };

@@ -1,5 +1,5 @@
 /* Offline support: cache the app shell (refreshed in the background) and the instrument samples (kept for good). */
-const CACHE = 'psalter-v7';
+const CACHE = 'psalter-v8';
 const SAMPLES = 'psalter-samples-v1'; // bump only when the sample files themselves change
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icon.svg', './icon-192.png', './icon-512.png', './apple-touch-icon.png', './my-songs.js'];
 self.addEventListener('install', e => {
