@@ -259,6 +259,9 @@ textarea#abc:focus{border-color:var(--accent-2);outline:none}
 .lib-cats button{border:0;background:var(--card2);border-radius:999px;padding:0 14px;min-height:40px;font-size:15.5px;font-weight:600;color:var(--text2)}
 .lib-cats button[aria-pressed="true"]{background:var(--accent);color:var(--accent-text)}
 .lib-count{font-size:14px;color:var(--muted);margin:2px 10px 0}
+.lib-actions{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 4px}
+.lib-actions .pill-btn{min-height:44px;padding:0 14px;font-size:15px}
+.lib-rmall{margin-left:8px;border:0;background:transparent;color:var(--danger);font-size:13px;font-weight:700;padding:4px 6px;border-radius:8px;text-transform:none;letter-spacing:0}
 .lib-item .s .fl{font-style:italic}
 mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px}
 
@@ -272,8 +275,8 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
       <h1>Psalms &amp; Hymns<small>Melody player</small></h1>
     </div>
     <button class="pill-btn" id="installBtn" hidden aria-label="Install app"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0-4.5-4.5M12 15l4.5-4.5M5 21h14"/></svg><span class="lbl">Install</span></button>
-    <button class="pill-btn solid" id="importBtn" title="Open a tune file (.abc, MIDI or MusicXML)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V9m0 0-4.5 4.5M12 9l4.5 4.5M5 3h14"/></svg><span class="lbl">Import</span></button>
-    <input type="file" id="fileInput" accept=".abc,.txt,.mid,.midi,.xml,.musicxml,.mxl,audio/midi,application/xml,text/xml" multiple hidden>
+    <button class="pill-btn solid" id="importBtn" title="Open a tune file (.abc, MIDI or MusicXML) or a backup (.json)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V9m0 0-4.5 4.5M12 9l4.5 4.5M5 3h14"/></svg><span class="lbl">Import</span></button>
+    <input type="file" id="fileInput" accept=".abc,.txt,.mid,.midi,.xml,.musicxml,.mxl,.json,audio/midi,application/xml,text/xml,application/json" multiple hidden>
   </div>
 </header>
 
@@ -285,6 +288,7 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
     <input class="lib-search" id="libSearch" type="search" placeholder="Search titles, words or tunes" autocomplete="off">
     <div class="lib-cats" id="libCats" role="group" aria-label="Show a category"></div>
     <div class="lib-count" id="libCount" aria-live="polite"></div>
+    <div class="lib-actions"><button class="pill-btn" id="restoreBtn" title="Open a backup or song-collection file (.json), or a tune file">Restore / import</button><button class="pill-btn" id="backupBtn" title="Save your songs and collections to a file">Back up my songs</button></div>
     <div id="libList"></div>
   </nav>
 
@@ -1083,7 +1087,7 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
   }
   function keyNameFromFifths(f, mode) {
     var shift = MODE_SHIFT[mode] || 0;
-    var maj = majorTonicFromFifths(f - shift);
+    var maj = majorTonicFromFifths(f);   // the relative major has the same key signature
     if (shift === 0) return prettyKey(maj) + ' major';
     // tonic of mode = major tonic moved
     var majPc = (NAT[maj[0]] + (maj[1] === '#' ? 1 : maj[1] === 'b' ? -1 : 0) + 12) % 12;
@@ -3439,7 +3443,7 @@ window.HYMN_SONGS = [
   var C = window.HymnCore;
   var $ = function (id) { return document.getElementById(id); };
   var LS = { get: function (k, d) { try { var v = localStorage.getItem('hp.' + k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } },
-             set: function (k, v) { try { localStorage.setItem('hp.' + k, JSON.stringify(v)); } catch (e) {} } };
+             set: function (k, v) { try { localStorage.setItem('hp.' + k, JSON.stringify(v)); return true; } catch (e) { return false; } } };
 
   /* =================== AUDIO =================== */
   /* Real sampled instruments (see HP_SAMPLES / credits). Each instrument has a recording about every
@@ -3626,7 +3630,11 @@ window.HYMN_SONGS = [
 
   /* =================== LIBRARY =================== */
   function songNum(s) { var m = (s.psalm || '').match(/Psalm (\d+)/); return m ? m[1] : (s.section === 'My Songs' ? '♪' : (s.title || '?')[0]); }
-  var CATS = ['Praise', 'Christmas', 'Easter', 'Communion', 'Gospel', 'Psalms', 'My Songs'];
+  var BASE_CATS = ['Praise', 'Christmas', 'Easter', 'Communion', 'Gospel', 'Psalms', 'My Songs'], CATS = BASE_CATS.slice();
+  // sections of songs saved on this device (e.g. a collection restored from a file) become their own categories
+  function customCats() { var o = []; mySongs.forEach(function (m) { if (m.section && m.section !== 'My Songs' && BASE_CATS.indexOf(m.section) < 0 && o.indexOf(m.section) < 0) o.push(m.section); }); return o; }
+  function refreshCats() { var c = customCats(); CATS = BASE_CATS.slice(0, -1).concat(c, ['My Songs']); return c; }
+  function isMine(s) { return mySongs.some(function (m) { return m.id === s.id; }); }
   var CAT_NOTE = { Christmas: 'Advent, Christmas and Epiphany', Easter: 'Lent, Holy Week, Easter and Ascension', Psalms: 'Metrical psalms and psalm hymns', Gospel: 'Gospel songs and hymns of faith', Communion: "The Lord's Supper and fellowship" };
   var wordsCache = {};
   // all the sung words of a song (from its w: lines), for searching, plus its first line
@@ -3642,8 +3650,10 @@ window.HYMN_SONGS = [
   function norm(x) { x = String(x || '').toLowerCase().replace(/[’‘']/g, "'"); return x.normalize ? x.normalize('NFD').replace(/[\u0300-\u036f]/g, '') : x; }
   function renderLibrary() {
     var q = norm(($('libSearch').value || '').trim()), list = $('libList'), groups = {}, cat = LS.get('cat', 'All'), total = 0;
-    var cats = $('libCats');
-    if (cats && !cats.childNodes.length) {
+    var cats = $('libCats'), custom = refreshCats();
+    if (CATS.indexOf(cat) < 0 && cat !== 'All') cat = 'All';
+    if (cats && cats.dataset.sig !== CATS.join('|')) {
+      cats.innerHTML = ''; cats.dataset.sig = CATS.join('|');
       ['All'].concat(CATS).forEach(function (c) {
         var b = document.createElement('button'); b.textContent = c; b.dataset.c = c;
         b.onclick = function () { LS.set('cat', c); renderLibrary(); };
@@ -3669,11 +3679,20 @@ window.HYMN_SONGS = [
     CATS.concat(Object.keys(groups).filter(function (k) { return CATS.indexOf(k) < 0; })).forEach(function (g) {
       if (!groups[g]) { if (g === 'My Songs' && !q && (cat === 'All' || cat === 'My Songs')) { var e = document.createElement('div'); e.className = 'lib-group'; e.innerHTML = '<h2>My Songs</h2><p class="source" style="margin:0 12px 8px">Songs you import or save appear here.</p>'; list.appendChild(e); } return; }
       var div = document.createElement('div'); div.className = 'lib-group';
-      div.innerHTML = '<h2>' + esc(g) + ' <span style="font-weight:600;text-transform:none;letter-spacing:0">· ' + groups[g].length + (CAT_NOTE[g] ? ' · ' + esc(CAT_NOTE[g]) : '') + '</span></h2>';
+      var isCustom = custom.indexOf(g) >= 0;
+      div.innerHTML = '<h2>' + esc(g) + ' <span style="font-weight:600;text-transform:none;letter-spacing:0">· ' + groups[g].length + (CAT_NOTE[g] ? ' · ' + esc(CAT_NOTE[g]) : isCustom ? ' · saved on this device' : '') + '</span></h2>';
+      if (isCustom && !q) {
+        var rm = document.createElement('button'); rm.className = 'lib-rmall'; rm.textContent = 'Remove all'; rm.title = 'Remove the ' + g + ' songs from this device';
+        rm.onclick = function () { if (!confirm('Remove all ' + groups[g].length + ' “' + g + '” songs from this device? (You can restore them again from your file.)')) return; mySongs = mySongs.filter(function (m) { return m.section !== g; }); LS.set('mySongs', mySongs); if (LS.get('cat', 'All') === g) LS.set('cat', 'All'); if (S.song && S.song.section === g) loadSong(builtIn[0].id); renderLibrary(); toast('Removed the ' + g + ' songs'); };
+        div.querySelector('h2').appendChild(rm);
+      }
       groups[g].sort(function (a, b) {
         var pa = +((a.psalm || '').match(/\d+/) || [1e4])[0], pb = +((b.psalm || '').match(/\d+/) || [1e4])[0];
         if (g === 'Results' && a._rank !== b._rank) return a._rank - b._rank;
-        return g === 'Psalms' && pa !== pb ? pa - pb : a.title.replace(/^['‘’"]/, '').localeCompare(b.title.replace(/^['‘’"]/, ''));
+        if (g === 'Results' && pa !== pb) return pa - pb;
+        if ((g === 'Results' || isCustom) && (a.order != null || b.order != null) && a.order !== b.order) return (a.order != null ? a.order : 1e9) - (b.order != null ? b.order : 1e9);
+        if (isCustom && (a.order != null || b.order != null)) return (a.order != null ? a.order : 1e9) - (b.order != null ? b.order : 1e9) || a.title.localeCompare(b.title);
+        return (g === 'Psalms' || isCustom) && pa !== pb ? pa - pb : a.title.replace(/^['‘’"]/, '').localeCompare(b.title.replace(/^['‘’"]/, ''));
       });
       groups[g].forEach(function (s) {
         var b = document.createElement('button'); b.className = 'lib-item'; b.setAttribute('aria-current', S.song && S.song.id === s.id ? 'true' : 'false');
@@ -3682,9 +3701,9 @@ window.HYMN_SONGS = [
         if (s._hitWords && terms.length) { var at = w.all.indexOf(terms[0]); if (at >= 0) { var st = Math.max(0, w.all.lastIndexOf(' ', Math.max(0, at - 24)) + 1), snip = w.raw.slice(st, at + terms[0].length + 28); fl = '<span class="fl">…' + esc(snip).replace(new RegExp(terms[0].replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi'), function (m) { return '<mark class="hit">' + m + '</mark>'; }) + '…</span>' + (sub ? ' · ' : ''); } }
         b.innerHTML = '<span class="num">' + esc(songNum(s)) + '</span><span style="min-width:0"><span class="t">' + esc(s.title) + '</span><span class="s">' + fl + esc(sub || (s.section === 'My Songs' ? 'My song' : '')) + '</span></span>';
         b.onclick = function () { loadSong(s.id, true); closeLib(); };
-        if (s.section === 'My Songs' && /^my-/.test(s.id)) {
+        if (isMine(s)) {
           var d = document.createElement('span'); d.className = 'del'; d.textContent = 'Remove'; d.setAttribute('role', 'button'); d.tabIndex = 0;
-          d.onclick = function (ev) { ev.stopPropagation(); if (confirm('Remove “' + s.title + '” from My Songs?')) { mySongs = mySongs.filter(function (m) { return m.id !== s.id; }); LS.set('mySongs', mySongs); if (S.song.id === s.id) loadSong(builtIn[0].id); renderLibrary(); } };
+          d.onclick = function (ev) { ev.stopPropagation(); if (confirm('Remove “' + s.title + '” from ' + (s.section || 'My Songs') + '?')) { mySongs = mySongs.filter(function (m) { return m.id !== s.id; }); LS.set('mySongs', mySongs); if (S.song.id === s.id) loadSong(builtIn[0].id); renderLibrary(); } };
           b.appendChild(d);
         }
         div.appendChild(b);
@@ -4327,8 +4346,41 @@ window.HYMN_SONGS = [
     var ds = new Blob([data]).stream().pipeThrough(new DecompressionStream('deflate-raw'));
     return new Response(ds).text();
   }
+  // A backup or song-collection file: { app: 'psalter-player', songs: [{ id, title, abc, section?, psalm?, tune?, meter?, credit?, source?, order? }] }.
+  // Songs are kept in this browser's local storage only. A song whose id is already here is updated in place.
+  function restoreJSON(t, fname) {
+    var d; try { d = JSON.parse(t); } catch (e) { throw new Error('this file is not valid JSON'); }
+    var list = d && (Array.isArray(d.songs) ? d.songs : Array.isArray(d) ? d : null);
+    if (!list) throw new Error('this is not a Psalter Player backup or song collection');
+    var res = { restored: true, added: 0, updated: 0, same: 0, skipped: 0, sections: {}, first: null, name: d.name || '' };
+    var next = mySongs.slice();
+    list.forEach(function (s, i) {
+      if (!s || typeof s.abc !== 'string' || !/K:/.test(s.abc)) { res.skipped++; return; }
+      var r = parseFull(s.abc);
+      if (r.errors.length && !r.notes.length) { res.skipped++; return; }
+      var song = { id: String(s.id || ('my-' + Date.now().toString(36) + i.toString(36))), title: String(s.title || r.title || 'Song ' + (i + 1)), psalm: s.psalm || '', tune: s.tune || '', meter: s.meter || '', credit: s.credit || (r.composer || []).join(' · '), source: s.source || ('Restored from ' + fname), abc: s.abc.trim() + '\n' };
+      if (s.section && s.section !== 'My Songs') song.section = String(s.section).slice(0, 40);
+      if (typeof s.order === 'number') song.order = s.order;
+      if (builtIn.some(function (b) { return b.id === song.id; })) song.id = 'my-' + song.id;
+      var j = -1; for (var k = 0; k < next.length; k++) if (next[k].id === song.id) { j = k; break; }
+      if (j >= 0) { if (JSON.stringify(next[j]) === JSON.stringify(song)) res.same++; else { next[j] = song; res.updated++; } }
+      else { next.push(song); res.added++; }
+      res.sections[song.section || 'My Songs'] = 1; if (!res.first) res.first = song.id;
+    });
+    if (!LS.set('mySongs', next)) throw new Error('there is not enough storage space in this browser to keep these songs');
+    mySongs = next;
+    return res;
+  }
+  function backup() {
+    var d = new Date(), stamp = d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
+    var data = { app: 'psalter-player', version: 1, saved: d.toISOString(), songs: mySongs };
+    var blob = new Blob([JSON.stringify(data)], { type: 'application/json' }), a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = 'psalter-player-backup-' + stamp + '.json'; document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+    toast('Backup saved: ' + mySongs.length + ' song' + (mySongs.length === 1 ? '' : 's'));
+    return data;
+  }
   function importFiles(files) {
-    var added = [];
+    var added = [], restored = [];
     var jobs = Array.prototype.map.call(files, function (f) {
       var name = f.name.replace(/\.[^.]+$/, '').replace(/[_-]+/g, ' ').trim();
       var ext = (f.name.match(/\.([^.]+)$/) || [])[1]; ext = (ext || '').toLowerCase();
@@ -4336,13 +4388,16 @@ window.HYMN_SONGS = [
       if (ext === 'mid' || ext === 'midi') p = readAsBuf(f).then(function (b) { return [C.midiToABC(b, name).abc]; });
       else if (ext === 'mxl') p = readAsBuf(f).then(unzipFirstXML).then(function (t) { return [C.musicXMLToABC(t)]; });
       else if (ext === 'xml' || ext === 'musicxml') p = readAsText(f).then(function (t) { return [C.musicXMLToABC(t)]; });
+      else if (ext === 'json') p = readAsText(f).then(function (t) { return restoreJSON(t, f.name); });
       else p = readAsText(f).then(function (t) {
+        if (/^\s*\{/.test(t)) return restoreJSON(t, f.name);
         if (/<score-partwise|<score-timewise/.test(t)) return [C.musicXMLToABC(t)];
         var parts = t.split(/\n(?=X:)/).filter(function (x) { return /[A-Ga-g]/.test(x) && /K:/.test(x); });
         if (!parts.length) parts = [t];
         return parts.map(function (x) { return /^\s*X:/m.test(x) ? x.trim() : 'X:1\nT:' + name + '\n' + x.trim(); });
       });
       return p.then(function (abcs) {
+        if (abcs && abcs.restored) { restored.push(abcs); return; }
         abcs.forEach(function (abc) {
           var r = parseFull(abc);
           if (r.errors.length && !r.notes.length) throw new Error(f.name + ': ' + r.errors[0].message);
@@ -4351,9 +4406,17 @@ window.HYMN_SONGS = [
         });
       }).catch(function (e) { toast('Could not open ' + f.name + ': ' + (e.message || e)); });
     });
-    Promise.all(jobs).then(function () {
-      LS.set('mySongs', mySongs); renderLibrary();
+    return Promise.all(jobs).then(function () {
+      if (!LS.set('mySongs', mySongs)) toast('This browser is out of storage space, so the new songs may not be kept.');
+      renderLibrary();
       if (added.length) { loadSong(added[0].id, true); toast(added.length === 1 ? 'Added “' + added[0].title + '” to My Songs' : 'Added ' + added.length + ' songs to My Songs'); }
+      restored.forEach(function (r) {
+        var secs = Object.keys(r.sections), n = r.added + r.updated;
+        if (secs.length === 1 && secs[0] !== 'My Songs') { LS.set('cat', secs[0]); renderLibrary(); }
+        if (r.first && !added.length && n) loadSong(r.first, true);
+        toast(n ? (r.added ? 'Added ' + r.added : '') + (r.added && r.updated ? ', ' : '') + (r.updated ? 'updated ' + r.updated : '') + ' song' + (n === 1 ? '' : 's') + ' in ' + secs.join(', ') + (r.skipped ? ' (' + r.skipped + ' could not be read)' : '') : r.same ? 'Those songs are already here.' : 'No songs were found in that file.');
+      });
+      return { added: added, restored: restored };
     });
   }
 
@@ -4444,6 +4507,8 @@ window.HYMN_SONGS = [
       LS.set('mySongs', mySongs); LS.set('song', S.song.id); renderLibrary(); updateHeader(); toast('Saved to My Songs');
     };
     $('importBtn').onclick = function () { $('fileInput').click(); };
+    if ($('restoreBtn')) $('restoreBtn').onclick = function () { $('fileInput').click(); };
+    if ($('backupBtn')) $('backupBtn').onclick = function () { if (!mySongs.length) { toast('There are no saved songs to back up yet.'); return; } backup(); };
     $('fileInput').onchange = function () { if (this.files && this.files.length) importFiles(this.files); this.value = ''; };
     document.addEventListener('dragover', function (e) { e.preventDefault(); });
     document.addEventListener('drop', function (e) { e.preventDefault(); if (e.dataTransfer.files.length) importFiles(e.dataTransfer.files); });
@@ -4469,7 +4534,7 @@ window.HYMN_SONGS = [
     var params = new URLSearchParams(location.search);
     loadSong(params.get('song') || LS.get('song', builtIn[0] && builtIn[0].id));
   }
-  window.HymnApp = { state: S, play: play, pause: pause, stop: stop, loadSong: loadSong, setVerse: setVerse, setTranspose: setTranspose, applyText: applyText, importFiles: importFiles, audio: Audio };
+  window.HymnApp = { state: S, play: play, pause: pause, stop: stop, loadSong: loadSong, setVerse: setVerse, setTranspose: setTranspose, applyText: applyText, importFiles: importFiles, restoreJSON: restoreJSON, backup: backup, audio: Audio };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
 
