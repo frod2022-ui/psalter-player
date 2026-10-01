@@ -326,18 +326,17 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
 .sc-info{font-size:12px;white-space:pre-wrap;background:rgba(0,0,0,.04);padding:10px;border-radius:10px;margin:0}
 .seg.seg-wrap{flex-wrap:wrap}
 
-/* phones in portrait: ask to turn sideways (iPhone ignores the manifest orientation) */
-.rotate-card{display:none}
-@media (orientation:portrait) and (max-width:600px) and (pointer:coarse){
-  .rotate-card{display:flex;position:fixed;inset:0;z-index:1000;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:32px;text-align:center;background:var(--bg,#f2f2f7);color:var(--text,#1c1c1e);-webkit-user-select:none;user-select:none}
-  .rotate-card svg{width:88px;height:88px;color:var(--accent,#8a4b16)}
-  .rotate-card .rc-phone{transform-origin:32px 32px;transform-box:view-box;animation:rc-turn 2.4s ease-in-out infinite}
-  .rotate-card p{margin:0;font-size:22px;font-weight:700;letter-spacing:-.01em}
-  .rotate-card small{max-width:280px;font-size:15px;line-height:1.4;color:var(--muted,#8e8e93)}
-  body{overflow:hidden}
-}
+/* phones held upright with a song open: a gentle, dismissible hint to turn sideways (the app works upright too) */
+.rotate-tip{display:flex;align-items:center;gap:12px;padding:10px 10px 10px 14px;border-radius:16px;background:color-mix(in srgb,var(--card) 92%,transparent);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);box-shadow:0 2px 10px rgba(0,0,0,.08);border:1px solid var(--line);
+  color:var(--text);font-size:15px;font-weight:600;line-height:1.3;animation:rise .35s cubic-bezier(.2,.8,.2,1)}
+.rotate-tip[hidden]{display:none}
+.rotate-tip svg{width:30px;height:30px;flex:none;color:var(--accent)}
+.rotate-tip span{flex:1;min-width:0}
+.rotate-tip button{flex:none;border:0;border-radius:12px;min-height:40px;padding:0 14px;background:var(--accent-soft);color:var(--accent);font-weight:700;font-size:15px}
+.rotate-tip .rc-phone{transform-origin:32px 32px;transform-box:view-box;animation:rc-turn 2.4s ease-in-out 2}
 @keyframes rc-turn{0%,25%{transform:rotate(0)}55%,100%{transform:rotate(-90deg)}}
-@media (prefers-reduced-motion:reduce){.rotate-card .rc-phone{animation:none;transform:rotate(-90deg)}}
+@media (prefers-reduced-motion:reduce){.rotate-tip .rc-phone{animation:none}}
 
 /* phones held sideways (short landscape screens): compact header and a one-row dock so the score stays in view */
 @media (orientation:landscape) and (max-height:500px){
@@ -368,11 +367,6 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
 </style>
 </head>
 <body>
-<div class="rotate-card" id="rotateCard" role="alert" aria-live="polite">
-  <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g class="rc-phone"><rect x="22" y="14" width="20" height="36" rx="4"/><path d="M29 45h6"/></g><path class="rc-arrow" d="M44 6a20 20 0 0 1 14 14M58 20l-6-1M58 20l1-6" stroke-width="2.5"/></svg>
-  <p>Turn your phone sideways</p>
-  <small>The music scrolls across the screen, so the Psalter Player works in landscape.</small>
-</div>
 <header class="topbar">
   <div class="topbar-in">
     <div class="brand">
@@ -398,6 +392,11 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
   </nav>
 
   <main class="main">
+    <div class="rotate-tip" id="rotateTip" role="status" aria-live="polite" hidden>
+      <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g class="rc-phone"><rect x="22" y="14" width="20" height="36" rx="4"/><path d="M29 45h6"/></g><path d="M44 6a20 20 0 0 1 14 14M58 20l-6-1M58 20l1-6" stroke-width="3"/></svg>
+      <span>Turn your phone sideways for the best view</span>
+      <button type="button" id="rotateNo">Not now</button>
+    </div>
     <section class="card" aria-live="polite">
       <div class="song-head">
         <div style="min-width:0;flex:1">
@@ -5352,8 +5351,8 @@ window.HYMN_SONGS = [
       list.appendChild(div);
     });
   }
-  function openLib() { $('library').classList.add('open'); $('scrim').classList.add('show'); }
-  function closeLib() { $('library').classList.remove('open'); $('scrim').classList.remove('show'); }
+  function openLib() { $('library').classList.add('open'); $('scrim').classList.add('show'); updateRotateTip(); }
+  function closeLib() { $('library').classList.remove('open'); $('scrim').classList.remove('show'); updateRotateTip(); }
 
   /* =================== LOAD / PARSE =================== */
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
@@ -5452,8 +5451,9 @@ window.HYMN_SONGS = [
     var r = S.res;
     W = Math.max(300, W || 800);
     var sp = W < 520 ? 10.5 : W < 800 ? 12 : 13.5;           // staff space in px
-    if (shortLandscape()) sp = Math.min(sp, window.innerHeight < 415 ? 8.25 : 9.25);             // phone held sideways: keep both staves on screen
-    var lyrPx = Math.round(sp * (W < 520 ? 1.75 : 1.65));
+    var SL = shortLandscape(), slSmall = window.innerHeight < 415;
+    if (SL) sp = Math.min(sp, S.satb && S.tp ? (slSmall ? 8.25 : 9.25) : (slSmall ? 12.5 : 13.5));             // phone held sideways: keep both staves on screen
+    var lyrPx = SL ? (slSmall ? 19 : 20) : Math.round(sp * (W < 520 ? 1.75 : 1.65)); // phone sideways: big, easy-to-read words
     S.disp = C.displayNotes(r, S.transpose);
     var dn = S.disp.notes;
     var ak = S.autoKey && S.autoKey.t === S.transpose ? S.autoKey : null;
@@ -5494,12 +5494,12 @@ window.HYMN_SONGS = [
         if (nxt) need = Math.max(need, (it.lw + nxt.lw) / 2 + 0.3 * sp);
         U = Math.max(U, need / du(it));
       });
-      U = Math.min(U, 10 * sp);
+      U = Math.min(U, SL ? Math.max(10 * sp, 9 * lyrPx) : 10 * sp); // sideways phone: room for the big words
       nItems.forEach(function (it, k) { // shrink a syllable only if it would touch its neighbour
         var nxt = nItems[k + 1], prv = nItems[k - 1], f = 1;
         if (nxt && it.lw + nxt.lw > 0) f = Math.min(f, (du(it) * U - 0.3 * sp) / ((it.lw + nxt.lw) / 2));
         if (prv && it.lw + prv.lw > 0) f = Math.min(f, (du(prv) * U - 0.3 * sp) / ((it.lw + prv.lw) / 2));
-        if (f < 1) lyrScale[it.i] = Math.max(0.6, f);
+        if (f < 1) lyrScale[it.i] = Math.max(SL ? 0.85 : 0.6, f);
       });
       items.forEach(function (it) { it.w = it.type === 'note' ? du(it) * U : 0; });
       S.propU = U;
@@ -5875,6 +5875,7 @@ window.HYMN_SONGS = [
   function setPart(p) { if (PARTS.indexOf(p) < 0) return; S.part = p; LS.set('part', p); render(); syncSingUI(); }
   function setView(v) { if (['one', 'sep', 'tog'].indexOf(v) < 0) return; S.view = v; render(); syncSatbUI(); } // test hook only: no layout buttons in the app
   function render() {
+    updateRotateTip();
     var host = $('staff'); if (!S.res) return;
     var axis = rollAxis();
     if (S.roll) { S.roll.destroy(); S.roll = null; }
@@ -6430,16 +6431,17 @@ window.HYMN_SONGS = [
 
   /* =================== UI WIRING =================== */
   function toast(t) { var e = $('toast'); e.textContent = t; e.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(function () { e.classList.remove('show'); }, 3200); }
-  /* phones: landscape only. The manifest asks for it; where the browser allows (installed Android apps, full screen)
-     lock it too, silently. iPhone ignores both, so a full-screen "turn your phone sideways" card covers portrait (CSS). */
-  function shortLandscape() { return window.innerHeight <= 500 && window.innerWidth > window.innerHeight; }
-  function lockLandscape() {
-    function tryLock() { try { var o = screen.orientation; if (o && o.lock) { var p = o.lock('landscape'); if (p && p.catch) p.catch(function () {}); } } catch (e) {} }
-    var coarse = window.matchMedia && matchMedia('(pointer: coarse)').matches; if (!coarse) return;
-    tryLock(); document.addEventListener('pointerdown', function once() { document.removeEventListener('pointerdown', once, true); tryLock(); }, true);
+  /* phones held upright: everything works, but with a song open in the player we suggest turning sideways (a small,
+     dismissible tip - never a block; library, search, settings, credits and import stay fully usable upright) */
+  function shortLandscape() { return window.innerHeight <= 500 && window.innerWidth > window.innerHeight; } // phone held sideways
+  var tipMQ = window.matchMedia ? matchMedia('(orientation: portrait) and (max-width: 600px) and (pointer: coarse)') : null;
+  function updateRotateTip() {
+    var t = $('rotateTip'); if (!t) return; var no = false; try { no = sessionStorage.getItem('hp.rotateNo') === '1'; } catch (e) {}
+    var modal = Array.prototype.some.call(document.querySelectorAll('.modal'), function (m) { return !m.hidden; });
+    var lib = $('library') && $('library').classList.contains('open');
+    t.hidden = !(tipMQ && tipMQ.matches && S.res && S.res.notes && S.res.notes.length && !no && !modal && !lib);
   }
   function init() {
-    lockLandscape();
     // drop stored settings of features that no longer exist (every setting the app uses is listed here)
     (function () { var keep = 'allVerses aref cat loop metro mix mode mySongs part reverb satb song speed syncMs tick voice voiceGen volume vrange'.split(' ');
       try { for (var i = localStorage.length - 1; i >= 0; i--) { var k = localStorage.key(i); if (k && k.indexOf('hp.') === 0) { var n = k.slice(3); if (keep.indexOf(n) < 0 && n.indexOf('prefs.') !== 0) localStorage.removeItem(k); } } } catch (e) {} })();
@@ -6590,8 +6592,8 @@ window.HYMN_SONGS = [
       $('loadFill').style.width = pct + '%'; $('loadBar').setAttribute('aria-valuenow', pct);
     });
     // sound settings sheet: tuning, reverb, credits
-    function openSheet(id) { var m = $(id); m.hidden = false; requestAnimationFrame(function () { m.classList.add('show'); }); var f = m.querySelector('[data-close]'); if (f) f.focus(); }
-    function closeSheet(m) { m.classList.remove('show'); m.hidden = true; }
+    function openSheet(id) { var m = $(id); m.hidden = false; updateRotateTip(); requestAnimationFrame(function () { m.classList.add('show'); }); var f = m.querySelector('[data-close]'); if (f) f.focus(); }
+    function closeSheet(m) { m.classList.remove('show'); m.hidden = true; updateRotateTip(); }
     Array.prototype.forEach.call(document.querySelectorAll('.modal'), function (m) {
       m.addEventListener('click', function (e) { if (e.target === m || e.target.hasAttribute('data-close')) closeSheet(m); });
     });
@@ -6646,6 +6648,8 @@ window.HYMN_SONGS = [
       if (e.code === 'Space') { e.preventDefault(); toggle(); }
       if (e.key === 'Escape') { closeLib(); Array.prototype.forEach.call(document.querySelectorAll('.modal.show'), closeSheet); }
     });
+    $('rotateNo').onclick = function () { try { sessionStorage.setItem('hp.rotateNo', '1'); } catch (e) {} updateRotateTip(); };
+    if (tipMQ) { if (tipMQ.addEventListener) tipMQ.addEventListener('change', updateRotateTip); else if (tipMQ.addListener) tipMQ.addListener(updateRotateTip); }
     var rw; window.addEventListener('resize', function () { clearTimeout(rw); rw = setTimeout(function () { if (S.res) render(); }, 150); });
     document.addEventListener('visibilitychange', function () { if (document.hidden && S.playing) { /* keep playing in background where allowed */ } });
     // install prompt
