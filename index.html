@@ -1,0 +1,2194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Psalms &amp; Hymns – Melody Player</title>
+<meta name="description" content="Play the melody of psalms and hymns, with the words lined up under the notes. Works offline.">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Psalter">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20512%20512%22%3E%20%3Cdefs%3E%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23c8782a%22%2F%3E%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%236b3410%22%2F%3E%20%3C%2FlinearGradient%3E%20%3ClinearGradient%20id%3D%22wood%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23fff7ec%22%2F%3E%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23f3dcc0%22%2F%3E%20%3C%2FlinearGradient%3E%20%3C%2Fdefs%3E%20%3Crect%20width%3D%22512%22%20height%3D%22512%22%20rx%3D%22112%22%20fill%3D%22url(%23bg)%22%2F%3E%20%3Cpath%20d%3D%22M256%2092%20L392%20384%20Q396%20404%20376%20404%20L136%20404%20Q116%20404%20120%20384%20Z%22%20fill%3D%22none%22%20stroke%3D%22url(%23wood)%22%20stroke-width%3D%2226%22%20stroke-linejoin%3D%22round%22%2F%3E%20%3Cg%20stroke%3D%22%23fff3e3%22%20stroke-width%3D%227%22%20stroke-linecap%3D%22round%22%20opacity%3D%22.92%22%3E%20%3Cline%20x1%3D%22256%22%20y1%3D%22150%22%20x2%3D%22256%22%20y2%3D%22384%22%2F%3E%20%3Cline%20x1%3D%22221%22%20y1%3D%22210%22%20x2%3D%22221%22%20y2%3D%22384%22%2F%3E%20%3Cline%20x1%3D%22291%22%20y1%3D%22210%22%20x2%3D%22291%22%20y2%3D%22384%22%2F%3E%20%3Cline%20x1%3D%22186%22%20y1%3D%22282%22%20x2%3D%22186%22%20y2%3D%22384%22%2F%3E%20%3Cline%20x1%3D%22326%22%20y1%3D%22282%22%20x2%3D%22326%22%20y2%3D%22384%22%2F%3E%20%3C%2Fg%3E%20%3Ccircle%20cx%3D%22256%22%20cy%3D%22304%22%20r%3D%2234%22%20fill%3D%22%236b3410%22%20stroke%3D%22%23fff3e3%22%20stroke-width%3D%228%22%2F%3E%20%3C%2Fsvg%3E">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+:root{
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Helvetica Neue","Segoe UI",Roboto,Arial,sans-serif;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,"Times New Roman",serif;
+  --bg:#f2f2f7; --bg2:#e9e9ef; --card:#ffffff; --card2:#f7f7fa; --text:#1c1c1e; --text2:#3a3a3c; --muted:#6c6c70;
+  --line:rgba(60,60,67,.18); --accent:#8a4b16; --accent-2:#b5651d; --accent-soft:rgba(181,101,29,.13); --accent-text:#fff;
+  --ink:#1c1c1e; --staff:#4a4a50; --hl:#d97a1c; --hl-soft:rgba(232,140,40,.20); --danger:#c0392b; --ok:#2e7d32;
+  --shadow:0 1px 2px rgba(0,0,0,.05),0 6px 24px rgba(0,0,0,.07); --shadow-lg:0 10px 40px rgba(0,0,0,.14);
+  --r:20px; --r-sm:14px; --tap:56px;
+  color-scheme:light dark;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#000; --bg2:#141416; --card:#1c1c1e; --card2:#2c2c2e; --text:#f5f5f7; --text2:#e5e5ea; --muted:#a1a1a6;
+  --line:rgba(235,235,245,.16); --accent:#f0a453; --accent-2:#f5b56d; --accent-soft:rgba(240,164,83,.18); --accent-text:#1c1c1e;
+  --ink:#f2f2f2; --staff:#9a9aa0; --hl:#ffb15c; --hl-soft:rgba(255,177,92,.22); --danger:#ff6b5e; --ok:#66bb6a;
+  --shadow:0 1px 2px rgba(0,0,0,.5),0 8px 30px rgba(0,0,0,.45); --shadow-lg:0 10px 40px rgba(0,0,0,.6);
+}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:19px;line-height:1.45;-webkit-font-smoothing:antialiased;
+  padding-bottom:calc(210px + env(safe-area-inset-bottom))}
+button,select,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer;-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:3px solid var(--accent-2);outline-offset:2px;border-radius:10px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* top bar */
+.topbar{position:sticky;top:0;z-index:30;backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
+  background:color-mix(in srgb,var(--bg) 78%,transparent);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) max(18px,env(safe-area-inset-right)) 10px max(18px,env(safe-area-inset-left))}
+.topbar-in{max-width:1280px;margin:0 auto;display:flex;align-items:center;gap:14px}
+.brand{display:flex;align-items:center;gap:12px;min-width:0;flex:1}
+.brand img{width:44px;height:44px;border-radius:11px;box-shadow:0 2px 8px rgba(0,0,0,.18);flex:none}
+.brand h1{font-size:24px;line-height:1.1;margin:0;font-weight:700;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand small{display:block;font-size:14px;color:var(--muted);font-weight:500;letter-spacing:0}
+.pill-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 18px;border-radius:999px;border:0;
+  background:var(--accent-soft);color:var(--accent);font-weight:600;font-size:17px;transition:transform .15s ease,background .2s ease;white-space:nowrap}
+.pill-btn:active{transform:scale(.96)}
+.pill-btn.solid{background:var(--accent);color:var(--accent-text)}
+.pill-btn svg{width:22px;height:22px;flex:none}
+
+/* layout */
+.wrap{max-width:1280px;margin:0 auto;padding:18px max(16px,env(safe-area-inset-left));display:grid;grid-template-columns:1fr;gap:18px}
+@media (min-width:1000px){.wrap{grid-template-columns:330px 1fr;align-items:start}.library{position:sticky;top:96px;max-height:calc(100vh - 330px);overflow:auto}}
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);padding:20px}
+.main{display:flex;flex-direction:column;gap:18px;min-width:0}
+
+/* library */
+.library{padding:12px}
+.lib-search{width:100%;min-height:50px;border-radius:14px;border:0;background:var(--card2);padding:0 16px;font-size:18px;margin:4px 0 8px}
+.lib-group h2{font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:16px 10px 6px;font-weight:700}
+.lib-item{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border:0;background:transparent;border-radius:14px;padding:12px;min-height:64px;transition:background .15s}
+.lib-item:hover{background:var(--card2)}
+.lib-item[aria-current="true"]{background:var(--accent-soft)}
+.lib-item .num{flex:none;width:46px;height:46px;border-radius:12px;background:var(--card2);display:grid;place-items:center;font-weight:700;font-size:15px;color:var(--accent);line-height:1;text-align:center}
+.lib-item[aria-current="true"] .num{background:var(--accent);color:var(--accent-text)}
+.lib-item .t{display:block;font-weight:600;font-size:18px;line-height:1.25}
+.lib-item .s{display:block;font-size:14.5px;color:var(--muted);line-height:1.3;margin-top:2px}
+.lib-item .del{margin-left:auto;border:0;background:transparent;color:var(--danger);font-size:15px;font-weight:600;padding:8px;border-radius:10px}
+.lib-close{display:none}
+@media (max-width:999.98px){
+  .library{position:fixed;inset:auto 0 0 0;z-index:60;max-height:86vh;overflow:auto;border-radius:24px 24px 0 0;transform:translateY(105%);transition:transform .35s cubic-bezier(.2,.8,.2,1);
+    padding:10px 12px calc(20px + env(safe-area-inset-bottom));box-shadow:var(--shadow-lg)}
+  .library.open{transform:none}
+  .lib-close{display:flex;justify-content:space-between;align-items:center;padding:6px 6px 0}
+  .lib-close h2{margin:0;font-size:22px}
+  .scrim{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:55;opacity:0;pointer-events:none;transition:opacity .3s}
+  .scrim.show{opacity:1;pointer-events:auto}
+}
+@media (min-width:1000px){.scrim,.choose-btn{display:none!important}}
+
+/* song header */
+.song-head{display:flex;gap:16px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
+.song-head h2{font-family:var(--serif);font-size:34px;line-height:1.12;margin:0;font-weight:700;letter-spacing:-.01em}
+.song-sub{color:var(--accent);font-weight:600;font-size:17px;margin:2px 0 0;letter-spacing:.01em}
+.song-credit{color:var(--muted);font-size:15px;margin:6px 0 0}
+.choose-btn{flex:none}
+.verses{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center}
+.verses .lbl{font-weight:600;color:var(--muted);font-size:16px;margin-right:2px}
+.chip{min-width:56px;min-height:50px;border-radius:999px;border:1.5px solid var(--line);background:var(--card);font-weight:700;font-size:19px;padding:0 16px;transition:all .18s}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-text);box-shadow:0 3px 10px var(--accent-soft)}
+.toggle{display:inline-flex;align-items:center;gap:10px;min-height:50px;font-weight:600;font-size:17px;user-select:none;cursor:pointer}
+.toggle input{appearance:none;-webkit-appearance:none;width:52px;height:32px;border-radius:999px;background:var(--bg2);position:relative;transition:background .2s;margin:0;flex:none;border:1px solid var(--line)}
+.toggle input::after{content:"";position:absolute;top:2px;left:2px;width:26px;height:26px;border-radius:50%;background:#fff;box-shadow:0 2px 5px rgba(0,0,0,.25);transition:transform .22s cubic-bezier(.3,.7,.3,1)}
+.toggle input:checked{background:#34c759}
+.toggle input:checked::after{transform:translateX(20px)}
+
+/* staff */
+.staff-card{padding:14px 10px 18px;overflow:hidden}
+.staff-top{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:0 10px 4px;color:var(--muted);font-size:15px;flex-wrap:wrap}
+.staff-top b{color:var(--text2)}
+#staff{width:100%;display:block}
+#staff svg{display:block;width:100%;height:auto;overflow:visible}
+.st-line{stroke:var(--staff);stroke-width:1.1}
+.st-bar{stroke:var(--ink);stroke-width:1.4}
+.st-ink{fill:var(--ink);stroke:none}
+.st-stroke{stroke:var(--ink);fill:none}
+.st-note{cursor:pointer}
+.st-note .head,.st-note .stem,.st-note .flag,.st-note .acc,.st-note .dot{transition:fill .12s,stroke .12s}
+.st-note.on .head,.st-note.on .dot,.st-note.on .flag,.st-note.on .acc path{fill:var(--hl)}
+.st-note.on .stem,.st-note.on .ledger{stroke:var(--hl)}
+.st-note.on .hollow{stroke:var(--hl)}
+.lyr{font-family:var(--serif);fill:var(--text);transition:fill .12s}
+.lyr.on{fill:var(--hl);font-weight:700}
+.lyr.past{fill:var(--muted)}
+.st-hl{fill:var(--hl-soft);transition:transform .14s cubic-bezier(.3,.7,.3,1),opacity .2s;opacity:0}
+.st-hl.show{opacity:1}
+.st-meta{fill:var(--muted);font-size:13px}
+.lyr-only{font-family:var(--serif);font-size:22px;line-height:1.6;padding:6px 14px 0;color:var(--text2)}
+
+/* transport */
+.transport{position:fixed;left:0;right:0;bottom:0;z-index:40;padding:12px max(14px,env(safe-area-inset-right)) calc(12px + env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left));
+  background:color-mix(in srgb,var(--card) 86%,transparent);backdrop-filter:saturate(180%) blur(24px);-webkit-backdrop-filter:saturate(180%) blur(24px);border-top:1px solid var(--line);box-shadow:0 -6px 30px rgba(0,0,0,.08)}
+.tr-in{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:auto 1fr;gap:10px 18px;align-items:center}
+.tr-main{display:flex;align-items:center;gap:12px}
+.play{width:76px;height:76px;border-radius:50%;border:0;background:var(--accent);color:var(--accent-text);display:grid;place-items:center;box-shadow:0 6px 20px var(--accent-soft),0 2px 6px rgba(0,0,0,.15);transition:transform .15s ease,box-shadow .2s}
+.play:active{transform:scale(.93)}
+.play svg{width:34px;height:34px}
+.round{width:58px;height:58px;border-radius:50%;border:0;background:var(--card2);display:grid;place-items:center;transition:transform .15s}
+.round:active{transform:scale(.92)}
+.round svg{width:26px;height:26px}
+.round[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent)}
+.tr-ctrls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 16px;align-items:center}
+.ctrl{display:flex;flex-direction:column;gap:2px;min-width:0}
+.ctrl .cap{font-size:13px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;gap:6px}
+.ctrl .cap output{color:var(--text);letter-spacing:0;text-transform:none;font-size:15px}
+.stepper{display:flex;align-items:center;background:var(--card2);border-radius:14px;min-height:50px;overflow:hidden}
+.stepper button{border:0;background:transparent;width:54px;min-height:50px;font-size:26px;font-weight:500;color:var(--accent);flex:none}
+.stepper button:active{background:var(--accent-soft)}
+.stepper .val{flex:1;text-align:center;font-weight:700;font-size:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:50px;background:transparent;margin:0}
+input[type=range]::-webkit-slider-runnable-track{height:8px;border-radius:8px;background:linear-gradient(to right,var(--accent) var(--p,50%),var(--bg2) var(--p,50%))}
+input[type=range]::-moz-range-track{height:8px;border-radius:8px;background:var(--bg2)}
+input[type=range]::-moz-range-progress{height:8px;border-radius:8px;background:var(--accent)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:30px;height:30px;border-radius:50%;background:#fff;margin-top:-11px;box-shadow:0 2px 8px rgba(0,0,0,.3);border:.5px solid rgba(0,0,0,.08)}
+input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.3);border:0}
+.seg{display:flex;background:var(--card2);border-radius:14px;padding:4px;gap:4px;min-height:50px}
+.seg button{flex:1;border:0;background:transparent;border-radius:10px;font-weight:600;font-size:16px;padding:0 8px;min-height:42px;transition:background .2s,box-shadow .2s;white-space:nowrap}
+.seg button[aria-pressed="true"]{background:var(--card);box-shadow:0 2px 8px rgba(0,0,0,.12);color:var(--accent)}
+@media (prefers-color-scheme:dark){.seg button[aria-pressed="true"]{background:#48484a;color:var(--accent)}}
+.ctrl.wide{grid-column:span 1}
+.now{font-size:15px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:230px}
+.now b{display:block;color:var(--text);font-size:17px;overflow:hidden;text-overflow:ellipsis}
+.progress{grid-column:1/-1;height:6px;border-radius:6px;background:var(--bg2);overflow:hidden;cursor:pointer}
+.progress i{display:block;height:100%;width:0;background:var(--accent);border-radius:6px;transition:width .12s linear}
+.round.more{display:none}
+@media (max-width:899.98px){
+  body{padding-bottom:calc(150px + env(safe-area-inset-bottom))}
+  .tr-in{grid-template-columns:1fr}
+  .tr-main{justify-content:center;gap:16px}
+  .now{display:none}
+  .round.more{display:grid}
+  .transport.expanded .round.more{background:var(--accent-soft);color:var(--accent)}
+  .tr-ctrls{grid-template-columns:1fr 1fr;display:none}
+  .transport.expanded .tr-ctrls{display:grid;animation:rise .28s cubic-bezier(.2,.8,.2,1)}
+  .ctrl.voice{grid-column:1/-1}
+}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media (max-width:560px){
+  .topbar .pill-btn .lbl{display:none}
+  .topbar .pill-btn{width:50px;padding:0}
+  .brand h1{font-size:21px}
+  .song-head h2{font-size:28px}
+  .card{padding:16px}
+  .wrap{padding:12px 10px;gap:12px}
+}
+@media (max-width:380px){.tr-ctrls{gap:8px 10px}.stepper button{width:46px}}
+
+/* disclosure sections */
+details.card{padding:0;overflow:hidden}
+details.card>summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 20px;min-height:64px;font-weight:700;font-size:20px;cursor:pointer}
+details.card>summary::-webkit-details-marker{display:none}
+details.card>summary::after{content:"";width:12px;height:12px;border-right:3px solid var(--muted);border-bottom:3px solid var(--muted);transform:rotate(45deg);transition:transform .25s;margin-right:6px;flex:none}
+details.card[open]>summary::after{transform:rotate(225deg)}
+details.card>summary span{display:flex;align-items:center;gap:12px}
+details.card>summary .ico{width:36px;height:36px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;flex:none}
+details.card>summary .ico svg{width:22px;height:22px}
+.dbody{padding:0 20px 20px}
+textarea#abc{width:100%;min-height:300px;border-radius:14px;border:1.5px solid var(--line);background:var(--card2);padding:14px 16px;font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:17px;line-height:1.55;resize:vertical;tab-size:2}
+textarea#abc:focus{border-color:var(--accent-2);outline:none}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.msg{border-radius:14px;padding:14px 16px;margin-top:12px;font-size:17px;display:none}
+.msg.show{display:block}
+.msg.err{background:color-mix(in srgb,var(--danger) 12%,transparent);color:var(--danger);border:1px solid color-mix(in srgb,var(--danger) 30%,transparent)}
+.msg.ok{background:color-mix(in srgb,var(--ok) 12%,transparent);color:var(--ok)}
+.msg.warn{background:var(--accent-soft);color:var(--text2)}
+.msg ul{margin:6px 0 0;padding-left:22px}
+.help h3{font-size:19px;margin:18px 0 6px}
+.help p,.help li{color:var(--text2)}
+.help code,.help kbd{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;background:var(--card2);padding:2px 7px;border-radius:7px;font-size:.92em;color:var(--text)}
+.help table{border-collapse:collapse;width:100%;margin:8px 0}
+.help td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.help td:first-child{white-space:nowrap;font-weight:600}
+.source{font-size:15px;color:var(--muted)}
+.toast{position:fixed;left:50%;top:calc(84px + env(safe-area-inset-top));transform:translate(-50%,-20px);background:var(--text);color:var(--bg);padding:12px 20px;border-radius:999px;font-weight:600;font-size:16px;opacity:0;transition:all .3s;z-index:90;pointer-events:none;box-shadow:var(--shadow-lg);max-width:90vw;text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.tap-hint{font-size:14px;color:var(--muted);text-align:center;margin-top:6px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-in">
+    <div class="brand">
+      <img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20512%20512%22%3E%20%3Cdefs%3E%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23c8782a%22%2F%3E%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%236b3410%22%2F%3E%20%3C%2FlinearGradient%3E%20%3ClinearGradient%20id%3D%22wood%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23fff7ec%22%2F%3E%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23f3dcc0%22%2F%3E%20%3C%2FlinearGradient%3E%20%3C%2Fdefs%3E%20%3Crect%20width%3D%22512%22%20height%3D%22512%22%20rx%3D%22112%22%20fill%3D%22url(%23bg)%22%2F%3E%20%3Cpath%20d%3D%22M256%2092%20L392%20384%20Q396%20404%20376%20404%20L136%20404%20Q116%20404%20120%20384%20Z%22%20fill%3D%22none%22%20stroke%3D%22url(%23wood)%22%20stroke-width%3D%2226%22%20stroke-linejoin%3D%22round%22%2F%3E%20%3Cg%20stroke%3D%22%23fff3e3%22%20stroke-width%3D%227%22%20stroke-linecap%3D%22round%22%20opacity%3D%22.92%22%3E%20%3Cline%20x1%3D%22256%22%20y1%3D%22150%22%20x2%3D%22256%22%20y2%3D%22384%22%2F%3E%20%3Cline%20x1%3D%22221%22%20y1%3D%22210%22%20x2%3D%22221%22%20y2%3D%22384%22%2F%3E%20%3Cline%20x1%3D%22291%22%20y1%3D%22210%22%20x2%3D%22291%22%20y2%3D%22384%22%2F%3E%20%3Cline%20x1%3D%22186%22%20y1%3D%22282%22%20x2%3D%22186%22%20y2%3D%22384%22%2F%3E%20%3Cline%20x1%3D%22326%22%20y1%3D%22282%22%20x2%3D%22326%22%20y2%3D%22384%22%2F%3E%20%3C%2Fg%3E%20%3Ccircle%20cx%3D%22256%22%20cy%3D%22304%22%20r%3D%2234%22%20fill%3D%22%236b3410%22%20stroke%3D%22%23fff3e3%22%20stroke-width%3D%228%22%2F%3E%20%3C%2Fsvg%3E" alt="">
+      <h1>Psalms &amp; Hymns<small>Melody player</small></h1>
+    </div>
+    <button class="pill-btn" id="installBtn" hidden aria-label="Install app"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0-4.5-4.5M12 15l4.5-4.5M5 21h14"/></svg><span class="lbl">Install</span></button>
+    <button class="pill-btn solid" id="importBtn" title="Open a tune file (.abc, MIDI or MusicXML)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V9m0 0-4.5 4.5M12 9l4.5 4.5M5 3h14"/></svg><span class="lbl">Import</span></button>
+    <input type="file" id="fileInput" accept=".abc,.txt,.mid,.midi,.xml,.musicxml,.mxl,audio/midi,application/xml,text/xml" multiple hidden>
+  </div>
+</header>
+
+<div class="scrim" id="scrim"></div>
+<div class="wrap">
+  <nav class="card library" id="library" aria-label="Song library">
+    <div class="lib-close"><h2>Choose a song</h2><button class="pill-btn" id="libClose">Done</button></div>
+    <label class="sr" for="libSearch">Search songs</label>
+    <input class="lib-search" id="libSearch" type="search" placeholder="Search psalms and hymns" autocomplete="off">
+    <div id="libList"></div>
+  </nav>
+
+  <main class="main">
+    <section class="card" aria-live="polite">
+      <div class="song-head">
+        <div style="min-width:0;flex:1">
+          <h2 id="songTitle">Loading…</h2>
+          <p class="song-sub" id="songSub"></p>
+          <p class="song-credit" id="songCredit"></p>
+        </div>
+        <button class="pill-btn choose-btn" id="chooseBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Songs</button>
+      </div>
+      <div class="verses" id="verses" role="group" aria-label="Choose a verse"></div>
+    </section>
+
+    <section class="card staff-card" aria-label="Music and words">
+      <div class="staff-top"><span id="keyInfo"></span><span>Tap any note to start there</span></div>
+      <div id="staff"></div>
+    </section>
+
+    <details class="card" id="editBox">
+      <summary><span><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="m13.5 6.5 4 4"/></svg></span>Type or change the notes</span></summary>
+      <div class="dbody">
+        <label class="sr" for="abc">Melody in ABC notation</label>
+        <textarea id="abc" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off"></textarea>
+        <div class="msg" id="msg" role="status"></div>
+        <div class="row">
+          <button class="pill-btn solid" id="applyBtn">Use these notes</button>
+          <button class="pill-btn" id="saveBtn">Save to My Songs</button>
+          <button class="pill-btn" id="downloadBtn">Download .abc file</button>
+          <button class="pill-btn" id="resetBtn">Undo my changes</button>
+        </div>
+      </div>
+    </details>
+
+    <details class="card help">
+      <summary><span><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5V14"/><circle cx="12" cy="17.3" r=".6" fill="currentColor"/></svg></span>How to type notes</span></summary>
+      <div class="dbody">
+        <p>Tunes are written in <b>ABC</b>, a simple way of typing music with ordinary letters. Open “Type or change the notes” to see the tune that is playing now — it is the easiest example to copy.</p>
+        <h3>The top lines</h3>
+        <table>
+          <tr><td><code>T:</code></td><td>The title, for example <code>T:Amazing Grace</code></td></tr>
+          <tr><td><code>M:</code></td><td>Beats in a bar: <code>M:3/4</code> (three beats) or <code>M:4/4</code> (four)</td></tr>
+          <tr><td><code>L:</code></td><td>How long a plain note is: <code>L:1/4</code> means one beat</td></tr>
+          <tr><td><code>Q:</code></td><td>Speed, for example <code>Q:1/4=90</code></td></tr>
+          <tr><td><code>K:</code></td><td>The key, for example <code>K:G</code>, <code>K:F</code>, <code>K:Bb</code> or <code>K:Am</code>. Put this line last; the notes start after it. The key adds the right sharps and flats for you.</td></tr>
+        </table>
+        <h3>Notes</h3>
+        <table>
+          <tr><td><code>C D E F G A B</code></td><td>Notes from middle C upward</td></tr>
+          <tr><td><code>c d e f g a b</code></td><td>The same notes one octave higher</td></tr>
+          <tr><td><code>c'</code> &nbsp; <code>C,</code></td><td>An apostrophe goes one octave higher still; a comma goes one octave lower</td></tr>
+          <tr><td><code>^F</code> <code>_B</code> <code>=B</code></td><td>Sharp, flat and natural (the sign goes before the note)</td></tr>
+          <tr><td><code>G2</code> <code>G3</code> <code>G/2</code> <code>G3/2</code></td><td>Twice as long, three times as long, half as long, one and a half times as long</td></tr>
+          <tr><td><code>z</code></td><td>A rest (silence). <code>z2</code> is a longer rest</td></tr>
+          <tr><td><code>|</code></td><td>A bar line. <code>|:</code> and <code>:|</code> mark a section to repeat</td></tr>
+          <tr><td><code>G2-G</code></td><td>A dash joins two notes into one held note</td></tr>
+        </table>
+        <h3>Words</h3>
+        <p>Put a line starting with <code>w:</code> under a line of notes. Each syllable goes with one note. Use a dash between syllables (<code>shep- herd</code>), <code>_</code> to hold a syllable over another note, and <code>*</code> to skip a note. Another <code>w:</code> line under the same notes is the next verse.</p>
+        <p>Example:<br><code>K:G</code><br><code>D | G2 B/G/ | B2 A | G2 E | D2</code><br><code>w: A- maz- ing _ grace! How sweet the sound</code></p>
+        <h3>Your own files</h3>
+        <p>Press <b>Import</b> to open tunes saved on this device: ABC files (<code>.abc</code>), MIDI files (<code>.mid</code>) and MusicXML files (<code>.xml</code>, <code>.musicxml</code>, <code>.mxl</code>). They are kept in <b>My Songs</b>.</p>
+        <p class="source" id="sourceNote"></p>
+      </div>
+    </details>
+  </main>
+</div>
+
+<div class="transport" id="transport">
+  <div class="tr-in">
+    <div class="progress" id="progress" title="Position in the tune"><i id="progressBar"></i></div>
+    <div class="tr-main">
+      <button class="round" id="stopBtn" aria-label="Stop and go back to the start" title="Stop"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2.5"/></svg></button>
+      <button class="play" id="playBtn" aria-label="Play"><svg id="playIco" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg></button>
+      <button class="round" id="loopBtn" aria-pressed="false" aria-label="Repeat the song" title="Repeat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 2l3 3-3 3"/><path d="M4 11V9a4 4 0 0 1 4-4h12"/><path d="M7 22l-3-3 3-3"/><path d="M20 13v2a4 4 0 0 1-4 4H4"/></svg></button>
+      <button class="round more" id="moreBtn" aria-expanded="false" aria-label="Show speed, key, volume and sound" title="More controls"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2.2"/><circle cx="10" cy="17" r="2.2"/></svg></button>
+      <div class="now" id="nowPlaying"><b id="nowTitle"></b><span id="nowState">Ready</span></div>
+    </div>
+    <div class="tr-ctrls">
+      <div class="ctrl">
+        <div class="cap"><span>Speed</span><output id="tempoOut"></output></div>
+        <div class="stepper"><button id="tempoDown" aria-label="Slower">−</button><input type="range" id="tempo" min="40" max="180" step="1" value="90" aria-label="Speed in beats per minute" style="flex:1;min-width:0"><button id="tempoUp" aria-label="Faster">+</button></div>
+      </div>
+      <div class="ctrl">
+        <div class="cap"><span>Key</span><output id="transOut">As written</output></div>
+        <div class="stepper"><button id="transDown" aria-label="Lower by a half step">−</button><div class="val" id="keyVal">G</div><button id="transUp" aria-label="Higher by a half step">+</button></div>
+      </div>
+      <div class="ctrl">
+        <div class="cap"><span>Volume</span><output id="volOut"></output></div>
+        <div class="stepper" style="padding:0 14px"><input type="range" id="volume" min="0" max="100" step="1" value="80" aria-label="Volume"></div>
+      </div>
+      <div class="ctrl voice">
+        <div class="cap"><span>Sound</span></div>
+        <div class="seg" id="voiceSeg" role="group" aria-label="Instrument">
+          <button data-v="psaltery" aria-pressed="true">Psaltery</button><button data-v="organ" aria-pressed="false">Organ</button><button data-v="piano" aria-pressed="false">Piano</button>
+        </div>
+      </div>
+      <div class="ctrl">
+        <label class="toggle"><input type="checkbox" id="allVerses"> Sing all verses</label>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script id="hp-core">
+/* ===== Hymn Player core: ABC parser, lyrics, MIDI & MusicXML import, spelling ===== */
+(function (root) {
+  'use strict';
+  var LETTERS = 'CDEFGAB';
+  var NAT = { C: 0, D: 2, E: 4, F: 5, G: 7, A: 9, B: 11 };
+  var SHARP_ORDER = 'FCGDAEB', FLAT_ORDER = 'BEADGCF';
+  var MAJOR_FIFTHS = { 'C': 0, 'G': 1, 'D': 2, 'A': 3, 'E': 4, 'B': 5, 'F#': 6, 'C#': 7, 'F': -1, 'Bb': -2, 'Eb': -3, 'Ab': -4, 'Db': -5, 'Gb': -6, 'Cb': -7 };
+  var MODE_SHIFT = { maj: 0, ion: 0, mix: -1, dor: -2, aeo: -3, m: -3, min: -3, phr: -4, loc: -5, lyd: 1 };
+  var NOTE_NAMES_SHARP = ['C', 'C♯', 'D', 'E♭', 'E', 'F', 'F♯', 'G', 'A♭', 'A', 'B♭', 'B'];
+
+  function ParseError(msg, line, col) { this.message = msg; this.line = line; this.col = col; }
+
+  function fifthsToAcc(fifths) {
+    var acc = { C: 0, D: 0, E: 0, F: 0, G: 0, A: 0, B: 0 }, i;
+    if (fifths > 0) for (i = 0; i < Math.min(fifths, 7); i++) acc[SHARP_ORDER[i]] = 1;
+    if (fifths < 0) for (i = 0; i < Math.min(-fifths, 7); i++) acc[FLAT_ORDER[i]] = -1;
+    return acc;
+  }
+  function majorTonicFromFifths(f) {
+    for (var k in MAJOR_FIFTHS) if (MAJOR_FIFTHS[k] === f) return k;
+    return 'C';
+  }
+  function prettyKey(name) { return name.replace(/#/g, '♯').replace(/b(?=$|\s|m)/, '♭'); }
+
+  /* Parse a K: field value. Returns {fifths, acc, tonic, mode, name} or null if invalid */
+  function parseKey(str) {
+    var s = (str || '').replace(/%.*$/, '').trim();
+    // strip clef/other assignments
+    s = s.replace(/\b(clef|middle|transpose|octave|stafflines|t|m)\s*=\s*\S+/gi, '').replace(/\b(treble|bass|alto|tenor|perc|none)\b(?=\s|$)/gi, function (w) { return w.toLowerCase() === 'none' ? 'NONE' : ''; }).trim();
+    if (s === '' || /^NONE$/.test(s)) return { fifths: 0, acc: fifthsToAcc(0), tonic: 'C', mode: 'maj', name: s === '' ? 'C' : 'none' };
+    if (/^H[Pp]/.test(s)) return { fifths: 2, acc: fifthsToAcc(2), tonic: 'D', mode: 'maj', name: 'HP' };
+    var m = s.match(/^([A-Ga-g])([#b♯♭]?)\s*([A-Za-z]*)\s*(.*)$/);
+    if (!m) return null;
+    var tonic = m[1].toUpperCase() + (m[2] === '#' || m[2] === '♯' ? '#' : m[2] ? 'b' : '');
+    var modeWord = (m[3] || '').toLowerCase();
+    var mode = 'maj';
+    if (modeWord) {
+      var mk = modeWord === 'm' ? 'm' : modeWord.slice(0, 3);
+      if (!(mk in MODE_SHIFT)) {
+        if (/^[\^_=]/.test(m[3])) { m[4] = m[3] + ' ' + m[4]; } else return null;
+      } else mode = mk;
+    }
+    // fifths of tonic as major
+    var base = MAJOR_FIFTHS[tonic];
+    if (base === undefined) {
+      // e.g. G# major or D# : compute via circle
+      var pcs = { C: 0, D: 2, E: 4, F: 5, G: 7, A: 9, B: 11 };
+      var pc = (pcs[tonic[0]] + (tonic[1] === '#' ? 1 : tonic[1] === 'b' ? -1 : 0) + 12) % 12;
+      base = ((pc * 7) % 12); if (base > 6) base -= 12;
+      if (tonic[1] === '#' && base < 0) base += 12;
+    }
+    var fifths = base + MODE_SHIFT[mode];
+    var acc = fifthsToAcc(fifths);
+    // explicit accidentals e.g. ^f _b =c
+    var rest = (m[4] || '').trim();
+    var em, re = /(\^\^|__|\^|_|=)([A-Ga-g])/g;
+    while ((em = re.exec(rest))) acc[em[2].toUpperCase()] = em[1] === '^' ? 1 : em[1] === '_' ? -1 : em[1] === '^^' ? 2 : em[1] === '__' ? -2 : 0;
+    var nice = tonic + (mode === 'maj' ? '' : mode === 'm' || mode === 'min' || mode === 'aeo' ? 'm' : ' ' + mode);
+    return { fifths: fifths, acc: acc, tonic: tonic, mode: mode, name: nice };
+  }
+
+  function parseFraction(s) {
+    var m = String(s).trim().match(/^(\d+)\s*\/\s*(\d+)$/);
+    if (m) return +m[1] / +m[2];
+    if (/^\d+(\.\d+)?$/.test(String(s).trim())) return +s;
+    return null;
+  }
+  function parseMeter(s) {
+    s = (s || '').replace(/%.*$/, '').trim();
+    if (s === 'C') return { num: 4, den: 4, text: '4/4', symbol: 'C' };
+    if (s === 'C|') return { num: 2, den: 2, text: '2/2', symbol: 'C|' };
+    if (/^none$/i.test(s) || s === '') return { num: 4, den: 4, text: '', free: true };
+    var m = s.match(/^\(?([\d+]+)\)?\s*\/\s*(\d+)/);
+    if (!m) return null;
+    var num = m[1].split('+').reduce(function (a, b) { return a + (+b || 0); }, 0);
+    return { num: num, den: +m[2], text: num + '/' + m[2] };
+  }
+  function parseTempo(s, unitWhole) {
+    s = (s || '').replace(/"[^"]*"/g, '').replace(/%.*$/, '').trim();
+    var m = s.match(/(\d+\s*\/\s*\d+(?:\s+\d+\s*\/\s*\d+)*)\s*=\s*(\d+)/);
+    if (m) {
+      var beat = m[1].split(/\s+/).reduce(function (a, f) { return a + (parseFraction(f) || 0); }, 0);
+      return { bpm: +m[2] * beat * 4, beatWhole: beat }; // convert to quarter-notes per minute
+    }
+    m = s.match(/^(\d+)$/);
+    if (m) return { bpm: +m[1] * (unitWhole || 0.25) * 4, beatWhole: unitWhole || 0.25 };
+    return null;
+  }
+
+  /* ---------- lyric tokenizer (ABC 2.1 section 5.1) ---------- */
+  function tokenizeLyrics(text) {
+    var toks = [], cur = '', i, ch, lastWasHyph = false;
+    function push(hyph) { toks.push({ t: 'syl', text: cur, hyph: hyph }); cur = ''; }
+    for (i = 0; i < text.length; i++) {
+      ch = text[i];
+      if (ch === '\\' && text[i + 1] === '-') { cur += '-'; i++; continue; }
+      if (ch === ' ' || ch === '\t') { if (cur) { push(false); lastWasHyph = false; } continue; }
+      if (ch === '-') {
+        if (cur) { push(true); lastWasHyph = true; }
+        else if (lastWasHyph) { toks.push({ t: 'skip', cont: true }); }
+        else { lastWasHyph = true; }
+        continue;
+      }
+      if (ch === '_') { if (cur) push(false); toks.push({ t: 'hold' }); lastWasHyph = false; continue; }
+      if (ch === '*') { if (cur) push(false); toks.push({ t: 'skip' }); lastWasHyph = false; continue; }
+      if (ch === '|') { if (cur) push(false); toks.push({ t: 'bar' }); lastWasHyph = false; continue; }
+      if (ch === '~') { cur += ' '; continue; }
+      cur += ch; lastWasHyph = false;
+    }
+    if (cur) push(false);
+    return toks;
+  }
+  function stripVerseNumber(s) { return s.replace(/^\s*\d+\.\s*/, ''); }
+
+  function alignLyrics(notes, text, verse) {
+    var toks = tokenizeLyrics(text), idx = 0, first = true, placed = 0, last = null;
+    for (var k = 0; k < toks.length; k++) {
+      var tk = toks[k];
+      if (tk.t === 'bar') {
+        if (idx > 0) { var b = notes[idx - 1].bar; while (idx < notes.length && notes[idx].bar === b) idx++; }
+        continue;
+      }
+      if (idx >= notes.length) return { overflow: toks.length - k };
+      var n = notes[idx];
+      if (!n.lyrics) n.lyrics = [];
+      if (tk.t === 'syl') {
+        var txt = tk.text;
+        if (first) { txt = stripVerseNumber(txt); first = false; if (!txt) { continue; } }
+        n.lyrics[verse] = { text: txt, hyph: tk.hyph };
+        last = n.lyrics[verse]; placed++;
+      } else if (tk.t === 'hold') {
+        n.lyrics[verse] = { text: '', hold: true };
+        if (last) last.extend = true;
+      } else if (tk.t === 'skip') {
+        if (tk.cont) n.lyrics[verse] = { text: '', cont: true };
+      }
+      idx++;
+    }
+    return { placed: placed, unused: notes.length - idx };
+  }
+
+  /* ---------- the ABC parser ---------- */
+  function parseABC(src) {
+    var res = {
+      title: '', subtitles: [], composer: [], meter: { num: 4, den: 4, text: '4/4' }, unit: null, tempo: null,
+      key: parseKey('C'), notes: [], elements: [], verseCount: 0, verseLabels: [], extraVerses: [], errors: [], warnings: [], info: {}
+    };
+    if (typeof src !== 'string') src = String(src || '');
+    var lines = src.replace(/\r\n?/g, '\n').split('\n');
+    var inHeader = false, sawX = false, bodyStarted = false;
+    var unit = null; // fraction of a whole note
+    var keyAcc = res.key.acc, curKey = res.key, meter = res.meter;
+    var firstVoice = null, curVoice = null;
+    var barNo = 0, barAcc = {}, music = [], lineIdx = 0;
+    var pendingNotes = [], groupNotes = [], verseInGroup = 0, lastLineWasLyric = false, groupHasAny = false;
+    var Wlines = [];
+    var tupletLeft = 0, tupletFactor = 1, brokenNext = 1, lastNote = null, pendingTieFrom = null;
+    var anyHeaderK = false, overlaySkip = false, lastDecor = [], curSrcLine = 0;
+
+    function unitQ() { return (unit || defaultUnit()) * 4; }
+    function defaultUnit() { return (meter.num / meter.den) < 0.75 ? 1 / 16 : 1 / 8; }
+    function err(msg, ln, col) { res.errors.push({ message: msg, line: ln + 1, col: (col || 0) + 1 }); }
+    function voiceOk() { return firstVoice === null || curVoice === firstVoice; }
+    function handleVoice(v) {
+      var id = (v || '').trim().split(/\s+/)[0];
+      if (!id) return;
+      if (firstVoice === null) firstVoice = id;
+      curVoice = id;
+    }
+    function applyField(letter, value, ln, inline) {
+      value = value.replace(/(^|[^\\])%.*$/, '$1').trim();
+      switch (letter) {
+        case 'T': if (!res.title) res.title = value; else res.subtitles.push(value); break;
+        case 'C': res.composer.push(value); break;
+        case 'M': { var mt = parseMeter(value); if (!mt) err('The time signature "M:' + value + '" isn\'t one I understand. Try something like M:4/4 or M:3/4.', ln); else { meter = mt; if (!bodyStarted) res.meter = mt; } break; }
+        case 'L': { var f = parseFraction(value); if (!f) err('The note length "L:' + value + '" should look like L:1/4 or L:1/8.', ln); else unit = f; break; }
+        case 'Q': { var t = parseTempo(value, unit || defaultUnit()); if (t && !res.tempo) res.tempo = t; break; }
+        case 'K': {
+          var k = parseKey(value);
+          if (!k) { err('I don\'t recognise the key "K:' + value + '". Try K:G, K:D, K:F, K:Bb or K:Am.', ln); k = parseKey('C'); }
+          if (!voiceOk() && bodyStarted) break;
+          curKey = k; keyAcc = k.acc;
+          if (!anyHeaderK) { res.key = k; anyHeaderK = true; }
+          if (/(\b|\s)V:/.test(value)) {}
+          break;
+        }
+        case 'V': handleVoice(value); break;
+        case 'X': sawX = true; break;
+        default:
+          if (!inline) res.info[letter] = (res.info[letter] ? res.info[letter] + '\n' : '') + value;
+      }
+    }
+
+    function newNote(o) {
+      o.i = res.notes.length; o.bar = barNo; o.line = lineIdx; o.srcLine = curSrcLine; o.lyrics = [];
+      res.notes.push(o); res.elements.push({ type: 'note', n: o.i }); return o;
+    }
+
+    function parseMusicLine(s, ln) {
+      var i = 0, L = s.length;
+      // continuation handled by caller
+      while (i < L) {
+        var ch = s[i];
+        if (overlaySkip && ch !== '|' && ch !== ':') { i++; continue; }
+        if (ch === ' ' || ch === '\t') { if (lastNote) lastNote.spaceAfter = true; i++; continue; }
+        if (ch === '%') break;
+        if (ch === '\\') { i++; continue; }
+        if (ch === '`' || ch === '$' || ch === ')' || ch === 'y') { i++; continue; }
+        if (ch === '"') { var e = s.indexOf('"', i + 1); if (e < 0) { err('A chord name or text in quotes (") was not closed.', ln, i); return; } i = e + 1; continue; }
+        if (ch === '!' || ch === '+') {
+          var e2 = s.indexOf(ch, i + 1);
+          if (e2 < 0) { err('A decoration starting with "' + ch + '" was not closed.', ln, i); return; }
+          i = e2 + 1; continue;
+        }
+        if (ch === '{') { var e3 = s.indexOf('}', i + 1); if (e3 < 0) { err('Grace notes in { } were not closed with "}".', ln, i); return; } i = e3 + 1; continue; }
+        if ('.~HLMOPSTuvJR'.indexOf(ch) >= 0) { i++; continue; }
+        if (ch === '&') { overlaySkip = true; i++; continue; }
+        if (ch === '(') {
+          var tm = s.slice(i).match(/^\((\d)(?::(\d*))?(?::(\d*))?/);
+          if (tm) {
+            var p = +tm[1], q = tm[2] ? +tm[2] : ({ 2: 3, 3: 2, 4: 3, 6: 2, 8: 3 }[p] || ((meter.num % 3 === 0 && meter.num > 3) ? 3 : 2));
+            var r = tm[3] ? +tm[3] : p;
+            tupletFactor = q / p; tupletLeft = r; i += tm[0].length; continue;
+          }
+          i++; continue;
+        }
+        if (ch === '-') { if (lastNote) lastNote.tie = true; i++; continue; }
+        if (ch === '>' || ch === '<') {
+          var run = s.slice(i).match(/^(>+|<+)/)[0], n = run.length;
+          var factor = 1 - Math.pow(0.5, n); // >:0.5 >>:0.75
+          if (lastNote) {
+            if (ch === '>') { setDur(lastNote, lastNote.dur * (1 + factor)); brokenNext = 1 - factor; }
+            else { setDur(lastNote, lastNote.dur * (1 - factor)); brokenNext = 1 + factor; }
+          }
+          i += n; continue;
+        }
+        // inline field [K:...]
+        if (ch === '[' && /^\[[A-Za-z]:/.test(s.slice(i, i + 3))) {
+          var e4 = s.indexOf(']', i);
+          if (e4 < 0) { err('An inline field like [K:G] was not closed with "]".', ln, i); return; }
+          var fl = s[i + 1], fv = s.slice(i + 3, e4);
+          applyField(fl, fv, ln, true);
+          if (fl === 'V' && !voiceOk()) return; // rest of line belongs to another voice
+          i = e4 + 1; continue;
+        }
+        // endings [1 [2
+        if (ch === '[' && /\d/.test(s[i + 1] || '')) {
+          var em = s.slice(i).match(/^\[(\d+(?:[,-]\d+)*)/);
+          res.elements.push({ type: 'ending', nums: parseEndingNums(em[1]) });
+          i += em[0].length; continue;
+        }
+        // bar lines
+        if (ch === '|' || ch === ':' || (ch === '[' && s[i + 1] === '|') || ch === ']') {
+          var bm = s.slice(i).match(/^(?::|\||\[\||\])+/);
+          if (!bm) { i++; continue; }
+          var tok = bm[0];
+          if (tok === ':' ) { i++; continue; }
+          i += tok.length;
+          var lead = tok.match(/^:*/)[0].length, trail = tok.match(/:*$/)[0].length;
+          var kind = /\]|\|\||\[\|/.test(tok) ? 'double' : 'single';
+          if (/\|\]$|\|\]:*$/.test(tok) && !lead) kind = 'final';
+          var bel = { type: 'bar', kind: kind, repEnd: lead > 0, repStart: trail > 0 && (tok.length > trail), afterNote: res.notes.length - 1 };
+          if (tok === '::') { bel.repEnd = true; bel.repStart = true; }
+          res.elements.push(bel);
+          if (res.notes.length) res.notes[res.notes.length - 1].barAfter = bel;
+          barNo++; barAcc = {}; overlaySkip = false;
+          var dm = s.slice(i).match(/^\s?(\d+(?:[,-]\d+)*)/);
+          if (dm && !/^\s?\d+\s*\//.test(s.slice(i))) { res.elements.push({ type: 'ending', nums: parseEndingNums(dm[1]) }); i += dm[0].length; }
+          continue;
+        }
+        // chords
+        if (ch === '[') {
+          var e5 = s.indexOf(']', i);
+          if (e5 < 0) { err('A chord in [ ] was not closed with "]".', ln, i); return; }
+          var inner = s.slice(i + 1, e5), best = null, pos = 0, firstLen = null;
+          while (pos < inner.length) {
+            var nm = inner.slice(pos).match(/^(\^\^|__|\^|_|=)?([A-Ga-g])([',]*)([0-9]*\/*[0-9]*)/);
+            if (!nm) { pos++; continue; }
+            var pn = pitchOf(nm[1], nm[2], nm[3], true);
+            if (firstLen === null) firstLen = lenOf(nm[4]);
+            if (!best || pn.midi > best.midi) best = pn;
+            pos += nm[0].length;
+          }
+          i = e5 + 1;
+          var lm = s.slice(i).match(/^[0-9]*\/*[0-9]*/)[0]; i += lm.length;
+          if (best) { commitAcc(best); addNote(best, (firstLen || 1) * lenOf(lm), ln); }
+          continue;
+        }
+        // notes
+        var nm2 = s.slice(i).match(/^(\^\^|__|\^|_|=)?([A-Ga-g])([',]*)([0-9]*\/*[0-9]*)/);
+        if (nm2) {
+          var pn2 = pitchOf(nm2[1], nm2[2], nm2[3]);
+          commitAcc(pn2);
+          addNote(pn2, lenOf(nm2[4]), ln);
+          i += nm2[0].length; continue;
+        }
+        var rm = s.slice(i).match(/^([zx])([0-9]*\/*[0-9]*)/);
+        if (rm) { addNote({ rest: true, invisible: rm[1] === 'x' }, lenOf(rm[2]), ln); i += rm[0].length; continue; }
+        var zm = s.slice(i).match(/^([ZX])(\d*)/);
+        if (zm) { var bars = +(zm[2] || 1); for (var bb = 0; bb < bars; bb++) { addNote({ rest: true, wholeBar: true }, (meter.num / meter.den) / (unit || defaultUnit()), ln); if (bb < bars - 1) { res.elements.push({ type: 'bar', kind: 'single' }); barNo++; } } i += zm[0].length; continue; }
+        if (ch === '^' || ch === '_' || ch === '=') { err('The sharp/flat sign "' + ch + '" must come right before a note letter, like ^F or _B.', ln, i); return; }
+        if (/[0-9\/]/.test(ch)) { err('The number "' + ch + '" needs to come right after a note, like G2 or A/2.', ln, i); return; }
+        err('I don\'t understand the character "' + ch + '". Notes are the letters A to G (or a to g), and z is a rest.', ln, i);
+        return;
+      }
+    }
+    function parseEndingNums(t) { var out = []; t.split(',').forEach(function (p) { var r = p.split('-'); if (r.length === 2) for (var x = +r[0]; x <= +r[1]; x++) out.push(x); else out.push(+p); }); return out; }
+    function lenOf(t) {
+      if (!t) return 1;
+      var m = t.match(/^(\d*)(\/*)(\d*)$/);
+      if (!m) return 1;
+      var num = m[1] ? +m[1] : 1, den = 1;
+      if (m[2]) den = m[3] ? +m[3] * Math.pow(2, m[2].length - 1) : Math.pow(2, m[2].length);
+      return num / den;
+    }
+    function pitchOf(accStr, letter, octs, noCommit) {
+      var up = letter.toUpperCase(), oct = letter === up ? 4 : 5;
+      for (var k = 0; k < octs.length; k++) oct += octs[k] === "'" ? 1 : -1;
+      var explicit = accStr ? { '^': 1, '^^': 2, '_': -1, '__': -2, '=': 0 }[accStr] : null;
+      var key = up + oct, alter;
+      if (explicit !== null) alter = explicit;
+      else if (key in barAcc) alter = barAcc[key];
+      else alter = keyAcc[up] || 0;
+      return { letter: up, octave: oct, alter: alter, explicit: explicit, midi: 12 * (oct + 1) + NAT[up] + alter, step: LETTERS.indexOf(up) + 7 * oct };
+    }
+    function commitAcc(p) { if (p.explicit !== null && p.explicit !== undefined) barAcc[p.letter + p.octave] = p.explicit; }
+    function setDur(n, d) { n.dur = d; n.durUnits = d / unitQ(); }
+    function addNote(p, lenUnits, ln) {
+      var d = lenUnits * unitQ();
+      if (brokenNext !== 1) { d *= brokenNext; brokenNext = 1; }
+      if (tupletLeft > 0) { d *= tupletFactor; tupletLeft--; p.tuplet = true; }
+      if (!(d > 0) || !isFinite(d)) { err('A note length could not be worked out.', ln); return; }
+      var n = newNote(p);
+      setDur(n, d);
+      if (lastNote && lastNote.tie && !n.rest) {
+        if (lastNote.midi === n.midi) { n.tiedFrom = lastNote.i; } else { lastNote.slurTie = true; }
+      }
+      lastNote = n;
+      if (!n.rest) pendingNotes.push(n);
+      n.barLen = meter.free ? 0 : meter.num / meter.den * 4;
+      groupHasAny = true;
+    }
+
+    var contBuffer = '';
+    for (var ln = 0; ln < lines.length; ln++) {
+      var raw = lines[ln]; curSrcLine = ln;
+      var line = raw.replace(/\s+$/, '');
+      if (/^%%/.test(line)) continue;
+      if (/^\s*%/.test(line)) continue;
+      if (/^\s*$/.test(line)) { if (bodyStarted && res.notes.length) { /* blank line ends tune */ if (sawX && res.notes.length) break; } continue; }
+      var fm = line.match(/^([A-Za-z+]):(.*)$/);
+      if (fm && !(bodyStarted && /^[A-Ga-g]:/.test(line) && false)) {
+        var L = fm[1], V = fm[2];
+        if (L === 'w' || L === '+') {
+          if (!voiceOk()) continue;
+          if (!lastLineWasLyric || L === '+') {
+            if (L !== '+') { groupNotes = pendingNotes; pendingNotes = []; verseInGroup = 0; }
+          }
+          if (L === '+') { verseInGroup = Math.max(0, verseInGroup - 1); }
+          var r = alignLyrics(groupNotes, V, verseInGroup);
+          if (r.overflow) res.warnings.push('Line ' + (ln + 1) + ': there are more words than notes; ' + r.overflow + ' word part(s) were left out.');
+          verseInGroup++;
+          res.verseCount = Math.max(res.verseCount, verseInGroup);
+          lastLineWasLyric = true;
+          continue;
+        }
+        if (L === 'W') { Wlines.push(V.trim()); continue; }
+        if (L === 'K' && !bodyStarted) { applyField(L, V, ln); bodyStarted = true; continue; }
+        if (L === 'V') { applyField(L, V, ln); lastLineWasLyric = false; continue; }
+        if ('XTCMLQKNOSRBDFGHIZPrsmU'.indexOf(L) >= 0) { applyField(L, V, ln); continue; }
+        if (!bodyStarted) { applyField(L, V, ln); continue; }
+      }
+      if (!bodyStarted) {
+        // tolerate missing headers: treat as music
+        if (/^[A-Za-z]:/.test(line)) continue;
+        bodyStarted = true;
+      }
+      if (!voiceOk() && !/^\s*\[V:/.test(line)) continue;
+      lastLineWasLyric = false;
+      var t = line;
+      parseMusicLine(t, ln);
+      if (!/\\\s*$/.test(t)) lineIdx++;
+      if (res.errors.length > 8) break;
+    }
+    res.unit = unit || defaultUnit();
+    if (!res.tempo) res.tempo = null;
+    // W: verses (unaligned stanzas)
+    var stanza = [];
+    Wlines.concat(['']).forEach(function (w) {
+      if (w === '') { if (stanza.length) res.extraVerses.push(stanza.join(' ')); stanza = []; return; }
+      stanza.push(w);
+    });
+    res.extraVerses = res.extraVerses.map(function (s) { return s.replace(/^\s*\d+\.\s*/, ''); });
+    if (!res.notes.length && !res.errors.length) res.errors.push({ message: 'I couldn\'t find any notes. Type notes using the letters A to G after the K: line.', line: 1, col: 1 });
+    finish(res);
+    return res;
+  }
+
+  function finish(res) {
+    // timeline in quarter-note beats, source order
+    var t = 0;
+    res.notes.forEach(function (n) { n.start = t; t += n.dur; });
+    res.totalBeats = t;
+    // bar sanity warnings
+    var barLen = res.meter.free ? 0 : res.meter.num / res.meter.den * 4;
+    if (barLen) {
+      var bars = {}, blen = {}; res.notes.forEach(function (n) { bars[n.bar] = (bars[n.bar] || 0) + n.dur; blen[n.bar] = n.barLen; });
+      var keys = Object.keys(bars).map(Number).sort(function (a, b) { return a - b; });
+      keys.forEach(function (b, ix) {
+        if (ix === 0 || ix === keys.length - 1) return;
+        var want = blen[b] || barLen; if (want && Math.abs(bars[b] - want) > 1e-6) res.warnings.push('Bar ' + (b + 1) + ' has ' + fmtBeats(bars[b]) + ' beats but the time signature expects ' + fmtBeats(want) + '.');
+      });
+    }
+    res.verseLabels = []; for (var v = 0; v < res.verseCount; v++) res.verseLabels.push('Verse ' + (v + 1));
+    res.playback = unfold(res);
+  }
+  function fmtBeats(x) { return Math.round(x * 100) / 100; }
+
+  /* repeats & endings -> playback order list of note indices */
+  function unfold(res) {
+    var els = res.elements, out = [], i = 0, repStart = 0, pass = 1, skipping = false, guard = 0;
+    var jumpedFrom = -1;
+    while (i < els.length && guard++ < 100000) {
+      var e = els[i];
+      if (e.type === 'note') { if (!skipping) out.push(e.n); i++; continue; }
+      if (e.type === 'ending') { skipping = e.nums.indexOf(pass) < 0; i++; continue; }
+      if (e.type === 'bar') {
+        if (e.repEnd && !skipping && pass === 1 && jumpedFrom !== i) {
+          jumpedFrom = i; pass = 2; i = repStart; continue;
+        }
+        if (e.repEnd && !skipping && pass === 2) { pass = 1; jumpedFrom = -1; repStart = i + 1; }
+        if (e.repEnd && skipping) { i++; continue; }
+        if (e.kind !== 'single' && !e.repEnd && skipping) { /* an ending stopped */ }
+        if (e.kind !== 'single' || e.repEnd) { if (skipping && !e.repEnd) skipping = false; }
+        if (e.repStart) { if (i + 1 !== repStart || pass === 1) { repStart = i + 1; if (jumpedFrom !== -1 && pass === 2 && !e.repEnd) {} } }
+        if (e.kind === 'final' && pass === 1) {}
+        i++; continue;
+      }
+      i++;
+    }
+    // reset pass when leaving repeats with no endings
+    return out;
+  }
+
+  /* ---------- playback events (ties merged for audio) ---------- */
+  function buildEvents(res, transpose) {
+    var ev = [], t = 0, order = res.playback;
+    for (var k = 0; k < order.length; k++) {
+      var n = res.notes[order[k]];
+      var e = { n: n.i, start: t, dur: n.dur, midi: n.rest ? null : n.midi + (transpose || 0), attack: true };
+      if (n.tiedFrom !== undefined && ev.length && ev[ev.length - 1].midi === e.midi && order[k - 1] === n.tiedFrom) {
+        e.attack = false; var p = ev[ev.length - 1]; while (p && !p.attack) p = ev[ev.indexOf(p) - 1]; if (p) p.sound += n.dur;
+      }
+      e.sound = n.dur;
+      ev.push(e); t += n.dur;
+    }
+    return { events: ev, total: t };
+  }
+
+  /* ---------- spelling (for transposition & MIDI import) ---------- */
+  function spell(midi, fifths) {
+    var acc = fifthsToAcc(fifths), pc = ((midi % 12) + 12) % 12, best = null;
+    for (var li = 0; li < 7; li++) {
+      var L = LETTERS[li], a = pc - NAT[L];
+      if (a > 6) a -= 12; if (a < -6) a += 12;
+      if (Math.abs(a) > 2) continue;
+      var score = Math.abs(a - acc[L]) * 10 + Math.abs(a);
+      if (a !== acc[L]) score += (fifths >= 0 ? (a < acc[L] ? 3 : 0) : (a > acc[L] ? 3 : 0));
+      if (Math.abs(a) === 2) score += 20;
+      if ((a === -1 && (L === 'C' || L === 'F')) || (a === 1 && (L === 'E' || L === 'B'))) score += 8;
+      if (!best || score < best.score) best = { letter: L, alter: a, score: score };
+    }
+    var natPitch = midi - best.alter;
+    var oct = Math.floor(natPitch / 12) - 1;
+    return { letter: best.letter, alter: best.alter, octave: oct, step: LETTERS.indexOf(best.letter) + 7 * oct, midi: midi };
+  }
+  function transposeFifths(fifths, semis) {
+    var f = fifths + ((((semis * 7) % 12) + 12) % 12);
+    while (f > 6) f -= 12;
+    while (f < -6) f += 12;
+    if (f === 6 && fifths < 0) f = -6;
+    return f;
+  }
+  /* display layer: for each note compute letter/octave/step & which accidental glyph to show */
+  function displayNotes(res, transpose) {
+    transpose = transpose || 0;
+    var fifths = transpose ? transposeFifths(res.key.fifths, transpose) : res.key.fifths;
+    var keyAcc = transpose ? fifthsToAcc(fifths) : res.key.acc;
+    var out = [], barState = {}, curBar = -1;
+    res.notes.forEach(function (n) {
+      if (n.bar !== curBar) { barState = {}; curBar = n.bar; }
+      var d = { i: n.i, rest: n.rest, dur: n.dur, bar: n.bar, line: n.line };
+      if (!n.rest) {
+        var sp = transpose ? spell(n.midi + transpose, fifths) : { letter: n.letter, alter: n.alter, octave: n.octave, step: n.step, midi: n.midi };
+        d.letter = sp.letter; d.octave = sp.octave; d.step = sp.step; d.alter = sp.alter; d.midi = n.midi + transpose;
+        var k = sp.letter + sp.octave, cur = (k in barState) ? barState[k] : keyAcc[sp.letter];
+        if (sp.alter !== cur || (n.explicit !== null && n.explicit !== undefined && !transpose)) { d.showAcc = sp.alter; }
+        barState[k] = sp.alter;
+      }
+      out.push(d);
+    });
+    return { notes: out, fifths: fifths, keyAcc: keyAcc, keyName: keyNameFromFifths(fifths, res.key.mode) };
+  }
+  function keyNameFromFifths(f, mode) {
+    var shift = MODE_SHIFT[mode] || 0;
+    var maj = majorTonicFromFifths(f - shift);
+    if (shift === 0) return prettyKey(maj) + ' major';
+    // tonic of mode = major tonic moved
+    var majPc = (NAT[maj[0]] + (maj[1] === '#' ? 1 : maj[1] === 'b' ? -1 : 0) + 12) % 12;
+    var off = { mix: 7, dor: 2, aeo: 9, m: 9, min: 9, phr: 4, loc: 11, lyd: 5 }[mode];
+    var sp = spell(60 + ((majPc + off) % 12), f);
+    var nm = sp.letter + (sp.alter > 0 ? '♯' : sp.alter < 0 ? '♭' : '');
+    return nm + (mode === 'm' || mode === 'min' || mode === 'aeo' ? ' minor' : ' ' + { mix: 'mixolydian', dor: 'dorian', phr: 'phrygian', loc: 'locrian', lyd: 'lydian' }[mode]);
+  }
+
+  /* ---------- writing ABC from a note list (MIDI / MusicXML import) ---------- */
+  function lenStr(q) { // q = duration in units of L
+    var r = Math.round(q * 96) / 96, num, den;
+    for (den = 1; den <= 64; den *= 2) { num = r * den; if (Math.abs(num - Math.round(num)) < 1e-6) { num = Math.round(num); break; } }
+    if (den > 64) { den = 64; num = Math.round(r * 64); }
+    if (num === den) return '';
+    if (den === 1) return String(num);
+    if (num === 1 && den === 2) return '/';
+    if (num === 1) return '/' + den;
+    return num + '/' + den;
+  }
+  function abcPitch(sp) {
+    var o = sp.octave, s;
+    if (o >= 5) { s = sp.letter.toLowerCase(); for (var k = 5; k < o; k++) s += "'"; }
+    else { s = sp.letter; for (var j = 4; j > o; j--) s += ','; }
+    return s;
+  }
+  function accMark(a) { return { '-2': '__', '-1': '_', '0': '=', '1': '^', '2': '^^' }[a]; }
+  /* items: [{midi|null, dur (quarters), lyric?:{text,hyph,extend}}]; opts: {title, meterNum, meterDen, fifths, mode, bpm, pickup(quarters)} */
+  function notesToABC(items, opts) {
+    var num = opts.meterNum || 4, den = opts.meterDen || 4, fifths = opts.fifths || 0;
+    var barQ = num / den * 4, Lq = den >= 8 ? 0.5 : 1; // L in quarters
+    var keyAcc = fifthsToAcc(fifths), mode = opts.mode || 'maj';
+    var keyName = majorTonicFromFifths(fifths - (mode === 'm' ? -3 : 0));
+    if (mode === 'm') { var sp0 = spell(60 + ((NAT[keyName[0]] + (keyName[1] === '#' ? 1 : keyName[1] === 'b' ? -1 : 0) + 9) % 12), fifths); keyName = sp0.letter + (sp0.alter > 0 ? '#' : sp0.alter < 0 ? 'b' : '') + 'm'; }
+    var head = ['X:1', 'T:' + (opts.title || 'Imported tune')];
+    (opts.extraHeaders || []).forEach(function (h) { head.push(h); });
+    head.push('M:' + num + '/' + den, 'L:' + (Lq === 1 ? '1/4' : '1/8'), 'Q:1/4=' + Math.round(opts.bpm || 90), 'K:' + keyName);
+    var pos = -(opts.pickup || 0); // position within bar; negative = pickup
+    var out = [], lineBars = 0, barAcc = {}, verses = opts.verses || 1, lyricLines = [], curLyr = [];
+    for (var v = 0; v < verses; v++) curLyr.push([]);
+    var barCount = 0;
+    var barStartPos = opts.pickup ? opts.pickup : 0, inBar = opts.pickup ? (barQ - opts.pickup) : 0;
+    inBar = opts.pickup ? barQ - opts.pickup : 0;
+    var lineTok = [];
+    function flushLine() {
+      if (!lineTok.length) return;
+      out.push(lineTok.join(' ').replace(/ \|/g, ' |'));
+      for (var v = 0; v < verses; v++) if (opts.hasLyrics) out.push('w: ' + curLyr[v].join(' '));
+      lineTok = []; for (var v2 = 0; v2 < verses; v2++) curLyr[v2] = [];
+    }
+    items.forEach(function (it, idx) {
+      var remaining = it.dur, first = true;
+      while (remaining > 1e-6) {
+        var room = barQ - inBar, d = Math.min(remaining, room);
+        // avoid unrepresentable lengths like 5/4: split into representable chunks
+        var token;
+        if (it.midi === null || it.midi === undefined) token = 'z' + lenStr(d / Lq);
+        else {
+          var sp = spell(it.midi, fifths), key = sp.letter + sp.octave;
+          var cur = (key in barAcc) ? barAcc[key] : keyAcc[sp.letter];
+          token = (sp.alter !== cur ? accMark(sp.alter) : '') + abcPitch(sp) + lenStr(d / Lq);
+          barAcc[key] = sp.alter;
+          if (remaining - d > 1e-6) token += '-';
+        }
+        lineTok.push(token);
+        if (opts.hasLyrics && it.midi !== null && it.midi !== undefined) {
+          for (var v = 0; v < verses; v++) {
+            var ly = it.lyrics && it.lyrics[v];
+            if (!first) { curLyr[v].push('*'); continue; } // tied continuation: empty slot
+            if (!ly) curLyr[v].push('*');
+            else if (ly.hold) curLyr[v].push('_');
+            else curLyr[v].push(escapeLyric(ly.text) + (ly.hyph ? '-' : ''));
+          }
+        }
+        first = false;
+        remaining -= d; inBar += d;
+        if (inBar >= barQ - 1e-6) {
+          inBar = 0; barAcc = {}; barCount++; lineBars++;
+          var last = idx === items.length - 1 && remaining <= 1e-6;
+          lineTok.push(last ? '|]' : '|');
+          if (lineBars >= (opts.barsPerLine || 4) && !last) { flushLine(); lineBars = 0; }
+        }
+      }
+    });
+    if (lineTok.length && !/\|\]$/.test(lineTok[lineTok.length - 1])) lineTok.push('|]');
+    flushLine();
+    (opts.extraVerses || []).forEach(function (s, k) { out.push('W: ' + s); });
+    return head.concat(out).join('\n') + '\n';
+  }
+  function escapeLyric(t) { return String(t).replace(/\s+/g, '~').replace(/-/g, '\\-').replace(/[*_|]/g, ''); }
+
+  /* ---------- MIDI file reader ---------- */
+  function parseMIDI(bytes) {
+    var d = bytes instanceof Uint8Array ? bytes : new Uint8Array(bytes), p = 0;
+    function u32() { var v = (d[p] << 24 | d[p + 1] << 16 | d[p + 2] << 8 | d[p + 3]) >>> 0; p += 4; return v; }
+    function u16() { var v = d[p] << 8 | d[p + 1]; p += 2; return v; }
+    function vlq() { var v = 0, b; do { b = d[p++]; v = (v << 7) | (b & 0x7f); } while (b & 0x80 && p < d.length); return v; }
+    function str(n) { var s = ''; for (var k = 0; k < n; k++) s += String.fromCharCode(d[p + k]); return s; }
+    if (str(4) !== 'MThd') throw new Error('This does not look like a MIDI file.');
+    p = 4; var hl = u32(), fmt = u16(), ntr = u16(), div = u16(); p = 8 + hl;
+    if (div & 0x8000) throw new Error('This MIDI file uses SMPTE timing, which is not supported.');
+    var out = { ppq: div, format: fmt, notes: [], tempos: [], timeSigs: [], keySigs: [], names: [], lyrics: [] };
+    for (var tr = 0; tr < ntr && p < d.length; tr++) {
+      if (str(4) !== 'MTrk') break;
+      p += 4; var len = u32(), end = p + len, tick = 0, status = 0, open = {};
+      while (p < end) {
+        tick += vlq();
+        var b = d[p];
+        if (b & 0x80) { status = b; p++; } 
+        var hi = status & 0xf0, ch = status & 0x0f;
+        if (status === 0xff) {
+          var type = d[p++], ml = vlq(), ds = p; p += ml;
+          if (type === 0x51) out.tempos.push({ tick: tick, mpq: d[ds] << 16 | d[ds + 1] << 8 | d[ds + 2] });
+          else if (type === 0x58) out.timeSigs.push({ tick: tick, num: d[ds], den: Math.pow(2, d[ds + 1]) });
+          else if (type === 0x59) out.keySigs.push({ tick: tick, sf: (d[ds] << 24) >> 24, mi: d[ds + 1] });
+          else if (type === 0x03) { var nm = ''; for (var k = 0; k < ml; k++) nm += String.fromCharCode(d[ds + k]); out.names.push({ track: tr, name: nm }); }
+          else if (type === 0x05) { var ly = ''; for (var k2 = 0; k2 < ml; k2++) ly += String.fromCharCode(d[ds + k2]); out.lyrics.push({ track: tr, tick: tick, text: ly }); }
+          continue;
+        }
+        if (status === 0xf0 || status === 0xf7) { var sl = vlq(); p += sl; continue; }
+        if (hi === 0x90 || hi === 0x80) {
+          var note = d[p++], vel = d[p++], key = ch * 128 + note;
+          if (hi === 0x90 && vel > 0) { if (open[key]) { open[key].end = tick; out.notes.push(open[key]); } open[key] = { track: tr, ch: ch, start: tick, pitch: note, vel: vel }; }
+          else if (open[key]) { open[key].end = tick; out.notes.push(open[key]); delete open[key]; }
+          continue;
+        }
+        if (hi === 0xa0 || hi === 0xb0 || hi === 0xe0) { p += 2; continue; }
+        if (hi === 0xc0 || hi === 0xd0) { p += 1; continue; }
+        p++; // unknown, skip
+      }
+      p = end;
+    }
+    out.notes.sort(function (a, b) { return a.start - b.start || b.pitch - a.pitch; });
+    return out;
+  }
+  function midiToABC(bytes, title) {
+    var m = parseMIDI(bytes), ppq = m.ppq;
+    var notes = m.notes.filter(function (n) { return n.ch !== 9; });
+    if (!notes.length) throw new Error('This MIDI file has no melody notes in it.');
+    // choose the track with the highest average pitch among tracks having a reasonable number of notes
+    var tracks = {};
+    notes.forEach(function (n) { var t = tracks[n.track] || (tracks[n.track] = { c: 0, s: 0 }); t.c++; t.s += n.pitch; });
+    var maxC = 0; Object.keys(tracks).forEach(function (k) { maxC = Math.max(maxC, tracks[k].c); });
+    var bestT = null; Object.keys(tracks).forEach(function (k) { var t = tracks[k]; if (t.c >= maxC * 0.35 && (bestT === null || t.s / t.c > tracks[bestT].s / tracks[bestT].c)) bestT = k; });
+    var mel = notes.filter(function (n) { return String(n.track) === String(bestT); });
+    // skyline: highest note at each onset
+    var grid = ppq / 4; // sixteenth
+    function q(t) { return Math.round(t / grid) * grid; }
+    var byStart = {};
+    mel.forEach(function (n) { var s = q(n.start); if (!byStart[s] || byStart[s].pitch < n.pitch) byStart[s] = { start: s, end: Math.max(q(n.end), s + grid), pitch: n.pitch }; });
+    var seq = Object.keys(byStart).map(Number).sort(function (a, b) { return a - b; }).map(function (s) { return byStart[s]; });
+    var items = [], cur = 0;
+    var origin = 0;
+    seq.forEach(function (n, k) {
+      var next = k + 1 < seq.length ? seq[k + 1].start : n.end;
+      var end = Math.min(n.end, next);
+      if (n.start > cur + grid / 2 && items.length) items.push({ midi: null, dur: (n.start - cur) / ppq });
+      if (!items.length) origin = n.start;
+      var dur = end - n.start;
+      // absorb tiny gaps (articulation) into the note
+      if (next - end > 0 && next - end <= ppq / 2 && k + 1 < seq.length) dur = next - n.start;
+      items.push({ midi: n.pitch, dur: dur / ppq });
+      cur = n.start + dur;
+    });
+    var ts = m.timeSigs[0] || { num: 4, den: 4 };
+    var ks = m.keySigs[0];
+    var fifths = ks ? ks.sf : guessFifths(items), mode = ks && ks.mi ? 'm' : 'maj';
+    var bpm = m.tempos.length ? 60000000 / m.tempos[0].mpq : 100;
+    var barQ = ts.num / ts.den * 4;
+    var pickup = ((origin / ppq) % barQ);
+    pickup = pickup > 1e-6 ? barQ - pickup : 0;
+    if (!pickup) { // infer pickup from total length
+      var total = items.reduce(function (a, b) { return a + b.dur; }, 0), rem = total % barQ;
+      if (rem > 1e-6) { var acc = 0; for (var k = 0; k < items.length; k++) { acc += items[k].dur; if (Math.abs(acc - rem) < 1e-6) { pickup = rem; break; } if (acc > rem) break; } }
+    }
+    var nm = (m.names.filter(function (x) { return x.name.trim(); })[0] || {}).name;
+    return { abc: notesToABC(items, { title: title || nm || 'Imported MIDI tune', meterNum: ts.num, meterDen: ts.den, fifths: fifths, mode: mode, bpm: bpm * (ts.den === 2 ? 1 : 1), pickup: pickup }), items: items, raw: m, pickup: pickup, fifths: fifths, meter: ts };
+  }
+  function guessFifths(items) {
+    var best = 0, bestScore = -1;
+    for (var f = -6; f <= 6; f++) {
+      var acc = fifthsToAcc(f), sc = 0, tonicPc = (NAT[majorTonicFromFifths(f)[0]] + (majorTonicFromFifths(f)[1] === '#' ? 1 : majorTonicFromFifths(f)[1] === 'b' ? -1 : 0) + 12) % 12;
+      var scale = {}; LETTERS.split('').forEach(function (L) { scale[(NAT[L] + acc[L] + 12) % 12] = 1; });
+      items.forEach(function (it) { if (it.midi != null && scale[it.midi % 12]) sc += it.dur; });
+      var last = items.filter(function (it) { return it.midi != null; }).slice(-1)[0];
+      if (last && last.midi % 12 === tonicPc) sc += 2;
+      if (sc > bestScore + 1e-9 || (Math.abs(sc - bestScore) < 1e-9 && Math.abs(f) < Math.abs(best))) { best = f; bestScore = sc; }
+    }
+    return best;
+  }
+
+  /* ---------- MusicXML (uncompressed) reader, needs DOMParser ---------- */
+  function musicXMLToABC(text, DOMParserImpl) {
+    var DP = DOMParserImpl || (typeof DOMParser !== 'undefined' ? DOMParser : null);
+    if (!DP) throw new Error('MusicXML reading needs a web browser.');
+    var doc = new DP().parseFromString(text, 'application/xml');
+    if (doc.getElementsByTagName('parsererror').length) throw new Error('This MusicXML file could not be read (it may be damaged).');
+    if (doc.getElementsByTagName('score-timewise').length) throw new Error('Only "partwise" MusicXML files are supported.');
+    var part = doc.getElementsByTagName('part')[0];
+    if (!part) throw new Error('No music part was found in this MusicXML file.');
+    var title = (doc.getElementsByTagName('work-title')[0] || doc.getElementsByTagName('movement-title')[0] || {}).textContent || '';
+    var div = 1, fifths = 0, mode = 'maj', num = 4, den = 4, bpm = 0, items = [], gotKey = false, gotTime = false, maxVerse = 1, firstVoice = null;
+    var measures = part.getElementsByTagName('measure'), pickup = 0;
+    for (var mi = 0; mi < measures.length; mi++) {
+      var meas = measures[mi], mDur = 0;
+      var kids = meas.children;
+      for (var c = 0; c < kids.length; c++) {
+        var el = kids[c], tag = el.tagName;
+        if (tag === 'attributes') {
+          var dv = el.getElementsByTagName('divisions')[0]; if (dv) div = +dv.textContent || 1;
+          var ky = el.getElementsByTagName('key')[0]; if (ky && !gotKey) { var fx = ky.getElementsByTagName('fifths')[0]; if (fx) fifths = +fx.textContent; var md = ky.getElementsByTagName('mode')[0]; if (md && /minor/.test(md.textContent)) mode = 'm'; gotKey = true; }
+          var tm = el.getElementsByTagName('time')[0]; if (tm && !gotTime) { num = +(tm.getElementsByTagName('beats')[0] || {}).textContent || 4; den = +(tm.getElementsByTagName('beat-type')[0] || {}).textContent || 4; gotTime = true; }
+        } else if (tag === 'sound' && el.getAttribute('tempo') && !bpm) bpm = +el.getAttribute('tempo');
+        else if (tag === 'direction') { var snd = el.getElementsByTagName('sound')[0]; if (snd && snd.getAttribute('tempo') && !bpm) bpm = +snd.getAttribute('tempo'); }
+        else if (tag === 'backup') { break; } // ignore later voices in the measure
+        else if (tag === 'note') {
+          if (el.getElementsByTagName('grace').length) continue;
+          var vEl = el.getElementsByTagName('voice')[0], voice = vEl ? vEl.textContent : '1';
+          if (firstVoice === null) firstVoice = voice;
+          if (voice !== firstVoice) continue;
+          var isChord = el.getElementsByTagName('chord').length > 0;
+          var durEl = el.getElementsByTagName('duration')[0], dq = durEl ? (+durEl.textContent / div) : 0;
+          var midi = null;
+          if (!el.getElementsByTagName('rest').length) {
+            var pit = el.getElementsByTagName('pitch')[0];
+            if (pit) {
+              var stp = pit.getElementsByTagName('step')[0].textContent, oc = +pit.getElementsByTagName('octave')[0].textContent;
+              var alt = pit.getElementsByTagName('alter')[0]; alt = alt ? Math.round(+alt.textContent) : 0;
+              midi = 12 * (oc + 1) + NAT[stp] + alt;
+            }
+          }
+          if (isChord) { var lastIt = items[items.length - 1]; if (lastIt && midi !== null && lastIt.midi !== null && midi > lastIt.midi) lastIt.midi = midi; continue; }
+          var it = { midi: midi, dur: dq, lyrics: [] };
+          var lys = el.getElementsByTagName('lyric');
+          for (var li = 0; li < lys.length; li++) {
+            var nmb = +(lys[li].getAttribute('number') || (li + 1)); if (!(nmb >= 1)) nmb = li + 1;
+            var txtEl = lys[li].getElementsByTagName('text')[0], syl = (lys[li].getElementsByTagName('syllabic')[0] || {}).textContent || 'single';
+            if (txtEl) { it.lyrics[nmb - 1] = { text: txtEl.textContent, hyph: syl === 'begin' || syl === 'middle' }; maxVerse = Math.max(maxVerse, nmb); }
+            else if (lys[li].getElementsByTagName('extend').length) it.lyrics[nmb - 1] = { hold: true, text: '' };
+          }
+          var ties = el.getElementsByTagName('tie'), tieStop = false;
+          for (var ti = 0; ti < ties.length; ti++) if (ties[ti].getAttribute('type') === 'stop') tieStop = true;
+          var prev = items[items.length - 1];
+          if (tieStop && prev && prev.midi === midi) { prev.dur += dq; } else items.push(it);
+          mDur += dq;
+        }
+      }
+      if (mi === 0 && Math.abs(mDur - num / den * 4) > 1e-6 && mDur > 0) pickup = mDur;
+    }
+    var hasLyrics = items.some(function (it) { return it.lyrics && it.lyrics.length; });
+    // merge tie durations exceeding bar are re-split by notesToABC
+    return notesToABC(items, { title: title || 'Imported MusicXML tune', meterNum: num, meterDen: den, fifths: fifths, mode: mode, bpm: bpm || 90, pickup: pickup, hasLyrics: hasLyrics, verses: hasLyrics ? maxVerse : 0 });
+  }
+
+  /* ---------- simple English syllabifier (for plain-text verses) ---------- */
+  var SYL_EXC = { kindness: 'kind-ness', "foll'wing": "foll'-wing", "op'ning": "op'-ning", "tempter's": "tempt-er's", tempter: 'tempt-er', already: 'al-read-y', without: 'with-out', "with'ring": "with'-ring", simply: 'sim-ply', angels: 'an-gels', angel: 'an-gel', shining: 'shin-ing', waking: 'wak-ing', morning: 'morn-ing', closing: 'clos-ing', shadows: 'shad-ows', mower: 'mow-er', nations: 'na-tions', forgotten: 'for-got-ten', rolling: 'roll-ing', surely: 'sure-ly', crying: 'cry-ing', triumph: 'tri-umph', dying: 'dy-ing', flying: 'fly-ing', lying: 'ly-ing', ever: 'ev-er', never: 'nev-er', river: 'riv-er', many: 'man-y', anger: 'an-ger', within: 'with-in', following: 'fol-low-ing', downwards: 'down-wards', misdeed: 'mis-deed', deserved: 'de-served', suffered: 'suf-fered', pining: 'pin-ing', sadness: 'sad-ness', gladness: 'glad-ness', springing: 'spring-ing', 'ever-springing': 'ev-er-spring-ing', herald: 'her-ald', 'herald\'s': 'her-ald\'s', desert: 'des-ert', bidding: 'bid-ding', repentance: 're-pent-ance', kingdom: 'king-dom', warning: 'warn-ing', prepare: 'pre-pare', valleys: 'val-leys', crooked: 'crook-ed', rougher: 'rough-er', places: 'pla-ces', humble: 'hum-ble', befits: 'be-fits', holy: 'ho-ly', glory: 'glo-ry', abroad: 'a-broad', token: 'to-ken', broken: 'bro-ken', pardon: 'par-don', blotting: 'blot-ting', certainly: 'cer-tain-ly', 'devour\'d': 'de-vour\'d', 'swallow\'d': 'swal-low\'d', esteem: 'es-teem', away: 'a-way', raging: 'rag-ing', swelling: 'swell-ing', 'o\'erwhelmed': 'o\'er-whelm-ed', safely: 'safe-ly', bloody: 'blood-y', cruelty: 'cru-el-ty', 'fowler\'s': 'fowl-er\'s', escapes: 'es-capes', escaped: 'es-cap-ed', therefore: 'there-fore', 'th\'assembly': 'th\'as-sem-bly', ungodly: 'un-god-ly', judgment: 'judg-ment', overthrown: 'o-ver-thrown', unto: 'un-to', meditates: 'med-i-tates', scorner: 'scorn-er', 'scorner\'s': 'scorn-er\'s', sitteth: 'sit-teth', placeth: 'plac-eth', planted: 'plant-ed', season: 'sea-son', fadeth: 'fad-eth', prosper: 'pros-per', wicked: 'wick-ed', godly: 'god-ly', whereas: 'where-as', iniquities: 'in-iq-ui-ties', graciously: 'gra-cious-ly', forgive: 'for-give', diseases: 'dis-eas-es', relieve: 're-lieve', redeem: 're-deem', 'loving-kindness': 'lov-ing-kind-ness', tender: 'ten-der', mercies: 'mer-cies', eternal: 'e-ter-nal', attends: 'at-tends', busy: 'bus-y', carried: 'car-ried', slumber: 'slum-ber', slumbers: 'slum-bers', behold: 'be-hold', henceforth: 'hence-forth', going: 'go-ing', preserve: 'pre-serve', forever: 'for-ev-er', table: 'ta-ble', every: 'ev-ery', heaven: 'heav-en', heavens: 'heav-ens', heavenly: 'heav-en-ly', 'heav\'n': 'heav\'n', 'heav\'nly': 'heav\'n-ly', power: 'pow-er', powers: 'pow-ers', 'pow\'r': 'pow\'r', 'o\'er': 'o\'er', 'e\'er': 'e\'er', 'ne\'er': 'ne\'er', fire: 'fire', our: 'our', hour: 'hour', flower: 'flow-er', saviour: 'sav-iour', savior: 'sav-ior', even: 'ev-en', given: 'giv-en', 'giv\'n': 'giv\'n', jesus: 'je-sus', israel: 'is-ra-el', 'israel\'s': 'is-ra-el\'s', glorious: 'glo-rious', righteousness: 'right-eous-ness', righteous: 'right-eous', quiet: 'qui-et', comfort: 'com-fort', table: 'ta-ble', create: 'cre-ate', creatures: 'crea-tures', shepherd: 'shep-herd', restore: 're-store', mercy: 'mer-cy', goodness: 'good-ness', forevermore: 'for-ev-er-more', evermore: 'ev-er-more', dwelling: 'dwell-ing', pastures: 'pas-tures', waters: 'wa-ters', leadeth: 'lead-eth', anoint: 'a-noint', overflows: 'o-ver-flows', furnished: 'fur-nish-ed', presence: 'pres-ence', salvation: 'sal-va-tion', deliverance: 'de-liv-er-ance', experience: 'ex-pe-ri-ence', magnify: 'mag-ni-fy', posterity: 'pos-ter-i-ty', changing: 'chang-ing', trouble: 'trou-ble', praises: 'prais-es', people: 'peo-ple', cheerful: 'cheer-ful', before: 'be-fore', rejoice: 're-joice', indeed: 'in-deed', approach: 'ap-proach', seemly: 'seem-ly', mercy: 'mer-cy', maker: 'ma-ker', mountains: 'moun-tains', mighty: 'migh-ty', worship: 'wor-ship', alone: 'a-lone', jerusalem: 'je-ru-sa-lem', unto: 'un-to', sufficient: 'suf-fi-cient', defence: 'de-fence', everlasting: 'ev-er-last-ing', endless: 'end-less', thousand: 'thou-sand', evening: 'eve-ning', rising: 'ris-ing', 'ever-rolling': 'ev-er-roll-ing', forgotten: 'for-got-ten', opening: 'o-pen-ing', eternal: 'e-ter-nal', shelter: 'shel-ter', stormy: 'storm-y', shadow: 'sha-dow', secure: 'se-cure', received: 're-ceived', little: 'lit-tle', noble: 'no-ble', nobler: 'no-bler', immortality: 'im-mor-tal-i-ty', endures: 'en-dures', happy: 'hap-py', oppressed: 'op-pressed', eyesight: 'eye-sight', fainting: 'faint-ing', conscience: 'con-science', stranger: 'stran-ger', distress: 'dis-tress', widow: 'wid-ow', fatherless: 'fa-ther-less', prisoner: 'pris-oner', release: 're-lease', cooling: 'cool-ing', heated: 'heat-ed', refreshing: 're-fresh-ing', living: 'liv-ing', thirsty: 'thirst-y', behold: 'be-hold', majesty: 'maj-es-ty', divine: 'di-vine', restless: 'rest-less', employ: 'em-ploy', thankful: 'thank-ful', forsaken: 'for-sak-en', exposed: 'ex-posed', oppressor: 'op-press-or', 'oppressor\'s': 'op-press-or\'s', eternal: 'e-ter-nal', israel: 'Is-ra-el' };
+  function syllabifyWord(w) {
+    if (w.indexOf('~') > 0) { var jp = w.split('~'), first = syllabifyWord(jp[0]); first[first.length - 1] += '~' + jp.slice(1).join('~'); return first; }
+    var pm = w.match(/^(.*[A-Za-z])('s|’s)([^A-Za-z]*)$/);
+    if (pm && !SYL_EXC[(pm[1] + pm[2]).replace(/^[^A-Za-z']+/, '').toLowerCase()]) { var bp = syllabifyWord(pm[1]); bp[bp.length - 1] += pm[2] + pm[3]; return bp; }
+    var m = w.match(/^([^A-Za-z']*)([A-Za-z'’]+(?:-[A-Za-z'’]+)*)([^A-Za-z']*)$/);
+    if (!m) return [w];
+    var pre = m[1], core = m[2].replace(/’/g, "'"), post = m[3], lc = core.toLowerCase();
+    var parts;
+    if (core.indexOf('-') > 0) { parts = []; core.split('-').forEach(function (p) { parts = parts.concat(syllabifyWord(p)); }); }
+    else if (SYL_EXC[lc]) parts = splitLike(core, SYL_EXC[lc]);
+    else parts = autoSyl(core);
+    parts[0] = pre + parts[0]; parts[parts.length - 1] += post;
+    return parts;
+  }
+  function splitLike(word, pattern) { var out = [], pos = 0; pattern.split('-').forEach(function (p) { out.push(word.substr(pos, p.length)); pos += p.length; }); return out; }
+  function autoSyl(w) {
+    var lc = w.toLowerCase();
+    if (lc.length <= 3) return [w];
+    var V = /[aeiouy]/;
+    // find vowel groups (an apostrophe between vowels and a w after a vowel stay in the group)
+    var groups = [], i = 0;
+    while (i < lc.length) {
+      if (V.test(lc[i]) && !(lc[i] === 'y' && i === 0)) { var s = i; while (i < lc.length && (V.test(lc[i]) || (lc[i] === "'" && V.test(lc[i + 1] || '')) || (lc[i] === 'w' && i > s && !V.test(lc[i + 1] || '')))) i++; groups.push([s, i]); } else i++;
+    }
+    // silent final e / es / ed
+    var lastG = groups[groups.length - 1];
+    if (groups.length > 1 && lastG) {
+      var tail = lc.slice(lastG[0]);
+      if (/^e$/.test(tail) && !/[^aeiou]le$/.test(lc)) groups.pop();
+      else if (/^es$/.test(tail) && !/(s|x|z|ch|sh|c|g)es$/.test(lc) && !/[^aeiou]les$/.test(lc)) groups.pop();
+      else if (/^ed$/.test(tail) && !/[td]ed$/.test(lc)) groups.pop();
+    }
+    if (groups.length < 2) return [w];
+    var cuts = [];
+    for (var g = 0; g < groups.length - 1; g++) {
+      var a = groups[g][1], b = groups[g + 1][0], cons = lc.slice(a, b), cut;
+      if (cons.length === 0) cut = a; // vowel hiatus (rare after grouping)
+      else if (cons.length === 1) cut = a;
+      else {
+        var dig = /^(ch|sh|th|ph|wh|gh|ck|ng)$/;
+        if (cons.length === 2 && dig.test(cons)) cut = cons === 'ck' || cons === 'ng' ? b : a;
+        else if (/^(bl|br|cl|cr|dr|fl|fr|gl|gr|pl|pr|tr|str|thr|shr|sc|sp|st)$/.test(cons.slice(1)) && cons.length >= 3) cut = a + 1;
+        else if (/(ch|sh|th|ph|wh|ck|ng)$/.test(cons) && cons.length >= 3) cut = b - 2;
+        else cut = a + 1;
+      }
+      cuts.push(cut);
+    }
+    var out = [], prev = 0;
+    cuts.forEach(function (c) { out.push(w.slice(prev, c)); prev = c; });
+    out.push(w.slice(prev));
+    return out.filter(function (x) { return x; });
+  }
+  function syllabifyText(text) {
+    var syls = [];
+    text.split(/\s+/).filter(Boolean).forEach(function (word) {
+      var p = syllabifyWord(word);
+      p.forEach(function (s, k) { syls.push({ text: s, hyph: k < p.length - 1 }); });
+    });
+    return syls;
+  }
+  function sylsToW(syls) { return syls.map(function (s) { return escapeLyric(s.text) + (s.hyph ? '-' : ''); }).join(' ').replace(/- /g, '-'); }
+  /* align plain stanza to the slots verse 0 uses (or every singable note) */
+  function textToWLine(res, text) {
+    var syls = syllabifyText(text);
+    var sing = res.notes.filter(function (n) { return !n.rest; });
+    var slots = sing.map(function (n) { var l = n.lyrics && n.lyrics[0]; return !l ? 'skip' : l.hold ? 'hold' : l.cont ? 'skip' : 'syl'; });
+    var nSyl = slots.filter(function (s) { return s === 'syl'; }).length;
+    var parts = [], k = 0;
+    if (nSyl === syls.length) {
+      slots.forEach(function (s) { if (s === 'syl') { var y = syls[k++]; parts.push(escapeLyric(y.text) + (y.hyph ? '-' : '')); } else parts.push(s === 'hold' ? '_' : '*'); });
+    } else {
+      syls.forEach(function (y) { parts.push(escapeLyric(y.text) + (y.hyph ? '-' : '')); });
+    }
+    return { line: parts.join(' '), match: nSyl === syls.length, syllables: syls.length, slots: nSyl, singable: sing.length };
+  }
+  /* make W: stanzas into aligned verses */
+  function alignExtraVerses(res) {
+    if (!res.extraVerses.length) return res;
+    var sing = res.notes.filter(function (n) { return !n.rest; });
+    res.extraVerses.forEach(function (text) {
+      var w = textToWLine(res, text), v = res.verseCount;
+      alignLyrics(sing, w.line, v);
+      res.verseCount++; res.verseLabels.push('Verse ' + res.verseCount);
+      if (!w.match) res.warnings.push('Verse ' + res.verseCount + ' has ' + w.syllables + ' syllables but the tune has ' + w.slots + ' places for words; the words may not line up exactly.');
+    });
+    res.extraVerses = [];
+    return res;
+  }
+
+  /* Add plain-text verses (array of strings) as aligned w: lines, following verse 1's word slots. */
+  function addVersesToABC(abc, texts) {
+    var res = parseABC(abc);
+    if (res.errors.length) throw new Error('ABC error: ' + res.errors[0].message + ' (line ' + res.errors[0].line + ')');
+    var sing = res.notes.filter(function (n) { return !n.rest; });
+    var slots = sing.map(function (n) { var l = n.lyrics && n.lyrics[0]; return !l ? 'skip' : l.hold ? 'hold' : l.cont ? 'cont' : 'syl'; });
+    var nSyl = slots.filter(function (x) { return x === 'syl'; }).length;
+    var perVerse = texts.map(function (t, vi) {
+      var syls = syllabifyText(t);
+      if (syls.length !== nSyl) throw new Error('Verse ' + (res.verseCount + vi + 1) + ' has ' + syls.length + ' syllables, tune needs ' + nSyl + ': ' + syls.map(function (s) { return s.text + (s.hyph ? '-' : ''); }).join(' '));
+      var k = 0;
+      return slots.map(function (sl) { if (sl === 'syl') { var y = syls[k++]; return escapeLyric(y.text) + (y.hyph ? '-' : ''); } return sl === 'skip' ? '*' : '_'; });
+    });
+    var lines = abc.replace(/\r\n?/g, '\n').split('\n');
+    // group singable notes by source line
+    var bySrc = {}; sing.forEach(function (n, idx) { (bySrc[n.srcLine] = bySrc[n.srcLine] || []).push(idx); });
+    var srcLines = Object.keys(bySrc).map(Number).sort(function (a, b) { return a - b; });
+    var inserts = {};
+    srcLines.forEach(function (sl, gi) {
+      var end = sl, nextMusic = gi + 1 < srcLines.length ? srcLines[gi + 1] : lines.length;
+      for (var j = sl + 1; j < nextMusic; j++) if (/^w:/.test(lines[j])) end = j; else if (/^\s*$/.test(lines[j]) || /^[A-Za-z]:/.test(lines[j]) && !/^w:/.test(lines[j])) break;
+      inserts[end] = perVerse.map(function (tokens) { return 'w: ' + bySrc[sl].map(function (ix) { return tokens[ix]; }).join(' ').replace(/(\S)- (?=\S)/g, '$1- '); });
+    });
+    var out = [];
+    lines.forEach(function (l, i) { out.push(l); if (inserts[i]) out.push.apply(out, inserts[i]); });
+    return out.join('\n');
+  }
+
+  var API = { addVersesToABC: addVersesToABC, parseABC: parseABC, parseKey: parseKey, buildEvents: buildEvents, displayNotes: displayNotes, spell: spell, transposeFifths: transposeFifths,
+    keyNameFromFifths: keyNameFromFifths, notesToABC: notesToABC, parseMIDI: parseMIDI, midiToABC: midiToABC, musicXMLToABC: musicXMLToABC,
+    syllabifyText: syllabifyText, syllabifyWord: syllabifyWord, sylsToW: sylsToW, textToWLine: textToWLine, alignExtraVerses: alignExtraVerses, tokenizeLyrics: tokenizeLyrics, fifthsToAcc: fifthsToAcc, NOTE_NAMES: NOTE_NAMES_SHARP };
+  root.HymnCore = API;
+  if (typeof module !== 'undefined' && module.exports) module.exports = API;
+})(typeof window !== 'undefined' ? window : globalThis);
+
+</script>
+<script id="hp-songs">
+window.HYMN_SONGS = [
+ {
+  "id": "old100",
+  "section": "Psalter",
+  "title": "All People That on Earth Do Dwell",
+  "psalm": "Psalm 100",
+  "tune": "OLD HUNDREDTH",
+  "meter": "L.M. (8.8.8.8)",
+  "credit": "Music: Louis Bourgeois, Genevan Psalter, 1551 · Words: William Kethe, 1561 (Scottish Psalter, 1650)",
+  "source": "Melody checked against the melody MIDI at pateys.nf.ca (hymn #65), the hymnary.org OLD HUNDREDTH MusicXML (Flat) and the Open Hymnal ABC file. Words as in the Scottish Psalter, 1650 (public domain).",
+  "abc": "X:1\nT:All People That on Earth Do Dwell\nT:Psalm 100 · OLD HUNDREDTH\nC:Music: Louis Bourgeois, Genevan Psalter, 1551 · Words: William Kethe, 1561 (Scottish Psalter, 1650)\nS:Melody checked against the melody MIDI at pateys.nf.ca (hymn #65), the hymnary.org OLD HUNDREDTH MusicXML (Flat) and the Open Hymnal ABC file. Words as in the Scottish Psalter, 1650 (public domain).\nM:4/4\nL:1/4\nQ:1/4=100\nK:G\nG2 G F | E D G2 | A2 B2 | B2 B B |\nw: All peo- ple that on earth do dwell, Sing to the\nw: Know that the Lord is God in- deed; With- out our\nw: O en- ter then his gates with praise, Ap- proach with\nw: For why? the Lord our God is good, His mer- cy\nA G c2 | B2 A2 | G2 A B | A G E2 |\nw: Lord with cheer- ful voice. Him serve with mirth, his praise\nw: aid he did us make: We are his flock, he doth\nw: joy his courts un- to: Praise, laud, and bless his name\nw: is for ev- er sure; His truth at all times fir-\nF2 G2 | d2 B G | A c B2 | A2 G2 |]\nw: forth tell; Come ye be- fore him and re- joice.\nw: us feed, And for his sheep he doth us take.\nw: al- ways, For it is seem- ly so to do.\nw: mly stood, And shall from age to age en- dure."
+ },
+ {
+  "id": "crimond",
+  "section": "Psalter",
+  "title": "The Lord's My Shepherd",
+  "psalm": "Psalm 23",
+  "tune": "CRIMOND",
+  "meter": "C.M. (8.6.8.6)",
+  "credit": "Music: Jessie Seymour Irvine, 1872 · Words: Scottish Psalter, 1650",
+  "source": "Melody checked against the pateys.nf.ca melody MIDI (#11) and two hymnary.org MusicXML files (Cyber Hymnal; Flat edition with words), which also gave the slurred-note placement. Words: Scottish Psalter, 1650 (public domain).",
+  "abc": "X:1\nT:The Lord's My Shepherd\nT:Psalm 23 · CRIMOND\nC:Music: Jessie Seymour Irvine, 1872 · Words: Scottish Psalter, 1650\nS:Melody checked against the pateys.nf.ca melody MIDI (#11) and two hymnary.org MusicXML files (Cyber Hymnal; Flat edition with words), which also gave the slurred-note placement. Words: Scottish Psalter, 1650 (public domain).\nM:3/4\nL:1/4\nQ:1/4=92\nK:F\nC | A2 B3/4G/4 | c2 B/G/ | F2 E | F2 A |\nw: The Lord's my _ shep- herd, _ I'll not want; He\nw: My soul he _ doth re- _ store a- gain; And\nw: Yea, though I _ walk in _ death's dark vale, Yet\nw: My ta- ble _ thou hast _ fur- nish- ed In\nw: Good- ness and _ mer- cy _ all my life Shall\nA G G | =B2 B | c2 A | A B A | G2 A |\nw: makes _ me down to lie in pas- _ tures green; he\nw: me _ to walk doth make With- in _ the paths of\nw: will _ I fear none ill: For thou _ art with me;\nw: pres- _ ence of my foes; My head _ thou dost with\nw: sure- _ ly fol- low me: And in _ God's house for\nB c B | A2 A | G B d | F2 E | F2 |]\nw: lead- _ eth me the qui- _ et wa- ters by.\nw: right- _ eous- ness, E'en for _ his own name's sake.\nw: and _ thy rod And staff _ me com- fort still.\nw: oil _ a- noint, And my _ cup o- ver- flows.\nw: ev- _ er- more My dwell- _ ing- place shall be."
+ },
+ {
+  "id": "stanne",
+  "section": "Psalter",
+  "title": "Our God, Our Help in Ages Past",
+  "psalm": "Psalm 90",
+  "tune": "ST. ANNE",
+  "meter": "C.M. (8.6.8.6)",
+  "credit": "Music: William Croft, 1708 · Words: Isaac Watts, 1719",
+  "source": "Open Hymnal Project ABC (openhymnal.org, public domain), melody cross-checked against the pateys.nf.ca melody MIDI (#330).",
+  "abc": "X:1\nT:Our God, Our Help in Ages Past\nT:Psalm 90 · ST. ANNE\nC:Music: William Croft, 1708 · Words: Isaac Watts, 1719\nS:Open Hymnal Project ABC (openhymnal.org, public domain), melody cross-checked against the pateys.nf.ca melody MIDI (#330).\nM:4/4\nL:1/4\nQ:1/4=96\nK:C\nG | E A G c | c B c G | c G A ^F | G3\nw: Our God, our help in a- ges past, Our hope for years to come,\nw: Un- der the sha- dow of Thy throne Thy saints have dwelt se- cure;\nw: Be- fore the hills in or- der stood, Or earth re- ceived her frame,\nw: Thy Word com- mands our flesh to dust, 'Re- turn, ye sons of men:'\nw: A thou- sand a- ges in Thy sight Are like an eve- ning gone;\nw: The bus- y tribes of flesh and blood, With all their lives and cares,\nw: Time, like an ev- er roll- ing stream, Bears all its sons a- way;\nw: Like flow'- ry fields the na- tions stand Pleased with the morn- ing light;\nw: Our God, our help in a- ges past, Our hope for years to come,\nB | c A d B | c A B G | A c d B | c3 |]\nw: Our shel- ter from the storm- y blast, And our e- ter- nal home.\nw: Suf- fic- ient is Thine arm a- lone, And our de- fense is sure.\nw: From ev- er- last- ing Thou art God, To end- less years the same.\nw: All na- tions rose from earth at first, And turn to earth a- gain.\nw: Short as the watch that ends the night Be- fore the ris- ing sun.\nw: Are car- ried down- wards by the flood, And lost in foll'- wing years.\nw: They fly, for- got- ten, as a dream Dies at the op'- ning day.\nw: The flow'rs be- neath the mow- er's hand Lie with'- ring ere 'tis night.\nw: Be Thou our guard while troub- les last, And our e- ter- nal home."
+ },
+ {
+  "id": "dundee",
+  "section": "Psalter",
+  "title": "I to the Hills Will Lift Mine Eyes",
+  "psalm": "Psalm 121",
+  "tune": "DUNDEE (called FRENCH in Scotland)",
+  "meter": "C.M. (8.6.8.6)",
+  "credit": "Music: Scottish Psalter, 1615 (Ravenscroft, 1621) · Words: Scottish Psalter, 1650",
+  "source": "Melody checked against the pateys.nf.ca melody MIDI (#82) and the hymnary.org DUNDEE (Ravenscroft) MusicXML. Words: Scottish Psalter, 1650 (public domain).",
+  "abc": "X:1\nT:I to the Hills Will Lift Mine Eyes\nT:Psalm 121 · DUNDEE (called FRENCH in Scotland)\nC:Music: Scottish Psalter, 1615 (Ravenscroft, 1621) · Words: Scottish Psalter, 1650\nS:Melody checked against the pateys.nf.ca melody MIDI (#82) and the hymnary.org DUNDEE (Ravenscroft) MusicXML. Words: Scottish Psalter, 1650 (public domain).\nM:4/4\nL:1/4\nQ:1/4=100\nK:D\nD | F G A D | E F G F | E D D C | D3 A |\nw: I to the hills will lift mine eyes, from whence doth come mine aid? My\nw: Thy foot he'll not let slide, nor will He slum- ber that thee keeps. Be-\nw: The Lord thee keeps, the Lord thy shade On thy right hand doth stay: The\nw: The Lord shall keep thy soul; he shall Pre- serve thee from all ill. Hence-\nd c B A | A ^G A F | E D D C | D3 |]\nw: safe- ty com- eth from the Lord, who heav'n and earth hath made.\nw: hold, he that keeps Is- ra- el, He slum- bers not, nor sleeps.\nw: moon by night thee shall not smite, Nor yet the sun by day.\nw: forth thy go- ing out and in God keep for ev- er will."
+ },
+ {
+  "id": "old124",
+  "section": "Psalter",
+  "title": "Now Israel May Say",
+  "psalm": "Psalm 124",
+  "tune": "OLD 124TH",
+  "meter": "10.10.10.10.10",
+  "credit": "Music: Genevan Psalter, 1551 · Words: Scottish Psalter, 1650",
+  "source": "Melody checked against the pateys.nf.ca melody MIDI (#85) and the hymnary.org OLD 124TH MusicXML. Words: Scottish Psalter, 1650 (public domain).",
+  "abc": "X:1\nT:Now Israel May Say\nT:Psalm 124 · OLD 124TH\nC:Music: Genevan Psalter, 1551 · Words: Scottish Psalter, 1650\nS:Melody checked against the pateys.nf.ca melody MIDI (#85) and the hymnary.org OLD 124TH MusicXML. Words: Scottish Psalter, 1650 (public domain).\nM:4/4\nL:1/4\nQ:1/4=104\nK:F\nF2 G A | B2 A2 | G F F E | F4 |\nw: Now Is- ra- el may say, and that tru- ly,\nw: Then cer- tain- ly they had de- vour'd us all,\nw: The rag- ing streams, with their proud swell- ing waves,\nw: E'en as a bird out of the fowl- er's snare\nA2 B c | d2 c2 | B A G F | E4 |\nw: If that the Lord had not our cause main- tain'd;\nw: And swal- low'd quick, for ought that we could deem;\nw: Had then our soul o'er- whelm- ed in the deep.\nw: Es- capes a- way, so is our soul set free:\nC2 F F | E2 F2 | G B A G | A4 |\nw: If that the Lord had not our right sus- tain'd,\nw: Such was their rage, as we might well es- teem.\nw: But bless'd be God, who doth us safe- ly keep,\nw: Broke are their nets, and thus es- cap- ed we.\nc2 c B | A2 G2 | A c c =B | c4 |\nw: When cru- el men a- gainst us fu- rious- ly\nw: And as the floods with migh- ty force do fall,\nw: And hath not giv'n us for a liv- ing prey\nw: There- fore our help is in the Lord's great name,\nA2 G F | E2 F2 | G B A2 | G2 F2- | F2 |]\nw: Rose up in wrath, to make of us their prey;\nw: So had they now our lives e'en swept a- way. *\nw: Un- to their teeth, and blood- y cru- el- ty. *\nw: Who heav'n and earth by his great pow'r did frame. *"
+ },
+ {
+  "id": "genevan42",
+  "section": "Psalter",
+  "title": "Comfort, Comfort Ye My People",
+  "psalm": "Psalm 42 tune (words: Isaiah 40)",
+  "tune": "GENEVAN 42 (PSALM 42 / FREU DICH SEHR)",
+  "meter": "8.7.8.7.7.7.8.8",
+  "credit": "Music: Louis Bourgeois, Genevan Psalter, 1551 · Words: Johannes Olearius, 1671; tr. Catherine Winkworth, 1863",
+  "source": "Melody (Genevan rhythm) checked against the pateys.nf.ca melody MIDI (#113) and the hymnary.org GENEVAN 42 MusicXML. Words: Winkworth, 1863 (public domain).",
+  "abc": "X:1\nT:Comfort, Comfort Ye My People\nT:Psalm 42 tune (words: Isaiah 40) · GENEVAN 42 (PSALM 42 / FREU DICH SEHR)\nC:Music: Louis Bourgeois, Genevan Psalter, 1551 · Words: Johannes Olearius, 1671; tr. Catherine Winkworth, 1863\nS:Melody (Genevan rhythm) checked against the pateys.nf.ca melody MIDI (#113) and the hymnary.org GENEVAN 42 MusicXML. Words: Winkworth, 1863 (public domain).\nM:3/2\nL:1/4\nQ:1/2=60\nK:F\nF2 G A2 G | F E D2 C2 | F2 G A2 B | [M:4/2] A2 G2 F4 |\nw: Com- fort, com- fort ye my peo- ple, Speak ye peace, thus saith our God;\nw: Yea, her sins our God will par- don, Blot- ting out each dark mis- deed;\nw: For the her- ald's voice is cry- ing In the des- ert far and near,\nw: Make ye straight what long was crook- ed, Make the rough- er pla- ces plain:\n[M:3/2] F2 G A2 G | F E D2 C2 | F2 G A2 B | [M:4/2] A2 G2 F4 |\nw: Com- fort those who sit in dark- ness, Mourn- ing 'neath their sor- rows' load;\nw: All that well de- served His an- ger He no more will see or heed.\nw: Bid- ding all men to re- pent- ance, Since the king- dom now is here.\nw: Let your hearts be true and hum- ble, As be- fits His ho- ly reign.\n[M:3/2] A2 A c2 B | A G A4 | c2 c d2 c | B A G4 |\nw: Speak ye to Je- ru- sa- lem Of the peace that waits for them;\nw: She hath suf- fered man- y~a day, Now her griefs have passed a- way;\nw: Oh, that warn- ing cry o- bey! Now pre- pare for God a way!\nw: For the glo- ry of the Lord Now o'er earth is shed a- broad;\nA2 c B2 A | F G A2 F2 | A2 A B2 A | [M:4/2] G F E2 F4 |]\nw: Tell her that her sins I cov- er, And her war- fare now is o- ver.\nw: God will change her pin- ing sad- ness In- to ev- er- spring- ing glad- ness.\nw: Let the val- leys rise to meet Him, And the hills bow down to greet Him.\nw: And all flesh shall see the to- ken That His word is nev- er bro- ken."
+ },
+ {
+  "id": "martyrdom",
+  "section": "Psalter",
+  "title": "As Pants the Hart for Cooling Streams",
+  "psalm": "Psalm 42",
+  "tune": "MARTYRDOM",
+  "meter": "C.M. (8.6.8.6)",
+  "credit": "Music: Hugh Wilson, c. 1800 · Words: Nahum Tate & Nicholas Brady, New Version, 1696",
+  "source": "Melody from the pateys.nf.ca melody MIDI (#26); slurs and note placement checked against the hymnary.org MARTYRDOM MusicXML. Words: Tate & Brady, 1696 (public domain), as printed at pateys.nf.ca.",
+  "abc": "X:1\nT:As Pants the Hart for Cooling Streams\nT:Psalm 42 · MARTYRDOM\nC:Music: Hugh Wilson, c. 1800 · Words: Nahum Tate & Nicholas Brady, New Version, 1696\nS:Melody from the pateys.nf.ca melody MIDI (#26); slurs and note placement checked against the hymnary.org MARTYRDOM MusicXML. Words: Tate & Brady, 1696 (public domain), as printed at pateys.nf.ca.\nM:3/4\nL:1/4\nQ:1/4=96\nK:G\nD | G2 E | D2 G/A/ | B2 A | G2 B |\nw: As pants the hart for _ cool- ing streams when\nw: For thee, my God, the _ liv- ing God, My\nw: Why rest- less, why cast _ down, my soul? Trust\nw: God of my strength, how _ long shall I, Like\nw: Why rest- less, why cast _ down, my soul? Hope\nd2 B/A/ | G2 B | A2 d | B2 A | G2 B |\nw: heat- ed _ in the chase, so longs my soul, O\nw: thirst- y _ soul doth pine; O when shall I be-\nw: God, who _ will em- ploy His aid for thee, and\nw: one for- _ got- ten, mourn, For- lorn, for- sak- en,\nw: still, and _ thou shalt sing The praise of him who\nc2 B | A2 B | D E G/A/ | B2 A | G2 |]\nw: God, for thee and thy _ re- _ fresh- ing grace.\nw: hold thy face, Thou Maj- _ es- _ ty di- vine?\nw: change these sighs To thank- _ ful _ hymns of joy.\nw: and ex- posed To my _ op- _ press- or's scorn?\nw: is thy God, Thy health's _ e- _ ter- nal spring."
+ },
+ {
+  "id": "dukestreet",
+  "section": "Psalter",
+  "title": "Jesus Shall Reign",
+  "psalm": "Psalm 72",
+  "tune": "DUKE STREET",
+  "meter": "L.M. (8.8.8.8)",
+  "credit": "Music: attr. John Hatton, 1793 · Words: Isaac Watts, 1719",
+  "source": "Open Hymnal Project ABC (openhymnal.org, public domain), checked against the hymnary.org DUKE STREET MusicXML.",
+  "abc": "X:1\nT:Jesus Shall Reign\nT:Psalm 72 · DUKE STREET\nC:Music: attr. John Hatton, 1793 · Words: Isaac Watts, 1719\nS:Open Hymnal Project ABC (openhymnal.org, public domain), checked against the hymnary.org DUKE STREET MusicXML.\nM:2/2\nL:1/2\nQ:1/4=100\nK:Eb\nE G/2 A/2 | B (c/2 d/2) | e (d/2 c/2) | B2 | B B/2 B/2 |\nw: Je- sus shall reign wher- * e'er the * sun Does his suc-\nw: For Him shall end- less * prayer be * made, And prais- es\nw: Peo- ple and realms of * ev- ery * tongue Dwell on His\nw: Bless- ings a- bound wher- * e'er He * reigns; The pri- soner\nw: Where He dis- plays His * hea- ling * power Death and the\nw: Let ev- ery crea- ture * rise and * bring Pe- cu- liar\nc B | A G | F2 | G G/2 F/2 | (E/2 G/2) (B/2 e/2) |\nw: ces- sive jour- neys run; His king- dom stretch * from *\nw: throng to crown His head; His Name, like sweet * per- *\nw: love with sweet- est song; And in- fant voic- * es *\nw: leaps to lose his chains, The wear- y find * e- *\nw: curse are known no more; In Him the tribes * of *\nw: ho- nors to our King, An- gels des- cend * with *\n(c/2 B/2) (A/2 G/2) | F2 | B c/2 d/2 | e3/2 A/2 | G F | E2 |]\nw: shore * to * shore Till moons shall wax and wane no more.\nw: fume * shall * rise With ev- ery morn- ing sac- ri- fice.\nw: shall * pro- * claim Their ear- ly bless- ings on His Name.\nw: ter- * nal * rest, And all the sons of want are blest.\nw: A- * dam * boast More bless- ings than their fa- ther lost.\nw: songs * a- * gain, And earth re- peat the loud A- men."
+ },
+ {
+  "id": "stflavian",
+  "section": "Psalter",
+  "title": "That Man Hath Perfect Blessedness",
+  "psalm": "Psalm 1",
+  "tune": "ST. FLAVIAN (Day's Psalter)",
+  "meter": "C.M. (8.6.8.6)",
+  "credit": "Music: John Day's Psalter, 1562 · Words: Scottish Psalter, 1650",
+  "source": "Melody from the Open Hymnal Project ABC of ST. FLAVIAN (openhymnal.org, public domain). Words: Scottish Psalter, 1650 (public domain).",
+  "abc": "X:1\nT:That Man Hath Perfect Blessedness\nT:Psalm 1 · ST. FLAVIAN (Day's Psalter)\nC:Music: John Day's Psalter, 1562 · Words: Scottish Psalter, 1650\nS:Melody from the Open Hymnal Project ABC of ST. FLAVIAN (openhymnal.org, public domain). Words: Scottish Psalter, 1650 (public domain).\nM:4/4\nL:1/4\nQ:1/4=100\nK:F\nF | F E F A | G G F F | B A F G | A3\nw: That man hath per- fect bless- ed- ness who walk- eth not a- stray\nw: Nor sit- teth in the scorn- er's chair: But plac- eth his de- light\nw: He shall be like a tree that grows Near plant- ed by a riv'r,\nw: And all he doth shall pros- per well. The wick- ed are not so;\nw: In judg- ment there- fore shall not stand Such as un- god- ly are;\nw: For why? the way of god- ly men Un- to the Lord is known:\nA | A B c A | F G A A | G F F E | F3 |]\nw: In coun- sel of un- god- ly men, nor stands in sin- ners' way,\nw: U- pon God's law, and med- i- tates On his law day and night.\nw: Which in his sea- son yields his fruit, And his leaf fad- eth nev'r:\nw: But like they are un- to the chaff, Which wind drives to and fro.\nw: Nor in th'as- sem- bly of the just Shall wick- ed men ap- pear.\nw: Where- as the way of wick- ed men Shall quite be o- ver- thrown."
+ },
+ {
+  "id": "old137",
+  "section": "Psalter",
+  "title": "O Thou My Soul, Bless God the Lord",
+  "psalm": "Psalm 103",
+  "tune": "OLD 137TH (Day's Psalter)",
+  "meter": "C.M.D. (8.6.8.6 D)",
+  "credit": "Music: John Day's Psalter, 1563 · Words: Scottish Psalter, 1650",
+  "source": "Melody from the Open Hymnal Project ABC of OLD 137TH (openhymnal.org, public domain). Words: Scottish Psalter, 1650 (public domain).",
+  "abc": "X:1\nT:O Thou My Soul, Bless God the Lord\nT:Psalm 103 · OLD 137TH (Day's Psalter)\nC:Music: John Day's Psalter, 1563 · Words: Scottish Psalter, 1650\nS:Melody from the Open Hymnal Project ABC of OLD 137TH (openhymnal.org, public domain). Words: Scottish Psalter, 1650 (public domain).\nM:4/4\nL:1/4\nQ:1/4=104\nK:G\nG | F E D G | B A G G | A B c A | B3\nw: O thou my soul, bless God the Lord; and all that in me is\nw: All thine in- iq- ui- ties who doth Most gra- cious- ly for- give:\nB | A G F G | E E D D | G A B A | G3\nw: Be stir- red up his ho- ly name to mag- ni- fy and bless.\nw: Who thy dis- eas- es all and pains Doth heal, and thee re- lieve.\nD | G A B G | c c B G | E F G A | G3\nw: Bless, O my soul, the Lord thy God, and not for- get- ful be\nw: Who doth re- deem thy life, that thou To death may'st not go down;\nG | B c d d | e e d B | A B c A | G3 |]\nw: Of all his gra- cious ben- e- fits he hath be- stow'd on thee.\nw: Who thee with lo- ving- kind- ness doth And ten- der mer- cies crown:"
+ },
+ {
+  "id": "tallis",
+  "section": "Psalter",
+  "title": "From All That Dwell Below the Skies",
+  "psalm": "Psalm 117",
+  "tune": "TALLIS' CANON (Parker's Psalter)",
+  "meter": "L.M. (8.8.8.8)",
+  "credit": "Music: Thomas Tallis, for Archbishop Parker's Psalter, c. 1567 · Words: Isaac Watts, 1719",
+  "source": "Melody from the Open Hymnal Project ABC of TALLIS' CANON (openhymnal.org, public domain). Words: Watts, 1719 (public domain).",
+  "abc": "X:1\nT:From All That Dwell Below the Skies\nT:Psalm 117 · TALLIS' CANON (Parker's Psalter)\nC:Music: Thomas Tallis, for Archbishop Parker's Psalter, c. 1567 · Words: Isaac Watts, 1719\nS:Melody from the Open Hymnal Project ABC of TALLIS' CANON (openhymnal.org, public domain). Words: Watts, 1719 (public domain).\nM:4/4\nL:1/4\nQ:1/4=100\nK:G\nG | G F G G | A A B G | c c B B | A A G\nw: From all that dwell be- low the skies, Let the Cre- a- tor's praise a- rise;\nw: E- ter- nal are thy mer- cies, Lord; E- ter- nal truth at- tends thy word:\nd | c A B B | A A G D | E F G B | A A G |]\nw: Let the Re- deem- er's name be sung, Through ev- ery land, by ev- ery tongue.\nw: Thy praise shall sound from shore to shore, Till suns shall rise and set no more."
+ },
+ {
+  "id": "amazing",
+  "section": "Hymns",
+  "title": "Amazing Grace",
+  "psalm": "",
+  "tune": "NEW BRITAIN",
+  "meter": "C.M. (8.6.8.6)",
+  "credit": "Music: American folk melody (Carrell & Clayton, 1831) · Words: John Newton, 1779",
+  "source": "Open Hymnal Project ABC (openhymnal.org, public domain).",
+  "abc": "X:1\nT:Amazing Grace\nT:NEW BRITAIN\nC:Music: American folk melody (Carrell & Clayton, 1831) · Words: John Newton, 1779\nS:Open Hymnal Project ABC (openhymnal.org, public domain).\nM:3/4\nL:1/4\nQ:1/4=84\nK:G\nD | G2 B/G/ | B2 A | G2 E | D2 D |\nw: A- maz- ing * grace! How sweet the sound That\nw: 'Twas grace that * taught my heart to fear, And\nw: Through ma- ny * dan- gers, toils and snares, I\nw: The Lord has * pro- mised good to me, His\nw: Yea, when this * flesh and heart shall fail, And\nw: The earth shall * soon dis- solve like snow, The\nw: When we've been * there ten thou- sand years, Bright\nG2 B/G/ | B2 A | d3- | d2 B | (d3/2 B/) d/B/ | G2 D |\nw: saved a * wretch like me! * I once * was * lost, but\nw: grace my * fears re- lieved; * How pre- * cious * did that\nw: have al- * rea- dy come; * 'Tis grace * hath * brought me\nw: Word my * hope se- cures;  * He will * my * Shield and\nw: mor- tal * life shall cease, * I shall * pos- * sess, with-\nw: sun for- * bear to shine; * But God, * Who * called me\nw: shin- ing * as the sun, * We've no * less * days to\n(E3/2 G/) G/E/ | D2 D | G2 B/G/ | B2 A | G3- | G2 |]\nw: now * am * found; Was blind, but * now I see. *\nw: grace * ap- * pear The hour I * first be- lieved. *\nw: safe * thus * far, And grace will * lead me home. *\nw: Por- * tion * be, As long as * life en- dures. *\nw: in * the * veil, A life of * joy and peace. *\nw: here * be- * low, Shall be for- * ev- er mine. *\nw: sing * God's * praise Than when we'd * first be- gun. *"
+ },
+ {
+  "id": "holy",
+  "section": "Hymns",
+  "title": "Holy, Holy, Holy",
+  "psalm": "",
+  "tune": "NICAEA",
+  "meter": "11.12.12.10",
+  "credit": "Music: John Bacchus Dykes, 1861 · Words: Reginald Heber, 1826",
+  "source": "Open Hymnal Project ABC (openhymnal.org, public domain).",
+  "abc": "X:1\nT:Holy, Holy, Holy\nT:NICAEA\nC:Music: John Bacchus Dykes, 1861 · Words: Reginald Heber, 1826\nS:Open Hymnal Project ABC (openhymnal.org, public domain).\nM:4/4\nL:1/4\nQ:1/4=96\nK:D\nD D F F | A2 A2 | B.- B B B | A2 F2 | A3/2 A/ A A |\nw: Ho- ly, ho- ly, ho- ly! Lord * God Al- migh- ty! Ear- ly in the\nw: Ho- ly, ho- ly, ho- ly! All the saints a- dore Thee, Cast- ing down their\nw: Ho- ly, ho- ly, ho- ly! though the dark- ness hide Thee, Though the eye of\nw: Ho- ly, ho- ly, ho- ly! Lord * God Al- might- y! All Thy works shall\nd.- d c A | E A B3/2 A/ | A4 | D D F F | A.- A A2 |\nw: morn- * ing our song shall rise to Thee; Ho- ly, ho- ly, ho- * ly,\nw: gold- en crowns a- round the glass- y sea; Che- ru- bim and ser- a- phim\nw: sin- ful man Thy glor- y may not see; On- ly Thou art ho- * ly;\nw: praise Thy Name, in earth, and sky, and sea; Ho- ly, ho- ly, ho- * ly;\nB3/2 B/ B B | A2 A2 | d2 A A | B2 F2 | G E E3/2 D/ | D4 |]\nw: mer- ci- ful and might- y! God in three Per- sons, bless- ed Tri- ni- ty!\nw: fall- ing down be- fore Thee, Who was, and is, and ev- er- more shall be.\nw: there is none be- side Thee, Per- fect in pow'r, in love, and pur- it- y.\nw: mer- ci- ful and might- y! God in three Per- sons, bless- ed Tri- ni- ty!"
+ },
+ {
+  "id": "vision",
+  "section": "Hymns",
+  "title": "Be Thou My Vision",
+  "psalm": "",
+  "tune": "SLANE",
+  "meter": "10.10.9.10",
+  "credit": "Music: Traditional Irish · Words: Irish, tr. Mary Byrne, 1905; versified Eleanor Hull, 1912",
+  "source": "Open Hymnal Project ABC (openhymnal.org, public domain).",
+  "abc": "X:1\nT:Be Thou My Vision\nT:SLANE\nC:Music: Traditional Irish · Words: Irish, tr. Mary Byrne, 1905; versified Eleanor Hull, 1912\nS:Open Hymnal Project ABC (openhymnal.org, public domain).\nM:3/4\nL:1/4\nQ:1/4=92\nK:Eb\nE E F/E/ | C B, B,/C/ | E E F | G3 |\nw: Be Thou my * Vi- sion, O * Lord of my heart;\nw: Be Thou my * Wis- dom, and * Thou my true Word;\nw: Be Thou my * ba- ttle Shield, * Sword for the fight;\nw: Rich- es I * heed not, nor * man's em- pty praise,\nw: High King of * Hea- ven, my * vic- tor- y won,\nF F F | F G B | c B G | B3 |\nw: Naught be all else to me, save that Thou art.\nw: I ev- er with Thee and Thou with me, Lord;\nw: Be Thou my Dig- ni- ty, Thou my De- light;\nw: Thou mine In- her- i- tance, now and al- ways:\nw: May I reach Heav'ns joys, O bright Hea- ven's Sun!\nc c/d/e/d/ | c B G | B E D | (C2 B,) |\nw: Thou my * * * best Thought, by day or by night, *\nw: Thou my * great * Fa- ther, and I Thy true son; *\nw: Thou my * soul's * Shel- ter, Thou my high To- wer: *\nw: Thou and * Thou * on- ly, be first in my heart, *\nw: Heart of * my * own heart, what- ev- er be- fall, *\nE G B | c/B/ G E/G/ | F E E | E3 |]\nw: Wa- king or sleep- * ing, Thy * pre- sence my light.\nw: Thou in me dwell- * ing, and * I with Thee one.\nw: Raise Thou me heav'n- * ward, O * Pow'r of my pow'r.\nw: High King of Hea- * ven, my * Trea- sure Thou art.\nw: Still be my Vi- * sion, O * Rul- er of all."
+ },
+ {
+  "id": "abide",
+  "section": "Hymns",
+  "title": "Abide With Me",
+  "psalm": "",
+  "tune": "EVENTIDE",
+  "meter": "10.10.10.10",
+  "credit": "Music: William H. Monk, 1861 · Words: Henry F. Lyte, 1847",
+  "source": "Open Hymnal Project ABC (openhymnal.org, public domain).",
+  "abc": "X:1\nT:Abide With Me\nT:EVENTIDE\nC:Music: William H. Monk, 1861 · Words: Henry F. Lyte, 1847\nS:Open Hymnal Project ABC (openhymnal.org, public domain).\nM:4/4\nL:1/4\nQ:1/4=80\nK:Eb\nG2 G F | E2 B2 | c B B A | G4 | G2 A B |\nw: A- bide with me; fast falls the ev- en- tide; The dark- ness\nw: Swift to its close ebbs out life's lit- tle day; Earth's joys grow\nw: Not a brief glance I beg, a pass- ing word; But as Thou\nw: Come not in ter- rors, as the King of kings, But kind and\nw: Thou on my head in ear- ly youth didst smile; And, though re-\nw: I need Thy pres- ence ev- ery pas- sing hour. What but Thy\nw: I fear no foe, with Thee at hand to bless; Ills have no\nw: Hold Thou Thy cross be- fore my clos- ing eyes; Shine through the\nc2 B2 | A F G =A | B4 | G2 G F | E2 B2 |\nw: deep- ens; Lord with me a- bide. When o- ther help- ers\nw: dim; its glor- ies pass a- way; Change and de- cay in\nw: dwell'st with Thy dis- ci- ples, Lord, Fa- mil- iar, con- des-\nw: good, with heal- ing in Thy wings, Tears for all woes, a\nw: bell- ious and per- verse mean- while, Thou hast not left me,\nw: grace can foil the tempt- er's pow'r? Who, like Thy- self, my\nw: weight, and tears no bit- ter- ness. Where is death's sting? Where,\nw: gloom and point me to the skies. Heav'n's morn- ing breaks, and\nB A A G | F4 | F2 G A | G F E A | G2 F2 | E4 |]\nw: fail and com- forts flee, Help of the help- less, O a- bide with me.\nw: all a- round I see; O Thou who chan- gest not, a- bide with me.\nw: cend- ing, pa- tient, free. Come not to so- journ, but a- bide with me.\nw: heart for ev- ery plea? Come, Friend of sin- ners, and thus bide with me.\nw: oft as I left Thee, On to the close, O Lord, a- bide with me.\nw: guide and stay can be? Through cloud and sun- shine, Lord, a- bide with me.\nw: grave, thy vic- to- ry? I tri- umph still, if Thou a- bide with me.\nw: earth's vain shad- ows flee; In life, in death, O Lord, a- bide with me."
+ },
+ {
+  "id": "rock",
+  "section": "Hymns",
+  "title": "Rock of Ages",
+  "psalm": "",
+  "tune": "TOPLADY",
+  "meter": "7.7.7.7.7.7",
+  "credit": "Music: Thomas Hastings, 1830 · Words: Augustus M. Toplady, 1776",
+  "source": "Open Hymnal Project ABC (openhymnal.org, public domain).",
+  "abc": "X:1\nT:Rock of Ages\nT:TOPLADY\nC:Music: Thomas Hastings, 1830 · Words: Augustus M. Toplady, 1776\nS:Open Hymnal Project ABC (openhymnal.org, public domain).\nM:6/4\nL:1/4\nQ:1/4=100\nK:Bb\nF3/2 G/ | F2 D2 B3/2 G/ | F4 B3/2 c/ | d3 c B A | B4\nw: Rock of A- ges, cleft for me, Let me hide my- self in Thee;\nw: Not the la- bor of my hands Can ful- fill Thy law's de- mands;\nw: No- thing in my hand I bring, Simp- ly to the cross I cling;\nw: While I draw this fleet- ing breath, When mine eyes shall close in death,\nA3/2 B/ | c3 c A F | B4 A3/2 B/ | c3 c A F | B4\nw: Let the wa- ter and the blood, From Thy wound- ed side which flowed,\nw: Could my zeal no res- pite know, Could my tears for- ev- er flow,\nw: Na- ked, come to Thee for dress; Help- less look to Thee for grace;\nw: When I soar to worlds un- known, See Thee on Thy judg- ment throne,\nF3/2 G/ | F2 D2 B3/2 G/ | F4 B3/2 c/ | d3 c B A | B4 |]\nw: Be of sin the doub- le cure; Save from wrath and make me pure.\nw: All for sin could not a- tone; Thou must save, and Thou a- lone.\nw: Foul, I to the foun- tain fly; Wash me, Sa- vior, or I die.\nw: Rock of A- ges, cleft for me, Let me hide my- self in Thee."
+ }
+];
+</script>
+<script>window.MY_SONGS = window.MY_SONGS || [];</script>
+<script src="my-songs.js" onerror="void 0"></script>
+<script id="hp-app">
+(function () {
+  'use strict';
+  var C = window.HymnCore;
+  var $ = function (id) { return document.getElementById(id); };
+  var LS = { get: function (k, d) { try { var v = localStorage.getItem('hp.' + k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } },
+             set: function (k, v) { try { localStorage.setItem('hp.' + k, JSON.stringify(v)); } catch (e) {} } };
+
+  /* =================== AUDIO =================== */
+  var Audio = (function () {
+    var ctx = null, master, dry, wet, conv, comp, voice = LS.get('voice', 'psaltery'), volume = LS.get('volume', 80) / 100;
+    var ksCache = {}, waves = {}, live = [];
+    function ensure() {
+      if (ctx) { if (ctx.state === 'suspended') ctx.resume(); return ctx; }
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) throw new Error('This browser cannot play sound (no Web Audio).');
+      try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) {}
+      ctx = new AC({ latencyHint: 'interactive' });
+      comp = ctx.createDynamicsCompressor(); comp.threshold.value = -14; comp.knee.value = 12; comp.ratio.value = 3; comp.attack.value = 0.004; comp.release.value = 0.25;
+      master = ctx.createGain(); master.gain.value = volume * volume;
+      dry = ctx.createGain(); wet = ctx.createGain();
+      conv = ctx.createConvolver(); conv.buffer = impulse(2.8, 2.6);
+      master.connect(dry); master.connect(conv); conv.connect(wet);
+      dry.connect(comp); wet.connect(comp); comp.connect(ctx.destination);
+      setVoiceMix();
+      // iOS: unlock with a silent buffer
+      var b = ctx.createBuffer(1, 1, ctx.sampleRate), s = ctx.createBufferSource(); s.buffer = b; s.connect(ctx.destination); s.start(0);
+      return ctx;
+    }
+    function impulse(seconds, decay) {
+      var sr = ctx.sampleRate, len = Math.floor(sr * seconds), buf = ctx.createBuffer(2, len, sr);
+      for (var ch = 0; ch < 2; ch++) {
+        var d = buf.getChannelData(ch), lp = 0;
+        for (var i = 0; i < len; i++) {
+          var t = i / sr, n = Math.random() * 2 - 1;
+          lp += (n - lp) * (0.18 + 0.5 * Math.exp(-t * 3)); // darker tail
+          var env = Math.pow(1 - i / len, decay) * Math.exp(-t * 1.3);
+          d[i] = lp * env * (t < 0.012 ? t / 0.012 : 1);
+        }
+        // early reflections
+        [0.013, 0.021, 0.034, 0.047, 0.061].forEach(function (er, k) { var p = Math.floor((er + ch * 0.003) * sr); if (p < len) d[p] += (0.5 - k * 0.07) * (k % 2 ? -1 : 1); });
+      }
+      return buf;
+    }
+    function setVoiceMix() {
+      if (!ctx) return;
+      var w = voice === 'organ' ? 0.42 : voice === 'piano' ? 0.26 : 0.34;
+      wet.gain.setTargetAtTime(w, ctx.currentTime, 0.05); dry.gain.setTargetAtTime(voice === 'organ' ? 0.78 : 0.9, ctx.currentTime, 0.05);
+    }
+    function freq(m) { return 440 * Math.pow(2, (m - 69) / 12); }
+    /* Karplus–Strong plucked string, rendered once per pitch */
+    function ksBuffer(m) {
+      if (ksCache[m]) return ksCache[m];
+      var sr = ctx.sampleRate, f = freq(m), P = sr / f, N = Math.max(2, Math.floor(P - 0.5));
+      var rate = f / (sr / (N + 0.5));
+      var T60 = Math.max(1.4, Math.min(4.2, 4.2 - (m - 55) * 0.07)), secs = Math.min(4.5, T60 + 0.4), len = Math.floor(sr * secs);
+      var y = new Float32Array(len), rho = Math.pow(0.001, 1 / (f * T60)), S = 0.36;
+      // excitation: bright noise with a pluck-position comb, plus a little triangle for body
+      var pos = Math.max(1, Math.round(N * 0.13)), exc = new Float32Array(N), i;
+      for (i = 0; i < N; i++) exc[i] = (Math.random() * 2 - 1) * 0.8 + (1 - Math.abs(2 * i / N - 1)) * 0.6 - 0.3;
+      for (i = 0; i < N; i++) y[i] = exc[i] - (i >= pos ? exc[i - pos] : 0) * 0.85;
+      for (i = N; i < len; i++) y[i] = rho * ((1 - S) * y[i - N] + S * y[i - N - 1 < 0 ? 0 : i - N - 1]);
+      // DC block + normalise + tiny fade-in/out
+      var prevX = 0, prevY = 0, peak = 0;
+      for (i = 0; i < len; i++) { var x = y[i], o = x - prevX + 0.995 * prevY; prevX = x; prevY = o; y[i] = o; if (Math.abs(o) > peak) peak = Math.abs(o); }
+      var g = 0.85 / (peak || 1), fi = Math.floor(sr * 0.0015), fo = Math.floor(sr * 0.3);
+      for (i = 0; i < len; i++) { var e = g; if (i < fi) e *= i / fi; if (i > len - fo) e *= (len - i) / fo; y[i] *= e; }
+      var buf = ctx.createBuffer(1, len, sr); buf.getChannelData(0).set(y);
+      return (ksCache[m] = { buf: buf, rate: rate });
+    }
+    function wave(kind) {
+      if (waves[kind]) return waves[kind];
+      var h = kind === 'organ' ? [0, 1, 0.62, 0.28, 0.36, 0.08, 0.16, 0.03, 0.12, 0.02, 0.04, 0, 0.05] : [0, 1, 0.5, 0.28, 0.16, 0.1, 0.06, 0.04, 0.025, 0.015];
+      var re = new Float32Array(h.length), im = new Float32Array(h.length);
+      for (var i = 1; i < h.length; i++) im[i] = h[i];
+      return (waves[kind] = ctx.createPeriodicWave(re, im));
+    }
+    function track(nodes, end) { live.push({ nodes: nodes, end: end }); if (live.length > 80) live = live.filter(function (x) { return x.end > ctx.currentTime - 0.5; }); }
+    function note(midi, t, dur, vel) {
+      if (!ctx || midi === null || midi === undefined) return;
+      vel = vel || 1;
+      var out = ctx.createGain(); out.connect(master);
+      if (voice === 'psaltery') {
+        var ks = ksBuffer(midi), ringEnd = t + dur + 0.35;
+        var srcs = [], pans = [-0.22, 0.24], dets = [0, 7], gains = [0.62, 0.32];
+        for (var k = 0; k < 2; k++) {
+          var s = ctx.createBufferSource(); s.buffer = ks.buf; s.playbackRate.value = ks.rate; s.detune.value = dets[k];
+          var g = ctx.createGain(); g.gain.value = gains[k] * vel;
+          var p = ctx.createStereoPanner ? ctx.createStereoPanner() : null;
+          s.connect(g); if (p) { p.pan.value = pans[k]; g.connect(p); p.connect(out); } else g.connect(out);
+          s.start(t + k * 0.006); s.stop(ringEnd + 0.4); srcs.push(s);
+        }
+        // shimmer: soft octave sine that fades quickly
+        var o = ctx.createOscillator(), og = ctx.createGain(); o.type = 'sine'; o.frequency.value = freq(midi) * 2;
+        og.gain.setValueAtTime(0, t); og.gain.linearRampToValueAtTime(0.05 * vel, t + 0.004); og.gain.exponentialRampToValueAtTime(0.0005, t + 0.6);
+        o.connect(og); og.connect(out); o.start(t); o.stop(t + 0.7); srcs.push(o);
+        out.gain.setValueAtTime(1, t); out.gain.setValueAtTime(1, ringEnd); out.gain.setTargetAtTime(0, ringEnd, 0.12);
+        track(srcs.concat([out]), ringEnd + 0.8);
+      } else if (voice === 'organ') {
+        var lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 5200; lp.Q.value = 0.3; lp.connect(out);
+        var nodes = [];
+        [0, 5].forEach(function (cents, k) {
+          var os = ctx.createOscillator(); os.setPeriodicWave(wave('organ')); os.frequency.value = freq(midi); os.detune.value = cents;
+          var gg = ctx.createGain(); gg.gain.value = k ? 0.32 : 0.5; os.connect(gg); gg.connect(lp); os.start(t); os.stop(t + dur + 0.6); nodes.push(os);
+        });
+        var sub = ctx.createOscillator(), sg = ctx.createGain(); sub.type = 'sine'; sub.frequency.value = freq(midi) / 2; sg.gain.value = 0.12; sub.connect(sg); sg.connect(lp); sub.start(t); sub.stop(t + dur + 0.6); nodes.push(sub);
+        var end = t + Math.max(0.05, dur - 0.03);
+        out.gain.setValueAtTime(0, t); out.gain.linearRampToValueAtTime(0.42 * vel, t + 0.035); out.gain.setTargetAtTime(0.36 * vel, t + 0.035, 0.15);
+        out.gain.setValueAtTime(0.36 * vel, end); out.gain.setTargetAtTime(0, end, 0.06);
+        track(nodes.concat([out]), end + 0.6);
+      } else {
+        var f = freq(midi), lp2 = ctx.createBiquadFilter(); lp2.type = 'lowpass'; lp2.Q.value = 0.5; lp2.connect(out);
+        lp2.frequency.setValueAtTime(Math.min(9000, f * 14), t); lp2.frequency.setTargetAtTime(Math.min(4000, f * 4), t, 0.35);
+        var pn = [];
+        [[0, 0.5], [3, 0.3], [-4, 0.22]].forEach(function (d) {
+          var os2 = ctx.createOscillator(); os2.setPeriodicWave(wave('piano')); os2.frequency.value = f; os2.detune.value = d[0];
+          var g2 = ctx.createGain(); g2.gain.value = d[1]; os2.connect(g2); g2.connect(lp2); os2.start(t); os2.stop(t + dur + 1.2); pn.push(os2);
+        });
+        var tau = Math.max(0.35, 1.6 - (midi - 48) * 0.03), endp = t + dur;
+        out.gain.setValueAtTime(0, t); out.gain.linearRampToValueAtTime(0.55 * vel, t + 0.005); out.gain.setTargetAtTime(0.0001, t + 0.005, tau);
+        out.gain.setTargetAtTime(0, endp, 0.09);
+        track(pn.concat([out]), endp + 1.2);
+      }
+    }
+    function silence() {
+      if (!ctx) return;
+      var now = ctx.currentTime;
+      live.forEach(function (x) { x.nodes.forEach(function (n) { try { if (n.gain) { n.gain.cancelScheduledValues(now); n.gain.setTargetAtTime(0, now, 0.03); } else if (n.stop) n.stop(now + 0.15); } catch (e) {} }); });
+      live = [];
+    }
+    return {
+      ensure: ensure, note: note, silence: silence,
+      now: function () { return ctx ? ctx.currentTime : 0; },
+      latency: function () { return ctx ? (ctx.outputLatency || ctx.baseLatency || 0) : 0; },
+      setVolume: function (v) { volume = v; LS.set('volume', Math.round(v * 100)); if (master) master.gain.setTargetAtTime(v * v, ctx.currentTime, 0.04); },
+      setVoice: function (v) { voice = v; LS.set('voice', v); setVoiceMix(); },
+      get voice() { return voice; }, get volume() { return volume; }
+    };
+  })();
+
+  /* =================== STATE =================== */
+  var builtIn = (window.HYMN_SONGS || []).slice();
+  (window.MY_SONGS || []).forEach(function (s, i) { if (s && s.abc) builtIn.push({ id: 'file-' + i, section: 'My Songs', title: s.title || 'My song', psalm: s.psalm || '', tune: s.tune || '', meter: s.meter || '', credit: s.credit || '', source: s.source || 'Added in my-songs.js', abc: s.abc }); });
+  var mySongs = LS.get('mySongs', []);
+  var S = { song: null, res: null, disp: null, verse: 0, transpose: 0, bpm: 90, loop: LS.get('loop', false), allVerses: LS.get('allVerses', false),
+            playing: false, events: [], total: 0, idx: 0, anchorTime: 0, anchorBeat: 0, pausedBeat: 0, timer: null, raf: 0, cur: -1, layout: null, edited: false };
+
+  function allSongs() { return builtIn.concat(mySongs.map(function (m) { return Object.assign({ section: 'My Songs' }, m); })); }
+  function findSong(id) { var a = allSongs(); for (var i = 0; i < a.length; i++) if (a[i].id === id) return a[i]; return a[0]; }
+
+  /* =================== LIBRARY =================== */
+  function songNum(s) { var m = (s.psalm || '').match(/Psalm (\d+)/); return m ? m[1] : (s.section === 'My Songs' ? '♪' : (s.title || '?')[0]); }
+  function renderLibrary() {
+    var q = ($('libSearch').value || '').trim().toLowerCase(), list = $('libList'), groups = {}, order = ['Psalter', 'Hymns', 'My Songs'];
+    allSongs().forEach(function (s) {
+      var hay = (s.title + ' ' + s.psalm + ' ' + s.tune + ' ' + s.credit).toLowerCase();
+      if (q && hay.indexOf(q) < 0) return;
+      (groups[s.section] = groups[s.section] || []).push(s);
+    });
+    list.innerHTML = '';
+    order.concat(Object.keys(groups).filter(function (k) { return order.indexOf(k) < 0; })).forEach(function (g) {
+      if (!groups[g]) { if (g === 'My Songs' && !q) { var e = document.createElement('div'); e.className = 'lib-group'; e.innerHTML = '<h2>My Songs</h2><p class="source" style="margin:0 12px 8px">Songs you import or save appear here.</p>'; list.appendChild(e); } return; }
+      var div = document.createElement('div'); div.className = 'lib-group';
+      div.innerHTML = '<h2>' + esc(g === 'Psalter' ? 'Psalter — metrical psalms' : g) + '</h2>';
+      groups[g].forEach(function (s) {
+        var b = document.createElement('button'); b.className = 'lib-item'; b.setAttribute('aria-current', S.song && S.song.id === s.id ? 'true' : 'false');
+        var sub = [s.psalm, s.tune].filter(Boolean).join(' · ');
+        b.innerHTML = '<span class="num">' + esc(songNum(s)) + '</span><span style="min-width:0"><span class="t">' + esc(s.title) + '</span><span class="s">' + esc(sub || 'My song') + '</span></span>';
+        b.onclick = function () { loadSong(s.id, true); closeLib(); };
+        if (s.section === 'My Songs' && /^my-/.test(s.id)) {
+          var d = document.createElement('span'); d.className = 'del'; d.textContent = 'Remove'; d.setAttribute('role', 'button'); d.tabIndex = 0;
+          d.onclick = function (ev) { ev.stopPropagation(); if (confirm('Remove “' + s.title + '” from My Songs?')) { mySongs = mySongs.filter(function (m) { return m.id !== s.id; }); LS.set('mySongs', mySongs); if (S.song.id === s.id) loadSong(builtIn[0].id); renderLibrary(); } };
+          b.appendChild(d);
+        }
+        div.appendChild(b);
+      });
+      list.appendChild(div);
+    });
+  }
+  function openLib() { $('library').classList.add('open'); $('scrim').classList.add('show'); }
+  function closeLib() { $('library').classList.remove('open'); $('scrim').classList.remove('show'); }
+
+  /* =================== LOAD / PARSE =================== */
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function parseFull(abc) { var r = C.parseABC(abc); C.alignExtraVerses(r); return r; }
+  function loadSong(id, userAction) {
+    stop();
+    var s = findSong(id); S.song = s; LS.set('song', s.id);
+    $('abc').value = s.abc; S.edited = false;
+    var r = parseFull(s.abc);
+    if (r.errors.length) { showErrors(r); }
+    else hideMsg();
+    S.res = r; S.verse = 0; S.transpose = 0;
+    S.bpm = Math.round(r.tempo ? r.tempo.bpm : 90);
+    updateHeader(); setTempoUI(); updateTranspose(); renderVerses(); render(); renderLibrary();
+    if (userAction) window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  function applyText(text, silent) {
+    var r = parseFull(text);
+    if (r.errors.length) { showErrors(r); return false; }
+    stop();
+    S.res = r; S.edited = text !== S.song.abc;
+    if (S.verse >= Math.max(1, r.verseCount)) S.verse = 0;
+    if (r.tempo) S.bpm = Math.round(r.tempo.bpm);
+    updateHeader(); setTempoUI(); updateTranspose(); renderVerses(); render();
+    if (!silent) {
+      if (r.warnings.length) showMsg('warn', '<b>The tune is ready to play.</b> A few things look a little unusual:<ul>' + r.warnings.slice(0, 5).map(function (w) { return '<li>' + esc(w) + '</li>'; }).join('') + '</ul>');
+      else showMsg('ok', '✓ Notes understood — ' + r.notes.filter(function (n) { return !n.rest; }).length + ' notes' + (r.verseCount ? ', ' + r.verseCount + ' verse' + (r.verseCount > 1 ? 's' : '') : '') + '. Press Play to hear it.');
+    }
+    return true;
+  }
+  function showErrors(r) {
+    var lines = $('abc').value.split('\n');
+    showMsg('err', '<b>I couldn’t read part of the notes.</b><ul>' + r.errors.slice(0, 4).map(function (e) {
+      var src = lines[e.line - 1] || '';
+      return '<li>Line ' + e.line + ': ' + esc(e.message) + (src ? '<br><code style="white-space:pre-wrap">' + esc(src.slice(0, 80)) + '</code>' : '') + '</li>';
+    }).join('') + '</ul><p style="margin:8px 0 0">Tip: open “How to type notes” below for examples.</p>');
+  }
+  function showMsg(kind, html) { var m = $('msg'); m.className = 'msg show ' + kind; m.innerHTML = html; }
+  function hideMsg() { $('msg').className = 'msg'; }
+  function updateHeader() {
+    var s = S.song, r = S.res;
+    var title = (S.edited && r.title) ? r.title : s.title || r.title || 'Untitled';
+    $('songTitle').textContent = title; document.title = title + ' – Psalms & Hymns';
+    $('songSub').textContent = [s.psalm, s.tune, s.meter].filter(Boolean).join(' · ') || (r.subtitles[0] || '');
+    $('songCredit').textContent = s.credit || r.composer.join(' · ');
+    $('nowTitle').textContent = title;
+    $('sourceNote').textContent = s.source ? 'About this tune: ' + s.source : '';
+  }
+  function renderVerses() {
+    var v = $('verses'), n = Math.max(1, S.res.verseCount);
+    v.innerHTML = '';
+    if (S.res.verseCount === 0) { v.innerHTML = '<span class="lbl">No words for this tune</span>'; $('allVerses').parentNode.style.visibility = 'hidden'; return; }
+    $('allVerses').parentNode.style.visibility = n > 1 ? 'visible' : 'hidden';
+    var l = document.createElement('span'); l.className = 'lbl'; l.textContent = 'Verse'; v.appendChild(l);
+    for (var i = 0; i < n; i++) (function (i) {
+      var b = document.createElement('button'); b.className = 'chip'; b.textContent = i + 1; b.setAttribute('aria-pressed', i === S.verse ? 'true' : 'false');
+      b.setAttribute('aria-label', 'Verse ' + (i + 1));
+      b.onclick = function () { setVerse(i); };
+      v.appendChild(b);
+    })(i);
+  }
+  function setVerse(i) {
+    S.verse = i;
+    Array.prototype.forEach.call($('verses').querySelectorAll('.chip'), function (b, k) { b.setAttribute('aria-pressed', k === i ? 'true' : 'false'); });
+    render();
+  }
+
+  /* =================== STAFF RENDERING =================== */
+  var SVGNS = 'http://www.w3.org/2000/svg';
+  var measureCtx = document.createElement('canvas').getContext('2d');
+  function textW(t, px, bold) { measureCtx.font = (bold ? '700 ' : '') + px + 'px ' + getComputedStyle(document.body).getPropertyValue('--serif'); return measureCtx.measureText(t).width; }
+  function glyphFor(d) {
+    var bases = [4, 2, 1, 0.5, 0.25, 0.125];
+    for (var i = 0; i < bases.length; i++) {
+      var b = bases[i];
+      if (Math.abs(d - b * 1.75) < 1e-6) return { base: b, dots: 2 };
+      if (Math.abs(d - b * 1.5) < 1e-6) return { base: b, dots: 1 };
+      if (Math.abs(d - b) < 1e-6) return { base: b, dots: 0 };
+    }
+    for (var j = 0; j < bases.length; j++) if (d >= bases[j] - 1e-6) return { base: bases[j], dots: d >= bases[j] * 1.5 - 1e-6 ? 1 : 0 };
+    return { base: 0.125, dots: 0 };
+  }
+  var SHARP_STEPS = [38, 35, 39, 36, 33, 37, 34], FLAT_STEPS = [34, 37, 33, 36, 32, 35, 31];
+  function render() {
+    var host = $('staff'), r = S.res;
+    var W = Math.max(300, host.clientWidth || 800);
+    var sp = W < 520 ? 10.5 : W < 800 ? 12 : 13.5;           // staff space in px
+    var lyrPx = Math.round(sp * (W < 520 ? 1.75 : 1.65));
+    S.disp = C.displayNotes(r, S.transpose);
+    var dn = S.disp.notes, verse = S.verse;
+    $('keyInfo').innerHTML = 'Key <b>' + esc(S.disp.keyName) + '</b> · Time <b>' + esc(r.meter.text || 'free') + '</b>' + (S.transpose ? ' · moved ' + (S.transpose > 0 ? 'up ' : 'down ') + Math.abs(S.transpose) + ' half step' + (Math.abs(S.transpose) > 1 ? 's' : '') : '');
+    var fifths = S.disp.fifths, nAcc = Math.abs(fifths);
+    var clefW = 3.4 * sp, keyW = nAcc * 1.05 * sp + (nAcc ? 0.6 * sp : 0), timeW = r.meter.free ? 0 : 2.6 * sp;
+    // measure each element
+    var items = []; // {type:'note', n, w} | {type:'bar', el, w}
+    var noteEls = r.notes;
+    var barAfter = {}; r.elements.forEach(function (e, k) { if (e.type === 'bar' && e.afterNote !== undefined && e.afterNote >= 0) barAfter[e.afterNote] = e; });
+    noteEls.forEach(function (n, i) {
+      var d = dn[i], g = glyphFor(n.dur), ly = n.lyrics && n.lyrics[verse];
+      var lw = ly && ly.text ? textW(ly.text + (ly.hyph ? ' -' : ''), lyrPx) + 0.6 * sp : 0;
+      var base = (2.3 + Math.min(4, n.dur) * 1.35) * sp + (d.showAcc !== undefined ? 1.2 * sp : 0) + (g.dots ? 0.6 * sp : 0);
+      items.push({ type: 'note', i: i, w: Math.max(base, lw, 2.6 * sp), lw: lw, g: g });
+      if (barAfter[i]) items.push({ type: 'bar', el: barAfter[i], w: (barAfter[i].kind === 'single' && !barAfter[i].repEnd && !barAfter[i].repStart ? 1.4 : 2.2) * sp });
+    });
+    // break into systems: prefer phrase (source line) ends, then bars
+    var systems = [], cur = [], curW = 0, usable = W - 10;
+    function headW(first) { return clefW + keyW + (first ? timeW : 0) + 0.8 * sp; }
+    var lineEnds = {}; noteEls.forEach(function (n, i) { if (i + 1 < noteEls.length && noteEls[i + 1].line !== n.line) lineEnds[i] = true; });
+    // group items into "phrases" by source line, and phrases into "bars"
+    var phrases = [], ph = [];
+    items.forEach(function (it, k) { ph.push(it); var endsLine = it.type === 'bar' ? lineEnds[it.el.afterNote] : (lineEnds[it.i] && !(items[k + 1] && items[k + 1].type === 'bar')); if (endsLine) { phrases.push(ph); ph = []; } });
+    if (ph.length) phrases.push(ph);
+    function wOf(arr) { return arr.reduce(function (a, b) { return a + b.w; }, 0); }
+    phrases.forEach(function (p) {
+      var pw = wOf(p), hw = headW(systems.length === 0 && !cur.length);
+      if (cur.length && curW + pw <= usable - headW(systems.length === 0)) { cur = cur.concat(p); curW += pw; return; }
+      if (cur.length) { systems.push(cur); cur = []; curW = 0; }
+      if (pw <= usable - headW(systems.length === 0)) { cur = p.slice(); curW = pw; return; }
+      // phrase too long: split at bars
+      var bar = [];
+      p.forEach(function (it) {
+        bar.push(it);
+        if (it.type === 'bar') {
+          var bw = wOf(bar), lim = usable - headW(systems.length === 0);
+          if (cur.length && curW + bw > lim) { systems.push(cur); cur = []; curW = 0; }
+          cur = cur.concat(bar); curW += bw; bar = [];
+        }
+      });
+      if (bar.length) { var bw2 = wOf(bar); if (cur.length && curW + bw2 > usable - headW(systems.length === 0)) { systems.push(cur); cur = []; curW = 0; } cur = cur.concat(bar); curW += bw2; }
+    });
+    if (cur.length) systems.push(cur);
+    // vertical metrics
+    var topPad = 4.2 * sp, staffH = 4 * sp, belowStaff = 3.6 * sp, lyrH = r.verseCount ? lyrPx * 1.55 : 0, gap = 1.6 * sp;
+    var sysH = topPad + staffH + belowStaff + lyrH + gap;
+    var H = systems.length * sysH + 6;
+    var svg = document.createElementNS(SVGNS, 'svg');
+    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H); svg.setAttribute('width', W); svg.setAttribute('height', H);
+    svg.setAttribute('role', 'img'); svg.setAttribute('aria-label', 'Music notation with words');
+    function el(name, attrs, parent) { var e = document.createElementNS(SVGNS, name); for (var k in attrs) e.setAttribute(k, attrs[k]); (parent || svg).appendChild(e); return e; }
+    var hl = el('rect', { class: 'st-hl', x: 0, y: 0, width: 2.8 * sp, height: 1, rx: sp * 0.9 });
+    var layout = { notes: {}, sysTop: [], sp: sp, hl: hl, sysH: sysH };
+    systems.forEach(function (sys, si) {
+      var y0 = si * sysH + topPad, x = 4;
+      var first = si === 0;
+      layout.sysTop.push(si * sysH);
+      var stepY = function (step) { return y0 + staffH - (step - 30) * sp / 2; };
+      var natural = wOf(sys), head = headW(first), avail = W - 6 - x - head;
+      var isLast = si === systems.length - 1;
+      var scale = natural > 0 ? avail / natural : 1;
+      if (isLast && scale > 1.35) scale = 1.35; // don't over-stretch a short last line
+      if (scale > 2.2) scale = 2.2;
+      var endX = x + head + natural * scale;
+      for (var l = 0; l < 5; l++) el('line', { class: 'st-line', x1: x, x2: endX, y1: y0 + l * sp, y2: y0 + l * sp });
+      el('line', { class: 'st-bar', x1: x, x2: x, y1: y0, y2: y0 + staffH });
+      drawClef(el, x + 0.5 * sp, y0 + 3 * sp, sp);
+      var kx = x + clefW;
+      for (var a = 0; a < nAcc; a++) {
+        var st = fifths > 0 ? SHARP_STEPS[a] : FLAT_STEPS[a];
+        drawAcc(el, svg, fifths > 0 ? 1 : -1, kx + a * 1.05 * sp + 0.5 * sp, stepY(st), sp, 'st-ink');
+      }
+      var tx = kx + keyW;
+      if (first && !r.meter.free) {
+        var fs = sp * 2.15;
+        var tnum = r.meter.symbol === 'C' ? 'C' : r.meter.num, tden = r.meter.den;
+        if (r.meter.symbol === 'C' || r.meter.symbol === 'C|') { var tt = el('text', { x: tx + 0.9 * sp, y: y0 + 2.75 * sp, 'font-size': fs * 1.2, 'font-weight': 700, 'text-anchor': 'middle', class: 'st-ink', 'font-family': 'Georgia,serif' }); tt.textContent = 'C'; }
+        else {
+          var t1 = el('text', { x: tx + 1.0 * sp, y: y0 + 1.82 * sp, 'font-size': fs, 'font-weight': 800, 'text-anchor': 'middle', class: 'st-ink', 'font-family': 'Georgia,"Times New Roman",serif' }); t1.textContent = tnum;
+          var t2 = el('text', { x: tx + 1.0 * sp, y: y0 + 3.82 * sp, 'font-size': fs, 'font-weight': 800, 'text-anchor': 'middle', class: 'st-ink', 'font-family': 'Georgia,"Times New Roman",serif' }); t2.textContent = tden;
+        }
+      }
+      var cx = x + head;
+      var lyrY = y0 + staffH + belowStaff + lyrPx * 0.95;
+      var beamQueue = [];
+      sys.forEach(function (it, k) {
+        var w = it.w * scale;
+        if (it.type === 'bar') {
+          drawBar(el, it.el, cx + w * 0.45, y0, staffH, sp, isLast && k === sys.length - 1);
+          cx += w; return;
+        }
+        var n = noteEls[it.i], d = dn[it.i], nx = cx + Math.max(Math.min(w * 0.42, 1.6 * sp + (d.showAcc !== undefined ? 1 * sp : 0)), it.lw / 2);
+        var g = it.g, grp = el('g', { class: 'st-note', 'data-i': it.i });
+        var info = { x: nx, sys: si, y0: y0, cx: cx, w: w };
+        if (n.rest) { if (!n.invisible) drawRest(el, grp, g, nx, y0, sp); }
+        else {
+          var y = stepY(d.step), up = d.step < 34;
+          info.y = y;
+          // ledger lines
+          for (var ls = 28; ls >= d.step; ls -= 2) el('line', { class: 'st-line ledger', x1: nx - 1.05 * sp, x2: nx + 1.05 * sp, y1: stepY(ls), y2: stepY(ls), 'stroke-width': 1.3 }, grp);
+          for (var hs = 40; hs <= d.step; hs += 2) el('line', { class: 'st-line ledger', x1: nx - 1.05 * sp, x2: nx + 1.05 * sp, y1: stepY(hs), y2: stepY(hs), 'stroke-width': 1.3 }, grp);
+          var hollow = g.base >= 2;
+          el('ellipse', { class: 'head' + (hollow ? ' hollow' : ''), cx: nx, cy: y, rx: sp * 0.66, ry: sp * 0.47, transform: 'rotate(-20 ' + nx + ' ' + y + ')',
+            fill: hollow ? 'none' : 'var(--ink)', stroke: hollow ? 'var(--ink)' : 'none', 'stroke-width': hollow ? sp * 0.17 : 0 }, grp);
+          if (hollow) el('ellipse', { class: 'head', cx: nx, cy: y, rx: sp * 0.66, ry: sp * 0.47, transform: 'rotate(-20 ' + nx + ' ' + y + ')', fill: 'transparent' }, grp);
+          if (d.showAcc !== undefined) drawAcc(el, grp, d.showAcc, nx - 1.55 * sp, y, sp, 'st-ink');
+          for (var dt = 0; dt < g.dots; dt++) el('circle', { class: 'dot st-ink', cx: nx + sp * (1.1 + dt * 0.55), cy: (d.step % 2 === 0 ? y - sp / 2 : y), r: sp * 0.17 }, grp);
+          if (g.base < 4) {
+            var stemX = up ? nx + sp * 0.58 : nx - sp * 0.58, stemY2 = up ? y - 3.4 * sp : y + 3.4 * sp;
+            if (up && d.step < 26) stemY2 = stepY(34); if (!up && d.step > 42) stemY2 = stepY(34);
+            var stem = el('line', { class: 'stem st-stroke', x1: stemX, x2: stemX, y1: y + (up ? -0.15 : 0.15) * sp, y2: stemY2, 'stroke-width': sp * 0.12 }, grp);
+            info.stem = { el: stem, x: stemX, y2: stemY2, up: up, base: g.base, grp: grp };
+            if (g.base <= 0.5) beamQueue.push({ i: it.i, info: info, n: n });
+            else flushBeams();
+          } else flushBeams();
+          // tie to next
+          if (n.tie && noteEls[it.i + 1] && noteEls[it.i + 1].tiedFrom === it.i) info.tieOut = true;
+        }
+        if (n.rest || g.base > 0.5) flushBeams();
+        else if (n.spaceAfter || (n.barAfter) || k === sys.length - 1 || beatEnd(n)) flushBeams();
+        // lyric
+        var ly = n.lyrics && n.lyrics[verse];
+        if (ly && (ly.text || ly.hold)) {
+          if (ly.text) {
+            var tEl = el('text', { class: 'lyr', x: nx, y: lyrY, 'font-size': lyrPx, 'text-anchor': 'middle', 'data-i': it.i });
+            tEl.textContent = ly.text; info.lyr = tEl;
+            if (ly.hyph) info.hyph = true;
+          }
+        }
+        layout.notes[it.i] = info;
+        cx += w;
+      });
+      flushBeams();
+      function beatEnd(n) { var beat = r.meter.den === 8 && r.meter.num % 3 === 0 ? 1.5 : (r.meter.den === 2 ? 2 : 1); var e = n.start + n.dur; return Math.abs(e / beat - Math.round(e / beat)) < 1e-6; }
+      function flushBeams() {
+        if (!beamQueue.length) return;
+        var q = beamQueue; beamQueue = [];
+        if (q.length === 1) { drawFlag(el, q[0].info.stem, sp); return; }
+        var ups = q.reduce(function (a, b) { return a + (b.info.stem.up ? 1 : 0); }, 0) >= q.length / 2;
+        var ys = q.map(function (b) { return b.info.y; });
+        var ext = ups ? Math.min.apply(null, ys) - 3.2 * sp : Math.max.apply(null, ys) + 3.2 * sp;
+        q.forEach(function (b) {
+          var s = b.info.stem, sx = ups ? b.info.x + sp * 0.58 : b.info.x - sp * 0.58;
+          s.el.setAttribute('x1', sx); s.el.setAttribute('x2', sx); s.el.setAttribute('y2', ext); s.el.setAttribute('y1', b.info.y + (ups ? -0.15 : 0.15) * sp); s.x = sx;
+        });
+        var bt = sp * 0.48, x1 = q[0].info.stem.x, x2 = q[q.length - 1].info.stem.x;
+        var beam = el('path', { class: 'st-ink', d: 'M' + x1 + ' ' + ext + 'L' + x2 + ' ' + ext + 'L' + x2 + ' ' + (ext + (ups ? bt : -bt)) + 'L' + x1 + ' ' + (ext + (ups ? bt : -bt)) + 'Z' });
+        q.forEach(function (b) { b.info.beam = beam; });
+        // secondary beams for 16ths
+        q.forEach(function (b, k2) {
+          if (b.info.stem.base > 0.25) return;
+          var y2 = ext + (ups ? 1 : -1) * bt * 1.7, sx = b.info.stem.x, ex;
+          var nb = q[k2 + 1], pb = q[k2 - 1];
+          if (nb && nb.info.stem.base <= 0.25) ex = nb.info.stem.x; else if (pb && pb.info.stem.base > 0.25) ex = sx - 1.2 * sp; else if (!nb) ex = sx - 1.2 * sp; else ex = sx + 1.2 * sp;
+          if (pb && pb.info.stem.base <= 0.25) return;
+          el('path', { class: 'st-ink', d: 'M' + sx + ' ' + y2 + 'L' + ex + ' ' + y2 + 'L' + ex + ' ' + (y2 + (ups ? bt : -bt)) + 'L' + sx + ' ' + (y2 + (ups ? bt : -bt)) + 'Z' });
+        });
+      }
+    });
+    // ties & hyphens & extenders
+    Object.keys(layout.notes).forEach(function (k) {
+      var a = layout.notes[k], i = +k;
+      if (a.tieOut && layout.notes[i + 1]) {
+        var b = layout.notes[i + 1], up = dn[i].step >= 34, yy = a.y + (up ? -0.8 : 0.8) * sp;
+        if (b.sys === a.sys) el('path', { class: 'st-stroke', 'stroke-width': sp * 0.13, d: 'M' + (a.x + 0.7 * sp) + ' ' + yy + ' Q' + ((a.x + b.x) / 2) + ' ' + (yy + (up ? -1.2 : 1.2) * sp) + ' ' + (b.x - 0.7 * sp) + ' ' + yy });
+        else el('path', { class: 'st-stroke', 'stroke-width': sp * 0.13, d: 'M' + (a.x + 0.7 * sp) + ' ' + yy + ' q' + (1.4 * sp) + ' ' + ((up ? -1 : 1) * sp) + ' ' + (2.8 * sp) + ' 0' });
+      }
+      if (a.hyph && a.lyr) {
+        // find next syllable in same verse
+        for (var j = i + 1; j < noteEls.length; j++) { var lj = noteEls[j].lyrics && noteEls[j].lyrics[verse]; if (lj && lj.text) break; }
+        var bnext = layout.notes[j];
+        var lw = textW(noteEls[i].lyrics[verse].text, lyrPx);
+        var hx = bnext && bnext.sys === a.sys ? ((a.x + lw / 2) + (bnext.x - textW(noteEls[j].lyrics[verse].text, lyrPx) / 2)) / 2 : a.x + lw / 2 + 0.7 * sp;
+        var hy = el('text', { class: 'lyr', x: hx, y: lyrY_of(a), 'font-size': lyrPx, 'text-anchor': 'middle' }); hy.textContent = '-';
+      }
+      var ly = noteEls[i].lyrics && noteEls[i].lyrics[verse];
+      if (ly && ly.extend && a.lyr && !ly.hyph) {
+        // extender line under held notes
+        var last = i;
+        for (var m = i + 1; m < noteEls.length; m++) { var lm = noteEls[m].lyrics && noteEls[m].lyrics[verse]; if (lm && lm.hold) last = m; else break; }
+        var e = layout.notes[last];
+        if (e && e.sys === a.sys && last > i) el('line', { class: 'st-line', x1: a.x + textW(ly.text, lyrPx) / 2 + 2, x2: e.x + 0.6 * sp, y1: lyrY_of(a) + 2, y2: lyrY_of(a) + 2, 'stroke-width': 1.2 });
+      }
+    });
+    function lyrY_of(a) { return a.y0 + staffH + belowStaff + lyrPx * 0.95; }
+    hl.setAttribute('height', staffH + 5.4 * sp + (lyrH ? lyrH * 0.9 : 0));
+    host.innerHTML = ''; host.appendChild(svg);
+    svg.addEventListener('click', function (ev) {
+      var g = ev.target.closest('[data-i]'); if (!g) return;
+      seekToNote(+g.getAttribute('data-i'));
+    });
+    S.layout = layout; S.cur = -1;
+    if (S.playing || S.pausedBeat > 0) highlightAtBeat(S.playing ? currentBeat() : S.pausedBeat, true);
+  }
+  function drawClef(el, x, yG, sp) {
+    // treble clef drawn as strokes; yG = y of the G line
+    var s = sp, d = function (pts) { return pts; };
+    var path = 'M' + (x + 1.05 * s) + ',' + (yG + 0.25 * s) +
+      ' C' + (x + 0.55 * s) + ',' + (yG + 0.25 * s) + ' ' + (x + 0.45 * s) + ',' + (yG - 0.6 * s) + ' ' + (x + 1.05 * s) + ',' + (yG - 0.8 * s) +
+      ' C' + (x + 1.85 * s) + ',' + (yG - 1.0 * s) + ' ' + (x + 2.25 * s) + ',' + (yG + 0.05 * s) + ' ' + (x + 1.8 * s) + ',' + (yG + 0.75 * s) +
+      ' C' + (x + 1.35 * s) + ',' + (yG + 1.35 * s) + ' ' + (x + 0.1 * s) + ',' + (yG + 1.25 * s) + ' ' + (x + 0.05 * s) + ',' + (yG + 0.15 * s) +
+      ' C' + (x + 0.0 * s) + ',' + (yG - 0.95 * s) + ' ' + (x + 1.05 * s) + ',' + (yG - 1.75 * s) + ' ' + (x + 1.5 * s) + ',' + (yG - 2.6 * s) +
+      ' C' + (x + 1.95 * s) + ',' + (yG - 3.4 * s) + ' ' + (x + 1.8 * s) + ',' + (yG - 4.25 * s) + ' ' + (x + 1.45 * s) + ',' + (yG - 4.2 * s) +
+      ' C' + (x + 1.0 * s) + ',' + (yG - 4.1 * s) + ' ' + (x + 0.85 * s) + ',' + (yG - 3.1 * s) + ' ' + (x + 1.0 * s) + ',' + (yG - 2.3 * s) +
+      ' L' + (x + 1.42 * s) + ',' + (yG + 1.95 * s) +
+      ' C' + (x + 1.5 * s) + ',' + (yG + 2.6 * s) + ' ' + (x + 0.95 * s) + ',' + (yG + 2.75 * s) + ' ' + (x + 0.65 * s) + ',' + (yG + 2.45 * s);
+    el('path', { class: 'st-stroke', d: path, 'stroke-width': s * 0.2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' });
+    el('circle', { class: 'st-ink', cx: x + 0.78 * s, cy: yG + 2.3 * s, r: s * 0.33 });
+  }
+  function drawAcc(el, parent, a, x, y, sp, cls) {
+    var g = el('g', { class: 'acc' }, parent), s = sp, p;
+    if (a === 1 || a === 2) {
+      if (a === 2) { el('path', { class: cls, d: 'M' + (x - .5 * s) + ' ' + (y - .5 * s) + 'l' + s + ' ' + s + 'm0 -' + s + 'l-' + s + ' ' + s, stroke: 'var(--ink)', 'stroke-width': s * .22 }, g); return; }
+      p = 'M' + (x - .3 * s) + ' ' + (y - 1.3 * s) + 'v2.7' .replace('2.7', 2.7 * s) + '';
+      el('path', { class: cls, d: 'M' + (x - .28 * s) + ' ' + (y - 1.35 * s) + 'L' + (x - .28 * s) + ' ' + (y + 1.45 * s) + 'L' + (x - .14 * s) + ' ' + (y + 1.45 * s) + 'L' + (x - .14 * s) + ' ' + (y - 1.35 * s) + 'Z' +
+        'M' + (x + .18 * s) + ' ' + (y - 1.45 * s) + 'L' + (x + .18 * s) + ' ' + (y + 1.35 * s) + 'L' + (x + .32 * s) + ' ' + (y + 1.35 * s) + 'L' + (x + .32 * s) + ' ' + (y - 1.45 * s) + 'Z' +
+        'M' + (x - .62 * s) + ' ' + (y - .3 * s) + 'L' + (x + .62 * s) + ' ' + (y - .62 * s) + 'L' + (x + .62 * s) + ' ' + (y - .26 * s) + 'L' + (x - .62 * s) + ' ' + (y + .06 * s) + 'Z' +
+        'M' + (x - .62 * s) + ' ' + (y + .45 * s) + 'L' + (x + .62 * s) + ' ' + (y + .13 * s) + 'L' + (x + .62 * s) + ' ' + (y + .49 * s) + 'L' + (x - .62 * s) + ' ' + (y + .81 * s) + 'Z' }, g);
+    } else if (a === -1 || a === -2) {
+      var fl = function (xx) { el('path', { class: cls, d: 'M' + (xx - .35 * s) + ' ' + (y - 1.9 * s) + 'L' + (xx - .35 * s) + ' ' + (y + .55 * s) + 'C' + (xx + .2 * s) + ' ' + (y + .2 * s) + ' ' + (xx + .75 * s) + ' ' + (y - .1 * s) + ' ' + (xx + .55 * s) + ' ' + (y - .55 * s) + 'C' + (xx + .35 * s) + ' ' + (y - .95 * s) + ' ' + (xx - .05 * s) + ' ' + (y - .7 * s) + ' ' + (xx - .2 * s) + ' ' + (y - .45 * s) + 'L' + (xx - .2 * s) + ' ' + (y - 1.9 * s) + 'Z' +
+        'M' + (xx - .2 * s) + ' ' + (y - .2 * s) + 'C' + (xx - .02 * s) + ' ' + (y - .5 * s) + ' ' + (xx + .4 * s) + ' ' + (y - .55 * s) + ' ' + (xx + .25 * s) + ' ' + (y - .15 * s) + 'C' + (xx + .15 * s) + ' ' + (y + .05 * s) + ' ' + (xx - .05 * s) + ' ' + (y + .2 * s) + ' ' + (xx - .2 * s) + ' ' + (y + .3 * s) + 'Z', 'fill-rule': 'evenodd' }, g); };
+      fl(x); if (a === -2) fl(x - .75 * s);
+    } else {
+      el('path', { class: cls, d: 'M' + (x - .4 * s) + ' ' + (y - 1.5 * s) + 'L' + (x - .4 * s) + ' ' + (y + .55 * s) + 'L' + (x - .26 * s) + ' ' + (y + .55 * s) + 'L' + (x - .26 * s) + ' ' + (y - 1.5 * s) + 'Z' +
+        'M' + (x + .26 * s) + ' ' + (y - .55 * s) + 'L' + (x + .26 * s) + ' ' + (y + 1.5 * s) + 'L' + (x + .4 * s) + ' ' + (y + 1.5 * s) + 'L' + (x + .4 * s) + ' ' + (y - .55 * s) + 'Z' +
+        'M' + (x - .4 * s) + ' ' + (y - .3 * s) + 'L' + (x + .4 * s) + ' ' + (y - .55 * s) + 'L' + (x + .4 * s) + ' ' + (y - .2 * s) + 'L' + (x - .4 * s) + ' ' + (y + .05 * s) + 'Z' +
+        'M' + (x - .4 * s) + ' ' + (y + .5 * s) + 'L' + (x + .4 * s) + ' ' + (y + .25 * s) + 'L' + (x + .4 * s) + ' ' + (y + .6 * s) + 'L' + (x - .4 * s) + ' ' + (y + .85 * s) + 'Z' }, g);
+    }
+  }
+  function drawFlag(el, st, sp) {
+    var n = st.base <= 0.125 ? 3 : st.base <= 0.25 ? 2 : 1, s = sp;
+    for (var k = 0; k < n; k++) {
+      var yy = st.y2 + (st.up ? 1 : -1) * k * 0.85 * s, dir = st.up ? 1 : -1;
+      el('path', { class: 'flag st-ink', d: 'M' + st.x + ' ' + yy + 'C' + (st.x + .2 * s) + ' ' + (yy + dir * 1.0 * s) + ' ' + (st.x + 1.5 * s) + ' ' + (yy + dir * 1.3 * s) + ' ' + (st.x + 1.0 * s) + ' ' + (yy + dir * 2.6 * s) +
+        'C' + (st.x + 1.2 * s) + ' ' + (yy + dir * 1.6 * s) + ' ' + (st.x + .5 * s) + ' ' + (yy + dir * 1.35 * s) + ' ' + st.x + ' ' + (yy + dir * 1.0 * s) + 'Z' }, st.grp);
+    }
+  }
+  function drawRest(el, grp, g, x, y0, sp) {
+    var s = sp, b = g.base;
+    if (b >= 4) el('rect', { class: 'head st-ink', x: x - .65 * s, y: y0 + s, width: 1.3 * s, height: .5 * s }, grp);
+    else if (b >= 2) el('rect', { class: 'head st-ink', x: x - .65 * s, y: y0 + 1.5 * s, width: 1.3 * s, height: .5 * s }, grp);
+    else if (b >= 1) el('path', { class: 'head st-stroke', 'stroke-width': s * .28, 'stroke-linejoin': 'round', 'stroke-linecap': 'round', d: 'M' + (x - .3 * s) + ' ' + (y0 + .6 * s) + 'L' + (x + .45 * s) + ' ' + (y0 + 1.5 * s) + 'L' + (x - .3 * s) + ' ' + (y0 + 2.3 * s) + 'L' + (x + .4 * s) + ' ' + (y0 + 3.0 * s) + 'C' + (x - .5 * s) + ' ' + (y0 + 2.7 * s) + ' ' + (x - .5 * s) + ' ' + (y0 + 3.4 * s) + ' ' + (x + .05 * s) + ' ' + (y0 + 3.6 * s) }, grp);
+    else { el('path', { class: 'head st-stroke', 'stroke-width': s * .16, d: 'M' + (x + .5 * s) + ' ' + (y0 + 1.6 * s) + 'L' + (x - .2 * s) + ' ' + (y0 + 3.4 * s) }, grp); el('circle', { class: 'head st-ink', cx: x - .2 * s, cy: y0 + 1.75 * s, r: .32 * s }, grp); el('path', { class: 'head st-stroke', 'stroke-width': s * .14, d: 'M' + (x - .2 * s) + ' ' + (y0 + 1.95 * s) + 'Q' + (x + .2 * s) + ' ' + (y0 + 2.0 * s) + ' ' + (x + .5 * s) + ' ' + (y0 + 1.6 * s) }, grp); }
+    if (g.dots) el('circle', { class: 'dot st-ink', cx: x + 1.0 * s, cy: y0 + 1.5 * s, r: s * .17 }, grp);
+  }
+  function drawBar(el, b, x, y0, h, sp, isEnd) {
+    var thin = 1.4, thick = sp * 0.45;
+    var dots = function (xx) { el('circle', { class: 'st-ink', cx: xx, cy: y0 + 1.5 * sp, r: sp * .2 }); el('circle', { class: 'st-ink', cx: xx, cy: y0 + 2.5 * sp, r: sp * .2 }); };
+    if (b.kind === 'final' || (isEnd && b.kind !== 'single')) {
+      el('line', { class: 'st-bar', x1: x - .5 * sp, x2: x - .5 * sp, y1: y0, y2: y0 + h });
+      el('rect', { class: 'st-ink', x: x, y: y0, width: thick, height: h });
+      if (b.repEnd) dots(x - 1.1 * sp);
+      return;
+    }
+    if (b.repEnd || b.repStart) {
+      if (b.repEnd) { dots(x - 1.0 * sp); el('line', { class: 'st-bar', x1: x - .4 * sp, x2: x - .4 * sp, y1: y0, y2: y0 + h }); }
+      el('rect', { class: 'st-ink', x: x - thick / 2 + (b.repEnd && !b.repStart ? .2 * sp : 0), y: y0, width: thick, height: h });
+      if (b.repStart) { el('line', { class: 'st-bar', x1: x + .5 * sp, x2: x + .5 * sp, y1: y0, y2: y0 + h }); dots(x + 1.05 * sp); }
+      return;
+    }
+    if (b.kind === 'double') { el('line', { class: 'st-bar', x1: x - .3 * sp, x2: x - .3 * sp, y1: y0, y2: y0 + h }); el('line', { class: 'st-bar', x1: x + .1 * sp, x2: x + .1 * sp, y1: y0, y2: y0 + h }); return; }
+    el('line', { class: 'st-bar', x1: x, x2: x, y1: y0, y2: y0 + h, 'stroke-width': thin });
+  }
+
+  /* =================== PLAYBACK =================== */
+  function spb() { return 60 / S.bpm; }
+  function timeOf(beat) { return S.anchorTime + (beat - S.anchorBeat) * spb(); }
+  function currentBeat() { return S.anchorBeat + (Audio.now() - Audio.latency() - S.anchorTime) / spb(); }
+  function build() { var b = C.buildEvents(S.res, S.transpose); S.events = b.events; S.total = b.total; }
+  function play() {
+    if (!S.res || !S.res.notes.length) return;
+    try { Audio.ensure(); } catch (e) { toast(e.message); return; }
+    build();
+    var from = S.pausedBeat || 0;
+    if (from >= S.total - 1e-6) from = 0;
+    S.idx = 0; while (S.idx < S.events.length && S.events[S.idx].start < from - 1e-6) S.idx++;
+    // if resuming in the middle of a long note, sound it
+    S.anchorTime = Audio.now() + 0.12; S.anchorBeat = from;
+    S.playing = true; setPlayIcon(); $('nowState').textContent = 'Playing · verse ' + (S.verse + 1);
+    clearInterval(S.timer); S.timer = setInterval(tick, 25); tick();
+    cancelAnimationFrame(S.raf); S.raf = requestAnimationFrame(frame);
+  }
+  function tick() {
+    if (!S.playing) return;
+    var horizon = Audio.now() + 0.22;
+    while (S.idx < S.events.length && timeOf(S.events[S.idx].start) < horizon) {
+      var e = S.events[S.idx];
+      if (e.midi !== null && e.attack) Audio.note(e.midi, Math.max(Audio.now(), timeOf(e.start)), e.sound * spb() * 0.97, e.start === 0 ? 1 : 0.92);
+      S.idx++;
+    }
+    if (S.idx >= S.events.length && Audio.now() > timeOf(S.total) + 0.05) finished();
+  }
+  function finished() {
+    var n = Math.max(1, S.res.verseCount);
+    if (S.allVerses && S.verse < n - 1) { nextRound(S.verse + 1); return; }
+    if (S.loop) { nextRound(S.allVerses ? 0 : S.verse); return; }
+    stop();
+  }
+  function nextRound(v) {
+    if (v !== S.verse) setVerse(v);
+    S.idx = 0; S.anchorBeat = 0; S.anchorTime = Audio.now() + spb() * 1.0; // one-beat breath between verses
+    $('nowState').textContent = 'Playing · verse ' + (S.verse + 1);
+  }
+  function pause() {
+    if (!S.playing) return;
+    S.pausedBeat = Math.max(0, Math.min(S.total, currentBeat()));
+    // snap to the start of the current note
+    for (var k = S.events.length - 1; k >= 0; k--) if (S.events[k].start <= S.pausedBeat + 1e-6) { S.pausedBeat = S.events[k].start; break; }
+    S.playing = false; clearInterval(S.timer); Audio.silence(); setPlayIcon(); $('nowState').textContent = 'Paused';
+  }
+  function stop() {
+    S.playing = false; clearInterval(S.timer); cancelAnimationFrame(S.raf); Audio.silence();
+    S.pausedBeat = 0; setPlayIcon(); clearHighlight(); $('nowState').textContent = 'Ready'; $('progressBar').style.width = '0%';
+  }
+  function toggle() { if (S.playing) pause(); else play(); }
+  function seekToNote(i) {
+    build();
+    var ev = S.events.filter(function (e) { return e.n === i; })[0]; if (!ev) return;
+    var wasPlaying = S.playing;
+    if (wasPlaying) { S.playing = false; clearInterval(S.timer); Audio.silence(); }
+    S.pausedBeat = ev.start; highlightAtBeat(ev.start, true);
+    if (wasPlaying || true) play();
+  }
+  function frame() {
+    if (!S.playing) return;
+    highlightAtBeat(currentBeat());
+    S.raf = requestAnimationFrame(frame);
+  }
+  function highlightAtBeat(beat, force) {
+    var evs = S.events.length ? S.events : (build(), S.events), found = -1;
+    if (beat < 0) { if (S.cur !== -1) clearHighlight(); return; }
+    for (var k = 0; k < evs.length; k++) { if (evs[k].start <= beat + 1e-6 && beat < evs[k].start + evs[k].dur) { found = evs[k].n; break; } }
+    $('progressBar').style.width = Math.max(0, Math.min(100, beat / (S.total || 1) * 100)) + '%';
+    if (found === S.cur && !force) return;
+    setCurrent(found);
+  }
+  function setCurrent(i) {
+    var L = S.layout; if (!L) return;
+    var svg = $('staff').querySelector('svg'); if (!svg) return;
+    var prev = svg.querySelectorAll('.st-note.on, .lyr.on'); Array.prototype.forEach.call(prev, function (e) { e.classList.remove('on'); });
+    S.cur = i;
+    if (i < 0 || !L.notes[i]) { L.hl.classList.remove('show'); return; }
+    var info = L.notes[i], note = S.res.notes[i];
+    var g = svg.querySelector('.st-note[data-i="' + i + '"]'); if (g) g.classList.add('on');
+    // syllable: this note's own, or the one being held over it (melisma / tie)
+    var j = i, verse = S.verse;
+    while (j >= 0) {
+      var nj = S.res.notes[j], ly = nj.lyrics && nj.lyrics[verse];
+      if (ly && ly.text) break;
+      if (nj.rest) { j = -1; break; }
+      j--;
+    }
+    if (j >= 0 && L.notes[j] && L.notes[j].lyr) L.notes[j].lyr.classList.add('on');
+    var hx = info.x - 1.4 * L.sp, hy = L.sysTop[info.sys] + 0.6 * L.sp;
+    L.hl.style.transform = 'translate(' + hx + 'px,' + hy + 'px)'; L.hl.classList.add('show');
+    // keep the current line visible
+    if (S.playing && info.sys !== S.lastSys) {
+      S.lastSys = info.sys;
+      var svgRect = svg.getBoundingClientRect(), scale = svgRect.width / svg.viewBox.baseVal.width;
+      var top = svgRect.top + L.sysTop[info.sys] * scale, bottom = top + L.sysH * scale;
+      var trH = $('transport').getBoundingClientRect().height, topH = document.querySelector('.topbar').getBoundingClientRect().height;
+      if (top < topH + 8 || bottom > window.innerHeight - trH - 8) window.scrollBy({ top: top - topH - (window.innerHeight - topH - trH) * 0.25, behavior: 'smooth' });
+    }
+  }
+  function clearHighlight() { S.lastSys = -1; setCurrent(-1); }
+  function setPlayIcon() {
+    $('playIco').innerHTML = S.playing ? '<rect x="6.5" y="5" width="4" height="14" rx="1.3"/><rect x="13.5" y="5" width="4" height="14" rx="1.3"/>' : '<path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/>';
+    $('playBtn').setAttribute('aria-label', S.playing ? 'Pause' : 'Play');
+  }
+  function setTempo(b) {
+    b = Math.max(40, Math.min(180, Math.round(b)));
+    if (S.playing) { var cb = currentBeat(); S.anchorTime = Audio.now() - Audio.latency(); S.anchorBeat = cb; S.anchorTime = Audio.now(); }
+    S.bpm = b; setTempoUI();
+  }
+  function setTempoUI() { var t = $('tempo'); t.value = S.bpm; $('tempoOut').textContent = S.bpm + ' beats/min'; fill(t); }
+  function fill(r) { var p = (r.value - r.min) / (r.max - r.min) * 100; r.style.setProperty('--p', p + '%'); }
+  function updateTranspose() {
+    var t = S.transpose;
+    $('transOut').textContent = t === 0 ? 'As written' : (t > 0 ? '+' : '−') + Math.abs(t) + (Math.abs(t) === 1 ? ' half step' : ' half steps');
+    var f = C.transposeFifths(S.res.key.fifths, t);
+    $('keyVal').textContent = C.keyNameFromFifths(t ? f : S.res.key.fifths, S.res.key.mode).replace(' major', '').replace(' minor', 'm');
+  }
+  function setTranspose(t) {
+    t = Math.max(-12, Math.min(12, t));
+    var was = S.playing, beat = was ? currentBeat() : S.pausedBeat;
+    if (was) { S.playing = false; clearInterval(S.timer); Audio.silence(); }
+    S.transpose = t; updateTranspose(); render();
+    if (was) { S.pausedBeat = beat; for (var k = S.events.length - 1; k >= 0; k--) if (S.events[k].start <= beat) { S.pausedBeat = S.events[k].start; break; } play(); }
+  }
+
+  /* =================== IMPORT =================== */
+  function readAsText(f) { return new Promise(function (res, rej) { var r = new FileReader(); r.onload = function () { res(r.result); }; r.onerror = rej; r.readAsText(f); }); }
+  function readAsBuf(f) { return new Promise(function (res, rej) { var r = new FileReader(); r.onload = function () { res(r.result); }; r.onerror = rej; r.readAsArrayBuffer(f); }); }
+  function unzipFirstXML(buf) {
+    var u8 = new Uint8Array(buf), dv = new DataView(buf), eocd = -1;
+    for (var i = u8.length - 22; i >= Math.max(0, u8.length - 70000); i--) if (dv.getUint32(i, true) === 0x06054b50) { eocd = i; break; }
+    if (eocd < 0) return Promise.reject(new Error('This .mxl file could not be opened.'));
+    var cnt = dv.getUint16(eocd + 10, true), off = dv.getUint32(eocd + 16, true), entries = [];
+    for (var k = 0; k < cnt; k++) {
+      var nl = dv.getUint16(off + 28, true), xl = dv.getUint16(off + 30, true), cl = dv.getUint16(off + 32, true);
+      var name = new TextDecoder().decode(u8.subarray(off + 46, off + 46 + nl));
+      entries.push({ name: name, method: dv.getUint16(off + 10, true), csize: dv.getUint32(off + 20, true), lho: dv.getUint32(off + 42, true) });
+      off += 46 + nl + xl + cl;
+    }
+    var e = entries.filter(function (x) { return /\.(xml|musicxml)$/i.test(x.name) && !/^META-INF/i.test(x.name); })[0];
+    if (!e) return Promise.reject(new Error('No music was found inside this .mxl file.'));
+    var p = e.lho, start = p + 30 + dv.getUint16(p + 26, true) + dv.getUint16(p + 28, true), data = u8.subarray(start, start + e.csize);
+    if (e.method === 0) return Promise.resolve(new TextDecoder().decode(data));
+    if (typeof DecompressionStream === 'undefined') return Promise.reject(new Error('This browser cannot open compressed .mxl files. Please save the file as uncompressed MusicXML (.xml or .musicxml).'));
+    var ds = new Blob([data]).stream().pipeThrough(new DecompressionStream('deflate-raw'));
+    return new Response(ds).text();
+  }
+  function importFiles(files) {
+    var added = [];
+    var jobs = Array.prototype.map.call(files, function (f) {
+      var name = f.name.replace(/\.[^.]+$/, '').replace(/[_-]+/g, ' ').trim();
+      var ext = (f.name.match(/\.([^.]+)$/) || [])[1]; ext = (ext || '').toLowerCase();
+      var p;
+      if (ext === 'mid' || ext === 'midi') p = readAsBuf(f).then(function (b) { return [C.midiToABC(b, name).abc]; });
+      else if (ext === 'mxl') p = readAsBuf(f).then(unzipFirstXML).then(function (t) { return [C.musicXMLToABC(t)]; });
+      else if (ext === 'xml' || ext === 'musicxml') p = readAsText(f).then(function (t) { return [C.musicXMLToABC(t)]; });
+      else p = readAsText(f).then(function (t) {
+        if (/<score-partwise|<score-timewise/.test(t)) return [C.musicXMLToABC(t)];
+        var parts = t.split(/\n(?=X:)/).filter(function (x) { return /[A-Ga-g]/.test(x) && /K:/.test(x); });
+        if (!parts.length) parts = [t];
+        return parts.map(function (x) { return /^\s*X:/m.test(x) ? x.trim() : 'X:1\nT:' + name + '\n' + x.trim(); });
+      });
+      return p.then(function (abcs) {
+        abcs.forEach(function (abc) {
+          var r = parseFull(abc);
+          if (r.errors.length && !r.notes.length) throw new Error(f.name + ': ' + r.errors[0].message);
+          var song = { id: 'my-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), title: r.title || name, psalm: '', tune: '', meter: '', credit: (r.composer || []).join(' · '), source: 'Imported from ' + f.name, abc: abc.trim() + '\n' };
+          mySongs.push(song); added.push(song);
+        });
+      }).catch(function (e) { toast('Could not open ' + f.name + ': ' + (e.message || e)); });
+    });
+    Promise.all(jobs).then(function () {
+      LS.set('mySongs', mySongs); renderLibrary();
+      if (added.length) { loadSong(added[0].id, true); toast(added.length === 1 ? 'Added “' + added[0].title + '” to My Songs' : 'Added ' + added.length + ' songs to My Songs'); }
+    });
+  }
+
+  /* =================== UI WIRING =================== */
+  function toast(t) { var e = $('toast'); e.textContent = t; e.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(function () { e.classList.remove('show'); }, 3200); }
+  function init() {
+    $('playBtn').onclick = toggle;
+    $('stopBtn').onclick = stop;
+    $('moreBtn').onclick = function () { var t = $('transport'), open = !t.classList.contains('expanded'); t.classList.toggle('expanded', open); this.setAttribute('aria-expanded', open ? 'true' : 'false'); };
+    $('loopBtn').setAttribute('aria-pressed', S.loop ? 'true' : 'false');
+    $('loopBtn').onclick = function () { S.loop = !S.loop; LS.set('loop', S.loop); this.setAttribute('aria-pressed', S.loop ? 'true' : 'false'); toast(S.loop ? 'Repeat is on' : 'Repeat is off'); };
+    $('allVerses').checked = S.allVerses;
+    $('allVerses').onchange = function () { S.allVerses = this.checked; LS.set('allVerses', S.allVerses); };
+    $('tempo').oninput = function () { setTempo(+this.value); };
+    $('tempoDown').onclick = function () { setTempo(S.bpm - 4); };
+    $('tempoUp').onclick = function () { setTempo(S.bpm + 4); };
+    $('transDown').onclick = function () { setTranspose(S.transpose - 1); };
+    $('transUp').onclick = function () { setTranspose(S.transpose + 1); };
+    var vol = $('volume'); vol.value = Math.round(Audio.volume * 100); $('volOut').textContent = vol.value + '%'; fill(vol);
+    vol.oninput = function () { Audio.setVolume(this.value / 100); $('volOut').textContent = this.value + '%'; fill(this); };
+    Array.prototype.forEach.call($('voiceSeg').querySelectorAll('button'), function (b) {
+      b.setAttribute('aria-pressed', b.dataset.v === Audio.voice ? 'true' : 'false');
+      b.onclick = function () {
+        Audio.setVoice(b.dataset.v);
+        Array.prototype.forEach.call($('voiceSeg').querySelectorAll('button'), function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+        if (!S.playing) { try { Audio.ensure(); var m = (S.res.notes.filter(function (n) { return !n.rest; })[0] || {}).midi; if (m) Audio.note(m + S.transpose, Audio.now() + 0.03, 0.6, 0.8); } catch (e) {} }
+      };
+    });
+    $('progress').onclick = function (ev) {
+      var r = this.getBoundingClientRect(), beat = (ev.clientX - r.left) / r.width * (S.total || (build(), S.total));
+      var e = S.events.filter(function (x) { return x.start <= beat; }).pop(); if (e) seekToNote(e.n);
+    };
+    $('applyBtn').onclick = function () { applyText($('abc').value); };
+    var deb; $('abc').addEventListener('input', function () { clearTimeout(deb); deb = setTimeout(function () { var r = parseFull($('abc').value); if (r.errors.length) showErrors(r); else hideMsg(); }, 600); });
+    $('resetBtn').onclick = function () { $('abc').value = S.song.abc; applyText(S.song.abc, true); hideMsg(); toast('Back to the original notes'); };
+    $('downloadBtn').onclick = function () {
+      var blob = new Blob([$('abc').value], { type: 'text/vnd.abc' }), a = document.createElement('a');
+      a.href = URL.createObjectURL(blob); a.download = (S.res.title || 'tune').replace(/[^\w\s-]/g, '').trim().replace(/\s+/g, '-') + '.abc'; document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+    };
+    $('saveBtn').onclick = function () {
+      if (!applyText($('abc').value, true)) return;
+      var r = S.res, existing = /^my-/.test(S.song.id) ? S.song : null;
+      if (existing) { existing.abc = $('abc').value; existing.title = r.title || existing.title; }
+      else { var song = { id: 'my-' + Date.now().toString(36), title: (r.title || 'My tune') + (r.title === S.song.title ? ' (my version)' : ''), psalm: S.song.psalm || '', tune: S.song.tune || '', meter: S.song.meter || '', credit: S.song.credit || '', source: 'Saved from the editor', abc: $('abc').value }; mySongs.push(song); S.song = song; }
+      LS.set('mySongs', mySongs); LS.set('song', S.song.id); renderLibrary(); updateHeader(); toast('Saved to My Songs');
+    };
+    $('importBtn').onclick = function () { $('fileInput').click(); };
+    $('fileInput').onchange = function () { if (this.files && this.files.length) importFiles(this.files); this.value = ''; };
+    document.addEventListener('dragover', function (e) { e.preventDefault(); });
+    document.addEventListener('drop', function (e) { e.preventDefault(); if (e.dataTransfer.files.length) importFiles(e.dataTransfer.files); });
+    $('chooseBtn').onclick = openLib; $('libClose').onclick = closeLib; $('scrim').onclick = closeLib;
+    $('libSearch').oninput = renderLibrary;
+    document.addEventListener('keydown', function (e) {
+      if (/^(TEXTAREA|INPUT|SELECT)$/.test(e.target.tagName) && e.target.type !== 'range' && e.target.type !== 'checkbox') return;
+      if (e.code === 'Space') { e.preventDefault(); toggle(); }
+      if (e.key === 'Escape') closeLib();
+    });
+    var rw; window.addEventListener('resize', function () { clearTimeout(rw); rw = setTimeout(function () { if (S.res) render(); }, 150); });
+    document.addEventListener('visibilitychange', function () { if (document.hidden && S.playing) { /* keep playing in background where allowed */ } });
+    // install prompt
+    var deferred = null;
+    window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); deferred = e; $('installBtn').hidden = false; });
+    $('installBtn').onclick = function () { if (deferred) { deferred.prompt(); deferred = null; $('installBtn').hidden = true; } };
+    if ('serviceWorker' in navigator && /^https?:/.test(location.protocol)) navigator.serviceWorker.register('sw.js').catch(function () {});
+    var params = new URLSearchParams(location.search);
+    loadSong(params.get('song') || LS.get('song', builtIn[0] && builtIn[0].id));
+  }
+  window.HymnApp = { state: S, play: play, pause: pause, stop: stop, loadSong: loadSong, setVerse: setVerse, setTranspose: setTranspose, applyText: applyText, importFiles: importFiles, audio: Audio };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
+
+</script>
+</body>
+</html>
