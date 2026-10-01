@@ -1,5 +1,5 @@
 /* Offline support: cache the app shell (refreshed in the background) and the instrument samples (kept for good). */
-const CACHE = 'psalter-v9';
+const CACHE = 'psalter-v10';
 const SAMPLES = 'psalter-samples-v1'; // bump only when the sample files themselves change
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icon.svg', './icon-192.png', './icon-512.png', './apple-touch-icon.png', './my-songs.js'];
 self.addEventListener('install', e => {
@@ -14,6 +14,9 @@ self.addEventListener('message', e => {
   if (d.type !== 'cache-samples' || !Array.isArray(d.urls)) return;
   e.waitUntil(caches.open(SAMPLES).then(async c => {
     const urls = d.urls.map(u => new URL(u, self.registration.scope).href);
+    // drop samples of sounds that are no longer in the app (e.g. the removed choir and organ)
+    const want = new Set(urls);
+    for (const k of await c.keys()) { const u = k.url.split('?')[0]; if (!want.has(u)) await c.delete(k); }
     for (let i = 0; i < urls.length; i += 6) {
       await Promise.all(urls.slice(i, i + 6).map(async u => {
         if (await c.match(u)) return;
