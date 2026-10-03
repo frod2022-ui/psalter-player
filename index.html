@@ -111,14 +111,14 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent}
 .st-ink{fill:var(--ink);stroke:none}
 .st-stroke{stroke:var(--ink);fill:none}
 .st-note{cursor:pointer}
-.st-note .head,.st-note .stem,.st-note .flag,.st-note .acc,.st-note .dot{transition:fill .12s,stroke .12s}
+/* the highlight switches instantly at the onset: no colour fades, no sliding box */
 .st-note.on .head,.st-note.on .dot,.st-note.on .flag,.st-note.on .acc path{fill:var(--hl)}
 .st-note.on .stem,.st-note.on .ledger{stroke:var(--hl)}
 .st-note.on .hollow{stroke:var(--hl)}
-.lyr{font-family:var(--serif);fill:var(--text);transition:fill .12s}
+.lyr{font-family:var(--serif);fill:var(--text)}
 .lyr.on{fill:var(--hl);font-weight:700}
 .lyr.past{fill:var(--muted)}
-.st-hl{fill:var(--hl-soft);transition:transform .14s cubic-bezier(.3,.7,.3,1),opacity .2s;opacity:0}
+.st-hl{fill:var(--hl-soft);opacity:0}
 .st-hl.show{opacity:1}
 .st-meta{fill:var(--muted);font-size:13px}
 .lyr-only{font-family:var(--serif);font-size:22px;line-height:1.6;padding:6px 14px 0;color:var(--text2)}
@@ -323,7 +323,7 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
 .tr-in{max-width:1280px;margin:0 auto;display:flex;flex-direction:column;gap:6px}
 .progress{height:4px;margin:0 calc(-1 * max(14px,env(safe-area-inset-left)));background:var(--bg2);overflow:hidden;cursor:pointer;position:relative}
 .progress::before{content:"";position:absolute;left:0;right:0;top:-10px;bottom:-10px}
-.progress i{display:block;height:100%;width:0;background:var(--accent);transition:width .12s linear}
+.progress i{display:block;height:100%;width:100%;background:var(--accent);transform:scaleX(0);transform-origin:0 50%;will-change:transform}
 .loadrow{padding-top:6px}
 .tr-main{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:16px;padding-top:6px}
 .now{font-size:15px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
@@ -415,6 +415,31 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
 .lib-other{border:0;background:transparent;color:var(--accent);font:inherit;font-weight:700;padding:0 4px;min-height:32px;cursor:pointer}
 .lib-flat{display:flex;flex-direction:column}
 .lib-impnote{margin:12px 10px;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.seg.lib-tabs button{font-size:15px;padding:0 6px;gap:6px;white-space:normal;line-height:1.1;text-align:center}
+.lib-empty{margin:18px 8px;padding:18px;border-radius:16px;background:var(--card2);text-align:center;color:var(--text2)}
+.lib-empty p{margin:0 0 10px}
+.lib-empty .pill-btn{min-height:44px;padding:0 22px}
+.seg.lib-tabs{overflow:hidden}
+.seg.lib-tabs button{flex:1 1 0;min-width:0}
+@media (max-width:400px){.seg.lib-tabs button{flex-direction:column;gap:2px;font-size:14px;padding:4px 2px}.seg.lib-tabs .lib-tc{height:18px;font-size:11.5px;min-width:22px}}
+
+/* playing: nothing on the score animates by CSS; the roll is moved by transform from the audio clock */
+#staff .roll-strip,#staff .playhead{transition:none!important}
+#staff .st-hl.show{opacity:1}
+/* one-time "Tap along to set up sync" prompt */
+.sync-prompt{position:fixed;z-index:70;left:50%;bottom:calc(var(--dock,84px) + 12px + env(safe-area-inset-bottom));transform:translate(-50%,12px);opacity:0;width:min(560px,calc(100% - 24px));display:grid;grid-template-columns:auto 1fr;gap:10px 14px;align-items:center;padding:16px 18px;border-radius:20px;box-shadow:0 12px 40px rgba(0,0,0,.22);transition:transform .25s cubic-bezier(.2,.8,.2,1),opacity .2s}
+.sync-prompt.show{transform:translate(-50%,0);opacity:1}
+.sync-prompt[hidden]{display:none}
+.sp-ico{width:44px;height:44px;border-radius:14px;background:var(--accent);color:var(--accent-text);display:grid;place-items:center}
+.sp-ico svg{width:24px;height:24px}
+.sp-text{display:flex;flex-direction:column;gap:4px;font-size:15px;color:var(--text2);line-height:1.35}
+.sp-text b{font-size:17px;color:var(--text)}
+.sp-btns{grid-column:1/-1;display:flex;gap:10px;justify-content:flex-end}
+.sp-btns .pill-btn{min-height:44px;padding:0 20px}
+/* four buttons: label over count everywhere (fits a phone and the narrow desktop sidebar) */
+.seg.lib-tabs button{flex-direction:column;gap:2px;font-size:14px;padding:4px 2px;min-height:52px}
+.seg.lib-tabs .lib-tc{height:18px;font-size:11.5px;min-width:22px}
+.seg.lib-tabs{min-height:60px}
 
 </style>
 </head>
@@ -439,7 +464,6 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
     <input class="lib-search" id="libSearch" type="search" placeholder="Search titles, words or tunes" autocomplete="off">
     <div class="seg lib-tabs" id="libCats" role="group" aria-label="Show psalms or hymns"></div>
     <div class="lib-count" id="libCount" aria-live="polite"></div>
-    <div class="lib-actions"><button class="pill-btn" id="backupBtn" title="Save your songs and collections to a file">Back up my songs</button></div>
     <div id="libList"></div>
   </nav>
 
@@ -634,6 +658,11 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
     </div>
   </div>
 </div>
+<div class="sync-prompt card" id="syncPrompt" role="dialog" aria-labelledby="spTitle" hidden>
+  <div class="sp-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div>
+  <div class="sp-text"><b id="spTitle">Tap along to set up sync</b><span>Tap with 8 beeps so the cursor and highlight match exactly what you hear on this device (about 10 seconds). Do it again if you change speakers or use Bluetooth.</span></div>
+  <div class="sp-btns"><button class="pill-btn solid" id="spGo">Tap along</button><button class="pill-btn" id="spLater">Not now</button></div>
+</div>
 <div class="toast" id="toast"></div>
 
 <div class="modal" id="setSheet" role="dialog" aria-modal="true" aria-labelledby="setTitle" hidden>
@@ -717,7 +746,8 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
       get worker() { return !!w; }
     };
   }
-  function Clock(getCtx, graphDelay) {
+  function Clock(getCtx, graphDelay, opts) {
+    opts = opts || {};
     // graphDelay: fixed delay inside our own audio graph (a DynamicsCompressorNode looks ahead 6 ms)
     var gd = graphDelay == null ? 0.006 : graphDelay;
     var lastPerf = 0, lastT = 0, have = false;
@@ -731,6 +761,10 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
     }
     function raw(ctx, perf) {
       var ct = ctNow(ctx, perf);
+      // Safari / WebKit (macOS and iOS): no added output delay. Its reported latencies and output timestamps have been
+      // seen to put the cursor BEHIND the sound on real Macs, so the visuals follow the render clock (currentTime) and
+      // any real speaker delay (Bluetooth, AirPlay) is set once by tapping along (Sync check).
+      if (opts.renderClock) { okOts = false; return ct - gd; }
       if (ctx.getOutputTimestamp) {
         var ts = ctx.getOutputTimestamp();
         // contextTime is what is reaching the speakers at performanceTime. Some engines (WebKit builds) report a
@@ -740,7 +774,7 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
           var e = ts.contextTime + (perf - ts.performanceTime) / 1000;
           if (otsP0 === null || perf < otsP0) { otsP0 = perf; otsE0 = e; }
           else if (perf - otsP0 >= 250) { var rate = (e - otsE0) / ((perf - otsP0) / 1000); otsGood = Math.abs(rate - 1) < 0.03; otsP0 = perf; otsE0 = e; }
-          if (otsGood && e <= ct + 0.02 && e >= ct - 0.5) { okOts = true; return e - gd; }
+          if (otsGood && e <= ct + 0.02 && e >= ct - Math.min(0.5, ('outputLatency' in ctx ? (ctx.outputLatency || 0) : ASSUMED_OL) + (ctx.baseLatency || 0) + 0.05)) { okOts = true; return e - gd; } // an output timestamp far behind the reported latency is not trusted
         }
       }
       okOts = false;
@@ -768,7 +802,8 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
       },
       reset: function () { have = false; env = null; otsP0 = null; otsGood = false; },
       get usesOutputTimestamp() { return okOts; },
-      get assumedOutputLatency() { var ctx = getCtx(); return ctx && !okOts && !('outputLatency' in ctx) ? ASSUMED_OL : 0; },
+      get assumedOutputLatency() { var ctx = getCtx(); return ctx && !okOts && !opts.renderClock && !('outputLatency' in ctx) ? ASSUMED_OL : 0; },
+      get renderClock() { return !!opts.renderClock; },
       get otsRateOk() { return otsGood; },
       latency: function () { var ctx = getCtx(); if (!ctx) return 0; return Math.max(0, ctx.currentTime - raw(ctx, performance.now())); }
     };
@@ -6412,50 +6447,54 @@ window.HYMN_SONGS = [
   function norm(x) { x = String(x || '').toLowerCase().replace(/[’‘']/g, "'"); return x.normalize ? x.normalize('NFD').replace(/[\u0300-\u036f]/g, '') : x; }
   // two flat lists: Psalms (every psalm setting, by psalm number) and Hymns (everything else, A-Z)
   function psalmNo(s) { var m = (s.psalm || '').match(/Psalm\s+(\d+)/i) || (s.title || '').match(/^Psalm\s+(\d+)/i); return m ? +m[1] : 0; }
-  function tabOf(s) { return psalmNo(s) ? 'Psalms' : 'Hymns'; }
+  var PP_SEC = 'Puritan Psalter', TABS = ['All', 'Psalms', 'Hymns', PP_SEC];
+  function tabOf(s) { return s.section === PP_SEC ? PP_SEC : psalmNo(s) ? 'Psalms' : 'Hymns'; }
   function sortTitle(t) { return String(t || '').replace(/^['‘’"“]/, ''); }
-  function libTab() { var t = LS.get('libTab', ''); return t === 'Psalms' || t === 'Hymns' ? t : (S.song ? tabOf(S.song) : 'Psalms'); }
+  function libTab() { var t = LS.get('libTab', ''); return TABS.indexOf(t) >= 0 ? t : 'All'; }
   function renderLibrary() {
     var q = norm(($('libSearch').value || '').trim()), list = $('libList'), tab = libTab(), cats = $('libCats'), terms = q ? q.split(/\s+/) : [];
     refreshCats();
-    if (cats && cats.dataset.sig !== 'tabs') {
-      cats.innerHTML = ''; cats.dataset.sig = 'tabs'; cats.className = 'seg lib-tabs'; cats.setAttribute('aria-label', 'Show psalms or hymns');
-      ['Psalms', 'Hymns'].forEach(function (c) {
+    if (cats && cats.dataset.sig !== 'tabs4') {
+      cats.innerHTML = ''; cats.dataset.sig = 'tabs4'; cats.className = 'seg lib-tabs'; cats.setAttribute('aria-label', 'Show all songs, psalms, hymns or the Puritan Psalter');
+      TABS.forEach(function (c) {
         var b = document.createElement('button'); b.type = 'button'; b.dataset.c = c; b.innerHTML = c + ' <span class="lib-tc"></span>';
         b.onclick = function () { LS.set('libTab', c); renderLibrary(); list.scrollTop = 0; };
         cats.appendChild(b);
       });
     }
-    var counts = { Psalms: 0, Hymns: 0 }, hits = { Psalms: 0, Hymns: 0 }, items = [];
+    var counts = { Psalms: 0, Hymns: 0 }, hits = { Psalms: 0, Hymns: 0 }, items = []; counts[PP_SEC] = 0; hits[PP_SEC] = 0; counts.All = 0; hits.All = 0;
     allSongs().forEach(function (s) {
-      var t = tabOf(s); counts[t]++;
+      var t = tabOf(s); counts[t]++; counts.All++;
       var w = songWords(s);
       if (terms.length) {
         var head = norm(s.title + ' ' + s.psalm + ' ' + s.tune + ' ' + s.credit + ' ' + s.section), hay = head + ' ' + norm(w.all);
         if (!terms.every(function (x) { return hay.indexOf(x) >= 0; })) return;
-        hits[t]++;
+        hits[t]++; hits.All++;
         s._hitWords = !terms.every(function (x) { return head.indexOf(x) >= 0; });
         var tt = norm(s.title + ' ' + s.psalm); s._rank = terms.every(function (x) { return tt.indexOf(x) >= 0; }) ? (tt.indexOf(q) >= 0 ? 0 : 1) : s._hitWords ? 3 : 2;
       } else { s._hitWords = false; s._rank = 0; }
-      if (t === tab) items.push(s);
+      if (t === tab || tab === 'All') items.push(s);
     });
     if (cats) Array.prototype.forEach.call(cats.childNodes, function (b) { var c = b.dataset.c, n = q ? hits[c] : counts[c]; b.setAttribute('aria-pressed', c === tab ? 'true' : 'false'); b.querySelector('.lib-tc').textContent = n; b.setAttribute('aria-label', c + ', ' + n + ' songs'); });
     items.sort(function (a, b) {
       if (q && a._rank !== b._rank) return a._rank - b._rank;
-      if (tab === 'Psalms') { var d = psalmNo(a) - psalmNo(b); if (d) return d; }
+      if (tab === PP_SEC && (a.order != null || b.order != null) && a.order !== b.order) return (a.order != null ? a.order : 1e9) - (b.order != null ? b.order : 1e9); // psalter order
+      if (tab === 'All') { var pa = psalmNo(a) || 1e4, pb = psalmNo(b) || 1e4; if (pa !== pb) return pa - pb; if (pa < 1e4 && (a.section === PP_SEC) !== (b.section === PP_SEC)) return a.section === PP_SEC ? 1 : -1; if (pa < 1e4 && a.section === PP_SEC && b.section === PP_SEC && a.order != null && b.order != null && a.order !== b.order) return a.order - b.order; } // All: psalms by number, then hymns A-Z
+      else if (tab !== 'Hymns') { var d = psalmNo(a) - psalmNo(b); if (d) return d; }
       return sortTitle(a.title).localeCompare(sortTitle(b.title), undefined, { numeric: true, sensitivity: 'base' }) || (a.order != null && b.order != null ? a.order - b.order : 0);
     });
     list.innerHTML = '';
-    var other = tab === 'Psalms' ? 'Hymns' : 'Psalms', noun = tab === 'Psalms' ? 'psalm' : 'hymn';
+    var noun = tab === 'Hymns' ? 'hymn' : tab === 'All' ? 'song' : 'psalm';
     $('libCount').textContent = q ? (items.length ? items.length + ' ' + noun + (items.length === 1 ? '' : 's') + ' found' : 'No ' + noun + 's found') : items.length + ' ' + noun + 's';
-    if (q && hits[other]) { var sw = document.createElement('button'); sw.type = 'button'; sw.className = 'lib-other'; sw.textContent = hits[other] + ' in ' + other + ' →'; sw.onclick = function () { LS.set('libTab', other); renderLibrary(); }; $('libCount').appendChild(document.createTextNode(' · ')); $('libCount').appendChild(sw); }
+    if (q && tab !== 'All') TABS.forEach(function (other) { if (other === tab || other === 'All' || !hits[other]) return; var sw = document.createElement('button'); sw.type = 'button'; sw.className = 'lib-other'; sw.dataset.c = other; sw.textContent = hits[other] + ' in ' + other + ' →'; sw.onclick = function () { LS.set('libTab', other); renderLibrary(); }; $('libCount').appendChild(document.createTextNode(' · ')); $('libCount').appendChild(sw); });
+    if (tab === PP_SEC && !counts[PP_SEC]) { $('libCount').textContent = ''; var em = document.createElement('div'); em.className = 'lib-empty'; em.innerHTML = '<p><b>No Puritan Psalter songs yet.</b></p><p>Import your Puritan Psalter file (.json) and its psalms will appear here, in psalter order. It stays on this device.</p>'; var ib = document.createElement('button'); ib.type = 'button'; ib.className = 'pill-btn solid'; ib.id = 'libEmptyImport'; ib.textContent = 'Import'; ib.onclick = function () { $('fileInput').click(); }; em.appendChild(ib); list.innerHTML = ''; list.appendChild(em); return; }
     var body = document.createElement('div'); body.className = 'lib-flat';
     items.forEach(function (s) {
       var b = document.createElement('button'); b.className = 'lib-item'; b.setAttribute('aria-current', S.song && S.song.id === s.id ? 'true' : 'false');
-      var w = songWords(s), imp = s.section && BASE_CATS.indexOf(s.section) < 0 ? s.section : '', sub = [imp, tab === 'Psalms' && /^Psalm\s+\d+/i.test(s.title) ? '' : s.psalm, s.tune].filter(Boolean).join(' · ');
+      var w = songWords(s), imp = s.section && BASE_CATS.indexOf(s.section) < 0 ? s.section : '', sub = [tab === PP_SEC ? '' : imp === PP_SEC ? 'Puritan Psalter' : imp, tab !== 'Hymns' && /^Psalm\s+\d+/i.test(s.title) ? '' : s.psalm, s.tune].filter(Boolean).join(' · ');
       var fl = w.first && norm(w.first).indexOf(norm(s.title).replace(/[^a-z' ]/g, '').slice(0, 12)) !== 0 ? '<span class="fl">“' + esc(w.first) + '…”</span>' + (sub ? ' · ' : '') : '';
       if (s._hitWords && terms.length) { var at = w.all.indexOf(terms[0]); if (at >= 0) { var st = Math.max(0, w.all.lastIndexOf(' ', Math.max(0, at - 24)) + 1), snip = w.raw.slice(st, at + terms[0].length + 28); fl = '<span class="fl">…' + esc(snip).replace(new RegExp(terms[0].replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi'), function (m) { return '<mark class="hit">' + m + '</mark>'; }) + '…</span>' + (sub ? ' · ' : ''); } }
-      b.innerHTML = '<span class="num">' + esc(tab === 'Psalms' ? String(psalmNo(s)) : songNum(s)) + '</span><span style="min-width:0"><span class="t">' + esc(s.title) + '</span><span class="s">' + fl + esc(sub || (s.section === 'My Songs' ? 'My song' : '')) + '</span></span>';
+      b.innerHTML = '<span class="num">' + esc(tab !== 'Hymns' && psalmNo(s) ? String(psalmNo(s)) : songNum(s)) + '</span><span style="min-width:0"><span class="t">' + esc(s.title) + '</span><span class="s">' + fl + esc(sub || (s.section === 'My Songs' ? 'My song' : '')) + '</span></span>';
       b.onclick = function () { loadSong(s.id, true); closeLib(); };
       body.appendChild(b);
     });
@@ -7172,11 +7211,15 @@ window.HYMN_SONGS = [
   /* =================== PLAYBACK =================== */
   function spb() { return 60 / (S.bpm * (S.speed || 1)); } // practice speed slows the music down; the pitch stays
   function timeOf(beat) { return S.anchorTime + (beat - S.anchorBeat) * spb(); }
-  var TM = window.LFTiming, clock = TM.Clock(function () { return Audio.ctx; }), ticker = TM.Ticker(tick, 25), probe = null;
+  var TM = window.LFTiming, IS_WEBKIT = (function () { var ua = navigator.userAgent; return /AppleWebKit\//.test(ua) && !/Chrome\/|Chromium\/|Edg\/|Firefox\/|OPR\//.test(ua); })(),
+    clock = TM.Clock(function () { return Audio.ctx; }, 0.006, { renderClock: IS_WEBKIT }), ticker = TM.Ticker(tick, 25), probe = null;
   // the round (verse pass) being heard now, and the beat within it
   // the beat being heard now. Each round (verse pass) keeps its tempo segments, so a tempo change while playing maps
   // exactly: notes already scheduled at the old tempo are shown at the old tempo. syncMs: user offset (+ = later).
-  function syncSec() { return (+LS.get('syncMs', 0) || 0) / 1000; }
+  // sync offset: reset to 0 once with this update (old offsets were set against the earlier latency handling)
+  if (!LS.get('syncV2', 0)) { LS.set('syncMs', 0); LS.set('syncV2', 1); }
+  var syncS = (+LS.get('syncMs', 0) || 0) / 1000;
+  function syncSec() { return syncS; }
   function heardTime(perf) { return clock.heard(perf) - syncSec(); }
   // One clock for sound, cursor and highlight. A frame drawn in the rAF callback at perf reaches the screen at the next
   // refresh and stays there for one refresh interval, so we draw the audio time heard in the middle of that interval.
@@ -7297,7 +7340,7 @@ window.HYMN_SONGS = [
   }
   function stop() {
     S.waiting = false; S.playing = false; ticker.stop(); cancelAnimationFrame(S.raf); Audio.silence();
-    S.pausedBeat = 0; setPlayIcon(); clearHighlight(); S.bcTxt = ''; $('beatCount').hidden = true; $('staff').classList.remove('your-turn'); if (S.roll && S.posOf) S.roll.set(S.posOf(0)); $('nowState').textContent = 'Ready'; $('progressBar').style.width = '0%';
+    S.pausedBeat = 0; setPlayIcon(); clearHighlight(); S.bcTxt = ''; $('beatCount').hidden = true; $('staff').classList.remove('your-turn'); if (S.roll && S.posOf) S.roll.set(S.posOf(0)); $('nowState').textContent = 'Ready'; $('progressBar').style.transform = 'scaleX(0)'; S.pf = 0;
   }
   function toggle() { if (S.playing || S.waiting) pause(); else play(); }
   function seekToNote(i) {
@@ -7328,7 +7371,7 @@ window.HYMN_SONGS = [
     var evs = S.events.length ? S.events : (build(), S.events), found = -1;
     if (beat < 0) { if (S.cur !== -1) clearHighlight(); return; }
     for (var k = 0; k < evs.length; k++) { if (evs[k].start <= beat + 1e-6 && beat < evs[k].start + evs[k].dur) { found = evs[k].n; break; } }
-    $('progressBar').style.width = Math.max(0, Math.min(100, beat / (S.total || 1) * 100)) + '%';
+    var pf = Math.max(0, Math.min(1, beat / (S.total || 1))); if (Math.abs(pf - (S.pf || 0)) > 0.002 || !pf) { S.pf = pf; $('progressBar').style.transform = 'scaleX(' + pf.toFixed(4) + ')'; } // transform only: no layout per frame
     if (found === S.cur && !force) return;
     setCurrent(found);
   }
@@ -7596,7 +7639,7 @@ window.HYMN_SONGS = [
       ['prefs.pp', 'prefs.gen'].forEach(function (k) { var p = LS.get(k, null); if (p && p.voice && !INST[p.voice]) { p.voice = fix(p.voice); LS.set(k, p); } });
     })();
     // drop stored settings of features that no longer exist (every setting the app uses is listed here)
-    (function () { var keep = 'allVerses aref ctlTab libTab loop metro mix mode mySongs part reverb satb song tenorTune ttV2 speed syncMs tick voice voiceGen volume vrange'.split(' ');
+    (function () { var keep = 'allVerses aref ctlTab libTab loop metro mix mode mySongs part reverb satb song tenorTune ttV2 speed syncMs syncV2 syncAsked tick voice voiceGen volume vrange'.split(' ');
       try { for (var i = localStorage.length - 1; i >= 0; i--) { var k = localStorage.key(i); if (k && k.indexOf('hp.') === 0) { var n = k.slice(3); if (keep.indexOf(n) < 0 && n.indexOf('prefs.') !== 0) localStorage.removeItem(k); } } } catch (e) {} })();
     $('playBtn').onclick = toggle;
     $('stopBtn').onclick = stop;
@@ -7626,7 +7669,7 @@ window.HYMN_SONGS = [
     Audio.onState(function (st) { if (S.playing && st !== 'running') { pause(); toast('Sound was interrupted — tap play to go on'); } });
     window.HP_TEST = { S: S, Audio: Audio, clock: clock, get roll() { return S.roll; }, setProbe: function (on) { probe = on ? TM.FrameProbe() : null; return probe; }, get probe() { return probe; }, tick: tick, heardTime: heardTime, setSpeed: setSpeed, pitchPipe: pitchPipe, get schedPart() { return S.schedPart; }, nextPass: nextPass, chordList: chordList, syncSingUI: syncSingUI, satbParts: satbParts, setSatb: setSatb, setTenorTune: setTenorTune, TT: TT, setPart: setPart, partGain: partGain, setView: setView, learnAlone: learnAlone, saveMix: saveMix, get lines() { return S.lines; }, shownTime: shownTime, get fdt() { return fdt; }, play: play, pause: pause, stop: stop, render: render, velOf: velOf, loadSong: loadSong, songs: allSongs, renderLibrary: renderLibrary };
     (function () { // sync offset: + shows the cursor later (for output paths whose delay the browser does not report)
-      var r = $('sync'); function show(v) { v = Math.max(-300, Math.min(300, Math.round(v / 5) * 5)); r.value = v; LS.set('syncMs', v); $('syncOut').textContent = (v > 0 ? '+' : '') + v + ' ms'; fill(r); }
+      var r = $('sync'); function show(v) { v = Math.max(-300, Math.min(300, Math.round(v / 5) * 5)); r.value = v; LS.set('syncMs', v); syncS = v / 1000; $('syncOut').textContent = (v > 0 ? '+' : '') + v + ' ms'; fill(r); }
       show(+LS.get('syncMs', 0) || 0);
       r.oninput = function () { show(+r.value); }; r.ondblclick = function () { show(0); };
       $('syncDown').onclick = function () { show(+r.value - 10); }; $('syncUp').onclick = function () { show(+r.value + 10); };
@@ -7700,6 +7743,13 @@ window.HYMN_SONGS = [
       return { start: start, stop: stop, tap: tap, info: info, get on() { return on; }, get beeps() { return beeps; }, get t0() { return t0; } };
     })();
     window.HP_TEST.syncCheck = syncCheck;
+    // first launch: a one-time, prominent prompt to tap along and set the sync for this device
+    function showSyncPrompt() { var sp = $('syncPrompt'); if (!sp) return; sp.hidden = false; requestAnimationFrame(function () { sp.classList.add('show'); }); }
+    function hideSyncPrompt() { var sp = $('syncPrompt'); if (!sp) return; LS.set('syncAsked', 1); sp.classList.remove('show'); sp.hidden = true; }
+    if ($('spGo')) $('spGo').onclick = function () { hideSyncPrompt(); $('scInfo').textContent = syncCheck.info(); openSheet('syncSheet'); syncCheck.start(); };
+    if ($('spLater')) $('spLater').onclick = hideSyncPrompt;
+    if (!LS.get('syncAsked', 0) && !navigator.webdriver) setTimeout(showSyncPrompt, 1200);
+    window.HP_TEST.showSyncPrompt = showSyncPrompt; window.HP_TEST.hideSyncPrompt = hideSyncPrompt;
     // singing practice controls
     $('pipeBtn').onclick = function () { pitchPipe(false); };
     $('pipeBtn2').onclick = function () { pitchPipe(false); };
@@ -7807,7 +7857,7 @@ window.HYMN_SONGS = [
     };
     $('importBtn').onclick = function () { $('fileInput').click(); };
     if ($('restoreBtn')) $('restoreBtn').onclick = function () { $('fileInput').click(); };
-    if ($('backupBtn')) $('backupBtn').onclick = function () { if (!mySongs.length) { toast('There are no saved songs to back up yet.'); return; } backup(); };
+    if (false && $('backupBtn')) $('backupBtn').onclick = function () { if (!mySongs.length) { toast('There are no saved songs to back up yet.'); return; } backup(); };
     $('fileInput').onchange = function () { if (this.files && this.files.length) importFiles(this.files); this.value = ''; };
     document.addEventListener('dragover', function (e) { e.preventDefault(); });
     document.addEventListener('drop', function (e) { e.preventDefault(); if (e.dataTransfer.files.length) importFiles(e.dataTransfer.files); });
