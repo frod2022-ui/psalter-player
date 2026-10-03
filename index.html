@@ -697,7 +697,7 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
     </div>
     <button class="pill-btn wide-btn" id="creditsBtn" aria-haspopup="dialog">Credits &amp; licenses</button>
     <button class="link-btn" id="syncCheckBtn" aria-haspopup="dialog">Sync check…</button>
-    <p class="app-ver" id="appVer">Version <b>v24</b></p>
+    <p class="app-ver" id="appVer">Version <b>v25</b></p>
   </div>
 </div>
 
@@ -769,7 +769,11 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
       // Safari / WebKit (macOS and iOS): no added output delay. Its reported latencies and output timestamps have been
       // seen to put the cursor BEHIND the sound on real Macs, so the visuals follow the render clock (currentTime) and
       // any real speaker delay (Bluetooth, AirPlay) is set once by tapping along (Sync check).
-      if (opts.renderClock) { okOts = false; return ct - gd; }
+      // WebKit: currentTime is the end of the block just rendered; the speaker plays it outputLatency later (WebKit's
+      // outputLatency already covers the device buffer and hardware delay, so baseLatency is not added on top). Until
+      // audio has played WebKit reports 0; a value outside 0-300 ms is not trusted. Older Safari without the property
+      // gets a typical built-in-speaker delay.
+      if (opts.renderClock) { okOts = false; var wl = 'outputLatency' in ctx ? (ctx.outputLatency || 0) : ASSUMED_OL; if (!(wl >= 0 && wl < 0.3)) wl = ASSUMED_OL; return ct - wl - gd; }
       if (ctx.getOutputTimestamp) {
         var ts = ctx.getOutputTimestamp();
         // contextTime is what is reaching the speakers at performanceTime. Some engines (WebKit builds) report a
@@ -807,7 +811,7 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
       },
       reset: function () { have = false; env = null; otsP0 = null; otsGood = false; },
       get usesOutputTimestamp() { return okOts; },
-      get assumedOutputLatency() { var ctx = getCtx(); return ctx && !okOts && !opts.renderClock && !('outputLatency' in ctx) ? ASSUMED_OL : 0; },
+      get assumedOutputLatency() { var ctx = getCtx(); return ctx && !okOts && !('outputLatency' in ctx) ? ASSUMED_OL : 0; },
       get renderClock() { return !!opts.renderClock; },
       get otsRateOk() { return otsGood; },
       latency: function () { var ctx = getCtx(); if (!ctx) return 0; return Math.max(0, ctx.currentTime - raw(ctx, performance.now())); }
@@ -6812,7 +6816,7 @@ window.HYMN_SONGS = [
   "meter": "",
   "credit": "Music: John J. Husband, c. 1815 · Words: William P. Mackay, 1863",
   "source": "hymnary.org score (hymnary.org/text/we_praise_thee_o_god_for_the_son_of; hymnary.org/media/fetch/89023), melody line with all stanzas printed there; first published before 1931 (US public domain). Melody compared with 2 other hymnary.org editions: 100% of pitches agree. Words checked by hand against the standard text; modernized wording was put back to the original.",
-  "abc": "X:1\nT:Revive Us Again\nT:REVIVE US AGAIN\nC:Music: John J. Husband, c. 1815 · Words: William P. Mackay, 1863\nS:hymnary.org score (hymnary.org/text/we_praise_thee_o_god_for_the_son_of; hymnary.org/media/fetch/89023), melody line with all stanzas printed there; first published before 1931 (US public domain). Melody compared with 2 other hymnary.org editions: 100% of pitches agree. Words checked by hand against the standard text; modernized wording was put back to the original.\nM:3/4\nL:1/4\nQ:1/4=100\nK:G\nD | G G G | G2 G/ A/ | B B B |\nw: We praise Thee, O God! For the Son of Thy\nw: We praise Thee, O God! For Thy Spir- it of\nw: All glo- ry and praise To the Lamb that was\nw: All glo- ry and praise To the God of all\nw: Re- vive us a- gain; Fill each heart with Thy\nB2 G/ B/ | d d d | e2 d/ B/ | B A A |\nw: love, For * Je- sus Who died, And is now gone a-\nw: light, Who hath shown us our Sav- ior, And scat- tered our\nw: slain, Who hath borne all our sins, And hath cleansed eve- ry\nw: grace, Who hast brought us, and sought us, And guid- ed our\nw: love; May each soul be re- kind- led With fire from a-\nA2 d3/4 d/4 | e d B3/4 A/4 | G G d3/4 d/4 | e d B |\nw: bove. Hal- le- lu- jah! Thine the glo- ry. Hal- le- lu- jah! A-\nw: night. Hal- le- lu- jah! Thine the glo- ry. Hal- le- lu- jah! A-\nw: stain. Hal- le- lu- jah! Thine the glo- ry. Hal- le- lu- jah! A-\nw: ways. Hal- le- lu- jah! Thine the glo- ry. Hal- le- lu- jah! A-\nw: bove. Hal- le- lu- jah! Thine the glo- ry. Hal- le- lu- jah! A-\nA2 d3/4 d/4 | e d B3/4 A/4 | G G B | c B3/2 A/ |\nw: men. Hal- le- lu- jah! Thine the glo- ry. Re- vive us a-\nw: men. Hal- le- lu- jah! Thine the glo- ry. Re- vive us a-\nw: men. Hal- le- lu- jah! Thine the glo- ry. Re- vive us a-\nw: men. Hal- le- lu- jah! Thine the glo- ry. Re- vive us a-\nw: men. Hal- le- lu- jah! Thine the glo- ry. Re- vive us a-\nG2 |]\nw: gain.\nw: gain.\nw: gain.\nw: gain.\nw: gain.",
+  "abc": "X:1\nT:Revive Us Again\nT:REVIVE US AGAIN\nC:Music: John J. Husband, c. 1815 · Words: William P. Mackay, 1863\nS:hymnary.org score (hymnary.org/text/we_praise_thee_o_god_for_the_son_of; hymnary.org/media/fetch/89023), melody line with all stanzas printed there; first published before 1931 (US public domain). Melody compared with 2 other hymnary.org editions: 100% of pitches agree. Words checked by hand against the standard text; modernized wording was put back to the original.\nM:3/4\nL:1/4\nQ:1/4=100\nK:G\nD | G G G | G2 G/ A/ | B B B |\nw: We praise Thee, O God! For the Son of Thy\nw: We praise Thee, O God! For Thy Spir- it of\nw: All glo- ry and praise To the Lamb that was\nw: All glo- ry and praise To the God of all\nw: Re- vive us a- gain; Fill each heart with Thy\nB2 G/ B/ | d d d | e2 d/ B/ | B A A |\nw: love, For Je- _ sus Who died, And is now gone a-\nw: light, Who hath shown us our Sav- ior, And scat- tered our\nw: slain, Who hath borne all our sins, And hath cleansed eve- ry\nw: grace, Who hast brought us, and sought us, And guid- ed our\nw: love; May each soul be re- kind- led With fire from a-\nA2 d3/4 d/4 | e d B3/4 A/4 | G G d3/4 d/4 | e d B |\nw: bove. Hal- le- lu- jah! Thine the glo- ry. Hal- le- lu- jah! A-\nw: night. Hal- le- lu- jah! Thine the glo- ry. Hal- le- lu- jah! A-\nw: stain. Hal- le- lu- jah! Thine the glo- ry. Hal- le- lu- jah! A-\nw: ways. Hal- le- lu- jah! Thine the glo- ry. Hal- le- lu- jah! A-\nw: bove. Hal- le- lu- jah! Thine the glo- ry. Hal- le- lu- jah! A-\nA2 d3/4 d/4 | e d B3/4 A/4 | G G B | c B3/2 A/ |\nw: men. Hal- le- lu- jah! Thine the glo- ry. Re- vive us a-\nw: men. Hal- le- lu- jah! Thine the glo- ry. Re- vive us a-\nw: men. Hal- le- lu- jah! Thine the glo- ry. Re- vive us a-\nw: men. Hal- le- lu- jah! Thine the glo- ry. Re- vive us a-\nw: men. Hal- le- lu- jah! Thine the glo- ry. Re- vive us a-\nG2 |]\nw: gain.\nw: gain.\nw: gain.\nw: gain.\nw: gain.",
   "parts": {
    "src": "hymnary.org MusicXML score (revive_2.xml)",
    "sig": "50-lnoipu",
@@ -10744,6 +10748,24 @@ window.HYMN_SONGS = [
    "tenor": "0:1:55 1:1:58 2:1:58 3:1:58 4:1:58 6:1:56 7:1:58 8:1:58 9:1:58 10:1:58 11:1:60 12:1.5:60 13:0.5:60 14:3:58 15:1:58 16:1:58 17:1:56 18:1:55 19:1:55 20:1:56 21:1:58 22:1:58 23:1:58 24:1:56 25:1:58 26:1:60 27:0.5:58 27+0.5:0.5:56 28:3:55",
    "bass": "0:1:51 1:1:55 2:1:53 3:1:51 4:0.5:56 5:0.5:55 6:1:53 7:1:51 8:1:46 9:1:50 10:1:51 11:1:48 12:1.5:53 13:0.5:53 14:3:46 15:1:58 16:1:55 17:1:56 18:1:51 19:1:52 20:1:53 21:1:50 22:1:51 23:1:55 24:1:53 25:1:51 26:1:44 27:1:46 28:3:51"
   }
+ },
+ {
+  "id": "fountain",
+  "section": "Hymnology",
+  "title": "There Is a Fountain",
+  "psalm": "",
+  "tune": "CLEANSING FOUNTAIN",
+  "meter": "",
+  "credit": "Music: 19th-century American camp-meeting melody (CLEANSING FOUNTAIN), arr. Lowell Mason · Words: William Cowper, 1772",
+  "source": "Music: public-domain MusicXML score of CLEANSING FOUNTAIN from hymnary.org (hymnary.org/media/fetch/86977; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/t/f/o/u/tfountfb.htm), its syllable breaks laid under the melody note for note. From the Hymns of Grace “Hymnology” playlist (public-domain words and tune).",
+  "abc": "X:1\nT:There Is a Fountain\nM:4/4\nL:1/4\nQ:1/4=88\nK:Bb\nB,/ D/ | F3/2 G/ F B | B3/2 G/ F B,/ D/ | F3/2 F/ G/ F/ D/ B,/ |\nw: There _ is a fount- ain filled with blood Drawn _ from Im- man- _ uel’s _\nw: The _ dy- ing thief re- joiced to see That _ fount- ain in _ his _\nw: Dear _ dy- ing Lamb, Thy pre- cious blood Shall _ ne- ver lose _ its _\nw: E’er _ since, by faith, I saw the stream Thy _ flow- ing wounds _ sup- _\nw: Then _ in a nob- ler, sweet- er song, I'll _ sing Thy pow’r _ to _\nw: Lord, _ I be- lieve Thou hast pre- pared, Un- _ wor- thy though _ I _\nC3 |\nw: veins;\nw: day;\nw: pow’r\nw: ply,\nw: save,\nw: be,\nB,/ D/ | F3/2 G/ F B | B3/2 G/ F B/ c/ | d3/2 B/ c d |\nw: And _ sin- ners plunged be- neath that flood Lose _ all their guil- ty\nw: And _ there have I, though vile as he, Washed _ all my sins a-\nw: Till _ all the ran- somed church of God Be _ saved, to sin no\nw: Re- _ dee- ming love has been my theme, And _ shall be till I\nw: When _ this poor lisp- ing, stam- m’ring tongue Lies _ si- lent in the\nw: For _ me a blood bought free re- ward, A _ gold- en harp for\nB3 |\nw: stains.\nw: way.\nw: more.\nw: die.\nw: grave.\nw: me!\nB/ c/ | d3/2 B/ c d | B3/2 G/ B G | F3/2 F/ G/ F/ D/ B,/ |\nw: Lose _ all their guil- ty stains, _ _ Lose all their guil- _ ty _\nw: Washed _ all my sins a- way, _ _ Washed all my sins _ a- _\nw: Be _ saved, to sin no more, _ _ Be saved, to sin _ no _\nw: And _ shall be till I die, _ _ And shall be till _ I _\nw: Lies _ si- lent in the grave, _ _ Lies si- lent in _ the _\nw: A _ gold- en harp for me, _ _ A gold- en harp _ for _\nC3 |\nw: stains;\nw: way;\nw: more;\nw: die;\nw: grave;\nw: me;\nB,/ D/ | F3/2 G/ F B | B3/2 G/ F B/ c/ | d3/2 B/ c d | B3 |]\nw: And _ sin- ners plunged be- neath that flood Lose _ all their guil- ty stains.\nw: And _ there have I, though vile as he, Washed _ all my sins a- way.\nw: Till _ all the ran- somed church of God Be _ saved, to sin no more.\nw: Re- _ dee- ming love has been my theme, And _ shall be till I die.\nw: When _ this poor lisp- ing, stam- m’ring tongue Lies _ si- lent in the grave.\nw: For _ me a blood bought free re- ward, A _ gold- en harp for me!\n",
+  "parts": {
+   "src": "hymnary.org MusicXML score (fountain_t0.xml)",
+   "sig": "67-dycvyl",
+   "alto": "0:1:58 2:1.5:62 3:0.5:63 4:1:62 5:1:65 6:1.5:63 7:0.5:63 8:1:62 9:1:58 11:1.5:62 12:0.5:62 13:0.5:63 14:0.5:62 15:1:58 17:3:60 18:1:58 20:1.5:62 21:0.5:63 22:1:62 23:1:65 24:1.5:63 25:0.5:63 26:1:62 27:0.5:62 28:0.5:63 29:1.5:65 30:0.5:62 31:1:63 32:1:65 33:3:62 34:0.5:62 35:0.5:63 36:1.5:65 37:0.5:62 38:1:63 39:1:65 40:3:63 43:1:63 44:1.5:62 45:0.5:62 46:0.5:63 47:0.5:62 48:1:58 50:3:60 51:1:58 53:1.5:62 54:0.5:63 55:1:62 56:1:65 57:1.5:63 58:0.5:63 59:1:62 60:0.5:62 61:0.5:63 62:1.5:65 63:0.5:62 64:1:63 65:1:65 66:3:62",
+   "tenor": "0:0.5:50 1:0.5:53 2:1.5:58 3:0.5:58 4:1:58 5:1:53 6:1.5:55 7:0.5:58 8:1:58 9:0.5:50 10:0.5:53 11:1.5:58 12:0.5:58 13:1:58 15:0.5:53 16:0.5:50 17:3:53 18:0.5:50 19:0.5:53 20:1.5:58 21:0.5:58 22:1:58 23:1:53 24:1.5:55 25:0.5:58 26:1:58 27:1:58 29:1.5:58 30:0.5:58 31:1:57 32:1:53 33:3:53 34:1:58 36:1.5:58 37:0.5:58 38:1:57 39:1:58 40:3:58 43:1:58 44:1.5:58 45:0.5:58 46:1:58 48:0.5:53 49:0.5:50 50:3:53 51:0.5:50 52:0.5:53 53:1.5:58 54:0.5:58 55:1:58 56:1:53 57:1.5:55 58:0.5:58 59:1:58 60:1:58 62:1.5:58 63:0.5:58 64:1:57 65:1:53 66:3:53",
+   "bass": "0:1:46 2:1.5:46 3:0.5:46 4:1:46 5:1:50 6:1.5:51 7:0.5:51 8:1:46 9:1:46 11:1.5:46 12:0.5:46 13:1:46 15:1:46 17:3:53 18:1:46 20:1.5:46 21:0.5:46 22:1:46 23:1:50 24:1.5:51 25:0.5:51 26:1:46 27:1:46 29:1.5:46 30:0.5:46 31:1:53 32:1:53 33:3:46 34:1:58 36:1.5:58 37:0.5:58 38:1:53 39:1:46 40:3:51 43:1:51 44:1.5:46 45:0.5:46 46:1:46 48:1:46 50:3:53 51:1:46 53:1.5:46 54:0.5:46 55:1:46 56:1:50 57:1.5:51 58:0.5:51 59:1:46 60:1:46 62:1.5:46 63:0.5:46 64:1:53 65:1:53 66:3:46"
+  }
  }
 ];
 </script>
@@ -11758,9 +11780,9 @@ window.HYMN_SONGS = [
   // the beat being heard now. Each round (verse pass) keeps its tempo segments, so a tempo change while playing maps
   // exactly: notes already scheduled at the old tempo are shown at the old tempo. syncMs: user offset (+ = later).
   // sync offset: reset to 0 once with this update (old offsets were set against the earlier latency handling)
-  if (!LS.get('syncV2', 0)) { LS.set('syncMs', 0); LS.set('syncV2', 1); }
+  if (!LS.get('syncV3', 0)) { LS.set('syncMs', 0); LS.set('syncV2', 1); LS.set('syncV3', 1); } // v25: Safari now allows for its reported output delay, so older offsets are reset once
   var syncS = (+LS.get('syncMs', 0) || 0) / 1000;
-  var APP_VERSION = 'v24';
+  var APP_VERSION = 'v25';
   function syncSec() { return syncS; }
   function heardTime(perf) { return clock.heard(perf) - syncSec(); }
   // One clock for sound, cursor and highlight. A frame drawn in the rAF callback at perf reaches the screen at the next
@@ -11833,8 +11855,10 @@ window.HYMN_SONGS = [
     if (!S.playing) return;
     var now = Audio.now(), horizon = now + (document.hidden ? 1.2 : 0.16), P = S.pass;
     for (var guard = 0; guard < 6; guard++) {
-      if (S.idx < P.i1) {
-        var t0 = timeOf(S.events[S.idx].start);
+      var nxt = S.idx < P.i1 ? S.events[S.idx].start : Infinity;
+      if (S.gi < S.grid.length && S.grid[S.gi].b < P.to - 1e-6 && S.grid[S.gi].b >= P.from - 1e-6) nxt = Math.min(nxt, S.grid[S.gi].b);
+      if (nxt < Infinity) { // the next note or click not yet planned: if the timer came late, shift the song later (never play it late)
+        var t0 = timeOf(nxt);
         if (t0 < now + 0.09) { var sh = now + 0.1 - t0; /* room for the earliest-speaking sample (80 ms) */ S.anchorTime += sh; var lr = S.rounds[S.rounds.length - 1]; if (lr) { lr.at += sh; var ls = lr.segs[lr.segs.length - 1]; ls.at += sh; } S.stats.shifts++; }
       }
       while (S.idx < P.i1 && timeOf(S.events[S.idx].start) < horizon) {
@@ -12184,7 +12208,7 @@ window.HYMN_SONGS = [
       ['prefs.pp', 'prefs.gen'].forEach(function (k) { var p = LS.get(k, null); if (p && p.voice && !INST[p.voice]) { p.voice = fix(p.voice); LS.set(k, p); } });
     })();
     // drop stored settings of features that no longer exist (every setting the app uses is listed here)
-    (function () { var keep = 'allVerses aref ctlTab libTab loop metro mix mode mySongs part reverb satb song tenorTune ttV2 speed syncMs syncV2 updatedFrom tick voice voiceGen volume vrange'.split(' ');
+    (function () { var keep = 'allVerses aref ctlTab libTab loop metro mix mode mySongs part reverb satb song tenorTune ttV2 speed syncMs syncV2 syncV3 updatedFrom tick voice voiceGen volume vrange'.split(' ');
       try { for (var i = localStorage.length - 1; i >= 0; i--) { var k = localStorage.key(i); if (k && k.indexOf('hp.') === 0) { var n = k.slice(3); if (keep.indexOf(n) < 0 && n.indexOf('prefs.') !== 0) localStorage.removeItem(k); } } } catch (e) {} })();
     $('playBtn').onclick = toggle;
     $('stopBtn').onclick = stop;
