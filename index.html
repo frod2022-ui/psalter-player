@@ -440,6 +440,9 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
 .seg.lib-tabs button{flex-direction:column;gap:2px;font-size:14px;padding:4px 2px;min-height:52px}
 .seg.lib-tabs .lib-tc{height:18px;font-size:11.5px;min-width:22px}
 .seg.lib-tabs{min-height:60px}
+.app-ver{margin:4px 0 0;text-align:center;color:var(--muted);font-size:13px}
+.update-bar{position:fixed;z-index:75;left:50%;top:calc(12px + env(safe-area-inset-top));transform:translateX(-50%);border:0;border-radius:999px;background:var(--accent);color:var(--accent-text);font-weight:700;font-size:15px;min-height:44px;padding:0 20px;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.update-bar[hidden]{display:none}
 
 </style>
 </head>
@@ -663,6 +666,7 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
   <div class="sp-text"><b id="spTitle">Tap along to set up sync</b><span>Tap with 8 beeps so the cursor and highlight match exactly what you hear on this device (about 10 seconds). Do it again if you change speakers or use Bluetooth.</span></div>
   <div class="sp-btns"><button class="pill-btn solid" id="spGo">Tap along</button><button class="pill-btn" id="spLater">Not now</button></div>
 </div>
+<button class="update-bar" id="updateBar" hidden>Update ready — tap to refresh</button>
 <div class="toast" id="toast"></div>
 
 <div class="modal" id="setSheet" role="dialog" aria-modal="true" aria-labelledby="setTitle" hidden>
@@ -693,6 +697,7 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
     </div>
     <button class="pill-btn wide-btn" id="creditsBtn" aria-haspopup="dialog">Credits &amp; licenses</button>
     <button class="link-btn" id="syncCheckBtn" aria-haspopup="dialog">Sync check…</button>
+    <p class="app-ver" id="appVer">Version <b>v17</b></p>
   </div>
 </div>
 
@@ -7219,6 +7224,7 @@ window.HYMN_SONGS = [
   // sync offset: reset to 0 once with this update (old offsets were set against the earlier latency handling)
   if (!LS.get('syncV2', 0)) { LS.set('syncMs', 0); LS.set('syncV2', 1); }
   var syncS = (+LS.get('syncMs', 0) || 0) / 1000;
+  var APP_VERSION = 'v17';
   function syncSec() { return syncS; }
   function heardTime(perf) { return clock.heard(perf) - syncSec(); }
   // One clock for sound, cursor and highlight. A frame drawn in the rAF callback at perf reaches the screen at the next
@@ -7639,7 +7645,7 @@ window.HYMN_SONGS = [
       ['prefs.pp', 'prefs.gen'].forEach(function (k) { var p = LS.get(k, null); if (p && p.voice && !INST[p.voice]) { p.voice = fix(p.voice); LS.set(k, p); } });
     })();
     // drop stored settings of features that no longer exist (every setting the app uses is listed here)
-    (function () { var keep = 'allVerses aref ctlTab libTab loop metro mix mode mySongs part reverb satb song tenorTune ttV2 speed syncMs syncV2 syncAsked tick voice voiceGen volume vrange'.split(' ');
+    (function () { var keep = 'allVerses aref ctlTab libTab loop metro mix mode mySongs part reverb satb song tenorTune ttV2 speed syncMs syncV2 syncAsked updatedFrom tick voice voiceGen volume vrange'.split(' ');
       try { for (var i = localStorage.length - 1; i >= 0; i--) { var k = localStorage.key(i); if (k && k.indexOf('hp.') === 0) { var n = k.slice(3); if (keep.indexOf(n) < 0 && n.indexOf('prefs.') !== 0) localStorage.removeItem(k); } } } catch (e) {} })();
     $('playBtn').onclick = toggle;
     $('stopBtn').onclick = stop;
@@ -7877,7 +7883,27 @@ window.HYMN_SONGS = [
     window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); deferred = e; $('installBtn').hidden = false; });
     $('installBtn').onclick = function () { if (deferred) { deferred.prompt(); deferred = null; $('installBtn').hidden = true; } };
     var swOk = 'serviceWorker' in navigator && /^https?:/.test(location.protocol);
-    if (swOk) navigator.serviceWorker.register('sw.js').catch(function () {});
+    // updates: look for a new version at launch, whenever the app comes back to the screen and every 5 minutes.
+    // A new version takes over at once (skipWaiting + clients.claim) and the page reloads once - or, while a song is
+    // playing, a small "Update ready" banner waits for a tap.
+    var swReg = null, reloading = false, hadController = swOk && !!navigator.serviceWorker.controller;
+    function checkUpdate() { if (swReg && navigator.onLine !== false) swReg.update().catch(function () {}); }
+    function applyUpdate() { if (reloading) return; reloading = true; LS.set('updatedFrom', APP_VERSION); location.reload(); }
+    function updateReady() { if (S.playing || S.waiting) { var u = $('updateBar'); if (u) { u.hidden = false; } } else applyUpdate(); }
+    if (swOk) {
+      navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then(function (reg) {
+        swReg = reg; checkUpdate();
+        if (reg.waiting && navigator.serviceWorker.controller) reg.waiting.postMessage({ type: 'skip-waiting' });
+        reg.addEventListener('updatefound', function () { var w = reg.installing; if (!w) return; w.addEventListener('statechange', function () { if (w.state === 'installed' && navigator.serviceWorker.controller) w.postMessage({ type: 'skip-waiting' }); }); });
+      }).catch(function () {});
+      navigator.serviceWorker.addEventListener('controllerchange', function () { if (hadController) updateReady(); hadController = true; });
+      document.addEventListener('visibilitychange', function () { if (!document.hidden) checkUpdate(); });
+      window.addEventListener('focus', checkUpdate); window.addEventListener('online', checkUpdate);
+      setInterval(checkUpdate, 5 * 60 * 1000);
+    }
+    if ($('updateBar')) $('updateBar').onclick = function () { stop(); applyUpdate(); };
+    if (LS.get('updatedFrom', '') && LS.get('updatedFrom', '') !== APP_VERSION) { toast('Updated to ' + APP_VERSION); } LS.set('updatedFrom', '');
+    window.HP_TEST.checkUpdate = checkUpdate; window.HP_TEST.version = APP_VERSION;
     // fetch the chosen instrument now; afterwards let the service worker keep every instrument for offline use
     Audio.load().then(function () {
       if (swOk) navigator.serviceWorker.ready.then(function (reg) { if (reg.active) reg.active.postMessage({ type: 'cache-samples', urls: Audio.allUrls() }); }).catch(function () {});

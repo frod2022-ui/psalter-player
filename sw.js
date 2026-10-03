@@ -1,9 +1,11 @@
-/* Offline support: cache the app shell (refreshed in the background) and the instrument samples (kept for good). */
-const CACHE = 'psalter-v16';
+/* Offline support. The app shell (index.html, manifest) is NETWORK-FIRST, fetched past the HTTP cache, so a new version
+   shows up at the next launch even in an iPhone home-screen app; the cached copy is only used offline (or when the
+   network is too slow). The instrument samples are cache-first and kept for good. */
+const CACHE = 'psalter-v17';
 const SAMPLES = 'psalter-samples-v1'; // bump only when the sample files themselves change
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icon.svg', './icon-192.png', './icon-512.png', './apple-touch-icon.png', './my-songs.js'];
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE).then(c => Promise.all(SHELL.map(u => c.add(u).catch(() => null)))).then(() => self.skipWaiting()));
+  e.waitUntil(caches.open(CACHE).then(c => Promise.all(SHELL.map(u => fetch(new Request(u, { cache: 'reload' })).then(r => r.ok ? c.put(u, r) : null).catch(() => null)))).then(() => self.skipWaiting()));
 });
 self.addEventListener('activate', e => {
   e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE && k !== SAMPLES).map(k => caches.delete(k)))).then(() => self.clients.claim()));
@@ -11,6 +13,8 @@ self.addEventListener('activate', e => {
 // The page sends the list of every sample once its first instrument has loaded; fetch the missing ones quietly.
 self.addEventListener('message', e => {
   const d = e.data || {};
+  if (d.type === 'skip-waiting') { self.skipWaiting(); return; }
+  if (d.type === 'version' && e.source) { e.source.postMessage({ type: 'version', version: CACHE }); return; }
   if (d.type !== 'cache-samples' || !Array.isArray(d.urls)) return;
   e.waitUntil(caches.open(SAMPLES).then(async c => {
     const urls = d.urls.map(u => new URL(u, self.registration.scope).href);
@@ -41,11 +45,28 @@ self.addEventListener('fetch', e => {
     }));
     return;
   }
+  const shell = req.mode === 'navigate' || /\/(index\.html|manifest\.webmanifest)?$/.test(url.pathname);
+  if (shell) {
+    // network first (no HTTP cache), the cached copy after 4 s or offline
+    e.respondWith(caches.open(CACHE).then(async cache => {
+      const key = req.mode === 'navigate' ? './index.html' : req;
+      const net = fetch(req.mode === 'navigate' ? new Request('./index.html', { cache: 'no-store' }) : new Request(req, { cache: 'no-store' }))
+        .then(res => { if (res && res.ok) cache.put(key, res.clone()); return res; }).catch(() => null);
+      const slow = new Promise(r => setTimeout(r, 4000, null));
+      const res = await Promise.race([net, slow]);
+      if (res && res.ok) return res;
+      const hit = await cache.match(key, { ignoreSearch: true });
+      if (hit) { e.waitUntil(net); return hit; }
+      return (await net) || Response.error();
+    }));
+    return;
+  }
+  // other files (icons, my-songs.js): cached copy at once, refreshed in the background
   e.respondWith(caches.open(CACHE).then(async cache => {
     const hit = await cache.match(req, { ignoreSearch: true });
-    const net = fetch(req).then(res => { if (res && res.ok) cache.put(req, res.clone()); return res; }).catch(() => null);
+    const net = fetch(req, { cache: 'no-cache' }).then(res => { if (res && res.ok) cache.put(req, res.clone()); return res; }).catch(() => null);
     if (hit) { e.waitUntil(net); return hit; }
     const res = await net;
-    return res || (req.mode === 'navigate' ? cache.match('./index.html') : Response.error());
+    return res || Response.error();
   }));
 });
