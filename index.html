@@ -447,6 +447,9 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
 .seg.lib-tabs .lib-tl{display:block;max-width:100%}
 .seg.lib-tabs .lib-tc{height:17px;font-size:11px;min-width:22px;flex:none}
 .seg.lib-tabs button[hidden]{display:none}
+/* Melody in S / A / T / B: four big, equal, steady buttons */
+.seg.mv-seg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));min-height:56px}
+.seg.mv-seg button{min-height:48px;font-size:20px;font-weight:700;padding:0}
 
 </style>
 </head>
@@ -567,7 +570,10 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
       <div class="pane" id="pane-parts" role="tabpanel" aria-labelledby="tab-parts" data-pane="parts" hidden>
       <div class="ctrl ctrl-row"><button class="pill-btn satb-btn" id="satbBtn" aria-pressed="false" title="Four-part harmony: soprano (the melody), alto, tenor and bass, all sung"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="6" cy="17" r="2.3"/><circle cx="12" cy="13" r="2.3"/><circle cx="18" cy="9" r="2.3"/><path d="M8.3 17V6M14.3 13V4M20.3 9V3"/></svg>SATB</button>
         <span class="satb-info" id="satbInfo"></span></div>
-      <label class="toggle tt-toggle"><input type="checkbox" id="tenorTuneOn" checked><span>Tune in tenor<small>on for every song (remembered): the melody sounds an octave lower at tenor pitch, on a treble-8 staff; in four-part harmony the tenors sing the tune and the sopranos the tenor line an octave higher (old psalter style). Off: the melody as written and the usual hymnal layout</small></span></label>
+      <div class="ctrl mv-ctrl"><div class="cap"><span>Melody in</span></div>
+        <div class="seg mv-seg" id="melVoiceSeg" role="group" aria-label="Melody in: which voice sings the tune"><button data-mv="S" aria-label="Soprano">S</button><button data-mv="A" aria-label="Alto">A</button><button data-mv="T" aria-label="Tenor">T</button><button data-mv="B" aria-label="Bass">B</button></div>
+        <p class="hint">The voice that sings the tune, for every song (remembered; T by default). It sings at its own pitch, the words sit under its staff, and in four-part harmony the other voices are set around it. Melody only plays at that voice's pitch too.</p>
+        <input type="checkbox" id="tenorTuneOn" hidden aria-hidden="true" tabindex="-1"></div>
       <div id="satbOpts" hidden>
         <div class="mixer" id="mixer" role="group" aria-label="Parts: tap a part to learn it alone">
           <div class="mix-row" data-p="mel">
@@ -696,7 +702,7 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
     </div>
     <button class="pill-btn wide-btn" id="creditsBtn" aria-haspopup="dialog">Credits &amp; licenses</button>
     <button class="link-btn" id="syncCheckBtn" aria-haspopup="dialog">Sync check…</button>
-    <p class="app-ver" id="appVer">Version <b>v26</b></p>
+    <p class="app-ver" id="appVer">Version <b>v27</b></p>
   </div>
 </div>
 
@@ -2196,11 +2202,11 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
      consecutive 5ths and 8ves, hidden 5ths/8ves in the outer voices, overlaps, augmented intervals, leaps over a 5th,
      an unresolved leading tone or 7th) cost far more than anything else, then smooth, stepwise inner voices and kept
      common tones are preferred. Returns {S, A, T, B} as [{start, dur, midi}] in notation beats (the tune's voice too). */
-  function setFour(res, chords, tuneVoice) {
-    tuneVoice = tuneVoice === 'T' ? 'T' : 'S';
+  function setFour(res, chords, tuneVoice, tuneOct) {
+    tuneVoice = V4.indexOf(tuneVoice) >= 0 ? tuneVoice : 'S';
     var notes = res.notes.filter(function (n) { return n.start !== undefined; }); if (!notes.length) return null;
     var cl = chordObjs(chords); if (!cl.length) return null;
-    var K = keyCentre(res), oct = tuneVoice === 'T' ? -12 : 0, FREE = V4.filter(function (v) { return v !== tuneVoice; });
+    var K = keyCentre(res), oct = tuneOct != null ? tuneOct : tuneVoice === 'T' ? -12 : tuneVoice === 'B' ? -12 : 0, TB = tuneVoice === 'B', FREE = V4.filter(function (v) { return v !== tuneVoice; });
     var scale = [0, 2, 4, 5, 7, 9, 11].map(function (x) { return md(md(res.key.fifths * 7) + x); }); if (K.minor) scale.push(K.lead);
     function chordAt(b) { var c = cl[0].ch; for (var i = 0; i < cl.length; i++) if (cl[i].beat <= b + 1e-6) c = cl[i].ch; return c; }
     var cuts = {}; notes.forEach(function (n) { if (n.tiedFrom === undefined || n.rest) cuts[n.start.toFixed(4)] = n.start; }); cl.forEach(function (c) { cuts[c.beat.toFixed(4)] = c.beat; });
@@ -2225,9 +2231,9 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
         if (st.S < st.A || st.A < st.T || st.T < st.B || (tuneVoice === 'S' && st.A === st.S)) return;
         if (!relax && (st.S - st.A > 12 || st.A - st.T > 12)) return;
         var pcs = V4.map(function (v) { return md(st[v]); }), bp = pcs[3];
-        if (ch.pcs.indexOf(bp) < 0) return;
-        if (last && (bp !== K.tonic || ch.root !== K.tonic)) return;
-        if (!relax && bp !== ch.root && bp !== ch.pcs[1]) return; // root position or first inversion
+        if (ch.pcs.indexOf(bp) < 0 && !(TB && (sg.nct || relax))) return; // (tune in the bass: its passing notes stay as they are)
+        if (last && (bp !== K.tonic || ch.root !== K.tonic) && !(TB && relax)) return;
+        if (!relax && bp !== ch.root && bp !== ch.pcs[1] && !(TB && ch.pcs.indexOf(bp) >= 0)) return; // root position or first inversion
         var mine = FREE.map(function (v) { return md(st[v]); });
         var has = sg.nct ? mine : pcs;
         if (!relax && (has.indexOf(ch.root) < 0 || has.indexOf(ch.pcs[1]) < 0)) return;
@@ -2250,6 +2256,7 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
       if (st.T === st.A || st.S === st.A) c += 1.5; if (st.T === st.B) c += 4;
       if (sg.strong && [1, 2, 6, 10, 11].indexOf(md(st.S - st.A)) >= 0) c += 45; // no clash between the two upper voices on the beat
       if (st.T - st.B > 19) c += (st.T - st.B - 19) * 0.3;
+      if (tuneVoice === 'A' || TB) { if (st.S - st.A > 12) c += 30; if (st.A - st.T > 12) c += 30; if (st.S === st.A || st.A === st.T) c += 3; } // tune inside: keep the voices close and apart
       if (last && md(st[tuneVoice === 'S' ? 'S' : 'S']) !== K.tonic && tuneVoice === 'T') c += 0.5;
       return c;
     }
@@ -2368,8 +2375,12 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
   // four-part (SATB) setting made from the melody and its chords, following the voice-leading rules (setFour).
   // tune: 'S' (the hymnal layout) or 'T' (tune in tenor). Returns {alto, tenor, bass} of the voices not singing the tune
   // (for 'T' the key 'tenor' holds the soprano line: the track that the tenor part would otherwise have).
+  // which voice each track (mel = the tune, alto, tenor, bass) sings, for each voice that can carry the tune
+  var SATB_TRACKS = { S: { mel: 'S', alto: 'A', tenor: 'T', bass: 'B' }, A: { mel: 'A', alto: 'S', tenor: 'T', bass: 'B' }, T: { mel: 'T', alto: 'A', tenor: 'S', bass: 'B' }, B: { mel: 'B', alto: 'A', tenor: 'T', bass: 'S' } };
   function satb(res, chords, tune) {
-    var f = setFour(res, chords, tune); if (f) return tune === 'T' ? { alto: f.A, tenor: f.S, bass: f.B, four: f } : { alto: f.A, tenor: f.T, bass: f.B, four: f };
+    var f = setFour(res, chords, tune, arguments[3]);
+    if (f) { var tr = SATB_TRACKS[tune] || SATB_TRACKS.S; return { alto: f[tr.alto], tenor: f[tr.tenor], bass: f[tr.bass], four: f }; }
+    if (tune && tune !== 'S') return null;
     var t = altoBass(res, chords); if (!t) return null;
     var sop = res.notes.filter(function (n) { return n.start !== undefined && !n.rest && n.midi != null; }).reduce(function (o, n) { var l = o[o.length - 1]; if (n.tiedFrom !== undefined && l && l.midi === n.midi) l.dur += n.dur; else o.push({ start: n.start, dur: n.dur, midi: n.midi }); return o; }, []);
     return { alto: t.alto, tenor: addTenor(res, chords, sop, t.alto, t.bass), bass: t.bass };
@@ -2396,7 +2407,7 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
   // chords written in the source (ABC "quoted" chords / MusicXML harmony) as [{beat, name}]
   function sourceChords(res) { var o = []; res.notes.forEach(function (n) { if (n.chord && n.start !== undefined) o.push({ beat: n.start, name: n.chord }); }); return o; }
 
-  var API = { checkVoices: checkVoices, tidySwap: tidySwap, SWAP_RULES: SWAP_RULES, setFour: setFour, keyCentre: keyCentre, VR4: VR4, VL_RULES: RULES, harmonize: harmonize, altoBass: altoBass, satb: satb, addTenor: addTenor, keyParts: keyParts, melodySig: melodySig, decodePart: decodePart, chordPcs: chordPcs, sourceChords: sourceChords, transposeChord: transposeChord, spellPc: spellPc, CHORD_RX: CHORD_RX, addVersesToABC: addVersesToABC, parseABC: parseABC, parseKey: parseKey, buildEvents: buildEvents, displayNotes: displayNotes, spell: spell, transposeFifths: transposeFifths,
+  var API = { checkVoices: checkVoices, tidySwap: tidySwap, SWAP_RULES: SWAP_RULES, setFour: setFour, keyCentre: keyCentre, VR4: VR4, VL_RULES: RULES, harmonize: harmonize, altoBass: altoBass, satb: satb, SATB_TRACKS: SATB_TRACKS, addTenor: addTenor, keyParts: keyParts, melodySig: melodySig, decodePart: decodePart, chordPcs: chordPcs, sourceChords: sourceChords, transposeChord: transposeChord, spellPc: spellPc, CHORD_RX: CHORD_RX, addVersesToABC: addVersesToABC, parseABC: parseABC, parseKey: parseKey, buildEvents: buildEvents, displayNotes: displayNotes, spell: spell, transposeFifths: transposeFifths,
     keyNameFromFifths: keyNameFromFifths, notesToABC: notesToABC, parseMIDI: parseMIDI, midiToABC: midiToABC, musicXMLToABC: musicXMLToABC,
     syllabifyText: syllabifyText, syllabifyWord: syllabifyWord, sylsToW: sylsToW, textToWLine: textToWLine, alignExtraVerses: alignExtraVerses, tokenizeLyrics: tokenizeLyrics, fifthsToAcc: fifthsToAcc, NOTE_NAMES: NOTE_NAMES_SHARP };
   root.HymnCore = API;
@@ -10970,7 +10981,7 @@ window.HYMN_SONGS = [
   var S = { song: null, res: null, disp: null, verse: 0, transpose: 0, bpm: 90, loop: LS.get('loop', false), allVerses: LS.get('allVerses', false),
             playing: false, events: [], total: 0, idx: 0, anchorTime: 0, anchorBeat: 0, pausedBeat: 0, timer: null, raf: 0, cur: -1, layout: null, edited: false,
             mode: LS.get('mode', 'along') === 'off' ? 'off' : 'along', speed: LS.get('speed', 1), tickOn: LS.get('tick', true), metro: LS.get('metro', false), pipe: false, chords: false, bigWords: false, grid: [], lines: [], gi: 0,
-            satb: LS.get('satb', false), tenorTune: LS.get('ttV2', 0) ? LS.get('tenorTune', true) : (LS.set('ttV2', 1), LS.set('tenorTune', true), true), part: LS.get('part', 'mel'), view: 'four', // SATB always in the hymnal layout (S+A treble, T+B bass)
+            satb: LS.get('satb', false), tenorTune: LS.get('ttV2', 0) ? LS.get('tenorTune', true) : (LS.set('ttV2', 1), LS.set('tenorTune', true), true), melVoice: null, part: LS.get('part', 'mel'), view: 'four', // SATB always in the hymnal layout (S+A treble, T+B bass)
             mix: Object.assign({ mel: { vol: 1, mute: false, solo: false }, alto: { vol: 1, mute: false, solo: false }, tenor: { vol: 1, mute: false, solo: false }, bass: { vol: 1, mute: false, solo: false } }, LS.get('mix', null) || {}) };
 
   function allSongs() { return builtIn.concat(mySongs.map(function (m) { return Object.assign({ section: 'My Songs' }, m); })); }
@@ -11161,6 +11172,9 @@ window.HYMN_SONGS = [
     var lyrPx = SL ? (slSmall ? 19 : 20) : Math.round(sp * (W < 520 ? 1.75 : 1.65)); // phone sideways: big, easy-to-read words
     S.disp = C.displayNotes(r, S.transpose);
     var dn = S.disp.notes;
+    // the tune's staff follows the voice singing it: bass clef for the bass (notes shown where they sound), treble-8 an octave down
+    var mainBass = MV() === 'B', mainOct = melShift();
+    if (mainBass) dn = dn.map(function (d) { return d && d.step !== undefined ? Object.assign({}, d, { step: d.step + 7 * Math.round(mainOct / 12) + 12 }) : d; });
     var ak = S.autoKey && S.autoKey.t === S.transpose ? S.autoKey : null;
     $('keyInfo').innerHTML = 'Key <b>' + esc(S.disp.keyName) + '</b> · Time <b>' + esc(r.meter.text || 'free') + '</b>' + (S.transpose ? ' · moved ' + (S.transpose > 0 ? 'up ' : 'down ') + Math.abs(S.transpose) + ' half step' + (Math.abs(S.transpose) > 1 ? 's' : '') : '') + (ak ? ' · ' + (ak.fits ? 'fits' : 'closest to') + ' the ' + esc(ak.range.name) + ' range' + (ak.range.note ? ' (' + esc(ak.range.note) + ')' : '') : '');
     var fifths = S.disp.fifths, nAcc = Math.abs(fifths);
@@ -11233,7 +11247,8 @@ window.HYMN_SONGS = [
     // SATB views: 'tog' = hymnal layout (soprano stems up + alto stems down on the treble staff, tenor stems up + bass
     // stems down on a bass staff); 'sep' = alto (treble), tenor and bass (bass clef) each on a staff of their own under
     // the words; 'one' = the soprano (melody) only. Every part is shown at the pitch it sounds.
-    var tv = S.satb && S.tp ? S.view : 'one', ttOn = TT() && tv !== 'one', pAbove = tv === 'four' && ttOn ? ['tenor', 'alto'] : [], pStaves = tv === 'four' ? (ttOn ? ['bass'] : ['alto', 'tenor', 'bass']) : tv === 'sep' ? (ttOn ? ['tenor', 'alto', 'bass'] : ['alto', 'tenor', 'bass']) : tv === 'tog' ? (ttOn ? ['tenor', 'bass'] : ['bass']) : [], pGap = (ttOn ? 3.0 : 3.6) * sp, pOne = staffH + pGap + (ttOn ? 2.6 : 3.0) * sp, pH = pStaves.length * pOne;
+    var tv = S.satb && S.tp ? S.view : 'one', ttOn = TT() && tv !== 'one', mvOrd = ['S', 'A', 'T', 'B'], mvI = mvOrd.indexOf(TV()), trkOf = function (v) { return ['alto', 'tenor', 'bass'].filter(function (p) { return TRK(p) === v; })[0]; },
+      pAbove = tv === 'four' ? mvOrd.slice(0, mvI).map(trkOf) : [], pStaves = tv === 'four' ? mvOrd.slice(mvI + 1).map(trkOf) : tv === 'sep' ? (ttOn ? ['tenor', 'alto', 'bass'] : ['alto', 'tenor', 'bass']) : tv === 'tog' ? (ttOn ? ['tenor', 'bass'] : ['bass']) : [], altOn = tv !== 'one' && TV() !== 'S', pGap = (altOn ? 3.0 : 3.6) * sp, pOne = staffH + pGap + (altOn ? 2.6 : 3.0) * sp, pH = pStaves.length * pOne;
     var aboveH = pAbove.length * pOne; // four staves, tune in tenor: soprano and alto above the tune staff
     var sysH = topPad + aboveH + staffH + belowStaff + lyrH + pH + gap;
     var H = systems.length * sysH + 6;
@@ -11258,12 +11273,12 @@ window.HYMN_SONGS = [
       layout.sysEnd.push(endX); layout.sysStartX.push(x + head);
       for (var l = 0; l < 5; l++) el('line', { class: 'st-line', x1: x, x2: endX, y1: y0 + l * sp, y2: y0 + l * sp });
       el('line', { class: 'st-bar', x1: x, x2: x, y1: y0, y2: y0 + staffH });
-      drawClef(el, x + 0.5 * sp, y0 + 3 * sp, sp);
-      if (ttOn || (tv === 'one' && S.tenorTune)) { var c8 = el('text', { class: 'clef8 st-ink', x: x + 1.55 * sp, y: y0 + staffH + 3.0 * sp, 'font-size': (1.25 * sp).toFixed(1), 'text-anchor': 'middle' }); c8.textContent = '8'; } // treble-8: sounds an octave lower
+      if (mainBass) drawBassClef(el, svg, x + 0.5 * sp, y0 + sp, sp); else drawClef(el, x + 0.5 * sp, y0 + 3 * sp, sp);
+      if (!mainBass && mainOct === -12) { var c8 = el('text', { class: 'clef8 st-ink', x: x + 1.55 * sp, y: y0 + staffH + 3.0 * sp, 'font-size': (1.25 * sp).toFixed(1), 'text-anchor': 'middle' }); c8.textContent = '8'; } // treble-8: sounds an octave lower
       var kx = x + clefW;
       for (var a = 0; a < nAcc; a++) {
         var st = fifths > 0 ? SHARP_STEPS[a] : FLAT_STEPS[a];
-        drawAcc(el, svg, fifths > 0 ? 1 : -1, kx + a * 1.05 * sp + 0.5 * sp, stepY(st), sp, 'st-ink');
+        drawAcc(el, svg, fifths > 0 ? 1 : -1, kx + a * 1.05 * sp + 0.5 * sp, stepY(mainBass ? st - 2 : st), sp, 'st-ink');
       }
       var tx = kx + keyW;
       if (first && !r.meter.free) {
@@ -11328,7 +11343,7 @@ window.HYMN_SONGS = [
       });
       flushBeams();
       if (tv !== 'one') {
-        if (S.satb && S.tp) { var l1 = el('text', { class: 'part-label' + (S.part === 'mel' ? ' learn' : ''), x: x + 0.2 * sp, y: y0 - 2.6 * sp, 'font-size': (1.15 * sp).toFixed(1) }); l1.textContent = ttOn ? 'Tenor \u00b7 the tune' : tv === 'four' ? PART_NAME.mel : PART_NAME.mel + (tv === 'tog' ? ' + ' + PART_NAME.alto : '') + (S.tp.src === 'auto' && tv === 'tog' ? ' (alto auto)' : ''); }
+        if (S.satb && S.tp) { var l1 = el('text', { class: 'part-label' + (S.part === 'mel' ? ' learn' : ''), x: x + 0.2 * sp, y: y0 - 2.6 * sp, 'font-size': (1.15 * sp).toFixed(1) }); l1.textContent = TV() !== 'S' && tv === 'four' ? VNAME[TV()] + ' \u00b7 the tune' : tv === 'four' ? PART_NAME.mel : PART_NAME.mel + (tv === 'tog' ? ' + ' + PART_NAME.alto : '') + (S.tp.src === 'auto' && tv === 'tog' ? ' (alto auto)' : ''); }
         if (tv === 'tog' && !ttOn) drawPartNotes('alto', si, stepY, 30, 34, el('g', { class: 'part-staff part-alto overlay' }), 'down');
         pAbove.forEach(function (pn, k) { drawPartStaff(pn, si, si * sysH + topPad + k * pOne, x, endX, pBars); });
         pStaves.forEach(function (pn, k) { drawPartStaff(pn, si, y0 + staffH + belowStaff + lyrH + pGap + k * pOne, x, endX, pBars); });
@@ -11388,7 +11403,7 @@ window.HYMN_SONGS = [
     function drawPartStaff(pShow, si, yp, x, endX, bars) {
       // tenor and bass on a bass-clef staff at concert pitch (what is shown is what sounds); in the hymnal layout the
       // tenor shares the bass staff with stems up, the bass with stems down
-      var duo = tv === 'tog' && pShow === (ttOn ? 'tenor' : 'bass'), bass = pShow === 'bass' || (pShow === 'tenor' && !ttOn), base = bass ? 18 : 30, sY = function (step) { return yp + staffH - (step - base) * sp / 2; };
+      var duo = tv === 'tog' && pShow === (ttOn ? 'tenor' : 'bass'), bass = duo ? (pShow === 'bass' || (pShow === 'tenor' && !ttOn)) : (TRK(pShow) === 'T' || TRK(pShow) === 'B'), base = bass ? 18 : 30, sY = function (step) { return yp + staffH - (step - base) * sp / 2; };
       var g = el('g', { class: 'part-staff part-' + pShow + (S.part === pShow ? ' learn' : '') });
       for (var l = 0; l < 5; l++) el('line', { class: 'st-line', x1: x, x2: endX, y1: yp + l * sp, y2: yp + l * sp }, g);
       el('line', { class: 'st-bar', x1: x, x2: x, y1: yp, y2: yp + staffH }, g);
@@ -11475,17 +11490,45 @@ window.HYMN_SONGS = [
   /* Tune in tenor (old Scottish / Ravenscroft psalters): the tenors sing the tune an octave lower, the sopranos sing the
      tenor line an octave higher. The tracks keep their keys ('mel' is always the tune, 'tenor' always the line from the
      tenor part), so solo, mute, volume and "my part off" follow the line; only who sings it changes. */
-  function TT() { return !!(S.satb && S.tenorTune); }
-  function melShift() { return S.tenorTune ? -12 : 0; } // tune in tenor: the tune sounds an octave lower (melody only and SATB)
-  var TT_NAME = { mel: 'Tenor', alto: 'Alto', tenor: 'Soprano', bass: 'Bass' }, TT_ROLE = { mel: 'the tune', alto: 'harmony', tenor: 'tenor line, 8va', bass: 'harmony' };
-  function PN(p) { return (TT() ? TT_NAME : PART_NAME)[p]; }
-  function rangeOf(p) { return TT() ? PART_RANGE[{ mel: 'tenor', tenor: 'mel' }[p] || p] : PART_RANGE[p]; }
+  /* Melody in S / A / T / B (remembered; tenor by default): the chosen voice sings the tune at a suitable octave and the
+     other three tracks carry the other voices (C.SATB_TRACKS). Tune in tenor keeps its historical behaviour. */
+  if (S.melVoice == null) { var mv0 = LS.get('melVoice', null); S.melVoice = ['S', 'A', 'T', 'B'].indexOf(mv0) >= 0 ? mv0 : (S.tenorTune ? 'T' : 'S'); S.tenorTune = S.melVoice === 'T'; }
+  var VNAME = { S: 'Soprano', A: 'Alto', T: 'Tenor', B: 'Bass' }, VRANGE = { S: PART_RANGE.mel, A: PART_RANGE.alto, T: PART_RANGE.tenor, B: PART_RANGE.bass };
+  function MV() { return S.melVoice || 'S'; }
+  function TV() { return S.satb ? MV() : 'S'; } // voice layout of the tracks (melody only: the tune alone)
+  function TT() { return !!(S.satb && MV() === 'T'); }
+  function TRK(p) { return C.SATB_TRACKS[TV()][p]; }
+  // the octave the tune is sung in: soprano as written, tenor an octave lower; alto and bass the octave that fits them best
+  function melOct(v) {
+    v = v || MV(); if (v === 'S') return 0; if (v === 'T') return -12;
+    var r = S.res, ms = r && r.notes ? r.notes.filter(function (n) { return !n.rest && n.midi != null; }).map(function (n) { return n.midi; }) : [];
+    if (!ms.length) return v === 'B' ? -12 : 0;
+    if (S.octCache && S.octCache.res === r && S.octCache[v] !== undefined) return S.octCache[v];
+    if (!S.octCache || S.octCache.res !== r) S.octCache = { res: r };
+    // each octave: how far the tune leaves the voice's range, plus the voice-leading faults of the setting made around it
+    var rg = VRANGE[v], cand = v === 'A' ? [0, -12] : [-12, -24], best = cand[0], bc = 1e9, bch = null;
+    try { bch = baseChords().list; } catch (e) { bch = null; }
+    cand.forEach(function (o) {
+      var c = 0; ms.forEach(function (m) { m += o; c += m > rg[1] ? m - rg[1] : m < rg[0] ? rg[0] - m : 0; });
+      if (bch && c < 40) { try { var t = C.satb(r, bch, v, o); if (t) { var TR = C.SATB_TRACKS[v], V = {}, N = r.notes; V[v] = N.filter(function (n) { return n.start !== undefined && !n.rest && n.midi != null; }).reduce(function (q, n) { var l = q[q.length - 1]; if (n.tiedFrom !== undefined && l && l.midi === n.midi + o) l.dur += n.dur; else q.push({ start: n.start, dur: n.dur, midi: n.midi + o }); return q; }, []); ['alto', 'tenor', 'bass'].forEach(function (p) { V[TR[p]] = t[p]; }); c += 1.5 * C.checkVoices(r, V, bch, { fixed: [v] }).count; } else c += 50; } catch (e) { c += 50; } }
+      if (c < bc - 1e-9) { bc = c; best = o; }
+    });
+    return (S.octCache[v] = best);
+  }
+  function melShift() { return melOct(); } // the tune sounds at the chosen voice's pitch (melody only and SATB)
+  var TT_ROLE = { mel: 'the tune', alto: 'harmony', tenor: 'tenor line, 8va', bass: 'harmony' };
+  function PN(p) { return VNAME[TRK(p)]; }
+  function rangeOf(p) { return VRANGE[TRK(p)]; }
   function satbParts() {
     if (!S.res || !S.res.notes.length) return null;
     var bc = baseChords().list;
-    var tt = TT(); if (S.satbCache && S.satbCache.res === S.res && S.satbCache.chords === bc && S.satbCache.tt === tt) return S.satbCache;
-    var real = S.song && S.song.parts, out = { res: S.res, chords: bc, tt: tt, by: { alto: {}, tenor: {}, bass: {} }, list: {} }, lists;
-    if (real && real.alto && real.bass && real.sig === C.melodySig(S.res)) {
+    var tt = TT(), mv = S.satb ? MV() : 'S', alt = mv === 'A' || mv === 'B'; if (S.satbCache && S.satbCache.res === S.res && S.satbCache.chords === bc && S.satbCache.tt === tt && S.satbCache.mv === mv) return S.satbCache;
+    var real = S.song && S.song.parts, out = { res: S.res, chords: bc, tt: tt, mv: mv, by: { alto: {}, tenor: {}, bass: {} }, list: {} }, lists;
+    if (alt) { // tune in the alto or bass: a fresh four-part setting around it, by the voice-leading rules
+      var ta = null; try { ta = C.satb(S.res, bc, mv, melOct(mv)); } catch (e) { ta = null; }
+      if (!ta) return (S.satbCache = null);
+      lists = { alto: C.keyParts(S.res, ta.alto), tenor: C.keyParts(S.res, ta.tenor), bass: C.keyParts(S.res, ta.bass) }; out.src = 'auto'; out.tenorSrc = 'auto'; out.native = true; out.hadReal = !!(real && real.alto);
+    } else if (real && real.alto && real.bass && real.sig === C.melodySig(S.res)) {
       lists = { alto: C.decodePart(real.alto), bass: C.decodePart(real.bass) }; out.src = 'real'; out.note = real.src;
       if (real.tenor) { lists.tenor = C.decodePart(real.tenor); out.tenorSrc = 'real'; }
       else { // an older stored setting without its tenor: make one that fits the real alto and bass
@@ -11597,17 +11640,18 @@ window.HYMN_SONGS = [
       row.classList.toggle('learn', S.part === p); row.classList.toggle('silent', partGain(p) === 0);
       var nb = row.querySelector('.mix-name b'), ns = row.querySelector('.mix-name small'), nm = PN(p), tt2 = TT();
       if (nb && nb.textContent !== nm) { nb.textContent = nm; row.querySelector('.solo').setAttribute('aria-label', 'Solo ' + nm); row.querySelector('.mute').setAttribute('aria-label', 'Mute ' + nm); row.querySelector('.mix-vol').setAttribute('aria-label', nm + ' volume'); row.querySelector('.mix-name').title = 'Tap to learn the ' + nm.toLowerCase() + ' alone (tap again to hear all four)'; }
-      if (ns) ns.textContent = tt2 ? TT_ROLE[p] : PART_ROLE[p];
-      row.style.order = tt2 ? { tenor: 0, alto: 1, mel: 2, bass: 3 }[p] : '';
+      if (ns) ns.textContent = tt2 ? TT_ROLE[p] : p === 'mel' ? (TV() === 'S' ? PART_ROLE.mel : 'the tune') : PART_ROLE[p];
+      row.style.order = TV() === 'S' ? '' : ['S', 'A', 'T', 'B'].indexOf(TRK(p));
       row.querySelector('.mix-name').setAttribute('aria-pressed', S.part === p ? 'true' : 'false');
       row.querySelector('.solo').setAttribute('aria-pressed', m.solo ? 'true' : 'false');
       row.querySelector('.mute').setAttribute('aria-pressed', m.mute ? 'true' : 'false');
       var v = row.querySelector('.mix-vol'); if (+v.value !== Math.round(m.vol * 100)) v.value = Math.round(m.vol * 100); fill(v);
     });
     if ($('tenorTuneOn')) { $('tenorTuneOn').checked = !!S.tenorTune; }
+    Array.prototype.forEach.call(document.querySelectorAll('#melVoiceSeg button'), function (b) { b.setAttribute('aria-pressed', b.dataset.mv === MV() ? 'true' : 'false'); });
     var off = document.querySelector('#modeSeg [data-m="off"]'); if (off) off.textContent = S.satb ? 'My part off' : 'Melody off';
     var tp = S.satb ? satbParts() : null, ti = $('satbInfo');
-    ti.textContent = !S.satb ? '' : !tp ? 'No harmony for this song.' : (tp.src === 'real' ? (tp.tenorSrc === 'real' ? 'Real alto, tenor and bass' : 'Real alto and bass (tenor auto-generated to fit them)') + ' \u2014 ' + tp.note + '.' : 'Alto, tenor and bass auto-generated from the melody and its chords (four-part hymn harmony).') + (tp && TT() ? (tp.native ? ' Tune in tenor: a four-part setting made with the tune in the tenor (an octave lower), following the voice-leading rules.' : ' Tune in tenor: the tenors sing the tune (an octave lower), the sopranos the tenor line an octave higher' + (tp.fixes && (tp.fixes.exchanged + tp.fixes.altoDown + tp.fixes.bassDown + tp.fixes.sopUp) ? ' (voices tidied: ' + [tp.fixes.exchanged ? tp.fixes.exchanged + ' soprano/alto exchange' + (tp.fixes.exchanged > 1 ? 's' : '') : '', tp.fixes.sopUp ? tp.fixes.sopUp + ' soprano passage' + (tp.fixes.sopUp > 1 ? 's' : '') + ' up an octave' : '', tp.fixes.altoDown ? tp.fixes.altoDown + ' alto note' + (tp.fixes.altoDown > 1 ? 's' : '') + ' down an octave' : '', tp.fixes.bassDown ? tp.fixes.bassDown + ' bass passage' + (tp.fixes.bassDown > 1 ? 's' : '') + ' down an octave' : ''].filter(Boolean).join(', ') + ')' : '') + '.') : '') + rangeWarn(tp);
+    ti.textContent = !S.satb ? '' : !tp ? 'No harmony for this song.' : (tp.src === 'real' ? (tp.tenorSrc === 'real' ? 'Real alto, tenor and bass' : 'Real alto and bass (tenor auto-generated to fit them)') + ' \u2014 ' + tp.note + '.' : ((S.satb && (MV() === 'A' || MV() === 'B')) ? 'Melody in the ' + VNAME[MV()].toLowerCase() + (melOct() ? ' (an octave lower)' : ' (at pitch)') + ': ' + ['S', 'A', 'T', 'B'].filter(function (v) { return v !== MV(); }).map(function (v) { return VNAME[v].toLowerCase(); }).join(', ').replace(/, ([a-z]+)$/, ' and $1') + ' set around it by the voice-leading rules' + (tp.hadReal ? ' (the printed parts are written for the tune on top)' : '') + '.' : 'Alto, tenor and bass auto-generated from the melody and its chords (four-part hymn harmony).')) + (tp && TT() ? (tp.native ? ' Tune in tenor: a four-part setting made with the tune in the tenor (an octave lower), following the voice-leading rules.' : ' Tune in tenor: the tenors sing the tune (an octave lower), the sopranos the tenor line an octave higher' + (tp.fixes && (tp.fixes.exchanged + tp.fixes.altoDown + tp.fixes.bassDown + tp.fixes.sopUp) ? ' (voices tidied: ' + [tp.fixes.exchanged ? tp.fixes.exchanged + ' soprano/alto exchange' + (tp.fixes.exchanged > 1 ? 's' : '') : '', tp.fixes.sopUp ? tp.fixes.sopUp + ' soprano passage' + (tp.fixes.sopUp > 1 ? 's' : '') + ' up an octave' : '', tp.fixes.altoDown ? tp.fixes.altoDown + ' alto note' + (tp.fixes.altoDown > 1 ? 's' : '') + ' down an octave' : '', tp.fixes.bassDown ? tp.fixes.bassDown + ' bass passage' + (tp.fixes.bassDown > 1 ? 's' : '') + ' down an octave' : ''].filter(Boolean).join(', ') + ')' : '') + '.') : '') + rangeWarn(tp);
     ti.className = 'satb-info' + (tp && tp.src === 'auto' ? ' auto' : '');
   }
   // parts that leave their singable range in the current key
@@ -11619,7 +11663,8 @@ window.HYMN_SONGS = [
   }
   function octOf(m) { return String(Math.floor(m / 12) - 1); }
   function setSatb(on) { S.satb = !!on; LS.set('satb', S.satb); S.tp = S.satb ? satbParts() : null; if (S.satb && !Audio.isReady(partVoice())) Audio.load(partVoice()); render(); syncSingUI(); }
-  function setTenorTune(on) { S.tenorTune = !!on; LS.set('tenorTune', S.tenorTune); S.tp = S.satb ? satbParts() : null; render(); syncSingUI(); }
+  function setTenorTune(on) { setMelVoice(on ? 'T' : 'S'); }
+  function setMelVoice(v) { if (['S', 'A', 'T', 'B'].indexOf(v) < 0) return; var was = S.playing; if (was) pause(); S.melVoice = v; S.tenorTune = v === 'T'; LS.set('melVoice', v); LS.set('tenorTune', S.tenorTune); S.satbCache = null; S.tp = S.satb ? satbParts() : null; render(); syncSingUI(); if (was) play(); }
   function setPart(p) { if (PARTS.indexOf(p) < 0) return; S.part = p; LS.set('part', p); render(); syncSingUI(); }
   function setView(v) { if (v === 'sep' || v === 'tog') v = 'four'; if (['one', 'four'].indexOf(v) < 0) return; S.view = v; render(); syncSatbUI(); } // test hook only: no layout buttons in the app
   function render() {
@@ -11781,7 +11826,7 @@ window.HYMN_SONGS = [
   // sync offset: reset to 0 once with this update (old offsets were set against the earlier latency handling)
   if (!LS.get('syncV3', 0)) { LS.set('syncMs', 0); LS.set('syncV2', 1); LS.set('syncV3', 1); } // v25: Safari now allows for its reported output delay, so older offsets are reset once
   var syncS = (+LS.get('syncMs', 0) || 0) / 1000;
-  var APP_VERSION = 'v26';
+  var APP_VERSION = 'v27';
   function syncSec() { return syncS; }
   function heardTime(perf) { return clock.heard(perf) - syncSec(); }
   // One clock for sound, cursor and highlight. A frame drawn in the rAF callback at perf reaches the screen at the next
@@ -12207,7 +12252,7 @@ window.HYMN_SONGS = [
       ['prefs.pp', 'prefs.gen'].forEach(function (k) { var p = LS.get(k, null); if (p && p.voice && !INST[p.voice]) { p.voice = fix(p.voice); LS.set(k, p); } });
     })();
     // drop stored settings of features that no longer exist (every setting the app uses is listed here)
-    (function () { var keep = 'allVerses aref ctlTab libTab loop metro mix mode mySongs part reverb satb song tenorTune ttV2 speed syncMs syncV2 syncV3 updatedFrom tick voice voiceGen volume vrange'.split(' ');
+    (function () { var keep = 'allVerses aref ctlTab libTab loop metro mix mode mySongs part reverb satb song tenorTune ttV2 speed syncMs syncV2 syncV3 melVoice updatedFrom tick voice voiceGen volume vrange'.split(' ');
       try { for (var i = localStorage.length - 1; i >= 0; i--) { var k = localStorage.key(i); if (k && k.indexOf('hp.') === 0) { var n = k.slice(3); if (keep.indexOf(n) < 0 && n.indexOf('prefs.') !== 0) localStorage.removeItem(k); } } } catch (e) {} })();
     $('playBtn').onclick = toggle;
     $('stopBtn').onclick = stop;
@@ -12235,7 +12280,7 @@ window.HYMN_SONGS = [
     wireRoll();
     TM.unlock(function () { try { Audio.ensure(); } catch (e) {} });
     Audio.onState(function (st) { if (S.playing && st !== 'running') { pause(); toast('Sound was interrupted — tap play to go on'); } });
-    window.HP_TEST = { S: S, Audio: Audio, clock: clock, get roll() { return S.roll; }, setProbe: function (on) { probe = on ? TM.FrameProbe() : null; return probe; }, get probe() { return probe; }, tick: tick, heardTime: heardTime, setSpeed: setSpeed, pitchPipe: pitchPipe, get schedPart() { return S.schedPart; }, nextPass: nextPass, chordList: chordList, syncSingUI: syncSingUI, satbParts: satbParts, setSatb: setSatb, setTenorTune: setTenorTune, TT: TT, setPart: setPart, partGain: partGain, setView: setView, learnAlone: learnAlone, saveMix: saveMix, get lines() { return S.lines; }, shownTime: shownTime, get fdt() { return fdt; }, play: play, pause: pause, stop: stop, render: render, velOf: velOf, loadSong: loadSong, songs: allSongs, renderLibrary: renderLibrary };
+    window.HP_TEST = { S: S, Audio: Audio, clock: clock, get roll() { return S.roll; }, setProbe: function (on) { probe = on ? TM.FrameProbe() : null; return probe; }, get probe() { return probe; }, tick: tick, heardTime: heardTime, setSpeed: setSpeed, pitchPipe: pitchPipe, get schedPart() { return S.schedPart; }, nextPass: nextPass, chordList: chordList, syncSingUI: syncSingUI, satbParts: satbParts, setSatb: setSatb, setTenorTune: setTenorTune, setMelVoice: setMelVoice, melOct: function (v) { return melOct(v); }, TT: TT, setPart: setPart, partGain: partGain, setView: setView, learnAlone: learnAlone, saveMix: saveMix, get lines() { return S.lines; }, shownTime: shownTime, get fdt() { return fdt; }, play: play, pause: pause, stop: stop, render: render, velOf: velOf, loadSong: loadSong, songs: allSongs, renderLibrary: renderLibrary };
     (function () { // sync offset: + shows the cursor later (for output paths whose delay the browser does not report)
       var r = $('sync'); function show(v) { v = Math.max(-300, Math.min(300, Math.round(v / 5) * 5)); r.value = v; LS.set('syncMs', v); syncS = v / 1000; $('syncOut').textContent = (v > 0 ? '+' : '') + v + ' ms'; fill(r); }
       show(+LS.get('syncMs', 0) || 0);
@@ -12334,6 +12379,7 @@ window.HYMN_SONGS = [
     $('metroOn').checked = !!S.metro;
     $('metroOn').onchange = function () { S.metro = this.checked; LS.set('metro', S.metro); toast(S.metro ? 'Metronome on: a tick on every beat, accent on the first beat of the bar' : 'Metronome off'); };
     ['satbBtn', 'satbBtn2'].forEach(function (id) { if ($(id)) $(id).onclick = function () { setSatb(!S.satb); }; });
+    Array.prototype.forEach.call(document.querySelectorAll('#melVoiceSeg button'), function (b) { b.onclick = function () { setMelVoice(b.dataset.mv); toast('Melody in the ' + VNAME[b.dataset.mv].toLowerCase() + (S.satb ? ': the other voices are set around it' : '') + '; the words are under its staff'); }; });
     if ($('tenorTuneOn')) $('tenorTuneOn').onchange = function () { setTenorTune(this.checked); toast(this.checked ? (S.satb ? 'Tune in tenor: tenors sing the tune, sopranos the tenor line' : 'Tune in tenor: the melody sounds an octave lower (treble-8 clef)') : 'Tune in soprano: the melody as written, the usual hymnal layout'); };
     PARTS.forEach(function (p) {
       var row = document.querySelector('.mix-row[data-p="' + p + '"]'); if (!row) return;
