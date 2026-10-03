@@ -6477,9 +6477,9 @@ window.HYMN_SONGS = [
     });
     if (cats) Array.prototype.forEach.call(cats.childNodes, function (b) { var c = b.dataset.c, n = q ? hits[c] : counts[c]; b.setAttribute('aria-pressed', c === tab ? 'true' : 'false'); b.querySelector('.lib-tc').textContent = n; b.setAttribute('aria-label', c + ', ' + n + ' songs'); });
     items.sort(function (a, b) {
-      if (q && tab !== 'All' && a._rank !== b._rank) return a._rank - b._rank;
+      if (q && tab !== 'All' && tab !== 'Psalms' && a._rank !== b._rank) return a._rank - b._rank;
       if (tab === PP_SEC && (a.order != null || b.order != null) && a.order !== b.order) return (a.order != null ? a.order : 1e9) - (b.order != null ? b.order : 1e9); // psalter order
-      if (tab === 'All') return sortTitle(a.title).localeCompare(sortTitle(b.title), undefined, { numeric: true, sensitivity: 'base' }) || String(a.id).localeCompare(String(b.id)); // All: strict A-Z by title (search results too)
+      if (tab === 'All' || tab === 'Psalms') return sortTitle(a.title).localeCompare(sortTitle(b.title), undefined, { numeric: true, sensitivity: 'base' }) || String(a.id).localeCompare(String(b.id)); // All: strict A-Z by title (search results too)
       else if (tab !== 'Hymns') { var d = psalmNo(a) - psalmNo(b); if (d) return d; }
       return sortTitle(a.title).localeCompare(sortTitle(b.title), undefined, { numeric: true, sensitivity: 'base' }) || (a.order != null && b.order != null ? a.order - b.order : 0);
     });
