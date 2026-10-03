@@ -294,17 +294,6 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
 .sc-info{font-size:12px;white-space:pre-wrap;background:rgba(0,0,0,.04);padding:10px;border-radius:10px;margin:0}
 .seg.seg-wrap{flex-wrap:wrap}
 
-/* phones held upright with a song open: a gentle, dismissible hint to turn sideways (the app works upright too) */
-.rotate-tip{display:flex;align-items:center;gap:12px;padding:10px 10px 10px 14px;border-radius:16px;background:color-mix(in srgb,var(--card) 92%,transparent);
-  -webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);box-shadow:0 2px 10px rgba(0,0,0,.08);border:1px solid var(--line);
-  color:var(--text);font-size:15px;font-weight:600;line-height:1.3;animation:rise .35s cubic-bezier(.2,.8,.2,1)}
-.rotate-tip[hidden]{display:none}
-.rotate-tip svg{width:30px;height:30px;flex:none;color:var(--accent)}
-.rotate-tip span{flex:1;min-width:0}
-.rotate-tip button{flex:none;border:0;border-radius:12px;min-height:40px;padding:0 14px;background:var(--accent-soft);color:var(--accent);font-weight:700;font-size:15px}
-.rotate-tip .rc-phone{transform-origin:32px 32px;transform-box:view-box;animation:rc-turn 2.4s ease-in-out 2}
-@keyframes rc-turn{0%,25%{transform:rotate(0)}55%,100%{transform:rotate(-90deg)}}
-@media (prefers-reduced-motion:reduce){.rotate-tip .rc-phone{animation:none}}
 
 /* phones held sideways (short landscape screens): compact header and a one-row dock so the score stays in view */
 @media (orientation:landscape) and (max-height:500px){
@@ -426,16 +415,6 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
 /* playing: nothing on the score animates by CSS; the roll is moved by transform from the audio clock */
 #staff .roll-strip,#staff .playhead{transition:none!important}
 #staff .st-hl.show{opacity:1}
-/* one-time "Tap along to set up sync" prompt */
-.sync-prompt{position:fixed;z-index:70;left:50%;bottom:calc(var(--dock,84px) + 12px + env(safe-area-inset-bottom));transform:translate(-50%,12px);opacity:0;width:min(560px,calc(100% - 24px));display:grid;grid-template-columns:auto 1fr;gap:10px 14px;align-items:center;padding:16px 18px;border-radius:20px;box-shadow:0 12px 40px rgba(0,0,0,.22);transition:transform .25s cubic-bezier(.2,.8,.2,1),opacity .2s}
-.sync-prompt.show{transform:translate(-50%,0);opacity:1}
-.sync-prompt[hidden]{display:none}
-.sp-ico{width:44px;height:44px;border-radius:14px;background:var(--accent);color:var(--accent-text);display:grid;place-items:center}
-.sp-ico svg{width:24px;height:24px}
-.sp-text{display:flex;flex-direction:column;gap:4px;font-size:15px;color:var(--text2);line-height:1.35}
-.sp-text b{font-size:17px;color:var(--text)}
-.sp-btns{grid-column:1/-1;display:flex;gap:10px;justify-content:flex-end}
-.sp-btns .pill-btn{min-height:44px;padding:0 20px}
 /* four buttons: label over count everywhere (fits a phone and the narrow desktop sidebar) */
 .seg.lib-tabs button{flex-direction:column;gap:2px;font-size:14px;padding:4px 2px;min-height:52px}
 .seg.lib-tabs .lib-tc{height:18px;font-size:11.5px;min-width:22px}
@@ -443,6 +422,10 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
 .app-ver{margin:4px 0 0;text-align:center;color:var(--muted);font-size:13px}
 .update-bar{position:fixed;z-index:75;left:50%;top:calc(12px + env(safe-area-inset-top));transform:translateX(-50%);border:0;border-radius:999px;background:var(--accent);color:var(--accent-text);font-weight:700;font-size:15px;min-height:44px;padding:0 20px;box-shadow:0 8px 24px rgba(0,0,0,.25)}
 .update-bar[hidden]{display:none}
+/* four separate staves: each part lights its own sounding note */
+.part-note.on .head{fill:var(--hl)}
+.part-note.on .head.hollow{fill:none;stroke:var(--hl)}
+.part-note.on .stem,.part-note.on .ledger{stroke:var(--hl)}
 
 </style>
 </head>
@@ -471,11 +454,6 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
   </nav>
 
   <main class="main">
-    <div class="rotate-tip" id="rotateTip" role="status" aria-live="polite" hidden>
-      <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g class="rc-phone"><rect x="22" y="14" width="20" height="36" rx="4"/><path d="M29 45h6"/></g><path d="M44 6a20 20 0 0 1 14 14M58 20l-6-1M58 20l1-6" stroke-width="3"/></svg>
-      <span>Turn your phone sideways for the best view</span>
-      <button type="button" id="rotateNo">Not now</button>
-    </div>
     <section class="card" aria-live="polite">
       <div class="song-head">
         <div style="min-width:0;flex:1">
@@ -661,11 +639,6 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
     </div>
   </div>
 </div>
-<div class="sync-prompt card" id="syncPrompt" role="dialog" aria-labelledby="spTitle" hidden>
-  <div class="sp-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div>
-  <div class="sp-text"><b id="spTitle">Tap along to set up sync</b><span>Tap with 8 beeps so the cursor and highlight match exactly what you hear on this device (about 10 seconds). Do it again if you change speakers or use Bluetooth.</span></div>
-  <div class="sp-btns"><button class="pill-btn solid" id="spGo">Tap along</button><button class="pill-btn" id="spLater">Not now</button></div>
-</div>
 <button class="update-bar" id="updateBar" hidden>Update ready — tap to refresh</button>
 <div class="toast" id="toast"></div>
 
@@ -697,7 +670,7 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
     </div>
     <button class="pill-btn wide-btn" id="creditsBtn" aria-haspopup="dialog">Credits &amp; licenses</button>
     <button class="link-btn" id="syncCheckBtn" aria-haspopup="dialog">Sync check…</button>
-    <p class="app-ver" id="appVer">Version <b>v17</b></p>
+    <p class="app-ver" id="appVer">Version <b>v18</b></p>
   </div>
 </div>
 
@@ -6424,7 +6397,7 @@ window.HYMN_SONGS = [
   var S = { song: null, res: null, disp: null, verse: 0, transpose: 0, bpm: 90, loop: LS.get('loop', false), allVerses: LS.get('allVerses', false),
             playing: false, events: [], total: 0, idx: 0, anchorTime: 0, anchorBeat: 0, pausedBeat: 0, timer: null, raf: 0, cur: -1, layout: null, edited: false,
             mode: LS.get('mode', 'along') === 'off' ? 'off' : 'along', speed: LS.get('speed', 1), tickOn: LS.get('tick', true), metro: LS.get('metro', false), pipe: false, chords: false, bigWords: false, grid: [], lines: [], gi: 0,
-            satb: LS.get('satb', false), tenorTune: LS.get('ttV2', 0) ? LS.get('tenorTune', true) : (LS.set('ttV2', 1), LS.set('tenorTune', true), true), part: LS.get('part', 'mel'), view: 'tog', // SATB always in the hymnal layout (S+A treble, T+B bass)
+            satb: LS.get('satb', false), tenorTune: LS.get('ttV2', 0) ? LS.get('tenorTune', true) : (LS.set('ttV2', 1), LS.set('tenorTune', true), true), part: LS.get('part', 'mel'), view: 'four', // SATB always in the hymnal layout (S+A treble, T+B bass)
             mix: Object.assign({ mel: { vol: 1, mute: false, solo: false }, alto: { vol: 1, mute: false, solo: false }, tenor: { vol: 1, mute: false, solo: false }, bass: { vol: 1, mute: false, solo: false } }, LS.get('mix', null) || {}) };
 
   function allSongs() { return builtIn.concat(mySongs.map(function (m) { return Object.assign({ section: 'My Songs' }, m); })); }
@@ -6505,8 +6478,8 @@ window.HYMN_SONGS = [
     });
     list.appendChild(body);
   }
-  function openLib() { $('library').classList.add('open'); $('scrim').classList.add('show'); updateRotateTip(); }
-  function closeLib() { $('library').classList.remove('open'); $('scrim').classList.remove('show'); updateRotateTip(); }
+  function openLib() { $('library').classList.add('open'); $('scrim').classList.add('show'); }
+  function closeLib() { $('library').classList.remove('open'); $('scrim').classList.remove('show'); }
 
   /* =================== LOAD / PARSE =================== */
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
@@ -6606,7 +6579,8 @@ window.HYMN_SONGS = [
     W = Math.max(300, W || 800);
     var sp = W < 520 ? 10.5 : W < 800 ? 12 : 13.5;           // staff space in px
     var SL = shortLandscape(), slSmall = window.innerHeight < 415;
-    if (SL) sp = Math.min(sp, S.satb && S.tp ? (TT() && S.view === 'tog' ? (slSmall ? 7.3 : 8.1) : (slSmall ? 8.25 : 9.25)) : (slSmall ? 12.5 : 13.5));             // phone held sideways: keep both staves on screen
+    if (SL) sp = Math.min(sp, S.satb && S.tp ? (S.view === 'four' ? (slSmall ? 5.3 : 5.9) : TT() && S.view === 'tog' ? (slSmall ? 7.3 : 8.1) : (slSmall ? 8.25 : 9.25)) : (slSmall ? 12.5 : 13.5));             // phone held sideways: keep both staves on screen
+    if (!SL && S.satb && S.tp && S.view === 'four') sp = Math.max(8, Math.min(sp, (window.innerHeight - 230) / 45)); // four staves: fit the screen (iPad, iMac); a phone upright scrolls
     var lyrPx = SL ? (slSmall ? 19 : 20) : Math.round(sp * (W < 520 ? 1.75 : 1.65)); // phone sideways: big, easy-to-read words
     S.disp = C.displayNotes(r, S.transpose);
     var dn = S.disp.notes;
@@ -6682,8 +6656,9 @@ window.HYMN_SONGS = [
     // SATB views: 'tog' = hymnal layout (soprano stems up + alto stems down on the treble staff, tenor stems up + bass
     // stems down on a bass staff); 'sep' = alto (treble), tenor and bass (bass clef) each on a staff of their own under
     // the words; 'one' = the soprano (melody) only. Every part is shown at the pitch it sounds.
-    var tv = S.satb && S.tp ? S.view : 'one', ttOn = TT() && tv !== 'one', pStaves = tv === 'sep' ? (ttOn ? ['tenor', 'alto', 'bass'] : ['alto', 'tenor', 'bass']) : tv === 'tog' ? (ttOn ? ['tenor', 'bass'] : ['bass']) : [], pGap = (ttOn ? 3.0 : 3.6) * sp, pOne = staffH + pGap + (ttOn ? 2.6 : 3.0) * sp, pH = pStaves.length * pOne;
-    var sysH = topPad + staffH + belowStaff + lyrH + pH + gap;
+    var tv = S.satb && S.tp ? S.view : 'one', ttOn = TT() && tv !== 'one', pAbove = tv === 'four' && ttOn ? ['tenor', 'alto'] : [], pStaves = tv === 'four' ? (ttOn ? ['bass'] : ['alto', 'tenor', 'bass']) : tv === 'sep' ? (ttOn ? ['tenor', 'alto', 'bass'] : ['alto', 'tenor', 'bass']) : tv === 'tog' ? (ttOn ? ['tenor', 'bass'] : ['bass']) : [], pGap = (ttOn ? 3.0 : 3.6) * sp, pOne = staffH + pGap + (ttOn ? 2.6 : 3.0) * sp, pH = pStaves.length * pOne;
+    var aboveH = pAbove.length * pOne; // four staves, tune in tenor: soprano and alto above the tune staff
+    var sysH = topPad + aboveH + staffH + belowStaff + lyrH + pH + gap;
     var H = systems.length * sysH + 6;
     var svg = document.createElementNS(SVGNS, 'svg');
     svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H); svg.setAttribute('width', W); svg.setAttribute('height', H);
@@ -6692,7 +6667,7 @@ window.HYMN_SONGS = [
     var hl = el('rect', { class: 'st-hl', x: 0, y: 0, width: 2.8 * sp, height: 1, rx: sp * 0.9 });
     var layout = { notes: {}, sysTop: [], sysEnd: [], sysStartX: [], sp: sp, hl: hl, sysH: sysH, W: W, H: H, strip: !!strip };
     systems.forEach(function (sys, si) {
-      var y0 = si * sysH + topPad, x = 4;
+      var y0 = si * sysH + topPad + aboveH, x = 4;
       var first = si === 0;
       layout.sysTop.push(si * sysH);
       var stepY = function (step) { return y0 + staffH - (step - 30) * sp / 2; };
@@ -6730,7 +6705,7 @@ window.HYMN_SONGS = [
         var w = it.w * scale;
         if (it.type === 'bar') {
           drawBar(el, it.el, cx + w * 0.45, y0, staffH, sp, isLast && k === sys.length - 1);
-          if (pStaves.length) pBars.push([it.el, cx + w * 0.45, isLast && k === sys.length - 1]);
+          if (pStaves.length || pAbove.length) pBars.push([it.el, cx + w * 0.45, isLast && k === sys.length - 1]);
           cx += w; return;
         }
         var n = noteEls[it.i], d = dn[it.i], nx = strip ? cx + PROP_C0 : cx + Math.max(Math.min(w * 0.42, 1.6 * sp + (d.showAcc !== undefined ? 1 * sp : 0)), it.lw / 2);
@@ -6776,8 +6751,9 @@ window.HYMN_SONGS = [
       });
       flushBeams();
       if (tv !== 'one') {
-        if (S.satb && S.tp) { var l1 = el('text', { class: 'part-label' + (S.part === 'mel' ? ' learn' : ''), x: x + 0.2 * sp, y: y0 - 2.6 * sp, 'font-size': (1.15 * sp).toFixed(1) }); l1.textContent = ttOn ? 'Tenor \u00b7 the tune' : PART_NAME.mel + (tv === 'tog' ? ' + ' + PART_NAME.alto : '') + (S.tp.src === 'auto' && tv === 'tog' ? ' (alto auto)' : ''); }
+        if (S.satb && S.tp) { var l1 = el('text', { class: 'part-label' + (S.part === 'mel' ? ' learn' : ''), x: x + 0.2 * sp, y: y0 - 2.6 * sp, 'font-size': (1.15 * sp).toFixed(1) }); l1.textContent = ttOn ? 'Tenor \u00b7 the tune' : tv === 'four' ? PART_NAME.mel : PART_NAME.mel + (tv === 'tog' ? ' + ' + PART_NAME.alto : '') + (S.tp.src === 'auto' && tv === 'tog' ? ' (alto auto)' : ''); }
         if (tv === 'tog' && !ttOn) drawPartNotes('alto', si, stepY, 30, 34, el('g', { class: 'part-staff part-alto overlay' }), 'down');
+        pAbove.forEach(function (pn, k) { drawPartStaff(pn, si, si * sysH + topPad + k * pOne, x, endX, pBars); });
         pStaves.forEach(function (pn, k) { drawPartStaff(pn, si, y0 + staffH + belowStaff + lyrH + pGap + k * pOne, x, endX, pBars); });
       }
       function beatEnd(n) { var beat = r.meter.den === 8 && r.meter.num % 3 === 0 ? 1.5 : (r.meter.den === 2 ? 2 : 1); var e = n.start + n.dur; return Math.abs(e / beat - Math.round(e / beat)) < 1e-6; }
@@ -6843,6 +6819,11 @@ window.HYMN_SONGS = [
       if (bass) drawBassClef(el, g, x + 0.5 * sp, yp + sp, sp); else drawClef(function (n, at) { return el(n, at, g); }, x + 0.5 * sp, yp + 3 * sp, sp);
       var kx = x + clefW;
       for (var a2 = 0; a2 < nAcc; a2++) drawAcc(el, g, fifths > 0 ? 1 : -1, kx + a2 * 1.05 * sp + 0.5 * sp, sY((fifths > 0 ? SHARP_STEPS[a2] : FLAT_STEPS[a2]) - (bass ? 14 : 0)), sp, 'st-ink');
+      if (si === 0 && !r.meter.free) { // time signature on every staff
+        var mtx = kx + keyW, mfs = sp * 2.15;
+        if (r.meter.symbol === 'C' || r.meter.symbol === 'C|') { var mc = el('text', { x: mtx + 0.9 * sp, y: yp + 2.75 * sp, 'font-size': mfs * 1.2, 'font-weight': 700, 'text-anchor': 'middle', class: 'st-ink', 'font-family': 'Georgia,serif' }, g); mc.textContent = 'C'; }
+        else { var m1 = el('text', { x: mtx + 1.0 * sp, y: yp + 1.82 * sp, 'font-size': mfs, 'font-weight': 800, 'text-anchor': 'middle', class: 'st-ink', 'font-family': 'Georgia,"Times New Roman",serif' }, g); m1.textContent = r.meter.num; var m2 = el('text', { x: mtx + 1.0 * sp, y: yp + 3.82 * sp, 'font-size': mfs, 'font-weight': 800, 'text-anchor': 'middle', class: 'st-ink', 'font-family': 'Georgia,"Times New Roman",serif' }, g); m2.textContent = r.meter.den; }
+      }
       bars.forEach(function (b) { drawBar(function (n, at) { return el(n, at, g); }, b[0], b[1], yp, staffH, sp, b[2]); });
       if (duo && ttOn) { drawPartNotes('tenor', si, sY, base, 34, g, 'up'); drawPartNotes('alto', si, sY, base, 34, g, 'down'); }
       else if (duo) { drawPartNotes('tenor', si, sY, base, 22, g, 'up'); drawPartNotes('bass', si, sY, base, 22, g, 'down'); }
@@ -6861,7 +6842,7 @@ window.HYMN_SONGS = [
           nx = nxt && nxt.sys === ia.sys && noteEls[nj].start > sa ? ia.x + (nxt.x - ia.x) * (bt - sa) / (noteEls[nj].start - sa) : S.propU ? ia.x + (bt - sa) * S.propU : ia.x + (Math.max(layout.sysEnd[ia.sys] || 0, ia.x) - ia.x) * (bt - sa) / Math.max(1e-6, noteEls[a0].dur); // after the last notehead: the playhead's own end run
         }
         layout.partX = layout.partX || {}; (layout.partX[pShow] = layout.partX[pShow] || {})[q[0] + '+' + q[1]] = nx;
-        var spl = C.spell(q[3] + S.transpose, fifths), st = spl.step, y = sY(st), gl = glyphFor(q[2]), up = stem === 'up' ? true : stem === 'down' ? false : st < mid, grp = el('g', { class: 'part-note', 'data-i': q[0] }, g);
+        var spl = C.spell(q[3] + S.transpose, fifths), st = spl.step, y = sY(st), gl = glyphFor(q[2]), up = stem === 'up' ? true : stem === 'down' ? false : st < mid, grp = el('g', { class: 'part-note', 'data-i': q[0], 'data-p': pShow }, g); (layout.partEls = layout.partEls || []).push({ p: pShow, st: noteEls[q[0]].start + q[1], d: q[2], el: grp });
         for (var ls = base - 2; ls >= st; ls -= 2) el('line', { class: 'st-line ledger', x1: nx - 1.05 * sp, x2: nx + 1.05 * sp, y1: sY(ls), y2: sY(ls), 'stroke-width': 1.3 }, grp);
         for (var hs = base + 10; hs <= st; hs += 2) el('line', { class: 'st-line ledger', x1: nx - 1.05 * sp, x2: nx + 1.05 * sp, y1: sY(hs), y2: sY(hs), 'stroke-width': 1.3 }, grp);
         var hollow = gl.base >= 2;
@@ -6882,7 +6863,7 @@ window.HYMN_SONGS = [
       if (k < 0) return; var e = evs[k], a1 = layout.notes[e.n]; if (!a1) return;
       var x = a1.x, nx = evs[k + 1] && layout.notes[evs[k + 1].n];
       if (c.beat > e.start + 1e-6 && nx && nx.sys === a1.sys) x = a1.x + (nx.x - a1.x) * (c.beat - e.start) / e.dur;
-      var t = el('text', { class: 'chord', x: x - 0.5 * sp, y: a1.y0 - 2.2 * sp, 'font-size': (1.3 * sp).toFixed(1) }); t.textContent = c.name;
+      var t = el('text', { class: 'chord', x: x - 0.5 * sp, y: a1.y0 - aboveH - 2.2 * sp, 'font-size': (1.3 * sp).toFixed(1) }); t.textContent = c.name; // above the top staff
     });
     return { svg: svg, layout: layout };
   }
@@ -7063,9 +7044,8 @@ window.HYMN_SONGS = [
   function setSatb(on) { S.satb = !!on; LS.set('satb', S.satb); S.tp = S.satb ? satbParts() : null; if (S.satb && !Audio.isReady(partVoice())) Audio.load(partVoice()); render(); syncSingUI(); }
   function setTenorTune(on) { S.tenorTune = !!on; LS.set('tenorTune', S.tenorTune); S.tp = S.satb ? satbParts() : null; render(); syncSingUI(); }
   function setPart(p) { if (PARTS.indexOf(p) < 0) return; S.part = p; LS.set('part', p); render(); syncSingUI(); }
-  function setView(v) { if (['one', 'sep', 'tog'].indexOf(v) < 0) return; S.view = v; render(); syncSatbUI(); } // test hook only: no layout buttons in the app
+  function setView(v) { if (v === 'sep' || v === 'tog') v = 'four'; if (['one', 'four'].indexOf(v) < 0) return; S.view = v; render(); syncSatbUI(); } // test hook only: no layout buttons in the app
   function render() {
-    updateRotateTip();
     var host = $('staff'); if (!S.res) return;
     var axis = rollAxis();
     if (S.roll) { S.roll.destroy(); S.roll = null; }
@@ -7224,7 +7204,7 @@ window.HYMN_SONGS = [
   // sync offset: reset to 0 once with this update (old offsets were set against the earlier latency handling)
   if (!LS.get('syncV2', 0)) { LS.set('syncMs', 0); LS.set('syncV2', 1); }
   var syncS = (+LS.get('syncMs', 0) || 0) / 1000;
-  var APP_VERSION = 'v17';
+  var APP_VERSION = 'v18';
   function syncSec() { return syncS; }
   function heardTime(perf) { return clock.heard(perf) - syncSec(); }
   // One clock for sound, cursor and highlight. A frame drawn in the rAF callback at perf reaches the screen at the next
@@ -7251,7 +7231,7 @@ window.HYMN_SONGS = [
   }
   function play() {
     if (!S.res || !S.res.notes.length) return;
-    if (shortLandscape()) { var bring = function () { try { var sc = $('staff').closest('.card') || $('staff'), sb = $('staff').getBoundingClientRect().bottom, dt = $('transport').getBoundingClientRect().top, dy = Math.min($('staff').getBoundingClientRect().top - 4, Math.max(sc.getBoundingClientRect().top - 8, sb - (dt - 4))); if (Math.abs(dy) > 4) window.scrollBy({ top: dy, behavior: 'smooth' }); } catch (e) {} }; bring(); setTimeout(bring, 350); } // phone sideways: bring the score into view
+    bringScore();
     try { Audio.ensure(); } catch (e) { toast(e.message); return; }
     var want = S.satb ? partVoice() : Audio.voice;
     if (!Audio.isReady(want)) {
@@ -7378,8 +7358,15 @@ window.HYMN_SONGS = [
     if (beat < 0) { if (S.cur !== -1) clearHighlight(); return; }
     for (var k = 0; k < evs.length; k++) { if (evs[k].start <= beat + 1e-6 && beat < evs[k].start + evs[k].dur) { found = evs[k].n; break; } }
     var pf = Math.max(0, Math.min(1, beat / (S.total || 1))); if (Math.abs(pf - (S.pf || 0)) > 0.002 || !pf) { S.pf = pf; $('progressBar').style.transform = 'scaleX(' + pf.toFixed(4) + ')'; } // transform only: no layout per frame
+    partHighlight(beat);
     if (found === S.cur && !force) return;
     setCurrent(found);
+  }
+  // each part staff lights its own sounding note (alto, tenor, bass, soprano line), switched with the tune's highlight
+  function partHighlight(beat) {
+    var L = S.layout, pe = L && L.partEls; if (!pe) return;
+    var on = L.partOn || (L.partOn = {});
+    for (var k = 0; k < pe.length; k++) { var q = pe[k], is = beat >= 0 && q.st <= beat + 1e-6 && beat < q.st + q.d - 1e-6; if (is !== !!on[k]) { on[k] = is; q.el.classList.toggle('on', is); } }
   }
   function setCurrent(i) {
     var L = S.layout; if (!L) return;
@@ -7401,7 +7388,7 @@ window.HYMN_SONGS = [
     var hx = info.x - 1.4 * L.sp, hy = L.sysTop[info.sys] + 0.6 * L.sp;
     L.hl.style.transform = 'translate(' + hx + 'px,' + hy + 'px)'; L.hl.classList.add('show');
   }
-  function clearHighlight() { S.lastSys = -1; setCurrent(-1); }
+  function clearHighlight() { S.lastSys = -1; partHighlight(-1); setCurrent(-1); }
   function setPlayIcon() {
     $('playIco').innerHTML = S.playing ? '<rect x="6.5" y="5" width="4" height="14" rx="1.3"/><rect x="13.5" y="5" width="4" height="14" rx="1.3"/>' : '<path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/>';
     $('playBtn').setAttribute('aria-label', S.playing ? 'Pause' : 'Play');
@@ -7628,16 +7615,12 @@ window.HYMN_SONGS = [
 
   /* =================== UI WIRING =================== */
   function toast(t) { var e = $('toast'); e.textContent = t; e.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(function () { e.classList.remove('show'); }, 3200); }
-  /* phones held upright: everything works, but with a song open in the player we suggest turning sideways (a small,
-     dismissible tip - never a block; library, search, settings, credits and import stay fully usable upright) */
-  function shortLandscape() { return window.innerHeight <= 500 && window.innerWidth > window.innerHeight; } // phone held sideways
-  var tipMQ = window.matchMedia ? matchMedia('(orientation: portrait) and (max-width: 600px) and (pointer: coarse)') : null;
-  function updateRotateTip() {
-    var t = $('rotateTip'); if (!t) return; var no = false; try { no = sessionStorage.getItem('hp.rotateNo') === '1'; } catch (e) {}
-    var modal = Array.prototype.some.call(document.querySelectorAll('.modal'), function (m) { return !m.hidden; });
-    var lib = $('library') && $('library').classList.contains('open');
-    t.hidden = !(tipMQ && tipMQ.matches && S.res && S.res.notes && S.res.notes.length && !no && !modal && !lib);
+  function bringScore() { // phone sideways: bring the whole score into view above the dock
+    if (!shortLandscape() && !(S.satb && S.tp && S.view === 'four')) return; // also four staves anywhere: scroll the whole score above the dock
+    var bring = function () { try { var sc = $('staff').closest('.card') || $('staff'), sb = $('staff').getBoundingClientRect().bottom, dt = $('transport').getBoundingClientRect().top, dy = Math.min($('staff').getBoundingClientRect().top - 4, Math.max(sc.getBoundingClientRect().top - 8, sb - (dt - 4))); if (Math.abs(dy) > 4) window.scrollBy({ top: dy, behavior: 'smooth' }); } catch (e) {} };
+    bring(); setTimeout(bring, 350);
   }
+  function shortLandscape() { return window.innerHeight <= 500 && window.innerWidth > window.innerHeight; } // phone held sideways
   function init() {
     // sounds that were removed (choir, organ, synthesized voice, pure tone): saved choices become the psaltery
     (function () { var fix = function (v) { return INST[v] ? v : 'psaltery'; };
@@ -7645,7 +7628,7 @@ window.HYMN_SONGS = [
       ['prefs.pp', 'prefs.gen'].forEach(function (k) { var p = LS.get(k, null); if (p && p.voice && !INST[p.voice]) { p.voice = fix(p.voice); LS.set(k, p); } });
     })();
     // drop stored settings of features that no longer exist (every setting the app uses is listed here)
-    (function () { var keep = 'allVerses aref ctlTab libTab loop metro mix mode mySongs part reverb satb song tenorTune ttV2 speed syncMs syncV2 syncAsked updatedFrom tick voice voiceGen volume vrange'.split(' ');
+    (function () { var keep = 'allVerses aref ctlTab libTab loop metro mix mode mySongs part reverb satb song tenorTune ttV2 speed syncMs syncV2 updatedFrom tick voice voiceGen volume vrange'.split(' ');
       try { for (var i = localStorage.length - 1; i >= 0; i--) { var k = localStorage.key(i); if (k && k.indexOf('hp.') === 0) { var n = k.slice(3); if (keep.indexOf(n) < 0 && n.indexOf('prefs.') !== 0) localStorage.removeItem(k); } } } catch (e) {} })();
     $('playBtn').onclick = toggle;
     $('stopBtn').onclick = stop;
@@ -7749,13 +7732,7 @@ window.HYMN_SONGS = [
       return { start: start, stop: stop, tap: tap, info: info, get on() { return on; }, get beeps() { return beeps; }, get t0() { return t0; } };
     })();
     window.HP_TEST.syncCheck = syncCheck;
-    // first launch: a one-time, prominent prompt to tap along and set the sync for this device
-    function showSyncPrompt() { var sp = $('syncPrompt'); if (!sp) return; sp.hidden = false; requestAnimationFrame(function () { sp.classList.add('show'); }); }
-    function hideSyncPrompt() { var sp = $('syncPrompt'); if (!sp) return; LS.set('syncAsked', 1); sp.classList.remove('show'); sp.hidden = true; }
-    if ($('spGo')) $('spGo').onclick = function () { hideSyncPrompt(); $('scInfo').textContent = syncCheck.info(); openSheet('syncSheet'); syncCheck.start(); };
-    if ($('spLater')) $('spLater').onclick = hideSyncPrompt;
-    if (!LS.get('syncAsked', 0) && !navigator.webdriver) setTimeout(showSyncPrompt, 1200);
-    window.HP_TEST.showSyncPrompt = showSyncPrompt; window.HP_TEST.hideSyncPrompt = hideSyncPrompt;
+    try { localStorage.removeItem('hp.syncAsked'); } catch (e) {} // the one-time tap-along prompt is gone (Sync check stays in Settings)
     // singing practice controls
     $('pipeBtn').onclick = function () { pitchPipe(false); };
     $('pipeBtn2').onclick = function () { pitchPipe(false); };
@@ -7818,8 +7795,8 @@ window.HYMN_SONGS = [
       $('loadFill').style.width = pct + '%'; $('loadBar').setAttribute('aria-valuenow', pct);
     });
     // sound settings sheet: tuning, reverb, credits
-    function openSheet(id) { var m = $(id); m.hidden = false; updateRotateTip(); requestAnimationFrame(function () { m.classList.add('show'); }); var f = m.querySelector('[data-close]'); if (f) f.focus(); }
-    function closeSheet(m) { m.classList.remove('show'); m.hidden = true; if (m.id === 'ctlSheet') $('moreBtn').setAttribute('aria-expanded', 'false'); updateRotateTip(); }
+    function openSheet(id) { var m = $(id); m.hidden = false; requestAnimationFrame(function () { m.classList.add('show'); }); var f = m.querySelector('[data-close]'); if (f) f.focus(); }
+    function closeSheet(m) { m.classList.remove('show'); m.hidden = true; if (m.id === 'ctlSheet') $('moreBtn').setAttribute('aria-expanded', 'false'); }
     Array.prototype.forEach.call(document.querySelectorAll('.modal'), function (m) {
       m.addEventListener('click', function (e) { if (e.target === m || e.target.hasAttribute('data-close')) closeSheet(m); });
     });
@@ -7874,9 +7851,14 @@ window.HYMN_SONGS = [
       if (e.code === 'Space') { e.preventDefault(); toggle(); }
       if (e.key === 'Escape') { closeLib(); Array.prototype.forEach.call(document.querySelectorAll('.modal.show'), closeSheet); }
     });
-    $('rotateNo').onclick = function () { try { sessionStorage.setItem('hp.rotateNo', '1'); } catch (e) {} updateRotateTip(); };
-    if (tipMQ) { if (tipMQ.addEventListener) tipMQ.addEventListener('change', updateRotateTip); else if (tipMQ.addListener) tipMQ.addListener(updateRotateTip); }
-    var rw; window.addEventListener('resize', function () { clearTimeout(rw); rw = setTimeout(function () { if (S.res) render(); }, 150); });
+    try { sessionStorage.removeItem('hp.rotateNo'); localStorage.removeItem('hp.rotateNo'); } catch (e) {} // the old "turn sideways" tip is gone
+    // rotation is automatic: portrait or landscape, the layout follows; playback goes on and the cursor is placed from
+    // the audio clock on the next frame, so it is in sync again straight after the new layout
+    var rw, lastWH = innerWidth + 'x' + innerHeight;
+    function relayout() { var wh = innerWidth + 'x' + innerHeight; if (wh === lastWH) return; lastWH = wh; if (S.res) { render(); if (S.playing) { if (S.lastPerf) S.lastPerf = 0; bringScore(); } } }
+    window.addEventListener('resize', function () { clearTimeout(rw); rw = setTimeout(relayout, 120); });
+    window.addEventListener('orientationchange', function () { clearTimeout(rw); rw = setTimeout(relayout, 60); });
+    if (screen.orientation && screen.orientation.addEventListener) screen.orientation.addEventListener('change', function () { clearTimeout(rw); rw = setTimeout(relayout, 60); });
     document.addEventListener('visibilitychange', function () { if (document.hidden && S.playing) { /* keep playing in background where allowed */ } });
     // install prompt
     var deferred = null;
