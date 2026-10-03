@@ -436,7 +436,7 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
 .ctl-notes>summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-weight:600;color:var(--text2)}
 .ctl-notes .ctl-sub{margin:8px 0}
 .ctl-notes .ctl-sub>summary{min-height:44px}
-.ctl-sheet>*{flex-shrink:0}
+.ctl-sheet .tr-ctrls{overflow-y:auto;overscroll-behavior:contain}
 
 </style>
 </head>
@@ -601,8 +601,7 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
         <label class="toggle"><input type="checkbox" id="chordsOn"> Chords</label>
       </div>
       </div>
-    </div>
-    <details class="ctl-notes" id="notesBox">
+        <details class="ctl-notes" id="notesBox">
       <summary>Edit the notes (ABC)</summary>
       <div class="notes-in">
     <details class="card ctl-sub" id="editBox">
@@ -653,6 +652,7 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
     </details>
       </div>
     </details>
+    </div>
   </div>
 </div>
 <button class="update-bar" id="updateBar" hidden>Update ready — tap to refresh</button>
@@ -686,7 +686,7 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
     </div>
     <button class="pill-btn wide-btn" id="creditsBtn" aria-haspopup="dialog">Credits &amp; licenses</button>
     <button class="link-btn" id="syncCheckBtn" aria-haspopup="dialog">Sync check…</button>
-    <p class="app-ver" id="appVer">Version <b>v19</b></p>
+    <p class="app-ver" id="appVer">Version <b>v20</b></p>
   </div>
 </div>
 
@@ -5248,7 +5248,7 @@ window.HYMN_SONGS = [
  },
  {
   "id": "dayofrest",
-  "section": "Presbyterian",
+  "section": "Baptist",
   "title": "O Day of Rest And Gladness",
   "psalm": "",
   "tune": "WOODBIRD",
@@ -5266,7 +5266,7 @@ window.HYMN_SONGS = [
  },
  {
   "id": "saviorwhenindust",
-  "section": "Presbyterian",
+  "section": "Baptist",
   "title": "Savior When In Dust To Thee",
   "psalm": "",
   "tune": "ABERYSTWYTH",
@@ -5280,6 +5280,132 @@ window.HYMN_SONGS = [
    "alto": "0:1:57 1:0.5:62 2:0.5:61 3:0.5:62 4:0.5:64 5:1:65 6:1:62 7:1:61 8:2:57 9:1:62 10:1:61 11:1:62 12:1:57 13:1:57 15:1:62 16:2:61 17:1:57 18:0.5:57 19:0.5:61 20:0.5:62 21:0.5:64 22:1:65 23:1:62 24:1:61 25:2:57 26:1:61 27:0.5:62 28:0.5:64 29:1:65 30:1:64 31:1:62 32:1:61 33:2:57 34:1:58 35:1:57 36:1:58 37:1:58 38:1:60 39:1:64 41:2:60 42:1:62 43:1:61 44:1:62 45:0.5:64 45+0.5:0.5:60 46:1:60 47:0.5:64 48:0.5:62 49:2:60 50:1:62 51:0.5:65 51+0.5:0.5:64 52:1:65 53:1:60 54:1:62 55:1:62 56:2:64 57:1:62 58:0.5:62 59:0.5:61 60:0.5:62 61:0.5:64 62:1:65 63:1:62 64:1:61 65:2:57",
    "tenor": "0:1:53 1:1:57 3:1:57 5:1:57 6:1:57 7:0.5:57 7+0.5:0.5:55 8:2:53 9:1:57 10:1:57 11:1:57 12:1:57 13:1:57 15:1:57 16:2:57 17:0.5:53 17+0.5:0.5:55 18:1:57 20:1:57 22:1:57 23:1:57 24:0.5:52 24+0.5:0.5:55 25:2:53 26:1:57 27:0.5:57 28:0.5:60 29:1:60 30:1:58 31:1:57 32:0.5:57 32+0.5:0.5:55 33:2:53 34:1:53 35:1:53 36:1:53 37:1:55 38:1:57 39:0.5:60 40:0.5:58 41:2:57 42:1:57 43:1:57 44:1:57 45:1:60 46:0.5:53 46+0.5:1:57 48:0.5:56 49:2:57 50:1:53 51:1:58 52:1:60 53:1:53 54:1:57 55:1:62 56:2:61 57:0.5:57 57+0.5:0.5:58 58:0.5:57 59:0.5:55 60:1:57 62:1:57 63:1:57 64:0.25:52 64+0.25:0.25:53 64+0.5:0.5:55 65:2:53",
    "bass": "0:1:50 1:0.5:41 2:0.5:45 3:1:50 5:0.5:41 5+0.5:0.5:43 6:1:45 7:1:45 8:2:50 9:1:50 10:1:52 11:1:53 12:1:55 13:0.5:53 14:0.5:52 15:1:50 16:2:45 17:0.5:50 17+0.5:0.5:52 18:0.5:53 19:0.5:52 20:1:50 22:0.5:41 22+0.5:0.5:43 23:1:45 24:1:45 25:2:50 26:1:45 27:0.5:50 28:0.5:48 29:1:53 30:1:55 31:1:57 32:1:45 33:2:50 34:1:46 35:1:41 36:0.5:46 36+0.5:0.5:45 37:1:43 38:1:41 39:1:48 41:2:41 42:1:50 43:1:45 44:1:50 45:0.5:48 45+0.5:0.5:52 46:1:53 47:1:52 49:2:45 50:1:46 51:1:58 52:1:57 53:1:53 54:1:50 55:1:46 56:2:45 57:0.5:53 57+0.5:0.5:55 58:0.5:53 59:0.5:52 60:1:50 62:0.5:41 62+0.5:0.5:43 63:1:45 64:1:45 65:2:50"
+  }
+ },
+ {
+  "id": "tendershepherd",
+  "section": "Baptist",
+  "title": "Jesus, Tender Shepherd, Hear Me",
+  "psalm": "",
+  "tune": "EVENING PRAYER",
+  "meter": "8.7.8.7",
+  "credit": "Music: John Stainer, 1898 · Words: Mary L. Duncan, 1839",
+  "source": "Open Hymnal Project ABC (openhymnal.org; marked public domain), melody line with every stanza as printed there; their source: \"The Church Hymnary\" (Scotland), 1902 Hymn 601. Ed. John Stainer.. No second score was available to cross-check the melody.",
+  "abc": "X:1\nT:Jesus, Tender Shepherd, Hear Me\nT:EVENING PRAYER\nC:Music: John Stainer, 1898 · Words: Mary L. Duncan, 1839\nS:Open Hymnal Project ABC (openhymnal.org; marked public domain), melody line with every stanza as printed there; their source: \"The Church Hymnary\" (Scotland), 1902 Hymn 601. Ed. John Stainer.. No second score was available to cross-check the melody.\nM:4/4\nL:1/4\nQ:1/4=110\nK:F\nc c c B | A A A G | F G A A | c/B/ A G2 |\nw: Je- sus, ten- der Shep- herd, hear me; Bless Thy lit- tle la- mb to- night;\nw: All this day thy hand has led me, And I thank Thee fo- r Thy care;\nw: Let my sins be all for- giv- en; Bless the friends I lo- ve so well;\nc c c B | A A A G | F G A A | B E F2 |]\nw: Through the dark- ness be Thou near me; Watch my sleep till morn- ing light.\nw: Thou hast clothed me, warmed and fed me, Lis- ten to my eve- ning prayer.\nw: Take me, when I die, to hea- ven, Hap- py there with Thee to dwell.",
+  "parts": {
+   "src": "Open Hymnal Project (openhymnal.org, public domain), SATB setting of “Jesus, Tender Shepherd, Hear Me”",
+   "sig": "31-ns5fok",
+   "alto": "0:1:69 1:1:69 2:1:69 3:1:67 4:1:65 5:1:65 6:1:65 7:1:64 8:1:65 9:1:64 10:1:65 11:1:65 12:1:67 14:1:65 15:2:64 16:2:65 18:1:67 19:1:64 20:3:65 23:1:64 24:4:65 28:1:64 29:1:60 30:2:60",
+   "tenor": "0:2:60 2:2:60 4:4:60 8:7:60 15+1:1:58 16:1:60 17:1:57 18:2:55 20:2:57 22:2:57 24:1:57 25:1:59 26:1:60 27:1:53 28:1:55 29:1:58 30:2:57",
+   "bass": "0:2:53 2:2:52 4:1:53 5:1:57 6:1:60 7:1:58 8:1:57 9:1:55 10:1:53 11:1:53 12:1:52 14:1:53 15:1:60 15+1:1:58 16:1:57 17:1:53 18:1:52 19:1:48 20:1:53 21:1:50 22:1:49 23:1:45 24:2:50 26:2:48 28:2:48 30:2:53"
+  }
+ },
+ {
+  "id": "harkgladsound",
+  "section": "Baptist",
+  "title": "Hark the Glad Sound",
+  "psalm": "",
+  "tune": "CHESTERFIELD",
+  "meter": "8.6.8.6",
+  "credit": "Music: Thomas Haweis, 1792 · Words: Philip Doddridge, 1735",
+  "source": "Open Hymnal Project ABC (openhymnal.org; marked public domain), melody line with every stanza as printed there; their source: \"The Church Hymnal, Revised and Enlarged\" (Episcopal), 1896 Ed. Charles Hutchins Hymn 31 first tune. text from \"Hymns founded on various texts in the Holy Scrip. No second score was available to cross-check the melody.",
+  "abc": "X:1\nT:Hark the Glad Sound\nT:CHESTERFIELD\nC:Music: Thomas Haweis, 1792 · Words: Philip Doddridge, 1735\nS:Open Hymnal Project ABC (openhymnal.org; marked public domain), melody line with every stanza as printed there; their source: \"The Church Hymnal, Revised and Enlarged\" (Episcopal), 1896 Ed. Charles Hutchins Hymn 31 first tune. text from \"Hymns founded on various texts in the Holy Scrip. No second score was available to cross-check the melody.\nM:3/4\nL:1/4\nQ:1/4=130\nK:G\nD G B | d2 c | (B c) A | G2 B | (A d) G | (F G) E | D2\nw: Hark, the glad sound! the Sa- * vior comes! The Sa-*  vior pro- * mised long;\nw: On Him the Spi- rit, large- * ly poured, Ex- erts*  its sac- * red Fire;\nw: He comes the pris- 'ners to * re- lease, In Sa-*  tan's bon- * dage held;\nw: He comes from thick- est films * of vice To clear*  the men- * tal ray,\nw: He comes the bro- ken heart * to bind, The bleed-*  ing soul * to cure;\nw: His sil- ver trum- pets pub- * lish loud The jub- * 'lee of * the Lord\nA | (B A) G | (c B) A | (d c) B | e2 G | (E c) B | (A G) F | G3 |]\nw: Let ev- * ery heart * pre- pare * a throne, And ev- * ery voice * a song.\nw: Wis- dom * and might, * and zeal * and love, His ho- * ly Breast * in- spire.\nw: The gates * of brass * be- fore * Him burst, The ir- * on fet- * ters yield.\nw: And on * the eye- * balls of * the blind To pour * ce- les- * tial day.\nw: And with * the trea- * sures of * His grace T'en- rich * the hum- * ble poor.\nw: Our debts * are all * re- mit- * ted now Our he- * ri- tage * res- tored.",
+  "parts": {
+   "src": "Open Hymnal Project (openhymnal.org, public domain), SATB setting of “Hark the Glad Sound”",
+   "sig": "36-1ai5pba",
+   "alto": "0:1:59 1:1:62 2:1:62 3:2:62 4:1:66 5:1:67 6:1:64 7:0.5:62 7+0.5:0.5:60 8:2:59 9:1:62 10:2:62 12:1:64 13:1:62 14:1:64 15:1:61 16:2:62 17:1:62 18:1:62 19:1:64 20:1:62 21:0.5:64 21+0.5:0.5:66 22:1:67 23:1:66 24:0.5:67 24+0.5:0.5:62 25:0.5:64 25+0.5:0.5:66 26:0.5:67 26+0.5:0.5:65 27:2:64 28:1:62 29:1:64 30:1:66 31:1:67 32:1:64 33:1:62 34:1:60 35:3:59",
+   "tenor": "0:1:55 1:1:59 2:1:55 3:2:57 4:1:57 5:1:55 6:1:57 7:1:54 8:2:55 9:1:55 10:2:57 12:1:57 13:1:57 14:1:59 15:1:55 16:2:54 17:1:54 18:1:55 19:1:60 20:1:59 21:1:57 22:1:62 23:1:62 24:2:62 26:1:62 27:2:60 28:1:67 29:0.5:60 29+0.5:0.5:59 30:1:57 31:1:55 32:1:60 33:1:59 34:1:57 35:3:55",
+   "bass": "0:1:43 1:1:55 2:1:55 3:2:54 4:1:50 5:1:52 6:1:48 7:1:50 8:2:43 9:1:55 10:1:54 11:1:47 12:1:49 13:1:50 14:1:43 15:1:45 16:2:50 17:1:50 18:2:50 20:1:50 21:2:50 23:1:60 24:1:59 25:1:57 26:1:55 27:2:48 28:1:47 29:1:48 30:1:50 31:1:52 32:1:48 33:1:50 34:1:50 35:3:43"
+  }
+ },
+ {
+  "id": "holyghostlight",
+  "section": "Baptist",
+  "title": "Holy Ghost, with Light Divine",
+  "psalm": "",
+  "tune": "CANTERBURY",
+  "meter": "7.7.7.7",
+  "credit": "Music: Orlando Gibbons, 1623 · Words: verses 1-6 Andrew Reed, 1817. verses 7-13 Samuel Longfellow, 1864",
+  "source": "Open Hymnal Project ABC (openhymnal.org; marked public domain), melody line with every stanza as printed there; their source: 'Common Service Book With Hymnal' ULCA, 1917 Hymn 156.. No second score was available to cross-check the melody.",
+  "abc": "X:1\nT:Holy Ghost, with Light Divine\nT:CANTERBURY\nC:Music: Orlando Gibbons, 1623 · Words: verses 1-6 Andrew Reed, 1817. verses 7-13 Samuel Longfellow, 1864\nS:Open Hymnal Project ABC (openhymnal.org; marked public domain), melody line with every stanza as printed there; their source: 'Common Service Book With Hymnal' ULCA, 1917 Hymn 156.. No second score was available to cross-check the melody.\nM:4/4\nL:1/4\nQ:1/4=100\nK:Eb\nG A B c | F F G2 | B c d e | c c B2 |\nw: Ho- ly Ghost, with light di- vine Shine up- on this heart of mine;\nw: Let me see my Sa- vior's face, Let me all His beau- ties trace;\nw: Ho- ly Ghost, with pow'r di- vine Cleanse this guil- ty heart of mine;\nw: Ho- ly Ghost, with joy di- vine Cheer this sad- dened heart of mine;\nw: Ho- ly Spir- it, all di- vine, Dwell with- in this heart of mine;\nw: See, to Thee I yield my heart, Shed Thy life through ev- ery part;\nw: Ho- ly Spi- rit, Truth di- vine, Dawn u- pon this soul of mine;\nw: Ho- ly Spi- rit, Love di- vine, Glow with- in this heart of mine;\nw: Ho- ly Spi- rit, Right di- vine, King with- in my con- science reign;\nw: Ho- ly Spi- rit, Peace di- vine, Still this rest- less heart of mine;\nw: Ho- ly Spi- rit, Joy di- vine, Glad- den Thou this heart of mine;\nw: Now in- cline me to re- pent, Let me now my sins la- ment,\nG A B c | A G F2 | B A/G/ F E | F F E2 |]\nw: Chase the shades of night a- way, Turn the * dark- ness in- to day.\nw: Show those glo- rious truths to me Which are * on- ly known to Thee.\nw: In Thy mer- cy pit- y me, From sin's * bon- dage set me free.\nw: Yield a sac- red, set- tled peace, Let it * grow and still in- crease.\nw: Cast down ev- ery i- dol\\- throne, Reign su- * preme, and reign a- lone.\nw: A pure tem- ple I would be, Whol- ly * de- di- cate to Thee.\nw: Word of God and in- ward light Wake my * spi- rit, clear my sight.\nw: Kin- dle ev- ery high de- sire; Pe- rish * self in Thy pure fire.\nw: Be my Lord, and I shall be Fir- mly * bound, for- ev- er free.\nw: Speak to calm this tos- sing sea, Stayed in * Thy tran- qui- li- ty.\nw: In the des- ert ways I sing, \"Spring, O * Well, for- ev- er spring.\"\nw: Now my foul re- volt dep- lore, Weep, be- * lieve, and sin no more.",
+  "parts": {
+   "src": "Open Hymnal Project (openhymnal.org, public domain), SATB setting of “Holy Ghost, with Light Divine”",
+   "sig": "29-1ctko6k",
+   "alto": "0:1:63 1:1:63 2:1:63 3:1:63 4:1:63 5:1:62 6:2:63 7:1:65 8:1:65 9:1:65 10:1:63 11:1:67 12:0.5:65 12+0.5:0.5:63 13:2:62 14:1:63 15:1:63 16:1:63 17:1:63 18:1:65 19:1:64 20:2:65 21:1.5:65 23:0.5:63 24:1:62 25:1:63 26:1:63 27:1:62 28:2:63",
+   "tenor": "0:1:58 1:1:60 2:1:58 3:0.5:56 3+0.5:0.5:55 4:1:53 5:1:58 6:2:58 7:1:58 8:1:57 9:1:58 10:1:58 11:1:58 12:1:57 13:2:58 14:1:58 15:1:56 16:1:55 17:1:51 18:1:60 19:0.5:60 19+0.5:0.5:58 20:2:56 21:1:58 22:1:58 24:1:56 25:1:55 26:1:60 27:0.5:58 27+0.5:0.5:56 28:2:55",
+   "bass": "0:1:51 1:1:48 2:1:43 3:1:44 4:1:46 5:1:46 6:2:51 7:1:50 8:1:53 9:1:58 10:1:55 11:1:51 12:1:53 13:2:46 14:1:51 15:1:48 16:1:46 17:1:44 18:1:48 19:1:48 20:2:53 21:1.5:50 23:0.5:51 24:1:46 25:1:48 26:1:44 27:1:46 28:2:51"
+  }
+ },
+ {
+  "id": "strangerhere",
+  "section": "Baptist",
+  "title": "I'm But A Stranger Here",
+  "psalm": "",
+  "tune": "ST EDMUND SULLIVAN",
+  "meter": "6.4.6.4.6.6.6.4",
+  "credit": "Music: Arthur Seymour Sullivan, 1872 · Words: Thomas Rawson Taylor, 1836",
+  "source": "Open Hymnal Project ABC (openhymnal.org; marked public domain), melody line with every stanza as printed there; their source: \"Church Praise, with Tunes\", 1885 Hymn 391. Words found there, too.. No second score was available to cross-check the melody.",
+  "abc": "X:1\nT:I'm But A Stranger Here\nT:ST EDMUND SULLIVAN\nC:Music: Arthur Seymour Sullivan, 1872 · Words: Thomas Rawson Taylor, 1836\nS:Open Hymnal Project ABC (openhymnal.org; marked public domain), melody line with every stanza as printed there; their source: \"Church Praise, with Tunes\", 1885 Hymn 391. Words found there, too.. No second score was available to cross-check the melody.\nM:4/4\nL:1/4\nQ:1/4=120\nK:G\nG2 G G | G F A2 | D2 D E | D4 |\nw: I'm but a stran- ger here, Heav'n is my home;\nw: What though the temp- est rage, Heav'n is my home;\nw: There at my Sa- vior's side Heav'n is my home;\nw: There- fore I mur- mur not, Heav'n is my home;\nD2 B B | B A d2 | A2 F E | D4 |\nw: Earth is a des- ert drear, Heav'n is my home.\nw: Short is my pil- grim- age, Heav'n is my home;\nw: I shall be glor- i- fied, Heav'n is my home.\nw: What- e'er my earth- ly lot, Heav'n is my home;\nA2 B A | A G D2 | c2 B A | A G D2 |\nw: Dan- ger and sor- row stand round me on ev- ery hand;\nw: Time's wild and win- try blast soon shall be ov- er past;\nw: There are the good and blest, those I loved most and best;\nw: And I shall sure- ly stand there at my Lord's right hand.\nB2 e d | d c (B A) | G2 A F | G4 |]\nw: Heav'n is my fa- ther- land, * Heav'n is my home.\nw: I shall reach home at last, * Heav'n is my home.\nw: There, too, I soon shall rest, * Heav'n is my home.\nw: Heav'n is my fa- ther- land, * Heav'n is my home.",
+  "parts": {
+   "src": "Open Hymnal Project (openhymnal.org, public domain), SATB setting of “I'm But A Stranger Here”",
+   "sig": "43-3y91u3",
+   "alto": "0:2:59 1:1:60 2:1:62 3:1:60 4:1:60 5:2:60 6:2:60 7:1:60 8:1:60 9:4:59 10:2:59 11:1:59 12:1:61 13:1:62 14:1:62 15:2:64 16:2:66 17:1:62 18:1:61 19:4:62 20:2:60 21:1:60 22:1:60 23:1:59 24:1:59 25:2:59 26:2:64 27:1:62 28:1:62 29:1:62 30:1:64 31:2:62 32:2:62 33:1:64 34:1:64 35:1:64 36:1:64 37:2:64 39:2:62 40:1:62 41:1:62 42:4:62",
+   "tenor": "0:2:55 1:1:55 2:1:55 3:1:57 4:1:57 5:2:54 6:2:57 7:1:54 8:1:54 9:4:55 10:2:55 11:1:50 12:1:52 13:1:54 14:1:54 15:2:56 16:2:57 17:1:57 18:1:55 19:4:54 20:2:54 21:1:52 22:1:54 23:1:55 24:1:55 25:2:55 26:2:54 27:1:55 28:1:60 29:1:59 30:1:60 31:2:59 32:2:55 33:1:56 34:1:56 35:1:57 36:1:57 37:1:56 38:1:57 39:2:59 40:1:60 41:1:60 42:4:59",
+   "bass": "0:2:43 1:1:45 2:1:47 3:1:50 4:1:50 5:2:50 6:2:54 7:1:50 8:1:50 9:4:55 10:2:43 11:1:43 12:1:43 13:1:42 14:1:42 15:2:47 16:2:45 17:1:45 18:1:45 19:4:50 20:2:50 21:1:50 22:1:50 23:1:50 24:1:50 25:2:50 26:2:50 27:1:52 28:1:54 29:1:55 30:1:55 31:2:55 32:2:53 33:1:52 34:1:52 35:1:57 36:1:45 37:1:47 38:1:48 39:2:50 40:1:50 41:1:50 42:4:43"
+  }
+ },
+ {
+  "id": "flockfeeding",
+  "section": "Baptist",
+  "title": "Savior, Who Thy Flock Art Feeding",
+  "psalm": "",
+  "tune": "BATTY",
+  "meter": "8.7.8.7",
+  "credit": "Music: from Johann Thommen's Musicalischer Christenschatz, Basel, 1745 · Words: William Augustus Mühlenberg, 1826",
+  "source": "Open Hymnal Project ABC (openhymnal.org; marked public domain), melody line with every stanza as printed there; their source: \"Kern des Deutschen Kirchengesangs Zum Gebrauch\" Fridrich Layriz, 1854 Hymn 108. Text as found in 1871 Episcopal Hymnal. No second score was available to cross-check the melody.",
+  "abc": "X:1\nT:Savior, Who Thy Flock Art Feeding\nT:BATTY\nC:Music: from Johann Thommen's Musicalischer Christenschatz, Basel, 1745 · Words: William Augustus Mühlenberg, 1826\nS:Open Hymnal Project ABC (openhymnal.org; marked public domain), melody line with every stanza as printed there; their source: \"Kern des Deutschen Kirchengesangs Zum Gebrauch\" Fridrich Layriz, 1854 Hymn 108. Text as found in 1871 Episcopal Hymnal. No second score was available to cross-check the melody.\nM:none\nL:1/4\nQ:1/4=130\nK:F\nF G A G | A B c2 A2 | d c B A | G G A4 |\nw: Sa- vior, who Thy flock art feed- ing With the Shep- herd's kind- est care,\nw: Now, these lit- tle ones re- cei- ving, Fold them in Thy gra- cious arm;\nw: Ne- ver, from Thy pas- ture ro- ving, Let them be the li- on's prey;\nw: Then with- in Thy fold e- ter- nal Let them find a rest- ing place,\nc c c A/B/ | c c/B/ A2 G2 | F G A B | A G F4 |]\nw: All the fee- ble * gent- ly * lead- ing, While the lambs Thy bos- om share.\nw: There, we know, Thy * Word be- * liev- ing, On- ly there se- cure from harm.\nw: Let Thy ten- der- * ness, so * lov- ing, Keep them through life's dan- g'rous way.\nw: Feed in pas- tures * ev- er * ver- nal, Drink the riv- ers of Thy grace.",
+  "parts": {
+   "src": "Open Hymnal Project (openhymnal.org, public domain), SATB setting of “Savior, Who Thy Flock Art Feeding”",
+   "sig": "32-1lac749",
+   "alto": "0:1:60 1:1:60 2:1:65 3:1:64 4:1:65 5:1:65 6:2:64 7:2:60 8:1:65 9:1:65 10:1:62 11:1:65 12:1:62 13:1:62 14:4:64 15:1:64 16:1:64 17:1:65 18:0.5:69 19:0.5:67 20:1:69 21:1:67 23:1:67 23+1:1:65 24:2:64 25:1:62 26:1:64 27:1:65 28:1:65 29:1:65 30:1:64 31:4:65",
+   "tenor": "0:1:57 1:1:55 2:1:60 3:1:58 4:1:60 5:1:53 6:2:55 7:2:57 8:1:58 9:1:57 10:1:58 11:1:60 12:1:62 13:1:62 14:4:61 15:1:57 16:1:58 17:1:57 18:0.5:60 19:0.5:58 20:1:57 21:1:60 23:2:60 24:2:60 25:1:57 26:1:60 27:1:60 28:1:62 29:1:60 30:1:58 31:4:57",
+   "bass": "0:1:53 1:1:52 2:1:53 3:1:55 4:1:53 5:1:50 6:2:48 7:2:53 8:1:46 9:1:41 10:1:43 11:1:45 12:1:46 13:1:46 14:4:45 15:1:45 16:1:43 17:1:41 18:1:53 20:1:53 21:1:52 23:2:53 24:2:48 25:1:50 26:1:48 27:1:53 28:1:46 29:1:48 30:1:48 31:4:41"
+  }
+ },
+ {
+  "id": "thinearm",
+  "section": "Baptist",
+  "title": "Thine Arm, O Lord, in Days of Old",
+  "psalm": "",
+  "tune": "KINGSFOLD",
+  "meter": "8.6.8.6.8.6.8.6",
+  "credit": "Music: traditional English · Words:",
+  "source": "Open Hymnal Project ABC (openhymnal.org; marked public domain), melody line with every stanza as printed there; their source: The English Hymnal, 1906, Hymn 574, alt.. No second score was available to cross-check the melody.",
+  "abc": "X:1\nT:Thine Arm, O Lord, in Days of Old\nT:KINGSFOLD\nC:Music: traditional English · Words:\nS:Open Hymnal Project ABC (openhymnal.org; marked public domain), melody line with every stanza as printed there; their source: The English Hymnal, 1906, Hymn 574, alt.. No second score was available to cross-check the melody.\nM:4/4\nL:1/4\nQ:1/4=100\nK:G\nG/F/ | E E E D | G G A G/A/ | B B A/G/ E | D3\nw: Thine * arm, O Lord, in days of old, was * strong to heal and * save;\nw: And * lo! Thy touch brought life and health, gave * speech, and strength and * sight;\nw: Be * Thou our great De- li- verer still, Thou * Lord of life and * death;\nG/F/ | E E E D | G G A G/A/ | B B A/G/ E | E3\nw: It * tri- umphed o'er di- sease and death, o'er * dark- ness and * the grave.\nw: And * youth re- newed and fear re- lieved owned * Thee, the Lord * of light;\nw: Re- * store and quick- en, soothe and bless, with * Thine al- might- * y breath.\nB/c/ | d B B/A/ G | A A B G/A/ | B B/A/ G E | D3\nw: To * Thee they went, * the blind, the dumb, the * pal- sied * and the lame,\nw: And * now, O Lord, * be near to bless, Al- * might- y * as of yore,\nw: To * hands that work * and eyes that see, give * wis- dom's * heaven- ly lore,\nG/F/ | E E E/D/ E/F/ | G G A G/A/ | B B A/G/ E | E3 |]\nw: The * le- per with * his * taint- ed life, the * sick with fe- * vered frame.\nw: In * crowd- ed street, * by * rest- less couch, as * by Gen- nes- * aret's shore.\nw: That * whole and sick, * and * weak and strong, may * praise Thee ev- * er- more.",
+  "parts": {
+   "src": "Open Hymnal Project (openhymnal.org, public domain), SATB setting of “Thine Arm, O Lord, in Days of Old”",
+   "sig": "71-1r9f1f0",
+   "alto": "0:1:64 2:1:59 3:1:59 4:1:60 5:1:57 6:1:62 7:1:59 8:1:62 9:0.5:62 10:0.5:66 11:1:67 12:1:67 13:1:64 15:1:60 16:3:57 17:1:62 19:1:62 20:1:60 21:0.5:60 21+0.5:0.5:59 22:1:57 23:1:62 24:1:61 25:1:62 26:0.5:62 27:0.5:60 28:1:59 29:1:62 30:1:60 32:1:60 33:3:59 34:1:64 36:1:66 37:1:66 38:0.5:67 39:0.5:62 40:1:62 41:1:64 42:1:62 43:1:60 44:1:62 46:1:67 47:0.5:67 48:0.5:66 49:1:62 50:0.5:60 50+0.5:0.5:59 51:3:57 52:1:62 54:1:62 55:1:62 56:1:60 58:1:60 60:1:62 61:0.5:62 61+0.5:0.5:61 62:1:62 63:0.5:62 64:0.5:60 65:1:59 66:1:62 67:1:64 69:1:60 70:3:59",
+   "tenor": "0:0.5:59 1:0.5:57 2:1:55 3:1:55 4:1:55 5:1:54 6:1:55 7:1:55 8:1:54 9:0.5:55 10:0.5:60 11:1:59 12:1:62 13:1:60 15:1:55 16:2:55 16+2:1:54 17:1:55 19:1:55 20:1:55 21:1:55 22:1:54 23:1:55 24:1:55 25:1:54 26:0.5:55 27:0.5:54 28:1:55 29:1:55 30:1:52 32:0.5:52 32+0.5:0.5:54 33:3:55 34:1:55 36:1:59 37:1:62 38:0.5:62 39:0.5:60 40:1:59 41:0.5:57 41+0.5:0.5:55 42:1:54 43:1:55 44:0.5:55 45:0.5:54 46:1:62 47:0.5:62 48:0.5:60 49:1:59 50:1:55 51:2:55 51+2:1:54 52:1:55 54:1:55 55:1:55 56:1:57 58:1:60 60:0.5:59 60+0.5:0.5:57 61:1:55 62:1:54 63:0.5:55 64:0.5:54 65:1:55 66:1:54 67:1:52 69:0.5:52 69+0.5:0.5:54 70:3:55",
+   "bass": "0:1:52 2:1:52 3:0.5:52 3+0.5:0.5:50 4:1:48 5:1:48 6:1:47 7:1:52 8:1:50 9:0.5:47 10:0.5:45 11:1:43 12:1:43 13:1:45 15:1:48 16:3:50 17:1:47 19:1:48 20:0.5:48 20+0.5:0.5:47 21:1:45 22:1:50 23:1:47 24:1:52 25:0.5:50 25+0.5:0.5:48 26:0.5:47 27:0.5:45 28:1:43 29:1:47 30:1:48 32:1:45 33:3:52 34:1:52 36:1:47 37:1:59 38:0.5:52 39:0.5:54 40:1:55 41:1:48 42:1:50 43:1:43 44:0.5:47 45:0.5:45 46:1:43 47:0.5:43 48:0.5:45 49:1:47 50:1:48 51:3:50 52:1:47 54:1:48 55:0.5:48 55+0.5:0.5:47 56:1:45 58:1:57 60:0.5:55 60+0.5:0.5:54 61:1:52 62:1:50 63:0.5:47 64:0.5:45 65:1:43 66:1:47 67:1:48 69:1:45 70:3:52"
+  }
+ },
+ {
+  "id": "awakewiththesun",
+  "section": "Baptist",
+  "title": "Awake, My Soul, And With The Sun",
+  "psalm": "",
+  "tune": "OLD 100TH",
+  "meter": "8.8.8.8",
+  "credit": "Music: Genevan Psalter, attr. Louis Bourgeois, c. 1551 · Words: Thomas Ken, 1674",
+  "source": "Open Hymnal Project ABC (openhymnal.org; marked public domain), melody line with every stanza as printed there; their source: ccel from Sternhold and Hopkins' Psalter 1561.. No second score was available to cross-check the melody.",
+  "abc": "X:1\nT:Awake, My Soul, And With The Sun\nT:OLD 100TH\nC:Music: Genevan Psalter, attr. Louis Bourgeois, c. 1551 · Words: Thomas Ken, 1674\nS:Open Hymnal Project ABC (openhymnal.org; marked public domain), melody line with every stanza as printed there; their source: ccel from Sternhold and Hopkins' Psalter 1561.. No second score was available to cross-check the melody.\nM:none\nL:1/4\nQ:1/4=120\nK:G\nG2 G F E D | G2 A2 B3 | B2 B B A G | c2 B2 A3 |\nw: A- wake, my soul, and with the sun Thy dail- y stage of du- ty run;\nw: Thy prec- ious time mis- spent, re- deem, Each pre- sent day thy last es- teem,\nw: By in- flu- ence of Light di- vine Let thy own light to o- thers shine.\nw: In con- ver- sa- tion be sin- cere; Keep con- science as the noon- tide clear;\nw: Wake, and lift up thy- self, my heart, And with the an- gels bear thy part,\nG2 A B A G | E2 F2 G3 | d2 B G A c | B2 A2 G3 |]\nw: Shake off dull sloth, and joy- ful rise, To pay thy morn- ing sac- ri- fice.\nw: Im- prove thy tal- ent with due care; For the great day thy- self pre- pare.\nw: Re- flect all Heaven's pro- pit- ious ways In ar- dent love, and cheer- ful praise.\nw: Think how all see- ing God thy ways And all thy sec- ret thoughts sur- veys.\nw: Who all night long un- wear- ied sing High praise to the e- ter- nal King.",
+  "parts": {
+   "src": "Open Hymnal Project (openhymnal.org, public domain), SATB setting of “Praise God From Whom All Blessings Flow”",
+   "sig": "32-15s30y4",
+   "alto": "0:2:62 1:1:62 2:1:62 3:1:59 4:1:59 5:2:59 6:2:62 7:3:62 8:2:62 9:1:62 10:1:67 11:1:66 12:1:67 13:2:67 14:2:67 15:3:66 16:2:67 17:1:66 18:1:67 19:1:66 20:1:62 21:2:64 22:2:62 23:3:62 24:2:62 25:1:62 26:1:67 27:1:66 28:0.5:64 28+0.5:0.5:66 29:2:67 30:2:66 31:3:62",
+   "tenor": "0:2:59 1:1:59 2:1:57 3:1:55 4:1:54 5:2:55 6:2:54 7:3:55 8:2:55 9:1:59 10:1:62 11:1:60 12:1:59 13:2:64 14:2:62 15:3:62 16:2:59 17:1:62 18:1:62 19:1:62 20:1:62 21:1:60 21+1:1:59 22:2:57 23:3:59 24:2:59 25:1:55 26:1:59 27:1:62 28:1:64 29:2:62 30:1:62 30+1:1:60 31:3:59",
+   "bass": "0:2:55 1:1:55 2:1:50 3:1:52 4:1:47 5:2:52 6:2:50 7:3:43 8:2:55 9:1:55 10:1:55 11:1:50 12:1:52 13:2:48 14:2:43 15:3:50 16:2:52 17:1:50 18:1:55 19:1:50 20:1:47 21:2:48 22:2:50 23:3:43 24:2:55 25:1:55 26:1:52 27:1:50 28:1:45 29:1:47 29+1:1:48 30:2:50 31:3:43"
   }
  },
  {
@@ -6490,11 +6616,11 @@ window.HYMN_SONGS = [
   "source": "hymnary.org score (hymnary.org/text/love_divine_all_love_excelling_joy_of_he; hymnary.org/media/fetch/97916), melody line with all stanzas printed there; first published before 1931 (US public domain). Melody compared with 2 other hymnary.org editions: 100% of pitches agree. Words checked by hand against the standard text; modernized wording was put back to the original.",
   "abc": "X:1\nT:Love Divine, All Loves Excelling\nT:BEECHER\nC:Music: John Zundel, 1870 · Words: Charles Wesley, 1747\nS:hymnary.org score (hymnary.org/text/love_divine_all_love_excelling_joy_of_he; hymnary.org/media/fetch/97916), melody line with all stanzas printed there; first published before 1931 (US public domain). Melody compared with 2 other hymnary.org editions: 100% of pitches agree. Words checked by hand against the standard text; modernized wording was put back to the original.\nM:4/4\nL:1/4\nQ:1/4=90\nK:Bb\nF F G F | d c/ d/ c B | A G B G | F E/ F/ D2 |\nw: Love di- vine, all loves ex- * cel- ling, Joy of heaven to earth come * down,\nw: Breathe, O breathe thy lo- ving * Spi- rit in- to e- very trou- bled * breast;\nw: Come, al- migh- ty to de- * li- ver, let us all thy life re- * ceive;\nw: Fi- nish then thy new cre- * a- tion, pure and spot- less let us * be;\nF F G F | d c/ d/ c B | G e d B | A G/ A/ B2 |\nw: fix in us thy hum- ble * dwel- ling, all thy faith- ful mer- cies * crown.\nw: let us all in thee in- * he- rit, let us find the pro- mised * rest.\nw: sud- den- ly re- turn, and * ne- ver, ne- ver- more thy tem- ples * leave.\nw: let us see thy great sal- * va- tion per- fect- ly re- stored in * thee:\nB B B A | G A/ G/ _G D | d d e d | c c/ d/ c2 |\nw: Je- sus, thou art all com- * pas- sion, pure, un- boun- ded love thou * art;\nw: Take a- way the love of * sin- ning, Al- pha and O- me- ga * be;\nw: Thee we would be al- ways * bles- sing, serve thee as thy hosts a- * bove,\nw: changed from glo- ry in- to * glo- ry, till in heaven we take our * place,\nF F G F | d c/ d/ c B | G e d B | A G/ A/ B2 |]\nw: vi- sit us with thy sal- * va- tion, en- ter e- very trem- bling * heart.\nw: end of faith, as its be- * gin- ning, set our hearts at li- ber- * ty.\nw: pray and praise thee with- out * ceas- ing, glo- ry in thy per- fect * love.\nw: till we cast our crowns be- * fore thee, lost in won- der, love, and * praise.",
   "parts": {
-   "src": "hymnary.org MusicXML score (lovedivine_0.xml)",
+   "src": "hymnary.org MusicXML score (hog128_0.xml)",
    "sig": "68-1b3t2ul",
    "alto": "0:1:62 1:1:62 2:1:63 3:1:62 4:1:65 5:0.5:63 6:0.5:65 7:1:63 8:1:62 9:1:65 10:1:63 11:1:67 12:1:63 13:1:62 14:1:60 16:2:58 17:1:62 18:1:62 19:1:63 20:1:62 21:1:65 22:0.5:63 23:0.5:65 24:1:63 25:1:62 26:1:63 27:1:67 28:1:65 29:1:65 30:1:63 31:1:63 33:2:62 34:1:62 35:1:67 36:1:67 37:1:66 38:1:67 39:1:62 41:1:62 42:1:62 43:1:62 44:1:65 45:1:67 46:1:65 47:1:65 48:1:64 50:1:65 50+1:1:63 51:1:62 52:1:62 53:1:63 54:1:62 55:1:65 56:0.5:63 57:0.5:65 58:1:63 59:1:62 60:1:63 61:1:67 62:1:65 63:1:65 64:1:63 65:1:63 67:2:62",
-   "tenor": "0:1:53 1:1:53 2:1:55 3:1:53 4:1:58 5:1:57 7:1:57 8:1:58 9:1:58 10:1:58 11:1:58 12:1:58 13:1:58 14:1:57 16:2:53 17:1:58 18:1:58 19:1:58 20:1:58 21:1:58 22:1:57 24:1:57 25:1:58 26:1:58 27:1:58 28:1:58 29:1:62 30:1:60 31:1:53 33:2:53 34:1:55 35:1:62 36:1:62 37:1:60 38:1:58 39:0.5:60 40:0.5:58 41:1:57 42:1:54 43:1:53 44:1:58 45:1:58 46:1:58 47:1:57 48:1:58 50:2:57 51:1:58 52:1:58 53:1:58 54:1:58 55:1:58 56:1:57 58:1:57 59:1:58 60:1:58 61:1:58 62:1:58 63:1:62 64:1:60 65:1:53 67:2:53",
-   "bass": "0:1:46 1:1:46 2:1:46 3:1:46 4:1:46 5:1:53 7:1:53 8:1:46 9:1:51 10:1:51 11:1:51 12:1:51 13:1:53 14:1:53 16:2:46 17:1:46 18:1:46 19:1:51 20:1:46 21:1:46 22:1:53 24:1:54 25:1:55 26:1:51 27:1:51 28:1:53 29:1:53 30:1:53 31:1:53 33:2:46 34:1:43 35:1:46 36:1:50 37:1:50 38:1:50 39:1:50 41:1:50 42:1:50 43:1:46 44:1:46 45:1:46 46:1:46 47:1:48 48:1:48 50:2:53 51:1:46 52:1:46 53:1:51 54:1:46 55:1:46 56:1:53 58:1:54 59:1:55 60:1:51 61:1:51 62:1:53 63:1:53 64:1:53 65:1:53 67:2:46"
+   "tenor": "0:1:53 1:1:53 2:1:55 3:1:53 4:1:58 5:1:57 7:1:57 8:1:58 9:1:58 10:1:58 11:1:58 12:1:58 13:1:58 14:1:57 16:2:53 17:1:53 18:1:53 19:1:55 20:1:53 21:1:58 22:1:57 24:1:57 25:1:58 26:1:58 27:1:58 28:1:58 29:1:62 30:1:60 31:1:53 33:2:53 34:1:55 35:1:62 36:1:62 37:1:60 38:1:58 39:0.5:60 40:0.5:58 41:1:57 42:1:50 43:1:58 44:1:58 45:1:58 46:1:58 47:1:57 48:1:58 50:2:57 51:1:53 52:1:53 53:1:55 54:1:53 55:1:58 56:1:57 58:1:57 59:1:58 60:1:58 61:1:58 62:1:58 63:1:62 64:1:60 65:1:53 67:2:53",
+   "bass": "0:1:46 1:1:46 2:1:46 3:1:46 4:1:46 5:1:53 7:1:53 8:1:46 9:1:51 10:1:51 11:1:51 12:1:51 13:1:53 14:1:41 16:2:46 17:1:46 18:1:46 19:1:46 20:1:46 21:1:46 22:1:53 24:1:54 25:1:55 26:1:51 27:1:51 28:1:53 29:1:53 30:1:53 31:1:41 33:2:46 34:1:43 35:1:46 36:1:50 37:1:50 38:1:50 39:1:50 41:1:50 42:1:50 43:1:46 44:1:46 45:1:58 46:1:46 47:1:48 48:1:48 50:2:53 51:1:46 52:1:46 53:1:46 54:1:46 55:1:46 56:1:53 58:1:54 59:1:55 60:1:51 61:1:51 62:1:53 63:1:53 64:1:53 65:1:41 67:2:46"
   }
  },
  {
@@ -6513,6 +6639,24 @@ window.HYMN_SONGS = [
    "alto": "0:1:62 1:1:62 2:1:62 3:2:64 4:1:62 5:1:60 5+1:1:64 6:1:62 7:3:62 8:1:62 9:1:62 10:1:62 11:2:62 12:1:61 13:3:62 14:1:64 15:1:64 16:1:62 17:2:60 18:1:61 19:2:62 20:1:61 21:3:62 22:1:62 23:1:62 24:1:60 25:2:59 26:1:60 27:3:59",
    "tenor": "0:1:59 1:1:59 2:1:55 3:2:60 4:1:55 5:2:57 6:1:57 7:3:59 8:1:60 9:1:59 10:1:57 11:2:55 12:1:55 13:3:54 14:1:52 15:1:54 16:1:56 17:2:57 18:1:57 19:2:57 20:1:55 21:3:54 22:1:55 23:1:55 24:1:55 25:2:55 26:1:54 27:3:55",
    "bass": "0:1:55 1:1:55 2:1:47 3:2:48 4:1:47 5:2:45 6:1:50 7:3:55 8:1:57 9:1:55 10:1:54 11:2:55 12:1:52 13:3:50 14:1:45 15:1:45 16:1:45 17:2:45 18:1:45 19:2:50 20:1:50 21:2:50 21+2:1:48 22:1:47 23:1:48 24:1:52 25:2:50 26:1:50 27:3:43"
+  }
+ },
+ {
+  "id": "almightyking",
+  "section": "Baptist",
+  "title": "Come, Thou Almighty King",
+  "psalm": "",
+  "tune": "ITALIAN HYMN",
+  "meter": "",
+  "credit": "Music: Felice de Giardini, 1769 · Words: anonymous, c. 1757",
+  "source": "hymnary.org score (hymnary.org/text/come_thou_almighty_king_help_us_thy; hymnary.org/media/fetch/100122), melody line with all stanzas printed there; first published before 1931 (US public domain). Melody compared with 2 other hymnary.org editions: 100% of pitches agree. Words checked by hand against the standard text; modernized wording was put back to the original.",
+  "abc": "X:1\nT:Come, Thou Almighty King\nT:ITALIAN HYMN\nC:Music: Felice de Giardini, 1769 · Words: anonymous, c. 1757\nS:hymnary.org score (hymnary.org/text/come_thou_almighty_king_help_us_thy; hymnary.org/media/fetch/100122), melody line with all stanzas printed there; first published before 1931 (US public domain). Melody compared with 2 other hymnary.org editions: 100% of pitches agree. Words checked by hand against the standard text; modernized wording was put back to the original.\nM:3/4\nL:1/4\nQ:1/4=90\nK:F\nc A F | G F E | F3 | F G A |\nw: Come, thou Al- migh- * ty King, help us thy\nw: Come, thou In- car- * nate Word, gird on thy\nw: Come, Ho- ly Com- * for- ter, thy sa- cred\nw: To Thee, great One * in Three, e- ter- nal\nB/ c/ B A | G3 | c A F | C3 |\nw: name * * to sing, help us to praise:\nw: migh- * * ty sword, our prayer at- tend:\nw: wit- * * ness bear in this glad hour:\nw: prai- * * ses be hence, e- ver- more!\nG A B | A3/2 G/ F | G A B | A3/2 G/ F |\nw: Fa- ther, all glo- ri- ous, o'er all vic- to- ri- ous,\nw: come, and thy peo- ple bless, and give thy word suc- cess:\nw: thou who al- migh- ty art, now rule in ev- ery heart,\nw: Thy so- vereign ma- je- sty may we in glo- ry see,\nF A c | c3/2 d/ c | B A G | F3 |]\nw: come and reign o- ver us, An- cient of Days.\nw: Spi- rit of ho- li- ness, on us des- cend.\nw: and ne'er from us de- part, Spi- rit of power.\nw: and to e- ter- ni- ty love and a- dore!",
+  "parts": {
+   "src": "Open Hymnal Project (openhymnal.org, public domain), SATB setting of “God, Whose Almighty Word”",
+   "sig": "41-1ve01ik",
+   "alto": "0:1:65 1:1:60 2:1:60 3:1:62 4:1:60 5:1:60 6:3:60 7:1:60 8:1:60 9:1:65 10:1:64 12:1:67 13:1:65 14:3:64 15:1:72 16:1:69 17:1:65 18:3:60 19:1:64 20:1:65 21:1:67 22:1.5:65 23:0.5:64 24:1:65 25:1:64 26:1:65 27:1:67 28:1.5:65 29:0.5:64 30:1:65 31:1:65 32:1:69 33:1:72 34:1.5:65 35:0.5:65 36:1:65 37:1:67 38:1:65 39:1:64 40:3:65",
+   "tenor": "0:1:57 1:1:60 2:1:60 3:1:58 4:1:57 5:1:55 6:3:57 7:1:57 8:1:60 9:1:60 10:2:60 13:1:60 14:3:60 15:1:60 16:1:57 17:1:53 18:3:48 19:1:60 20:1:60 21:1:60 22:1.5:60 23:0.5:58 24:1:57 25:1:60 26:1:60 27:1:60 28:1.5:60 29:0.5:58 30:1:57 31:1:53 32:1:57 33:1:60 34:1.5:57 35:0.5:58 36:1:57 37:1:62 38:1:60 39:1:58 40:3:57",
+   "bass": "0:1:53 1:1:53 2:1:45 3:1:46 4:1:48 5:1:48 6:3:41 7:1:53 8:1:52 9:1:53 10:1:55 12:1:52 13:1:53 14:3:48 15:1:60 16:1:57 17:1:53 18:3:48 19:1:48 20:1:48 21:1:48 22:1.5:53 23:0.5:53 24:1:53 25:1:48 26:1:48 27:1:48 28:1.5:53 29:0.5:53 30:1:53 31:1:53 32:1:57 33:1:60 34:1.5:53 35:0.5:53 36:1:53 37:1:46 38:1:48 39:1:48 40:3:53"
   }
  },
  {
@@ -6544,11 +6688,101 @@ window.HYMN_SONGS = [
   "source": "hymnary.org score (hymnary.org/text/o_master_let_me_walk_with_thee; hymnary.org/media/fetch/99675), melody line with all stanzas printed there; first published before 1931 (US public domain). Only one edition was available, so the melody was not cross-checked. Words checked by hand against the standard text; modernized wording was put back to the original.",
   "abc": "X:1\nT:O Master, Let Me Walk with Thee\nT:MARYTON\nC:Music: H. Percy Smith, 1874 · Words: Washington Gladden, 1879\nS:hymnary.org score (hymnary.org/text/o_master_let_me_walk_with_thee; hymnary.org/media/fetch/99675), melody line with all stanzas printed there; first published before 1931 (US public domain). Only one edition was available, so the melody was not cross-checked. Words checked by hand against the standard text; modernized wording was put back to the original.\nM:3/4\nL:1/4\nQ:1/4=90\nK:Eb\nG G G | A2 G | F2 F | F3 |\nw: O Mas- ter, let me walk with thee\nw: Help me the slow of heart to move\nw: Teach me thy pa- tience; still with thee\nw: In hope that sends a shin- ing ray\nB B A | G2 e | e d c | B3 |\nw: in low- ly paths of ser- * vice free;\nw: by some clear, win- ning word * of love;\nw: in clos- er, dear- er com- * pa- ny,\nw: far down the fu- ture's broad- * ening way,\nB c B | e2 d | d c B | A2 G |\nw: tell me thy se- cret; help * me bear the\nw: teach me the way- ward feet * to stay, and\nw: in work that keeps faith sweet * and strong, in\nw: in peace that on- ly thou * canst give, with\nF2 E | A2 G | F C D | E3 |]\nw: strain of toil, the fret * of care.\nw: guide them in the home- * ward way.\nw: trust that tri- umphs o- * ver wrong.\nw: thee, O Mas- ter, let * me live.",
   "parts": {
-   "src": "hymnary.org MusicXML score (omaster_0.xml)",
+   "src": "hymnary.org MusicXML score (hog85_0.xml)",
    "sig": "35-19lij0r",
    "alto": "0:1:63 1:1:63 2:1:63 3:2:63 4:1:63 5:2:60 6:1:60 7:3:65 8:1:62 9:1:63 10:1:65 11:2:63 12:1:67 13:1:67 14:1:65 15:1:63 16:3:62 17:1:65 18:1:65 19:1:65 20:2:63 21:1:63 22:2:63 24:1:63 25:1:63 25+1:1:62 26:1:63 27:2:62 28:1:60 29:2:65 30:1:63 31:2:60 33:1:58 34:3:58",
    "tenor": "0:1:58 1:1:58 2:1:58 3:2:60 4:1:58 5:2:60 6:1:53 7:3:58 8:1:58 9:1:58 10:1:58 11:2:58 12:1:58 13:2:57 15:1:57 16:3:58 17:1:62 18:1:60 19:1:62 20:2:58 21:1:58 22:2:56 24:1:58 25:2:58 26:1:58 27:2:56 28:1:55 29:2:58 30:1:58 31:2:56 33:1:53 34:3:55",
    "bass": "0:1:51 1:1:51 2:1:51 3:2:51 4:1:51 5:2:44 6:1:45 7:3:46 8:1:46 9:1:48 10:1:50 11:2:51 12:1:48 13:2:53 15:1:53 16:3:46 17:1:56 18:1:56 19:1:56 20:2:55 21:1:55 22:2:56 24:1:55 25:2:53 26:1:51 27:2:46 28:1:48 29:2:50 30:1:51 31:1:44 32:1:41 33:1:46 34:3:51"
+  }
+ },
+ {
+  "id": "soldiercross",
+  "section": "Baptist",
+  "title": "Am I a Soldier of the Cross?",
+  "psalm": "",
+  "tune": "ARLINGTON",
+  "meter": "",
+  "credit": "Music: Thomas A. Arne, 1762 · Words: Isaac Watts, 1724",
+  "source": "hymnary.org score (hymnary.org/tune/arlington_arne; hymnary.org/media/fetch/98242), melody line with all stanzas printed there; first published before 1931 (US public domain). Melody compared with 1 other hymnary.org edition: 100% of pitches agree. Words checked by hand against the standard text; modernized wording was put back to the original.",
+  "abc": "X:1\nT:Am I a Soldier of the Cross?\nT:ARLINGTON\nC:Music: Thomas A. Arne, 1762 · Words: Isaac Watts, 1724\nS:hymnary.org score (hymnary.org/tune/arlington_arne; hymnary.org/media/fetch/98242), melody line with all stanzas printed there; first published before 1931 (US public domain). Melody compared with 1 other hymnary.org edition: 100% of pitches agree. Words checked by hand against the standard text; modernized wording was put back to the original.\nM:3/2\nL:1/4\nQ:1/4=90\nK:F\nF2 | A3/2 A/ A2 G2 | F3/2 F/ F2 G2 | A c B2 A2 |\nw: Am I a sol- dier of the cross, a fol- lower of the\nw: Must I be car- ried to the skies on flo- wery beds of\nw: Are there no foes for me to face? Must I not stem the\nw: Sure, I must fight if I would reign; in- crease my cour- age,\nA2 G2 B2 | A3/2 A/ A2 d2 | c3/2 c/ c2 F2 | G B A2 G2 |\nw: Lamb, * and shall I fear to own his cause, or blush to speak his\nw: ease, * while o- thers fought to win the prize, and sailed through bloo- dy\nw: flood? * Is this vile world a friend to grace, to help me on to\nw: Lord; * I'll bear the toil, en- dure the pain, sup- por- ted by thy\nF4 |]\nw: name?\nw: seas?\nw: God?\nw: word.",
+  "parts": {
+   "src": "hymnary.org MusicXML score (soldiercross_2.xml)",
+   "sig": "29-1e7a28e",
+   "alto": "0:2:65 1:1.5:65 2:0.5:65 3:2:65 4:2:64 5:1.5:62 6:0.5:62 7:2:62 8:2:64 9:1:65 10:1:60 11:1:62 11+1:1:64 12:2:65 13:2:65 14:2:64 15:2:67 16:1.5:65 17:0.5:65 18:2:65 19:2:65 20:1.5:65 21:0.5:65 22:2:65 23:2:60 24:1:62 25:1:67 26:2:65 27:2:64 28:4:65",
+   "tenor": "0:2:57 1:1.5:60 2:0.5:60 3:2:60 4:2:58 5:1.5:57 6:0.5:57 7:2:57 8:2:60 9:1:60 10:1:57 11:2:58 12:2:60 13:4:60 15:2:60 16:1.5:60 17:0.5:60 18:2:60 19:2:58 20:1.5:57 21:0.5:57 22:2:57 23:2:60 24:1:58 25:1:62 26:2:60 27:1:60 27+1:1:58 28:4:57",
+   "bass": "0:2:53 1:1.5:53 2:0.5:53 3:2:53 4:2:48 5:1.5:50 6:0.5:50 7:2:50 8:2:48 9:1:53 10:1:57 11:2:55 12:2:53 13:4:48 15:2:52 16:1.5:53 17:0.5:53 18:2:53 19:2:46 20:1.5:53 21:0.5:53 22:2:53 23:2:45 24:1:46 25:1:43 26:2:48 27:2:48 28:4:53"
+  }
+ },
+ {
+  "id": "nearcross",
+  "section": "Baptist",
+  "title": "Jesus, Keep Me Near the Cross",
+  "psalm": "",
+  "tune": "NEAR THE CROSS",
+  "meter": "",
+  "credit": "Music: William H. Doane, 1869 · Words: Fanny J. Crosby, 1869",
+  "source": "hymnary.org score (hymnary.org/text/jesus_keep_me_near_the_cross; hymnary.org/media/fetch/87948), melody line with all stanzas printed there; first published before 1931 (US public domain). Melody compared with 2 other hymnary.org editions: 100% of pitches agree. Words checked by hand against the standard text; modernized wording was put back to the original.",
+  "abc": "X:1\nT:Jesus, Keep Me Near the Cross\nT:NEAR THE CROSS\nC:Music: William H. Doane, 1869 · Words: Fanny J. Crosby, 1869\nS:hymnary.org score (hymnary.org/text/jesus_keep_me_near_the_cross; hymnary.org/media/fetch/87948), melody line with all stanzas printed there; first published before 1931 (US public domain). Melody compared with 2 other hymnary.org editions: 100% of pitches agree. Words checked by hand against the standard text; modernized wording was put back to the original.\nM:6/4\nL:1/4\nQ:1/4=110\nK:F\nA2 B A2 G | F2 D D3 | C2 F F2 A | A3 G3 |\nw: Je- sus, keep me near the cross, There a pre- cious foun- tain—\nw: Near the cross, a trem- bling soul, Love and Mer- cy found me;\nw: Near the cross! O Lamb of God, Bring its scenes be- fore me;\nw: Near the cross I’ll watch and wait Hop- ing, trust- ing ev- er,\nA2 B A2 G | F2 D D3 | C2 F F2 E | G3 F3 |\nw: Free to all, a heal- ing stream— Flows from Cal- v’ry’s moun- tain.\nw: There the bright and morn- ing star Sheds its beams a- round me.\nw: Help me walk from day to day, With its shad- ows o’er me.\nw: Till I reach the gold- en strand, Just be- yond the riv- er.\nA2 c c3 | B2 d d3 | c2 d c2 A | A3 G3 |\nw: In the cross, in the cross, Be my glo- ry ev- er;\nw: In the cross, in the cross, Be my glo- ry ev- er;\nw: In the cross, in the cross, Be my glo- ry ev- er;\nw: In the cross, in the cross, Be my glo- ry ev- er;\nA2 B A2 G | F2 D D3 | C2 F F2 E | G3 F3 |]\nw: Till my rap- tured soul shall find Rest be- yond the riv- er.\nw: Till my rap- tured soul shall find Rest be- yond the riv- er.\nw: Till my rap- tured soul shall find Rest be- yond the riv- er.\nw: Till my rap- tured soul shall find Rest be- yond the riv- er.",
+  "parts": {
+   "src": "hymnary.org MusicXML score (nearcross_1.xml)",
+   "sig": "51-97b3mv",
+   "alto": "0:2:65 1:1:65 2:2:65 3:1:64 4:2:62 5:1:62 6:3:62 7:2:57 8:1:60 9:2:60 10:1:65 11:3:65 12:3:64 13:2:65 14:1:65 15:2:65 16:1:64 17:2:62 18:1:62 19:3:58 20:2:57 21:1:60 22:2:60 23:1:60 24:3:64 25:3:65 26:2:65 27:1:65 28:3:65 29:2:65 30:1:65 31:3:65 32:2:65 33:1:65 34:2:65 35:1:65 36:3:65 37:3:64 38:2:60 39:1:62 40:2:60 41:1:61 42:2:62 43:1:62 44:3:58 45:2:57 46:1:60 47:2:60 48:1:60 49:3:64 50:3:65",
+   "tenor": "0:2:60 1:1:62 2:2:60 3:1:58 4:2:57 5:1:58 6:3:58 7:2:57 8:1:57 9:2:57 10:1:60 11:3:60 12:3:60 13:2:60 14:1:62 15:2:60 16:1:58 17:2:57 18:1:58 19:3:53 20:2:53 21:1:57 22:2:57 23:1:55 24:3:58 25:3:57 26:2:60 27:1:57 28:3:57 29:2:62 30:1:58 31:3:58 32:2:57 33:1:58 34:2:57 35:1:60 36:3:60 37:3:60 38:2:57 39:1:55 40:2:57 41:1:57 42:2:57 43:1:58 44:3:53 45:2:53 46:1:57 47:2:57 48:1:55 49:3:58 50:3:57",
+   "bass": "0:2:53 1:1:53 2:2:53 3:1:48 4:2:50 5:1:46 6:3:46 7:2:53 8:1:53 9:2:53 10:1:53 11:3:48 12:3:48 13:2:53 14:1:53 15:2:53 16:1:48 17:2:50 18:1:46 19:3:46 20:2:48 21:1:48 22:2:48 23:1:48 24:3:48 25:3:53 26:2:53 27:1:53 28:3:53 29:2:58 30:1:58 31:3:58 32:2:53 33:1:53 34:2:53 35:1:53 36:3:48 37:3:48 38:2:53 39:1:53 40:2:53 41:1:52 42:2:50 43:1:46 44:3:46 45:2:48 46:1:48 47:2:48 48:1:48 49:3:48 50:3:53"
+  }
+ },
+ {
+  "id": "alasbleed",
+  "section": "Baptist",
+  "title": "Alas! and Did My Saviour Bleed",
+  "psalm": "",
+  "tune": "MARTYRDOM",
+  "meter": "",
+  "credit": "Music: Hugh Wilson, c. 1800 · Words: Isaac Watts, 1707",
+  "source": "hymnary.org score (hymnary.org/text/alas_and_did_my_savior_bleed; hymnary.org/media/fetch/87342), melody line with all stanzas printed there; first published before 1931 (US public domain). Melody compared with 1 other hymnary.org edition: 37% of pitches agree. Words checked by hand against the standard text; modernized wording was put back to the original.",
+  "abc": "X:1\nT:Alas! and Did My Saviour Bleed\nT:MARTYRDOM\nC:Music: Hugh Wilson, c. 1800 · Words: Isaac Watts, 1707\nS:hymnary.org score (hymnary.org/text/alas_and_did_my_savior_bleed; hymnary.org/media/fetch/87342), melody line with all stanzas printed there; first published before 1931 (US public domain). Melody compared with 1 other hymnary.org edition: 37% of pitches agree. Words checked by hand against the standard text; modernized wording was put back to the original.\nM:4/4\nL:1/4\nQ:1/4=90\nK:Eb\nE | G3/2 F/ E G | B3/2 A/ G B | c B A G |\nw: But drops of grief can ne’er re- pay The debt of love I\nw: Thy bod- y slain, sweet Je- sus, Thine— And bathed in its own\nw: Was it for crimes that I had done He groaned up- on the\nw: Well might the sun in dark- ness hide And shut his glo- ries\nw: Thus might I hide my blush- ing face While His dear cross ap-\nF3 E | G3/2 F/ E G | B3/2 c/ B E | F A G F |\nw: owe: Would Lord, I give my- self a- way, ’Tis all a worm can\nw: blood— While the firm mark of wrath di- vine, His soul in an- guish\nw: tree? A- maz- ing pit- y! grace un- known! And love be- yond de-\nw: in, When Christ, the might- y Mak- er died, For man the crea- ture’s\nw: pears, Dis- solve my heart in thank- ful- ness, And melt my eyes to\nE3 E/ F/ | G G3/4 G/4 G A/ G/ | G/ F/ F3/4 E/4 F F/ G/ | A/ A/ A3/4 A/4 A B3/4 A/4 |\nw: do. At the cross, at the cross where I first * saw the light, And the bur- den of my heart rolled a-\nw: stood. At the cross, at the cross where I first * saw the light, And the bur- den of my heart rolled a-\nw: gree! At the cross, at the cross where I first * saw the light, And the bur- den of my heart rolled a-\nw: sin. At the cross, at the cross where I first * saw the light, And the bur- den of my heart rolled a-\nw: tears. At the cross, at the cross where I first * saw the light, And the bur- den of my heart rolled a-\nG3 G/ G/ | A A C A/ A/ | G G/ F/ E G | F F/ E/ D/ A/ G3/4 F/4 |\nw: way, It was there by faith I re- ceived my * sight, And now I am hap- py all the\nw: way, It was there by faith I re- ceived my * sight, And now I am hap- py all the\nw: way, It was there by faith I re- ceived my * sight, And now I am hap- py all the\nw: way, It was there by faith I re- ceived my * sight, And now I am hap- py all the\nw: way, It was there by faith I re- ceived my * sight, And now I am hap- py all the\nE3 |]\nw: day!\nw: day!\nw: day!\nw: day!\nw: day!",
+  "parts": {
+   "src": "hymnary.org MusicXML score (alasbleed_2.xml)",
+   "sig": "71-1uplrvn",
+   "alto": "0:1:63 1:1.5:63 2:0.5:63 3:1:63 4:1:63 5:1.5:67 6:0.5:65 7:1:63 8:1:63 9:1:63 10:1:63 11:1:62 12:1:63 13:3:62 14:1:63 15:1.5:63 16:0.5:63 17:1:63 18:1:63 19:1.5:67 20:0.5:68 21:1:67 22:1:63 23:1:60 24:1:65 25:1:63 26:1:62 27:3:63 28:0.5:63 29:0.5:63 30:1:63 31:0.75:63 32:0.25:63 33:1:63 34:0.5:63 35:0.5:63 36:0.5:63 37:0.5:62 38:0.75:62 39:0.25:63 40:1:62 41:0.5:62 42:0.5:63 43:0.5:65 44:0.5:65 45:0.75:65 46:0.25:65 47:1:65 48:0.75:67 49:0.25:65 50:3:63 51:0.5:63 52:0.5:63 53:1:63 54:1:63 55:1:60 56:0.5:63 57:0.5:65 58:1:63 59:1:63 61:1:63 62:1:63 63:1:60 64:0.5:60 65:0.5:60 66:0.5:58 67:0.5:65 68:0.75:63 69:0.25:62 70:3:63",
+   "tenor": "0:1:55 1:1.5:58 2:0.5:56 3:1:55 4:1:58 5:1.5:63 6:0.5:58 7:1:58 8:1:63 9:1:63 10:1:63 11:1:58 12:1:58 13:3:58 14:1:55 15:1.5:58 16:0.5:56 17:1:55 18:1:58 19:1.5:63 20:0.5:63 21:1:63 22:1:55 23:1:56 24:1:60 25:1:58 26:1:56 27:3:55 28:0.5:55 29:0.5:56 30:1:58 31:0.75:58 32:0.25:58 33:1:58 34:0.5:60 35:0.5:58 36:1:58 38:0.75:58 39:0.25:55 40:1:58 41:0.5:58 42:0.5:58 43:0.5:65 44:0.5:63 45:0.75:62 46:0.25:60 47:1:58 48:0.75:58 49:0.25:58 50:1:58 50+1:0.75:63 50+1.75:0.25:63 50+2:1:58 51:0.5:58 52:0.5:58 53:1:60 54:1:60 55:1:56 56:0.5:60 57:0.5:60 58:1:58 59:0.5:58 60:0.5:56 61:1:55 62:1:58 63:1:56 64:0.5:56 65:0.5:56 66:0.5:53 67:0.5:58 68:0.75:58 69:0.25:56 70:3:55",
+   "bass": "0:1:51 1:1.5:51 2:0.5:51 3:1:51 4:1:51 5:1.5:51 6:0.5:51 7:1:51 8:1:55 9:1:56 10:1:55 11:1:53 12:1:51 13:3:46 14:1:51 15:1.5:51 16:0.5:51 17:1:51 18:1:51 19:1.5:51 20:0.5:51 21:1:51 22:1:51 23:1:44 24:1:44 25:1:46 26:1:46 27:3:51 28:0.5:51 29:0.5:51 30:1:51 31:0.75:51 32:0.25:51 33:1:51 34:0.5:51 35:0.5:51 36:1:46 38:0.75:46 39:0.25:46 40:1:46 41:0.5:46 42:0.5:46 43:0.5:46 44:0.5:46 45:0.75:46 46:0.25:46 47:1:46 48:0.75:46 49:0.25:46 50:1:51 50+1:0.75:51 50+1.75:0.25:51 50+2:1:51 51:0.5:51 52:0.5:51 53:0.5:44 53+0.5:0.5:46 54:0.5:48 54+0.5:0.5:46 55:0.5:44 55+0.5:0.5:46 56:0.5:48 57:0.5:50 58:1:51 59:1:51 61:1:51 62:1:51 63:1:44 64:0.5:44 65:0.5:44 66:0.5:46 67:0.5:46 68:0.75:46 69:0.25:46 70:3:51"
+  }
+ },
+ {
+  "id": "alltheway",
+  "section": "Baptist",
+  "title": "All the Way My Saviour Leads Me",
+  "psalm": "",
+  "tune": "ALL THE WAY",
+  "meter": "",
+  "credit": "Music: Robert Lowry, 1875 · Words: Fanny J. Crosby, 1875",
+  "source": "hymnary.org score (hymnary.org/text/all_the_way_my_savior_leads_me; hymnary.org/media/fetch/128488), melody line with all stanzas printed there; first published before 1931 (US public domain). Melody compared with 2 other hymnary.org editions: 100% of pitches agree. Words checked by hand against the standard text; modernized wording was put back to the original.",
+  "abc": "X:1\nT:All the Way My Saviour Leads Me\nT:ALL THE WAY\nC:Music: Robert Lowry, 1875 · Words: Fanny J. Crosby, 1875\nS:hymnary.org score (hymnary.org/text/all_the_way_my_savior_leads_me; hymnary.org/media/fetch/128488), melody line with all stanzas printed there; first published before 1931 (US public domain). Melody compared with 2 other hymnary.org editions: 100% of pitches agree. Words checked by hand against the standard text; modernized wording was put back to the original.\nM:3/4\nL:1/4\nQ:1/4=90\nK:G\nB3/4 B/4 | B3/2 B/ A/ G/ | D G G/ B/ | A3/2 F/ G/ A/ |\nw: All the way my Sav- ior leads me What have I to ask be-\nw: All the way my Sav- ior leads me Cheers each wind- ing path I\nw: All the way my Sav- ior leads me O the full- ness of His\nB2 B/ B/ | c3/2 B/ A/ G/ | B A A/ A/ | A3/2 E/ F/ G/ |\nw: side? Can I doubt His ten- der me- rcy, Who through life has been my\nw: tread, Gives me grace for ev- ery tri- al, Feeds me with the liv- ing\nw: love! Per- fect rest to me is prom- ised In my Fa- ther’s house a-\nF2 E/ D/ | G3/2 A/ G/ E/ | D G G/ A/ | B3/2 G/ c/ B/ |\nw: guide? Heav’n- ly peace, di- vin- est com- fort, Here by faith in Him to\nw: bread. Though my wear- y steps may fal- ter And my soul a- thirst may\nw: bove. When my spir- it, clothed im- mor- tal, Wings its flight to realms of\nA2 B/ c/ | d3/2 B/ A/ G/ | A G F/ E/ | D/ G/ B A |\nw: dwell! For I know, what- e’er be- fall me, Je- sus do- eth all things\nw: be, Gush- ing from the rock be- fore me, Lo! A spring of joy I\nw: day This my song through end- less ag- es: Je- sus led me all the\nB2 B/ c/ | d3/2 B/ A/ G/ | A G F/ E/ | D/ G/ B A |\nw: well; For I know, wha- te’er be- fall me, Je- sus do- eth all things\nw: see; Gush- ing from the rock be- fore me, Lo! A spring of joy I\nw: way; This my song through end- less ag- es: Je- sus led me all the\nG2 |]\nw: well.\nw: see.\nw: way.",
+  "parts": {
+   "src": "hymnary.org MusicXML score (alltheway_0.xml)",
+   "sig": "75-1ig5kfb",
+   "alto": "0:0.75:62 1:0.25:62 2:1.5:62 3:0.5:62 4:0.5:60 5:0.5:59 6:1:59 7:1:59 8:0.5:59 9:0.5:62 10:1.5:62 11:0.5:62 12:0.5:62 13:0.5:62 14:2:62 15:0.5:67 16:0.5:67 17:1.5:67 18:0.5:67 19:0.5:62 20:0.5:62 21:1:62 22:1:62 23:0.5:62 24:0.5:62 25:1.5:61 26:0.5:61 27:0.5:61 28:0.5:61 29:2:62 30:0.5:60 31:0.5:60 32:1.5:59 33:0.5:60 34:0.5:59 35:0.5:60 36:1:59 37:1:59 38:0.5:62 39:0.5:62 40:1.5:62 41:0.5:59 42:0.5:64 43:0.5:62 44:2:62 45:0.5:62 46:0.5:62 47:1.5:62 48:0.5:62 49:0.5:62 50:0.5:62 51:1:64 52:1:64 53:0.5:62 54:0.5:60 55:0.5:59 56:0.5:62 57:1:67 58:1:66 59:2:67 60:0.5:62 61:0.5:62 62:1.5:62 63:0.5:62 64:0.5:62 65:0.5:62 66:1:64 67:1:64 68:0.5:62 69:0.5:60 70:0.5:59 71:0.5:62 72:1:67 73:1:66 74:2:62",
+   "tenor": "0:0.75:55 1:0.25:55 2:1.5:55 3:0.5:55 4:0.5:52 5:0.5:50 6:1:55 7:1:50 8:0.5:50 9:0.5:55 10:1.5:54 11:0.5:57 12:0.5:55 13:0.5:54 14:2:55 15:0.5:62 16:0.5:62 17:1.5:64 18:0.5:62 19:0.5:60 20:0.5:59 21:1:55 22:1:54 23:0.5:54 24:0.5:54 25:1.5:52 26:0.5:55 27:0.5:57 28:0.5:59 29:2:57 30:0.5:55 31:0.5:54 32:1.5:55 33:0.5:55 34:0.5:55 35:0.5:55 36:1:55 37:1:50 38:0.5:55 39:0.5:54 40:1.5:55 41:0.5:55 42:0.5:55 43:0.5:55 44:2:54 45:0.5:55 46:0.5:57 47:1.5:59 48:0.5:55 49:0.5:54 50:0.5:55 51:1:55 52:1:60 53:0.5:57 54:0.5:55 55:0.5:55 56:0.5:59 57:1:62 58:1:62 59:2:62 60:0.5:55 61:0.5:57 62:1.5:59 63:0.5:55 64:0.5:54 65:0.5:55 66:1:55 67:1:60 68:0.5:57 69:0.5:55 70:0.5:55 71:0.5:59 72:1:62 73:1:60 74:2:59",
+   "bass": "0:0.75:43 1:0.25:43 2:1.5:43 3:0.5:43 4:0.5:43 5:0.5:43 6:1:43 7:1:43 8:0.5:43 9:0.5:43 10:1.5:50 11:0.5:48 12:0.5:47 13:0.5:45 14:2:43 15:0.5:55 16:0.5:55 17:1.5:55 18:0.5:55 19:0.5:55 20:0.5:55 21:1:50 22:1:50 23:0.5:50 24:0.5:50 25:1.5:45 26:0.5:45 27:0.5:45 28:0.5:45 29:2:50 30:0.5:50 31:0.5:50 32:1.5:43 33:0.5:43 34:0.5:43 35:0.5:43 36:1:43 37:1:43 38:0.5:47 39:0.5:50 40:1.5:55 41:0.5:55 42:0.5:55 43:0.5:55 44:2:50 45:0.5:55 46:0.5:55 47:1.5:55 48:0.5:43 49:0.5:45 50:0.5:47 51:1:48 52:1:48 53:0.5:48 54:0.5:48 55:0.5:50 56:0.5:50 57:1:50 58:1:50 59:2:55 60:0.5:55 61:0.5:55 62:1.5:55 63:0.5:55 64:0.5:54 65:0.5:55 66:1:45 67:1:45 68:0.5:45 69:0.5:45 70:0.5:47 71:0.5:47 72:1:47 73:1:47 74:2:55"
+  }
+ },
+ {
+  "id": "revive",
+  "section": "Baptist",
+  "title": "Revive Us Again",
+  "psalm": "",
+  "tune": "REVIVE US AGAIN",
+  "meter": "",
+  "credit": "Music: John J. Husband, c. 1815 · Words: William P. Mackay, 1863",
+  "source": "hymnary.org score (hymnary.org/text/we_praise_thee_o_god_for_the_son_of; hymnary.org/media/fetch/89023), melody line with all stanzas printed there; first published before 1931 (US public domain). Melody compared with 2 other hymnary.org editions: 100% of pitches agree. Words checked by hand against the standard text; modernized wording was put back to the original.",
+  "abc": "X:1\nT:Revive Us Again\nT:REVIVE US AGAIN\nC:Music: John J. Husband, c. 1815 · Words: William P. Mackay, 1863\nS:hymnary.org score (hymnary.org/text/we_praise_thee_o_god_for_the_son_of; hymnary.org/media/fetch/89023), melody line with all stanzas printed there; first published before 1931 (US public domain). Melody compared with 2 other hymnary.org editions: 100% of pitches agree. Words checked by hand against the standard text; modernized wording was put back to the original.\nM:3/4\nL:1/4\nQ:1/4=100\nK:G\nD | G G G | G2 G/ A/ | B B B |\nw: We praise Thee, O God! For the Son of Thy\nw: We praise Thee, O God! For Thy Spir- it of\nw: All glo- ry and praise To the Lamb that was\nw: All glo- ry and praise To the God of all\nw: Re- vive us a- gain; Fill each heart with Thy\nB2 G/ B/ | d d d | e2 d/ B/ | B A A |\nw: love, For * Je- sus Who died, And is now gone a-\nw: light, Who hath shown us our Sav- ior, And scat- tered our\nw: slain, Who hath borne all our sins, And hath cleansed eve- ry\nw: grace, Who hast brought us, and sought us, And guid- ed our\nw: love; May each soul be re- kind- led With fire from a-\nA2 d3/4 d/4 | e d B3/4 A/4 | G G d3/4 d/4 | e d B |\nw: bove. Hal- le- lu- jah! Thine the glo- ry. Hal- le- lu- jah! A-\nw: night. Hal- le- lu- jah! Thine the glo- ry. Hal- le- lu- jah! A-\nw: stain. Hal- le- lu- jah! Thine the glo- ry. Hal- le- lu- jah! A-\nw: ways. Hal- le- lu- jah! Thine the glo- ry. Hal- le- lu- jah! A-\nw: bove. Hal- le- lu- jah! Thine the glo- ry. Hal- le- lu- jah! A-\nA2 d3/4 d/4 | e d B3/4 A/4 | G G B | c B3/2 A/ |\nw: men. Hal- le- lu- jah! Thine the glo- ry. Re- vive us a-\nw: men. Hal- le- lu- jah! Thine the glo- ry. Re- vive us a-\nw: men. Hal- le- lu- jah! Thine the glo- ry. Re- vive us a-\nw: men. Hal- le- lu- jah! Thine the glo- ry. Re- vive us a-\nw: men. Hal- le- lu- jah! Thine the glo- ry. Re- vive us a-\nG2 |]\nw: gain.\nw: gain.\nw: gain.\nw: gain.\nw: gain.",
+  "parts": {
+   "src": "hymnary.org MusicXML score (revive_2.xml)",
+   "sig": "50-lnoipu",
+   "alto": "0:1:62 1:1:62 2:1:62 3:1:62 4:2:62 5:0.5:62 6:0.5:62 7:1:62 8:1:62 9:1:62 10:2:62 11:0.5:62 12:0.5:62 13:1:67 14:1:67 15:1:67 16:2:67 17:0.5:67 18:0.5:62 19:1:67 20:1:66 21:1:66 22:2:66 23:0.75:67 24:0.25:67 25:1:67 26:1:67 27:0.75:67 28:0.25:62 29:1:62 30:1:62 31:0.75:67 32:0.25:67 33:1:67 34:1:67 35:1:67 36:2:66 37:0.75:67 38:0.25:67 39:1:67 40:1:67 41:0.75:67 42:0.25:62 43:1:64 44:1:64 45:1:67 46:1:67 47:1.5:67 48:0.5:66 49:2:62",
+   "tenor": "0:1:59 1:1:59 2:1:59 3:1:59 4:2:59 5:0.5:62 6:0.5:60 7:1:59 8:1:55 9:1:55 10:2:55 11:0.5:59 12:0.5:59 13:1:59 14:1:59 15:1:59 16:2:60 17:0.5:59 18:0.5:55 19:1:62 20:1:62 21:1:62 22:2:62 23:0.75:59 24:0.25:59 25:1:60 26:1:59 27:0.75:62 28:0.25:60 29:1:59 30:1:59 31:0.75:59 32:0.25:59 33:1:60 34:1:59 35:1:62 36:2:62 37:0.75:59 38:0.25:59 39:1:60 40:1:59 41:0.75:62 42:0.25:60 43:1:59 44:1:59 45:1:62 46:1:64 47:1.5:62 48:0.5:60 49:2:59",
+   "bass": "0:1:55 1:1:55 2:1:50 3:1:47 4:2:43 5:0.5:59 6:0.5:57 7:1:55 8:1:50 9:1:47 10:2:43 11:0.5:55 12:0.5:55 13:1:55 14:1:55 15:1:55 16:2:55 17:0.5:55 18:0.5:55 19:1:50 20:1:50 21:1:50 22:2:50 23:0.75:55 24:0.25:55 25:1:48 26:1:55 27:0.75:55 28:0.25:55 29:1:55 30:1:55 31:0.75:55 32:0.25:55 33:1:48 34:1:55 35:1:55 36:2:50 37:0.75:55 38:0.25:55 39:1:48 40:1:55 41:0.75:50 42:0.25:51 43:1:52 44:1:52 45:1:50 46:1:48 47:1.5:50 48:0.5:50 49:2:43"
   }
  },
  {
@@ -6606,6 +6840,24 @@ window.HYMN_SONGS = [
   }
  },
  {
+  "id": "thouartstanding",
+  "section": "Baptist",
+  "title": "O Jesus, Thou Art Standing",
+  "psalm": "",
+  "tune": "ST. EDITH",
+  "meter": "76.76 D",
+  "credit": "Music: Justin H. Knecht, 1799,  & Edward Husband, 1871 · Words: William W. How, 1867",
+  "source": "Music: public-domain MusicXML score of ST. EDITH from hymnary.org (hymnary.org/media/fetch/133353; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/o/j/t/h/ojthouas.htm), its syllable breaks laid under the melody note for note. In The Baptist Hymnal (1883) (hymnary.org index).",
+  "abc": "X:1\nT:O Jesus, Thou Art Standing\nM:4/4\nL:1/4\nQ:1/4=88\nK:Eb\nE | E D/ E/ F F | F E2 G | G F/ G/ A F | D3 E |\nw: O Je- sus, _ Thou art stand- ing, Out- side the _ fast closed door, In\nw: O Je- sus, _ Thou art knock- ing; And lo, that _ hand is scarred, And\nw: O Je- sus, _ Thou art plead- ing In ac- cents _ meek and low, I\nE D/ E/ G B | B2 A G | F G/ A/ G z/ F/ | E3 B |\nw: low- ly _ pa- tience wait- ing To pass the _ thresh- old o’er: Shame\nw: thorns Thy _ brow en- cir- cle, And tears Thy _ face have marred: O\nw: died for _ you, My child- ren, And will you _ treat Me so? O\ne3/2 d/ c G | B2 A G | F e e d/ c/ | B3 G |\nw: on us, Christ- ian bro- thers, His name and sign who _ bear, O\nw: love that pass- eth know- ledge, So pa- tient- ly to _ wait! O\nw: Lord, with shame and sor- row We op- en now the _ door; Dear\nG F/ G/ E G/ B/ | B2 A G | F E D E/ F/ | E3 |]\nw: shame, thrice _ shame up- _ on us, To keep Him stand- ing _ there!\nw: sin that _ hath no _ eq- ual, So fast to bar the _ gate!\nw: Sav- ior, _ en- ter, _ en- ter, And leave us nev- er- _ more.\n",
+  "parts": {
+   "src": "hymnary.org MusicXML score (thouartstanding_2.xml)",
+   "sig": "60-1tmw43a",
+   "alto": "0:1:58 1:1:58 2:1:58 4:1:62 5:1:62 6:1:62 7:2:63 8:1:58 9:1:63 10:1:63 12:1:63 13:1:60 14:3:58 15:1:58 16:1:58 17:1:58 19:1:63 20:1:63 21:2:63 22:1:63 23:1:63 24:1:60 25:1:60 27:1:62 29:0.5:65 30:3:63 31:1:63 32:1.5:67 33:0.5:67 34:1:67 35:1:67 36:2:67 37:1:65 38:1:63 39:1:63 40:0.5:63 40+0.5:0.5:65 41:1:67 42:0.5:65 43:0.5:63 44:3:62 45:1:63 46:1:63 47:1:63 49:1:63 50:1:63 52:2:63 53:1:63 54:1:63 55:1:60 56:1:60 57:1:58 58:1:58 60:3:58",
+   "tenor": "0:1:55 1:1:55 2:0.5:53 3:0.5:55 4:1:56 5:1:56 6:1:56 7:2:55 8:1:63 9:1:62 10:1:61 12:1:60 13:1:56 14:3:53 15:1:55 16:1:55 17:0.5:53 18:0.5:55 19:1:58 20:1:61 21:2:61 22:1:60 23:1:58 24:1:56 25:0.5:55 26:0.5:53 27:1:58 29:0.5:56 30:3:55 31:1:55 32:1.5:55 33:0.5:59 34:1:60 35:1:60 36:2:60 37:1:60 38:1:58 39:1:57 40:1:58 41:1:57 42:1:57 44:3:58 45:1:58 46:1:58 47:0.5:56 48:0.5:58 49:1:55 50:0.5:58 51:0.5:61 52:2:61 53:1:60 54:1:58 55:1:56 56:1:55 57:1:53 58:0.5:55 59:0.5:56 60:3:55",
+   "bass": "0:1:51 1:1:51 2:1:51 4:1:51 5:1:51 6:1:51 7:2:51 8:1:51 9:1:51 10:1:51 12:1:44 13:1:44 14:3:46 15:1:51 16:1:51 17:1:51 19:1:51 20:1:51 21:2:55 22:1:56 23:1:51 24:1:44 25:1:44 27:1:46 29:0.5:56 30:3:51 31:1:51 32:1.5:48 33:0.5:50 34:1:51 35:1:51 36:2:53 37:1:53 38:1:53 39:1:53 40:1:55 41:1:53 42:1:53 44:3:46 45:1:51 46:1:51 47:1:51 49:1:51 50:0.5:58 51:0.5:61 52:2:56 53:1:56 54:1:51 55:1:44 56:1:44 57:1:46 58:1:46 60:3:51"
+  }
+ },
+ {
   "id": "joincheerful",
   "section": "Presbyterian",
   "title": "Come, Let Us Join Our Cheerful Songs",
@@ -6624,24 +6876,6 @@ window.HYMN_SONGS = [
   }
  },
  {
-  "id": "wordincarnate",
-  "section": "Presbyterian",
-  "title": "O Word of God Incarnate",
-  "psalm": "",
-  "tune": "MUNICH",
-  "meter": "76.76 D",
-  "credit": "Music: Neuvermehrtes Gesangbuch, Meiningen, 1693 · Words: William W. How, 1867",
-  "source": "Music: public-domain MusicXML score of MUNICH from hymnary.org (hymnary.org/media/fetch/133850; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/o/w/o/r/owordgod.htm), its syllable breaks laid under the melody note for note; stanzas 3, 4 left out (they do not fit the tune line for line). In The Hymnal (Presbyterian Church USA, 1895, rev. 1911) and The Church Hymnary (Presbyterian, 1893) (hymnary.org index).",
-  "abc": "X:1\nT:O Word of God Incarnate\nM:4/4\nL:1/4\nQ:1/4=88\nK:Eb\nE/ F/ | G c B A | G2 G G | B A/ G/ F F | E3 E/ F/ |\nw: O _ Word of God in- car- nate, O wis- dom _ from on high, O _\nw: The _ Church from You, our Sav- ior, Re- ceived the _ gift di- vine, And _\nG c B A | G2 G G | B A/ G/ F F | E3 F |\nw: truth un- changed, un- chang- ing, O light of _ our dark sky: We\nw: still that light is lift- ed O’er all the _ earth to shine. It\nF G A A | G2 G c | e c G =A | B3 B |\nw: praise You for the ra- diance That from the hal- lowed page, A\nw: is the sac- red ves- sel Where gems of truth are stored; It\nB G A B | c2 c B | A G F F | E3 |]\nw: lan- tern to our foot- steps, Shines on from age to age.\nw: is the Heav’n drawn pic- ture Of Christ, the liv- ing Word.\n",
-  "parts": {
-   "src": "hymnary.org MusicXML score (wordincarnate_0.xml)",
-   "sig": "56-cr42ay",
-   "alto": "0:1:63 2:1:63 3:1:63 4:1:62 5:1:65 6:2:63 7:1:63 8:1:63 9:1:63 10:1:63 12:1:63 13:1:62 14:3:63 15:0.5:58 16:0.5:62 17:1:63 18:1:67 19:1:65 20:0.5:65 20+0.5:0.5:63 21:2:62 22:1:62 23:1:63 24:1:63 25:1:63 27:1:63 28:1:62 29:3:63 30:1:62 31:1:62 32:1:64 33:1:65 34:1:65 35:2:63 36:1:63 37:1:65 38:1:63 39:1:67 40:1:67 41:0.5:65 41+0.5:0.5:63 42:3:62 43:1:65 44:1:63 45:1:63 46:1:63 47:0.5:65 47+0.5:0.5:67 48:2:68 49:1:68 50:1:63 51:1:63 52:1:63 53:1:63 54:1:62 55:3:63",
-   "tenor": "0:0.5:55 1:0.5:56 2:1:58 3:0.5:56 3+0.5:0.5:55 4:1:53 5:1:58 6:2:58 7:1:58 8:1:58 9:1:58 10:1:60 12:0.5:53 12+0.5:0.5:55 13:1:56 14:3:55 15:0.5:55 16:0.5:53 17:1:58 18:1:63 19:1:62 20:1:60 21:2:59 22:1:59 23:1:60 24:1:58 25:1:60 27:0.5:53 27+0.5:0.5:55 28:1:56 29:3:55 30:1:58 31:1:58 32:1:58 33:1:60 34:1:60 35:2:60 36:1:60 37:1:56 38:1:55 39:0.5:63 39+0.5:0.5:62 40:1:60 41:1:60 42:3:58 43:1:56 44:1:55 45:1:58 46:1:63 47:1:61 48:2:60 49:1:63 50:1:63 51:1:56 52:1:60 53:0.5:53 53+0.5:0.5:55 54:1:56 55:3:55",
-   "bass": "0:1:51 2:1:51 3:1:44 4:1:46 5:1:50 6:2:51 7:1:51 8:1:51 9:1:43 10:1:44 12:1:46 13:1:46 14:3:51 15:0.5:55 16:0.5:53 17:1:51 18:1:48 19:0.5:50 19+0.5:0.5:51 20:1:53 21:2:55 22:1:55 23:1:48 24:1:43 25:1:44 27:1:46 28:1:46 29:3:51 30:1:58 31:1:56 32:1:55 33:1:53 34:1:53 35:2:48 36:1:48 37:1:48 38:1:48 39:0.5:48 39+0.5:0.5:50 40:1:51 41:1:53 42:3:46 43:1:50 44:1:51 45:1:49 46:1:48 47:1:46 48:2:44 49:1:44 50:1:43 51:1:48 52:1:44 53:1:46 54:1:46 55:3:51"
-  }
- },
- {
   "id": "tenthousand",
   "section": "Presbyterian",
   "title": "Ten Thousand Times Ten Thousand",
@@ -6657,6 +6891,114 @@ window.HYMN_SONGS = [
    "alto": "0:1:63 1:1.5:61 2:0.5:61 3:1:61 4:1:61 5:1:60 6:2:63 7:1:68 8:1:68 9:1:68 10:1:65 11:1:67 12:3:68 13:1:63 14:1.5:65 15:0.5:62 16:1:63 17:1:63 18:1:65 19:1:63 20:1:67 21:1:65 22:1.5:63 23:0.5:58 24:1:62 25:1:58 26:3:58 27:1:63 28:1.5:61 29:0.5:61 30:1:60 31:1:65 32:1:65 33:2:64 34:1:63 35:1:61 36:1:61 37:1:60 38:1:62 40:2:62 40+2:1:63 41:1:63 42:1:65 43:1:63 44:1:68 45:1:60 46:1.5:65 47:0.5:63 48:1:61 49:1:65 50:1.5:63 51:0.5:63 52:1:68 53:1:67 54:3:68",
    "tenor": "0:1:56 1:1.5:53 2:0.5:53 3:1:53 4:1:52 5:1:51 6:2:60 7:1:56 8:1:60 9:1:63 10:1:60 11:1:61 12:3:60 13:1:60 14:1.5:62 15:0.5:58 16:1:58 17:1:58 18:1:59 19:1:60 20:1:61 21:1:60 22:1.5:58 23:0.5:55 24:1:53 25:1:56 26:3:55 27:1:51 28:1.5:55 29:0.5:55 30:1:56 31:0.5:53 31+0.5:0.5:55 32:1:56 33:2:55 34:1:57 35:1:58 36:1:55 37:1:56 38:1:56 40:1:56 40+1:1:53 40+2:1:55 41:1:51 42:1:53 43:1:51 44:1:56 45:1:56 46:1.5:53 47:0.5:57 48:1:58 49:1:53 50:1.5:60 51:0.5:61 52:1:63 53:1:61 54:3:60",
    "bass": "0:1:44 1:1.5:44 2:0.5:44 3:1:44 4:1:44 5:1:44 6:2:56 7:1:53 8:1:51 9:1:51 10:1:53 11:1:51 12:3:56 13:1:56 14:1.5:56 15:0.5:56 16:1:55 17:1:55 18:1:56 19:1:56 20:1:52 21:1:53 22:1.5:46 23:0.5:46 24:1:46 25:1:46 26:3:51 27:1:51 28:1.5:51 29:0.5:51 30:1:53 31:1:49 32:1:48 33:2:48 34:1:53 35:1:46 36:1:51 37:1:44 38:1:53 40:2:46 40+2:1:51 41:1:51 42:1:53 43:1:51 44:1:56 45:0.5:53 45+0.5:0.5:51 46:1.5:49 47:0.5:48 48:1:46 49:1:49 50:1.5:51 51:0.5:51 52:1:51 53:1:51 54:3:44"
+  }
+ },
+ {
+  "id": "saviouragain",
+  "section": "Baptist",
+  "title": "Saviour, Again to Thy Dear Name",
+  "psalm": "",
+  "tune": "ELLERS",
+  "meter": "10.10.10.10",
+  "credit": "Music: Edward John Hopkins, 1869 · Words: John Ellerton, 1866. Ellerton wrote this hymn for the Festival of the Malpas, Middlewich and Nantwich Choral Association in Cheshire, England",
+  "source": "Music: public-domain MusicXML score of ELLERS from hymnary.org (hymnary.org/media/fetch/134207; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/s/a/v/a/savagain.htm), its syllable breaks laid under the melody note for note; stanzas 7 left out (they do not fit the tune line for line). In The Baptist Hymnal (1883) (hymnary.org index).",
+  "abc": "X:1\nT:Saviour, Again to Thy Dear Name\nM:4/4\nL:1/4\nQ:1/4=88\nK:G\nD2 D E | D2 G2 | G F G A | B4 | G2 G A | G2 B2 | B A B ^c | d4 |\nw: Sa- vior, a- gain to Thy dear name we raise With one ac- cord our part- ing hymn of praise;\nw: Grant us Thy peace up- on our home- ward way; With Thee be- gan, with Thee shall end the day.\nw: Grant us Thy peace, through this ap- proach- ing night; Turn Thou for us its dark- ness in- to light;\nw: Grant us Thy peace the peace Thou didst be- stow On Thine a- postles in Thine hou- r of woe;\nw: Grant us Thy peace through- out our earth- ly life; Peace to Thy church from er- ror and from strife;\nw: Thy peace in life, the balm of ev- ery pain; Thy peace in death, the hope to rise a- gain;\nd2 G G | c2 c2 | c A B c | B4 | G2 A G | G2 E2 | D D E D | D4 |]\nw: We stand to bless Thee ere our wor- ship cease; Then, low- ly kneel- ing, wait Thy word of peace.\nw: Guard thou the lips from sin, the hearts from shame, That in this house have called up- on Thy name.\nw: From harm and dan- ger keep Thy child- ren free, For dark and light are both a- like to Thee.\nw: The peace Thou brought- est, when at ev- en- tide They saw Thy pierc- èd hands, Thy wound- ed side.\nw: Peace to our land, the fruit of truth and love; Peace in each heart, Thy Spi- rit from a- bove.\nw: Then, when Thy voice shall bid our con- flict cease, Call us, O Lord, to Thine e- ter- nal peace.\n",
+  "parts": {
+   "src": "hymnary.org MusicXML score (saviouragain_0.xml)",
+   "sig": "40-14ztxbd",
+   "alto": "0:2:59 1:1:59 2:1:59 3:2:62 4:2:62 5:1:60 6:1:60 7:1:60 8:1:60 9:4:59 10:2:62 11:1:62 12:1:62 13:2:64 14:1:64 14+1:1:62 15:1:67 16:1:67 17:1:67 18:1:67 19:2:62 19+2:2:66 20:2:62 21:1:62 22:1:62 23:2:66 24:2:64 25:1:62 26:1:62 27:1:62 28:1:62 29:4:62 30:2:59 31:1:59 32:1:59 33:2:60 34:2:60 35:1:62 36:1:62 37:1:60 38:1:60 39:4:59",
+   "tenor": "0:2:55 1:1:55 2:1:55 3:2:55 4:2:55 5:1:50 6:1:50 7:1:52 8:1:54 9:4:55 10:2:59 11:1:59 12:1:59 13:2:59 14:2:59 15:1:61 16:1:61 17:1:59 18:1:57 19:4:57 20:2:55 21:1:59 22:1:59 23:2:60 24:2:57 25:1:57 26:1:57 27:1:54 28:1:54 29:4:55 30:2:55 31:1:55 32:1:55 33:2:52 34:2:55 35:1:55 36:1:55 37:1:55 38:1:54 39:4:55",
+   "bass": "0:2:43 1:1:43 2:1:43 3:2:47 4:2:47 5:1:45 6:1:45 7:1:45 8:1:45 9:4:43 10:2:55 11:1:55 12:1:55 13:2:52 14:2:52 15:1:45 16:1:45 17:1:45 18:1:45 19:2:54 19+2:1:50 19+3:1:48 20:2:47 21:1:59 22:1:59 23:2:57 24:2:55 25:1:54 26:1:54 27:1:50 28:1:50 29:4:43 30:2:52 31:1:52 32:1:52 33:2:48 34:2:48 35:1:47 36:1:47 37:1:45 38:1:50 39:4:43"
+  }
+ },
+ {
+  "id": "lovethykingdom",
+  "section": "Baptist",
+  "title": "I Love Thy Kingdom, Lord",
+  "psalm": "",
+  "tune": "ST. THOMAS (WILLIAMS)",
+  "meter": "SM",
+  "credit": "Music: Aaron Williams, 1770 · Words: Timothy Dwight, Psalms of David 1800. This is believed to be the oldest hymn by an American still in common use",
+  "source": "Music: public-domain MusicXML score of ST. THOMAS (WILLIAMS) from hymnary.org (hymnary.org/media/fetch/131229; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/i/l/o/v/ilovethy.htm), its syllable breaks laid under the melody note for note; stanzas 6, 7 left out (they do not fit the tune line for line). In The Baptist Hymnal (1883) (hymnary.org index).",
+  "abc": "X:1\nT:I Love Thy Kingdom, Lord\nM:4/4\nL:1/4\nQ:1/4=88\nK:G\nD | G G B A/ G/ | A3 B/ c/ | d c/ B/ c B | A3 d |\nw: I love Thy king- dom, _ Lord, The _ house of _ Thine ab- ode, The\nw: I love Thy church, O _ God. Her _ walls be- _ fore Thee stand, Dear\nw: If e’er to bless Thy _ sons My _ voice or _ hands de- ny, These\nw: Should I with scoff- ers _ join Her _ al- tars _ to a- buse? No!\nw: For her my tears shall _ fall For _ her my _ prayers as- cend, To\nw: Sure as Thy truth shall _ last, To _ Zi- on _ shall be giv'n The\nB G A D | G B d d | e d/ c/ B A | G3 |]\nw: church our blessed Re- deem- er saved With His own _ pre- cious blood.\nw: as the ap- ple of Thine eye, And writ- ten _ on Thy hand.\nw: hands let use- ful skills for- sake, This voice in _ si- lence die.\nw: Bet- ter far my tongue were dumb, My hand its _ skill should lose.\nw: her my cares and toils be giv’n Till toils and _ cares shall end.\nw: bright- est glo- ries earth can yield And bright- er _ bliss of Heav’n.\n",
+  "parts": {
+   "src": "hymnary.org MusicXML score (lovethykingdom_0.xml)",
+   "sig": "30-13p746k",
+   "alto": "0:1:59 1:1:62 2:1:62 3:1:67 4:0.5:66 5:0.5:64 6:3:66 7:1:67 9:1:67 10:1:67 12:0.5:64 12+0.5:0.5:66 13:1:67 14:3:66 15:1:62 16:1:62 17:1:62 18:1:62 19:1:62 20:1:62 21:1:64 22:1:66 23:1:67 24:1:67 25:1:69 27:1:71 28:1:66 29:3:62",
+   "tenor": "0:1:55 1:1:55 2:1:59 3:1:62 4:1:62 6:3:62 7:1:62 9:1:62 10:1:62 12:1:60 13:1:62 14:3:62 15:1:57 16:1:55 17:1:55 18:1:54 19:1:57 20:1:59 21:1:55 22:1:57 23:1:59 24:1:60 25:1:64 27:1:62 28:1:60 29:3:59",
+   "bass": "0:1:43 1:1:47 2:1:43 3:1:55 4:1:50 6:3:50 7:0.5:55 8:0.5:57 9:1:59 10:1:55 12:1:57 13:1:55 14:3:50 15:1:54 16:1:55 17:1:47 18:1:50 19:1:54 20:1:55 21:1:52 22:1:50 23:1:55 24:1:48 25:1:45 27:1:50 28:1:50 29:3:43"
+  }
+ },
+ {
+  "id": "mustjesus",
+  "section": "Baptist",
+  "title": "Must Jesus Bear the Cross Alone",
+  "psalm": "",
+  "tune": "MAITLAND",
+  "meter": "CM",
+  "credit": "Music: George Nelson Allen, 1844  · Words: Stanza 1: Thomas Shepherd, Penitential Cries, 1693, alt. Stanza 2: Apparently from a missionary Collection published in Norwich, England, early 19th Century. Stanza 3: The Oberlin Social and Sabbath School Hymn Book, by George Allen, 1844. Stanzas 4–5: From the Plymouth Collection of Hymns and Tunes, by Henry W. Beecher ( New York : AMS. Barnes & Burr, 1855)",
+  "source": "Music: public-domain MusicXML score of MAITLAND from hymnary.org (hymnary.org/media/fetch/132714; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/m/u/s/t/mustjesu.htm), its syllable breaks laid under the melody note for note; stanzas 2, 5 left out (they do not fit the tune line for line). In The Baptist Hymnal (1883) (hymnary.org index).",
+  "abc": "X:1\nT:Must Jesus Bear the Cross Alone\nM:6/4\nL:1/4\nQ:1/4=88\nK:Ab\nC/ D/ | E2 E A2 c | B2 A F/ A3/2 F | E2 E A2 c | B3- B2 c/ d/ |\nw: Must _ Je- sus bear the cross a- lone, _ And all the world go free? * No, _\nw: The _ con- se- crat- ed cross I’ll bear _ Till death shall set me free; * And _\nw: U- _ pon the crys- tal pave- ment down _ At Je- sus’ pierc- èd feet, * Joy- _\ne2 c A2 c | B2 A F/ A3/2 F | E2 A c2 B | A3- A2 |]\nw: there’s a cross for ev- ery- one, _ And there’s a cross for me. *\nw: then go home my crown to wear, _ For there’s a crown for me. *\nw: ful I'll cast my gol- den crown _ And His dear name re- peat. *\n",
+  "parts": {
+   "src": "hymnary.org MusicXML score (mustjesus_0.xml)",
+   "sig": "32-1dmqns9",
+   "alto": "0:0.5:56 1:0.5:58 2:2:60 3:1:60 4:2:60 5:1:63 6:2:61 7:1:61 8:0.5:61 9:1.5:65 10:1:61 11:2:63 12:1:58 13:2:63 14:1:63 15:3:63 16:2:63 17:1:63 19:2:63 20:1:63 21:2:60 22:1:63 23:2:61 24:1:61 25:0.5:61 26:1.5:65 27:1:61 28:2:63 29:1:60 30:2:63 31:1:61 32:5:60",
+   "tenor": "0:1:56 2:2:56 3:1:56 4:2:51 5:1:56 6:2:53 7:1:53 8:2:56 10:1:56 11:2:56 12:1:55 13:2:56 14:1:56 15:5:55 17:0.5:56 18:0.5:58 19:2:60 20:1:56 21:2:51 22:1:56 23:2:53 24:1:53 25:2:56 27:1:56 28:2:56 29:1:56 30:2:56 31:1:55 32:3:56 33:2:56",
+   "bass": "0:1:44 2:2:44 3:1:44 4:2:44 5:1:44 6:2:49 7:1:49 8:2:49 10:1:49 11:2:48 12:0.5:51 12+0.5:0.5:49 13:2:48 14:1:44 15:3:51 16:2:51 17:1:56 19:2:56 20:1:56 21:2:44 22:1:44 23:2:49 24:1:49 25:2:49 27:1:49 28:2:48 29:1:44 30:2:51 31:1:51 32:5:44"
+  }
+ },
+ {
+  "id": "puredelight",
+  "section": "Baptist",
+  "title": "There Is a Land of Pure Delight",
+  "psalm": "",
+  "tune": "ASCRIPTION",
+  "meter": "CM",
+  "credit": "Music: Luther Orlando Emerson, 1866 · Words: Isaac Watts, Hymns and Spiritual Songs 1707, Book 2, number 66. A prospect of Heaven makes death easy",
+  "source": "Music: public-domain MusicXML score of ASCRIPTION from hymnary.org (hymnary.org/media/fetch/134907; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/t/h/e/r/e/i/thereisa.htm), its syllable breaks laid under the melody note for note; stanzas 2, 4 left out (they do not fit the tune line for line). In The Baptist Hymnal (1883) and The Sacred Harp (1860 ed.) (hymnary.org index).",
+  "abc": "X:1\nT:There Is a Land of Pure Delight\nM:3/2\nL:1/4\nQ:1/2=56\nK:Bb\nF2 | F d B2 G2 | F D F2 F2 | B B d2 c2 | c4 c2 |\nw: There is a land of pure de- light, Where saints im- mor- tal reign; In-\nw: Sweet fields be- yond the swell- ing flood, Stand dressed in liv- ing green: So\nw: O! Could we make our doubts re- move, Those gloo- my thoughts that rise, And\nw: Could we but climb where Mos- es stood, And view the land- scape o’er, Not\nd c B2 F2 | G G B2 G2 | F B d2 c2 | B4 |]\nw: fi- nite day ex- cludes the night, And plea- sures ban- ish pain.\nw: to the Jews old Ca- naan stood, While Jor- dan rolled be- tween.\nw: see the Ca- naan that we love With un- be- cloud- ed eyes!\nw: Jor- dan’s stream, nor death’s cold flood, Should fright us from the shore.\n",
+  "parts": {
+   "src": "hymnary.org MusicXML score (puredelight_0.xml)",
+   "sig": "28-1i7qhr4",
+   "alto": "0:2:62 1:1:62 2:1:62 3:2:62 4:2:63 5:1:62 6:1:58 7:2:62 8:2:62 9:1:62 10:1:62 11:2:65 12:1:62 12+1:1:64 13:4:65 14:2:65 15:1:65 16:1:63 17:2:65 18:2:62 19:1:63 20:1:63 21:2:67 22:2:63 23:1:62 24:1:62 25:2:65 26:2:63 27:4:62",
+   "tenor": "0:2:58 1:1:58 2:1:53 3:2:53 4:2:58 5:1:58 6:1:53 7:2:58 8:2:58 9:1:53 10:1:53 11:2:58 12:2:58 13:4:57 14:2:57 15:1:58 16:1:57 17:2:58 18:2:58 19:1:58 20:1:58 21:2:58 22:2:58 23:1:58 24:1:58 25:2:58 26:2:53 27:4:53",
+   "bass": "0:2:46 1:1:46 2:1:46 3:2:46 4:2:46 5:1:46 6:1:46 7:2:46 8:2:46 9:1:46 10:1:46 11:2:46 12:2:55 13:4:53 14:2:53 15:1:46 16:1:48 17:2:50 18:2:46 19:1:51 20:1:51 21:2:51 22:2:51 23:1:53 24:1:53 25:2:53 26:2:41 27:4:46"
+  }
+ },
+ {
+  "id": "howsweetname",
+  "section": "Baptist",
+  "title": "How Sweet the Name of Jesus Sounds",
+  "psalm": "",
+  "tune": "ST. PETER (REINAGLE)",
+  "meter": "CM",
+  "credit": "Music: Alexander Robert Reinagle, 1836 · Words: John Newton, Olney Hymns ( London : W. Oliver, 1779 ), Book 1, number 57. The name of Jesus",
+  "source": "Music: public-domain MusicXML score of ST. PETER (REINAGLE) from hymnary.org (hymnary.org/media/fetch/130964; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/h/s/w/e/hsweetnj.htm), its syllable breaks laid under the melody note for note; stanzas 3 left out (they do not fit the tune line for line). In The Baptist Hymnal (1883) and The Sacred Harp (1860 ed.) (hymnary.org index).",
+  "abc": "X:1\nT:How Sweet the Name of Jesus Sounds\nM:4/4\nL:1/4\nQ:1/4=88\nK:Eb\nB | e d c B | B A G G | F E A G | F3 G |\nw: How sweet the name of Je- sus sounds In a be- liev- er’s ear! It\nw: It makes the wound- ed spir- it whole, And calms the trou- bled breast; ’Tis\nw: By Thee my prayers ac- cep- tance gain, Al- though with sin de- filed; Sa-\nw: Je- sus! my she- pherd, hus- band, friend, O pro- phet, priest and king, My\nw: Weak is the ef- fort of my heart, And cold my warm- est thought; But\nw: Till then I would Thy love pro- claim With ev- ery fleet- ing breath, And\nA G c B | B A G E | G F E D | E3 |]\nw: soothes his sor- rows, heals his wounds, And drives a- way his fear.\nw: man- na to the hun- gry soul, And to the wea- ry rest.\nw: tan ac- cu- ses me in vain, And I am owned a child.\nw: Lord, my life, my way, my end, Ac- cept the praise I bring.\nw: when I see Thee as Thou art, I’ll praise Thee as I ought.\nw: may the mu- sic of Thy name Re- fresh my soul in death!\n",
+  "parts": {
+   "src": "hymnary.org MusicXML score (howsweetname_0.xml)",
+   "sig": "28-1j340cl",
+   "alto": "0:1:63 1:1:67 2:1:67 3:1:63 4:1:63 5:1:65 6:1:62 7:1:63 8:1:63 9:0.5:60 9+0.5:0.5:62 10:1:63 11:1:62 12:1:63 13:3:62 14:1:63 15:1:63 16:1:63 17:1:63 18:1:63 19:1:60 20:1:62 21:1:63 22:1:60 23:1:63 24:1:60 25:1:58 26:1:58 27:3:58",
+   "tenor": "0:1:55 1:1:58 2:1:58 3:1:56 4:1:58 5:1:58 6:1:58 7:1:58 8:1:58 9:1:60 10:1:58 11:1:56 12:1:58 13:3:58 14:1:58 15:1:56 16:1:58 17:1:60 18:1:51 19:1:53 20:1:53 21:1:51 22:1:55 23:1:58 24:1:56 25:1:55 26:0.5:53 26+0.5:0.5:56 27:3:55",
+   "bass": "0:1:51 1:1:51 2:1:55 3:1:56 4:1:55 5:1:50 6:1:46 7:1:51 8:1:51 9:1:56 10:1:55 11:1:53 12:1:51 13:3:46 14:0.5:51 14+0.5:0.5:49 15:1:48 16:1:46 17:1:44 18:1:43 19:1:41 20:1:46 21:1:48 22:1:48 23:1:43 24:1:44 25:1:46 26:1:46 27:3:51"
+  }
+ },
+ {
+  "id": "happyhome",
+  "section": "Baptist",
+  "title": "Jerusalem, My Happy Home",
+  "psalm": "",
+  "tune": "BARRE",
+  "meter": "CM",
+  "credit": "Music: Edward Clark, 1871 · Words: Joseph Bromehead, in Psalms and Hymns for Public or Private Devotion ( Sheffield, England: Brittania Press, 1795 ). The original manuscript in the British Museum, dated around 1583, is inscribed, A song made by F. B. P. to the tune of DIANA. The author is thought to have been a Catholic priest who based the hymn on the writings of St. Augustine. For another version of these words, see O Mother Dear, Jerusalem",
+  "source": "Music: public-domain MusicXML score of BARRE from hymnary.org (hymnary.org/media/fetch/131702; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/j/m/y/h/jmyhappy.htm), its syllable breaks laid under the melody note for note; stanzas 3, 5, 8, 11, 13, 25, 26, 31 left out (they do not fit the tune line for line). In The Baptist Hymnal (1883) (hymnary.org index).",
+  "abc": "X:1\nT:Jerusalem, My Happy Home\nM:3/4\nL:1/4\nQ:1/4=88\nK:C\nE | E/ F/ G c | B/ A/ A A | G/ c/ B A | G2 F |\nw: Je- ru- sa- lem, my hap- py home! Name ev- er dear to me; When\nw: When shall these eyes thy heav’n built walls And pear- ly gates be- hold? Thy\nw: Why should I shrink at pain and woe? Or feel at death di- smay? I’ve\nw: Je- ru- sa- lem, my hap- py home! My soul still pants for thee; Then\nw: O Christ do Thou my soul pre- pare For that bright home of love; That\nw: Je- ru- sa- lem, my hap- py home, When shall I come to thee? When\nE/ F/ G c | B/ A/ A A | G/ E/ G F | E2 |]\nw: shall my la- bors have an end, In joy, and peace, and thee?\nw: bul- warks, with sal- va- tion strong, And streets of shin- ing gold?\nw: Ca- naan’s good- ly land in view, And realms of end- less day.\nw: shall my la- bors have an end, When I thy joys shall see.\nw: I may see Thee and ad- ore, With all Thy saints ab- ove.\nw: shall my sor- rows have an end? Thy joys when shall I see?\n",
+  "parts": {
+   "src": "hymnary.org MusicXML score (happyhome_0.xml)",
+   "sig": "28-ktnqyz",
+   "alto": "0:1:60 1:0.5:60 2:0.5:62 3:1:64 4:1:67 5:0.5:67 6:0.5:65 7:1:65 8:1:65 9:0.5:67 10:0.5:67 11:1:67 12:1:66 13:2:67 14:1:59 15:0.5:60 16:0.5:62 17:1:64 18:1:67 19:0.5:67 20:0.5:65 21:1:65 22:1:65 23:0.5:64 24:0.5:60 25:1:59 26:1:62 27:2:60",
+   "tenor": "0:1:55 1:0.5:55 2:0.5:55 3:0.5:55 3+0.5:0.5:60 4:1:60 5:0.5:60 6:0.5:60 7:1:60 8:1:60 9:0.5:60 10:0.5:64 11:1:62 12:0.5:62 12+0.5:0.5:60 13:2:59 14:1:55 15:0.5:55 16:0.5:55 17:0.5:55 17+0.5:0.5:60 18:1:60 19:0.5:60 20:0.5:60 21:1:60 22:1:60 23:0.5:60 24:0.5:55 25:1:55 26:1:55 27:2:55",
+   "bass": "0:1:48 1:0.5:48 2:0.5:48 3:1:48 4:1:52 5:0.5:53 6:0.5:53 7:1:53 8:1:53 9:0.5:52 10:0.5:48 11:1:50 12:1:50 13:2:43 14:1:43 15:0.5:48 16:0.5:48 17:1:48 18:1:52 19:0.5:53 20:0.5:53 21:1:53 22:1:53 23:0.5:55 24:0.5:55 25:1:43 26:1:43 27:2:48"
   }
  },
  {
@@ -6696,6 +7038,24 @@ window.HYMN_SONGS = [
   }
  },
  {
+  "id": "jesusisthinking",
+  "section": "Baptist",
+  "title": "Jesus, and Shall It Ever Be",
+  "psalm": "",
+  "tune": "FEDERAL STREET",
+  "meter": "LM",
+  "credit": "Music: Henry Kemble Oliver, 1832 · Words: Joseph Grigg, in Four Hymns on Divine Subjects, 1765, alt",
+  "source": "Music: public-domain MusicXML score of FEDERAL STREET from hymnary.org (hymnary.org/media/fetch/131531; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/j/a/n/s/janshall.htm), its syllable breaks laid under the melody note for note; stanzas 7, 9, 10 left out (they do not fit the tune line for line). In The Baptist Hymnal (1883) (hymnary.org index).",
+  "abc": "X:1\nT:Jesus, and Shall It Ever Be\nM:4/4\nL:1/4\nQ:1/4=88\nK:F\nA2 A A | B2 A c | c2 B2 | A4 | B2 B B | A3 A | =B2 B2 | c4 |\nw: Je- sus, and shall it _ e- ver be, A mor- tal man, a- shamed of Thee?\nw: A- shamed of Je- sus! _ soo- ner far Let night di- sown each ra- diant star!\nw: A- shamed of Je- sus! _ O as soon Let morn- ing blush to own the sun!\nw: A- shamed of Je- sus! _ that dear friend On whom my hopes of Heav’n de- pend!\nw: A- shamed of Je- sus! _ yes, I may When I've no guilt to wash a- way;\nw: A- shamed of Je- sus! _ emp- ty pride! I’ll boast a Sav- ior cru- ci- fied,\nc2 c B | A2 F2 | E F G A | B4 | A2 d d | c2 A2 | F2 G2 | F4 |]\nw: A- shamed of Thee, whom an- _ gels _ praise, Whose glo- ries shine through end- less days?\nw: ’Tis mid- night with my soul, _ till _ He, Bright morn- ing star, bid dark- ness flee.\nw: He sheds the beams of light _ di- _ vine O’er this be- night- ed soul of mine.\nw: No; when I blush, be this _ my _ shame, That I no more rev- ere His name.\nw: No tear to wipe, no good _ to _ crave, No fears to quell, no soul to save.\nw: And O may this my por- _ tion _ be, My Sa- vior not a- shamed of me!\n",
+  "parts": {
+   "src": "Open Hymnal Project (openhymnal.org, public domain), SATB setting of “While O'er Our Guilty Land, O Lord”",
+   "sig": "35-12gdag5",
+   "alto": "0:2:65 1:1:65 2:1:65 3:2:65 4:2:65 6:2:67 7:2:64 8:4:65 9:2:64 10:1:67 11:1:64 12:3:60 13:1:60 14:2:62 15:2:65 16:4:64 17:2:65 18:1:67 19:1:64 20:2:65 21:2:60 22:2:60 24:1:64 25:1:65 26:4:64 27:2:60 28:1:65 29:1:65 30:2:65 31:2:65 32:2:65 33:2:64 34:4:65",
+   "tenor": "0:2:60 1:1:60 2:1:60 3:2:62 4:1:60 5:1:57 6:2:60 7:2:60 8:4:60 9:2:55 10:1:60 11:1:55 12:3:53 13:1:53 14:2:53 15:2:55 16:4:55 17:2:57 18:1:60 19:1:60 20:2:60 21:2:57 22:1:55 23:1:57 24:1:58 25:1:57 26:4:55 27:2:53 28:1:58 29:1:58 30:2:57 31:2:60 32:2:57 33:2:58 34:4:57",
+   "bass": "0:2:53 1:1:53 2:1:53 3:2:53 4:2:53 6:2:52 7:2:48 8:4:53 9:2:48 10:1:52 11:1:48 12:3:53 13:1:53 14:2:50 15:2:50 16:4:48 17:2:53 18:1:52 19:1:48 20:2:53 21:2:41 22:2:48 24:2:48 26:4:48 27:2:53 28:1:46 29:1:50 30:2:53 31:2:41 32:2:48 33:2:48 34:4:41"
+  }
+ },
+ {
   "id": "mygodthemorning",
   "section": "Presbyterian",
   "title": "Lord, in the Morning Thou Shalt Hear",
@@ -6714,6 +7074,60 @@ window.HYMN_SONGS = [
   }
  },
  {
+  "id": "heavenlyfather",
+  "section": "Baptist",
+  "title": "How Gentle God's Commands",
+  "psalm": "",
+  "tune": "DENNIS",
+  "meter": "SM",
+  "credit": "Music: Hans Georg Nägeli; arr. by Lowell Mason, 1845 · Words: Philip Doddridge (1702–1751). Published posthumously in Hymns Founded on Various Texts in the Holy Scriptures, by Job Orton ( Shropshire, England: Joshua Eddowes & John Cotton, 1755), number 340: God’s care a remedy for ours",
+  "source": "Music: public-domain MusicXML score of DENNIS from hymnary.org (hymnary.org/media/fetch/130702; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/h/g/e/n/hgentlgc.htm), its syllable breaks laid under the melody note for note. In The Baptist Hymnal (1883) (hymnary.org index).",
+  "abc": "X:1\nT:How Gentle God's Commands\nM:3/4\nL:1/4\nQ:1/4=88\nK:F\nA | A F A | G E G | F3 |\nw: How gen- _ tle God’s _ com- mands!\nw: While Pro- _ vi- dence _ sup- ports,\nw: Why should _ this anx- _ ious load\nw: His good- _ ness stands _ ap- proved\nF | F D F | F C F | E3 |\nw: How kind _ His pre- _ cepts are!\nw: Let saints _ se- cure- _ ly dwell;\nw: Press down _ your wea- _ ry mind?\nw: Down to _ the pre- _ sent day;\nA | G E G | F2 c | c G B | A c d | c A B | A F G | F2 |]\nw: Come, cast _ your bur- dens on _ the Lord, _ And trust _ His con- _ stant care.\nw: That hand, _ which bears all na- _ ture up, _ Shall guide _ His child- _ ren well.\nw: Haste to _ your Heav'n- ly Fa- _ ther's throne, _ And sweet _ re- fresh- _ ment find.\nw: I’ll drop _ my bur- den at _ His feet, _ And bear _ a song _ a- way.\n",
+  "parts": {
+   "src": "hymnary.org MusicXML score (heavenlyfather_0.xml)",
+   "sig": "35-h0k1tu",
+   "alto": "0:1:65 1:1:65 2:1:60 3:1:65 4:1:64 5:1:60 6:1:64 7:3:65 8:1:63 9:1:62 10:1:58 11:1:62 12:1:60 13:1:57 14:1:60 15:3:60 16:1:64 17:1:64 18:1:60 19:1:64 20:2:65 21:1:65 22:2:64 24:1:67 25:2:65 27:1:65 28:2:65 30:1:65 31:2:65 33:1:64 34:2:65",
+   "tenor": "0:1:60 1:1:60 2:1:57 3:1:60 4:1:60 5:1:55 6:1:58 7:3:57 8:1:57 9:1:58 10:1:53 11:1:58 12:1:57 13:1:53 14:1:57 15:3:55 16:1:60 17:1:60 18:1:55 19:1:58 20:1:57 20+1:1:60 21:1:57 22:1:55 23:1:60 24:1:60 25:1:60 26:1:57 27:1:58 28:1:57 29:1:60 30:1:62 31:1:60 32:1:57 33:1:58 34:2:57",
+   "bass": "0:1:53 1:2:53 3:1:53 4:2:48 6:1:48 7:3:53 8:1:53 9:2:46 11:1:46 12:2:53 14:1:53 15:3:48 16:1:48 17:2:48 19:1:48 20:2:53 21:1:53 22:2:48 24:1:48 25:2:53 27:1:53 28:2:53 30:1:46 31:2:48 33:1:48 34:2:53"
+  }
+ },
+ {
+  "id": "soundingjoy",
+  "section": "Baptist",
+  "title": "Sweet the Moments, Rich in Blessing",
+  "psalm": "",
+  "tune": "BATTY",
+  "meter": "87.87",
+  "credit": "Music: Moravian melody, Basle, 1745 · Words: James Allen & Walter Shirley. Allen published the original version of this hymn in the Kendal Hymn Book in 1757. Shirley recast the words in 1770",
+  "source": "Music: public-domain MusicXML score of BATTY from hymnary.org (hymnary.org/media/fetch/134736; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/s/w/e/e/t/t/sweettmo.htm), its syllable breaks laid under the melody note for note. In The Baptist Hymnal (1883) (hymnary.org index).",
+  "abc": "X:1\nT:Sweet the Moments, Rich in Blessing\nM:4/4\nL:1/4\nQ:1/4=88\nK:E\nE F G F | G A B G | c B A G | F F G2 |\nw: Sweet the mo- ments, rich in bless- ing, Which be- fore the cross we spend,\nw: Here I stay, for- ev- er view- ing Mer- cy strea- ming in His blood;\nw: Tru- ly blessèd is the sta- ti- on, Low be- fore His cross to lie,\nw: Here we find our hope of Hea- ven, While up- on the Lamb we gaze;\nw: Oh, that, near the cross a- bi- ding, We may to the Sav- ior cleave,\nw: Lord, in cease- less con- tem- pla- tion Fix our hearts and eyes on Thee,\nB B B F | G A G F | E F G A | G F E2 |]\nw: Life and health and peace pos- sess- ing From the sin- ner’s dy- ing friend.\nw: Pre- cious drops, my soul be- de- wing, Plead and claim my peace with God.\nw: While I see di- vine com- pass- ion Floa- ting in His lan- guid eye.\nw: Lo- ving much, and much for- gi- ven, Let our hearts o’er- flow with praise.\nw: Naught with Him our hearts di- vid- ing, All for Him con- tent to leave!\nw: Till we taste Thy full sal- va- tion, And un- veiled Thy glo- ries see.\n",
+  "parts": {
+   "src": "hymnary.org MusicXML score (soundingjoy_0.xml)",
+   "sig": "30-1v3kp0r",
+   "alto": "0:1:64 1:1:63 2:1:64 3:1:59 4:1:64 5:1:64 6:1:63 7:1:64 8:1:64 9:1:64 10:1:64 11:1:64 12:1:64 13:1:63 14:2:64 15:1:64 16:1:64 17:1:63 18:1:63 19:1:64 20:1:64 21:1:64 22:1:63 23:1:61 24:1:63 25:1:64 26:1:64 27:1:64 28:1:63 29:2:64",
+   "tenor": "0:1:56 1:1:59 2:1:59 3:1:59 4:1:59 5:1:52 6:1:54 7:1:56 8:1:57 9:1:56 10:1:57 11:1:59 12:1:61 13:1:59 14:2:59 15:1:56 16:1:56 17:1:54 18:1:59 19:1:59 20:1:61 21:1:59 22:1:59 23:1:56 24:1:59 25:1:59 26:1:61 27:1:59 28:1:59 29:2:56",
+   "bass": "0:1:52 1:1:47 2:1:52 3:1:51 4:1:52 5:1:49 6:1:47 7:1:52 8:1:57 9:1:52 10:1:49 11:1:47 12:1:45 13:1:47 14:2:52 15:1:52 16:1:52 17:1:47 18:1:47 19:1:52 20:1:45 21:1:47 22:1:47 23:1:49 24:1:47 25:1:52 26:1:45 27:1:47 28:1:47 29:2:52"
+  }
+ },
+ {
+  "id": "savioursmile",
+  "section": "Baptist",
+  "title": "Prayer Is the Soul's Sincere Desire",
+  "psalm": "",
+  "tune": "CAMPMEETING",
+  "meter": "CM",
+  "credit": "Music: American campmeeting melody · Words: James Montgomery, 1818",
+  "source": "Music: public-domain MusicXML score of CAMPMEETING from hymnary.org (hymnary.org/media/fetch/133961; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/p/r/a/y/e/prayeris.htm), its syllable breaks laid under the melody note for note; stanzas 3 left out (they do not fit the tune line for line). In The Baptist Hymnal (1883) (hymnary.org index).",
+  "abc": "X:1\nT:Prayer Is the Soul's Sincere Desire\nM:3/2\nL:1/4\nQ:1/2=56\nK:F\nF2 | E G G2 G2 | F A A2 A2 | G A B2 d2 | c4 A2 |\nw: Prayer is the soul’s sin- cere de- sire, U- nut- tered or ex- pressed; The\nw: Prayer is the bur- den of a sigh, The fall- ing of a tear The\nw: Prayer is the Christ- ian’s vi- tal breath, The Christ- ian’s na- tive air, His\nw: Prayer is the con- trite sin- ner’s voice, Re- tur- ning from his ways, While\nw: The saints in prayer ap- pear as one In word, in deed, and mind, While\nw: Nor pray- er is made on earth alone; The Ho- ly Spir- it pleads, And\nc B B2 G2 | B A A2 F2 | A G F2 E2 | F4 |]\nw: mo- tion of a hid- den fire That trem- bles in the breast.\nw: up- ward glanc- ing of an eye, When none but God is near.\nw: watch- word at the gates of death; He en- ters Heav'n with prayer.\nw: ang- els in their songs re- joice And cry, Be- hold, he prays!\nw: with the Fa- ther and the Son Sweet fel- low- ship they find.\nw: Je- sus, on th'e- ter- nal throne, For sin- ners in- ter- cedes.\n",
+  "parts": {
+   "src": "hymnary.org MusicXML score (savioursmile_2.xml)",
+   "sig": "28-o7ko3p",
+   "alto": "0:2:60 1:1:60 2:1:64 3:2:64 4:2:60 5:1:60 6:1:65 7:2:65 8:2:66 9:1:67 10:1:66 11:2:67 12:2:67 13:4:67 14:2:65 15:1:66 16:1:67 17:2:67 18:2:64 19:1:67 20:1:65 21:2:65 22:2:63 23:1:62 24:1:62 25:2:60 26:2:60 27:4:60",
+   "tenor": "0:2:57 1:1:55 2:1:60 3:2:60 4:2:60 5:1:57 6:1:60 7:2:60 8:2:62 9:1:62 10:1:62 11:2:62 12:2:58 13:4:60 14:2:60 15:1:62 16:1:62 17:2:62 18:2:60 19:1:60 20:1:60 21:2:60 22:2:53 23:1:53 24:1:55 25:2:57 26:2:55 27:4:57",
+   "bass": "0:2:53 1:1:48 2:1:48 3:2:48 4:2:52 5:1:53 6:1:53 7:2:53 8:2:50 9:1:58 10:1:57 11:2:55 12:2:53 13:4:52 14:2:53 15:1:50 16:1:55 17:2:55 18:2:48 19:1:53 20:1:53 21:2:53 22:2:45 23:1:46 24:1:46 25:2:48 26:2:48 27:4:53"
+  }
+ },
+ {
   "id": "jesuslover2",
   "section": "Presbyterian",
   "title": "One There Is Above All Others",
@@ -6724,7 +7138,7 @@ window.HYMN_SONGS = [
   "source": "Music: public-domain MusicXML score of ALL SAINTS OLD from hymnary.org (hymnary.org/media/fetch/133552; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/o/n/e/t/onethere.htm), its syllable breaks laid under the melody note for note; stanzas 4 left out (they do not fit the tune line for line). In The Hymnal (Presbyterian Church USA, 1895, rev. 1911) and The Church Hymnary (Presbyterian, 1893) (hymnary.org index).",
   "abc": "X:1\nT:One There Is Above All Others\nM:4/4\nL:1/4\nQ:1/4=88\nK:C\nc G A A | G3/2 F/ E C | G A/ B/ c B | A A G2 |\nw: One there is, ab- ove all oth- ers, Well de- _ serves the name of friend;\nw: Which of all our friends to save us, Could or _ would have shed their blood?\nw: Men, when raised to lof- ty sta- tions, Of- ten _ know their friends no more;\nw: Could we bear from one a- no- ther, What He _ dai- ly bears from us?\nw: O for grace our hearts to soft- en! Teach us, _ Lord, at length to love;\nc G A A | G3/2 F/ E C | G A/ B/ c B | A A G2 |\nw: His is love be- yond a bro- ther’s, Cost- ly, _ free, and knows no end:\nw: But our Je- sus died to have us Re- con- _ ciled, in Him to God:\nw: Slight and scorn their poor re- la- tions Though they _ val- ued them be- fore.\nw: Yet this glo- rious friend and bro- ther, Loves us _ though we treat Him thus:\nw: We, a- las! for- get too of- ten, What a _ friend we have ab- ove:\nd d d c/ d/ | e d/ c/ d2 | c G A/ B/ c | d d c2 |]\nw: They who once His _ kind- ness _ prove, Find it ev- _ er- last- ing love!\nw: This was bound- less _ love in- _ deed! Je- sus is _ a friend in need.\nw: But our Sav- ior _ al- ways _ owns Those whom He _ re- deemed with groans.\nw: Though for good we _ ren- der _ ill, He ac- counts _ us breth- ren still.\nw: But when home our _ souls are _ brought, We will love _ Thee as we ought.\n",
   "parts": {
-   "src": "hymnary.org MusicXML score (jesuslover2_0.xml)",
+   "src": "hymnary.org MusicXML score (hog106_0.xml)",
    "sig": "49-uljaqq",
    "alto": "0:1:64 1:1:67 2:1:65 3:1:65 4:1:62 5:1:59 7:1:60 8:1:62 9:1:62 11:1:60 12:1:62 13:1:64 14:0.5:62 14+0.5:0.5:60 15:2:59 16:1:60 17:1:64 18:1:65 19:1:65 20:1:62 21:1:62 23:1:60 24:1:62 25:1:62 27:1:60 28:1:62 29:1:64 30:0.5:62 30+0.5:0.5:60 31:2:59 32:1:67 33:1:69 34:1:67 35:1:67 37:1:67 38:1:67 40:2:67 41:1:64 42:1:67 43:1:65 45:1:64 46:1:69 47:0.5:67 47+0.5:0.5:65 48:2:64",
    "tenor": "0:1:55 1:1:60 2:1:60 3:1:62 4:1:55 4+1:1:55 6:1:55 7:1:52 8:1:55 9:0.5:54 10:0.5:55 11:1:55 12:1:55 13:1:55 14:1:54 15:2:55 16:1:55 17:1:60 18:1:60 19:1:62 20:1:55 20+1:1:55 22:1:55 23:1:52 24:1:55 25:0.5:54 26:0.5:55 27:1:55 28:1:55 29:1:55 30:1:54 31:2:55 32:1:59 33:0.5:62 33+0.5:0.5:60 34:1:59 35:0.5:60 36:0.5:59 37:1:60 38:0.5:59 39:0.5:60 40:2:59 41:1:60 42:1:60 43:1:60 45:1:60 46:1:60 47:1:59 48:2:60",
@@ -6750,6 +7164,60 @@ window.HYMN_SONGS = [
   }
  },
  {
+  "id": "mysteriousway",
+  "section": "Baptist",
+  "title": "God Moves in a Mysterious Way",
+  "psalm": "",
+  "tune": "DUNDEE",
+  "meter": "CM",
+  "credit": "Music: Scottish Psalter, 1615 · Words: William Cowper, in Twenty-Six Letters on Religious Subjects, by John Newton, 1774",
+  "source": "Music: public-domain MusicXML score of DUNDEE from hymnary.org (hymnary.org/media/fetch/128647; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/g/o/d/m/godmoves.htm), its syllable breaks laid under the melody note for note; stanzas 2, 5 left out (they do not fit the tune line for line). In The Baptist Hymnal (1883) (hymnary.org index).",
+  "abc": "X:1\nT:God Moves in a Mysterious Way\nM:4/4\nL:1/4\nQ:1/4=88\nK:Eb\nE | G A B E | F G A G | F E E D | E3 B |\nw: God moves in a mys- te- rious way His won- ders to per- form; He\nw: Ye fear- ful saints, fresh cour- age take; The clouds ye so much dread Are\nw: Judge not the Lord by fee- ble sense, But trust Him for His grace; Be-\nw: Blind un- be- lief is sure to err And scan His work in vain; God\ne d c B | B =A B G | F E E D | E3 |]\nw: plants His foot- steps in the sea And rides up- on the storm.\nw: big with mer- cy and shall break In bless- ings on your head.\nw: hind a frow- ning pro- vi- dence He hides a smil- ing face.\nw: is His own in- ter- pret- er, And He will make it plain.\n",
+  "parts": {
+   "src": "hymnary.org MusicXML score (mysteriousway_0.xml)",
+   "sig": "28-r8ap0q",
+   "alto": "0:1:58 1:1:63 2:1:63 3:1:63 4:1:58 5:1:61 6:1:61 7:1:63 8:1:63 9:1:62 10:1:60 11:1:60 12:1:58 13:3:58 14:1:63 15:1:67 16:1:65 17:1:63 18:1:65 19:1:67 20:1:65 21:1:62 22:1:63 23:1:60 24:0.5:55 24+0.5:0.5:56 25:1:58 26:1:58 27:3:58",
+   "tenor": "0:1:55 1:1:58 2:1:60 3:1:58 4:1:55 5:1:56 6:1:58 7:1:60 8:1:58 9:1:58 10:1:55 11:1:56 12:1:53 13:3:55 14:1:55 15:1:58 16:1:58 17:1:55 18:1:53 19:1:60 20:1:60 21:1:58 22:1:58 23:1:56 24:1:51 25:1:53 26:1:53 27:3:55",
+   "bass": "0:1:51 1:1:51 2:1:44 3:1:43 4:1:51 5:1:49 6:1:46 7:1:44 8:1:51 9:1:46 10:1:48 11:1:44 12:1:46 13:3:51 14:1:51 15:1:51 16:1:46 17:1:48 18:1:50 19:1:51 20:1:53 21:1:46 22:1:51 23:1:44 24:1:48 25:1:46 26:1:46 27:3:51"
+  }
+ },
+ {
+  "id": "joyoflovinghearts",
+  "section": "Baptist",
+  "title": "Jesus, Thou Joy of Loving Hearts",
+  "psalm": "",
+  "tune": "HESPERUS",
+  "meter": "LM",
+  "credit": "Music: Henry Baker, 1854 · Words: Bernard of Clairvaux, 12th Century ( Jesu dulcis memoria ). Translated from Latin to English by Ray Palmer, 1858. Published in The Poetical Works of Ray Palmer ( London : R. D. Dickinson, 1876), pages 104–05",
+  "source": "Music: public-domain MusicXML score of HESPERUS from hymnary.org (hymnary.org/media/fetch/131776; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/j/t/h/o/jthoujoy.htm), its syllable breaks laid under the melody note for note; stanzas 4, 5 left out (they do not fit the tune line for line). In The Baptist Hymnal (1883) (hymnary.org index).",
+  "abc": "X:1\nT:Jesus, Thou Joy of Loving Hearts\nM:3/4\nL:1/4\nQ:1/4=88\nK:F\nA A A | c2 F | G2 G | A3 | c c c | B2 G | A2 B | G3 |\nw: Je- sus, Thou Joy of lo- ving hearts, Thou Fount of life, Thou Light of men,\nw: Thy truth un- changed hath ev- er stood; Thou sav- est those that on Thee call;\nw: We taste Thee, O Thou liv- ing Bread, And long to feast up- on Thee still;\nG G G | G2 G | =B2 G | c3 | A A A | A G F | F2 E | F3 |]\nw: From the best bliss that earth im- parts, We turn un- filled _ to Thee a- gain.\nw: To them that seek Thee Thou art good, To them that find _ Thee all in all.\nw: We drink of Thee, the Fount- ain- head, And thirst our souls _ from Thee to fill.\n",
+  "parts": {
+   "src": "hymnary.org MusicXML score (jesusthoujoy_0.xml)",
+   "sig": "33-13vkh36",
+   "alto": "0:1:65 1:1:65 2:1:65 3:2:65 4:1:65 5:2:65 6:1:64 7:3:65 8:1:65 9:1:65 10:1:65 11:2:62 12:1:64 13:2:65 14:1:67 15:3:64 16:1:64 17:1:64 18:1:64 19:2:65 20:1:65 21:2:65 22:1:65 23:3:64 24:1:65 25:1:64 26:1:63 27:2:62 29:1:62 30:2:60 31:1:60 32:3:60",
+   "tenor": "0:1:60 1:1:60 2:1:60 3:2:60 4:1:60 5:2:62 6:1:60 7:3:60 8:1:60 9:1:60 10:1:60 11:2:62 12:1:60 13:2:60 14:1:62 15:3:60 16:1:60 17:1:60 18:1:60 19:2:62 20:1:62 21:2:62 22:1:59 23:3:60 24:1:60 25:1:60 26:1:60 27:2:58 29:1:57 30:1:55 30+1:1:57 31:1:58 32:3:57",
+   "bass": "0:1:53 1:1:53 2:1:53 3:2:45 4:1:45 5:2:46 6:1:48 7:3:53 8:1:57 9:1:57 10:1:57 11:2:55 12:1:48 13:2:53 14:1:46 15:3:48 16:1:48 17:1:48 18:1:48 19:2:47 20:1:47 21:2:43 22:1:55 23:3:48 24:1:53 25:1:53 26:1:53 27:2:46 29:1:47 30:2:48 31:1:48 32:3:53"
+  }
+ },
+ {
+  "id": "nowthedayisover",
+  "section": "Baptist",
+  "title": "Now the Day Is Over",
+  "psalm": "",
+  "tune": "MERRIAL",
+  "meter": "65.65",
+  "credit": "Music: Joseph Barnby, 1868 · Words: Sabine Baring-Gould, in The Church Times, February 16, 1867",
+  "source": "Music: public-domain MusicXML score of MERRIAL from hymnary.org (hymnary.org/media/fetch/132934; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/n/o/w/d/nowdayis.htm), its syllable breaks laid under the melody note for note; stanzas 3 left out (they do not fit the tune line for line). In The Baptist Hymnal (1883) (hymnary.org index).",
+  "abc": "X:1\nT:Now the Day Is Over\nM:4/4\nL:1/4\nQ:1/4=88\nK:A\nE E E E | E2 E2 | F F =F ^F/ G/ | F2 A2 |\nw: Now the day is ov- er, Night is draw- ing _ nigh, _\nw: Now the dark- ness ga- thers, Stars be- gin to _ peep, _\nw: Grant to lit- tle child- ren Vi- sions bright of _ Thee; _\nw: Com- fort those who suf- fer, Wat- ching late in _ pain; _\nw: Through the long night watch- es May Thine an- gels _ spread _\nw: When the morn- ing wak- ens, Then may I a- _ rise _\nA3/2 A/ G F | E2 E2 | E3/2 E/ E E | E4 |]\nw: Shadows of the ev- en- ing Steal a- cross the sky.\nw: Birds, and beasts and flow- ers Soon will be as- leep.\nw: Guard the sail- ors toss- ing On the deep, blue sea.\nw: Those who plan some ev- il From their sin re- strain.\nw: Their white wings ab- ove me, Wat- ching round my bed.\nw: Pure, and fresh, and sin- less In Thy ho- ly eyes.\n",
+  "parts": {
+   "src": "hymnary.org MusicXML score (nowthedayisover_0.xml)",
+   "sig": "24-1n80we",
+   "alto": "0:1:61 1:1:61 2:1:59 3:0.5:61 3+0.5:0.5:62 4:2:61 5:2:61 6:1:61 7:1:61 8:1:61 9:1:61 11:4:61 13:1.5:61 14:0.5:61 15:1:63 16:1:63 17:2:64 18:2:64 19:1.5:62 20:0.5:62 21:1:62 22:1:62 23:4:61",
+   "tenor": "0:1:57 1:1:57 2:1:56 3:1:56 4:1:57 4+1:1:52 5:2:57 6:1:57 7:1:57 8:1:56 9:1:59 11:1:57 11+1:1:61 12:1:66 12+1:1:64 13:1:63 14:1:54 16:1:57 17:2:56 18:2:57 19:1:57 19+1:1:56 21:1:54 22:1:56 23:4:57",
+   "bass": "0:1:57 1:1:52 2:1:56 3:1:52 4:2:57 5:1:49 5+1:1:45 6:1:42 7:1:45 8:1:49 9:1:49 11:4:54 13:1.5:47 14:0.5:47 15:1:47 16:1:47 17:1:52 17+1:1:50 18:1:49 18+1:1:48 19:1:47 19+1:1:47 21:1:47 22:1:47 23:4:45"
+  }
+ },
+ {
   "id": "spiritdescend",
   "section": "Presbyterian",
   "title": "Spirit of God, Descend upon My Heart",
@@ -6765,6 +7233,24 @@ window.HYMN_SONGS = [
    "alto": "0:2:60 1:1:60 2:1:60 3:2:62 4:2:60 5:1:60 6:1:60 7:1:60 8:1:59 9:4:60 10:2:64 11:1:63 12:1:66 13:1:64 13+1:1:67 14:2:67 15:1:67 16:1:62 17:1:64 18:1:66 19:4:67 20:2:62 21:1:62 22:1:62 23:2:65 24:2:65 25:1:65 26:1:65 27:1:65 28:1:65 29:4:65 30:2:64 31:1:65 32:1:67 33:1:67 34:1:65 35:1:64 36:1:65 37:2:64 38:2:65 39:4:64",
    "tenor": "0:2:55 1:1:55 2:1:55 3:2:55 4:2:55 5:1:53 6:1:55 7:1:57 8:1:55 9:4:55 10:1:57 10+1:1:55 11:1:54 12:1:59 13:2:59 14:2:61 15:1:62 16:1:59 17:1:60 18:1:60 19:4:59 20:2:59 21:1:59 22:1:59 23:2:62 24:2:60 25:1:59 26:1:60 27:1:62 28:1:57 29:4:59 30:1:60 30+1:1:57 31:1:59 32:1:60 33:1:60 34:1:60 35:1:60 36:1:60 37:2:60 38:2:59 39:4:60",
    "bass": "0:2:48 1:1:48 2:1:48 3:2:47 4:2:48 5:1:53 6:1:52 7:1:50 8:1:43 9:4:48 10:2:45 11:1:47 12:1:51 13:2:52 14:2:52 15:1:50 16:1:50 17:1:50 18:1:50 19:4:55 20:2:55 21:1:55 22:1:55 23:2:55 24:2:55 25:1:55 26:1:55 27:1:55 28:1:55 29:4:55 30:2:48 31:1:50 32:1:52 33:1:53 34:1:53 35:1:55 36:1:57 37:2:55 38:2:55 39:4:48"
+  }
+ },
+ {
+  "id": "thywaynotmine",
+  "section": "Baptist",
+  "title": "Thy Way, Not Mine, O Lord",
+  "psalm": "",
+  "tune": "ST. CECILIA (HAYNE)",
+  "meter": "66.66",
+  "credit": "Music: Leighton George Hayne, 1863 · Words: Horatius Bonar, Hymns of Faith and Hope 1857",
+  "source": "Music: public-domain MusicXML score of ST. CECILIA (HAYNE) from hymnary.org (hymnary.org/media/fetch/135290; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/t/w/a/y/twaynotm.htm), its syllable breaks laid under the melody note for note. In The Baptist Hymnal (1883) (hymnary.org index).",
+  "abc": "X:1\nT:Thy Way, Not Mine, O Lord\nM:none\nL:1/4\nQ:1/4=88\nK:G\nd | c B B A | G3 B | A F F E | D3 A |\nw: Thy way, not mine, O Lord, Ho- we- ver dark it be! Lead\nw: Smooth let it be or rough, It will be still the best; Win-\nw: I dare not choose my lot; I would not, if I might; Choose\nw: The king- dom that I seek Is Thine; so let the way That\nw: Take Thou my cup, and it With joy or sor- row fill, As\nw: Choose Thou for me my friends, My sick- ness or my health; Choose\nA B c d | B3 G | E G A A | G3 |]\nw: me by Thine own hand, Choose out the path for me.\nw: ding or straight, it leads Right on- ward to Thy rest.\nw: Thou for me, my God, So I shall walk a- right.\nw: leads to it be Thine, Else I must sure- ly stray.\nw: best to Thee may seem; Choose Thou my good and ill.\nw: Thou my cares for me My po- ver- ty or wealth.\n",
+  "parts": {
+   "src": "hymnary.org MusicXML score (thywaynotmine_2.xml)",
+   "sig": "24-se46pz",
+   "alto": "0:1:67 1:1:67 2:1:67 3:1:67 4:1:66 5:3:67 6:1:61 7:1:62 8:1:62 9:1:62 10:1:61 11:3:62 12:1:66 13:1:66 14:1:67 15:1:67 16:1:66 17:3:67 18:1:62 19:1:60 20:1:67 21:1:67 22:1:66 23:3:67",
+   "tenor": "0:1:59 1:1:60 2:1:62 3:1:62 4:1:60 5:3:59 6:1:55 7:1:57 8:1:57 9:1:57 10:1:55 11:3:54 12:1:62 13:1:62 14:1:62 15:1:64 16:1:62 17:3:62 18:1:55 19:1:55 20:1:62 21:1:62 22:1:60 23:3:59",
+   "bass": "0:1:55 1:1:52 2:1:55 3:1:50 4:1:50 5:3:52 6:1:52 7:1:54 8:1:50 9:1:45 10:1:45 11:3:50 12:1:50 13:1:60 14:1:59 15:1:57 16:1:50 17:3:55 18:1:47 19:1:48 20:1:47 21:1:50 22:1:50 23:3:43"
   }
  },
  {
@@ -6840,6 +7326,294 @@ window.HYMN_SONGS = [
   }
  },
  {
+  "id": "hog1",
+  "section": "Hymnology",
+  "title": "Sing Praise to God Who Reigns Above",
+  "psalm": "",
+  "tune": "MIT FREUDEN ZART",
+  "meter": "",
+  "credit": "Music: traditional · Words: Johann J. Schütz, Christliches Gedenckbüchlein ( Frankfurt am Main, Germany: 1675 ) ( Sei Lob und Ehr dem höchsten Gut ). Translated from German to English by Frances E. Cox, 1864",
+  "source": "Music: public-domain MusicXML score of SING PRAISE TO GOD WHO REIGNS ABOVE from hymnary.org (hymnary.org/media/fetch/99411; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/s/i/n/g/p/singprat.htm), its syllable breaks laid under the melody note for note; stanzas 2, 3, 4, 5 left out (they do not fit the tune line for line).",
+  "abc": "X:1\nT:Sing Praise to God Who Reigns Above\nM:3/2\nL:1/4\nQ:1/2=56\nK:D\nD2 | F G A2 d2 | c B A2 B3/2 A/ | G F E2 F G | E2 D2 D2 |\nw: Sing praise to God who reigns ab- ove, The _ God of all cre- _ ation, The God\nF G A2 d2 | c B A2 B3/2 A/ |\nw: of pow- er, the God of love, The _\nG F |\nw: God of\nE2 F G | E2 D2 d2 |\nw: our sal- _ va- tion. With\nc B A2 d2 | c B A2 A2 | D E F2 D2 | F ^G A2 A2 |\nw: heal- ing balm my soul is filled And ev- ery faith- less mur- mur stilled: To\nB G E2 F G | E2 D2 |]\nw: God all praise and _ glo- ry.\n",
+  "parts": {
+   "src": "hymnary.org MusicXML score (hog1_2.xml)",
+   "sig": "58-1uqcumc",
+   "alto": "0:2:57 1:1:62 2:1:61 3:2:62 4:2:62 5:1:62 6:1:62 7:2:62 8:2:63 10:1:64 11:1:62 12:2:61 13:2:62 15:1:62 15+1:1:61 16:2:62 17:2:57 18:1:62 19:1:61 20:2:62 21:2:62 22:1:62 23:1:62 24:2:62 25:2:63 27:1:64 28:1:62 29:2:61 30:2:62 32:1:62 32+1:1:61 33:2:62 34:2:66 35:1:66 36:1:61 37:2:61 38:2:62 39:1:64 40:1:64 41:2:61 42:2:61 43:1:62 44:1:61 45:2:62 46:2:62 47:1:62 48:1:62 49:2:61 50:2:62 51:1:62 52:1:62 53:2:61 54:2:62 56:1:62 56+1:1:61 57:2:57",
+   "tenor": "0:2:54 1:1:57 2:1:57 3:2:57 4:2:57 5:1:57 6:1:55 7:2:54 8:1:54 8+1:1:59 10:1:59 11:1:57 12:2:57 13:1:57 14:1:59 15:1.5:57 15+1.5:0.5:55 16:2:54 17:2:54 18:1:57 19:1:57 20:2:57 21:2:57 22:1:57 23:1:55 24:2:54 25:1:54 25+1:1:59 27:1:59 28:1:57 29:2:57 30:1:57 31:1:59 32:1.5:57 32+1.5:0.5:55 33:2:54 34:2:59 35:1:57 36:1:56 37:2:54 38:2:54 39:1:57 40:1:56 41:2:57 42:2:57 43:1:57 44:1:55 45:2:57 46:2:54 47:1:59 48:1:59 49:2:57 50:1:62 50+1:1:60 51:1:59 52:1:59 53:2:57 54:1:57 55:1:59 56:1.5:57 56+1.5:0.5:55 57:2:54",
+   "bass": "0:2:50 1:1:50 2:1:52 3:2:54 4:2:42 5:1:43 6:1:47 7:1:50 7+1:1:48 8:2:47 10:1:52 11:0.5:54 11+0.5:0.5:55 12:1:57 12+1:1:55 13:1:54 14:1:52 15:1:57 15+1:1:45 16:2:50 17:2:50 18:1:50 19:1:52 20:2:54 21:2:42 22:1:43 23:1:47 24:1:50 24+1:1:48 25:2:47 27:1:52 28:0.5:54 28+0.5:0.5:55 29:1:57 29+1:1:54 30:1:54 31:1:52 32:1:57 32+1:1:45 33:2:50 34:2:47 35:1:49 36:1:49 37:2:54 38:2:47 39:1:49 40:1:52 41:2:57 42:1:57 42+1:1:55 43:1:54 44:1:52 45:2:50 46:1:50 46+1:1:49 47:1:47 48:1:52 49:1:57 49+1:1:55 50:2:54 51:1:55 52:1:52 53:1:57 53+1:1:55 54:1:54 55:1:52 56:2:45 57:2:50"
+  }
+ },
+ {
+  "id": "hog14",
+  "section": "Hymnology",
+  "title": "Give to Our God Immortal Praise",
+  "psalm": "",
+  "tune": "WARRINGTON",
+  "meter": "LM",
+  "credit": "Music: Ralph Harrison, 1784 · Words: Isaac Watts, The Psalms of David 1719",
+  "source": "Music: public-domain MusicXML score of WARRINGTON from hymnary.org (hymnary.org/media/fetch/130127; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/g/i/v/e/t/givetour.htm), its syllable breaks laid under the melody note for note.",
+  "abc": "X:1\nT:Give to Our God Immortal Praise\nM:3/4\nL:1/4\nQ:1/4=88\nK:Bb\nF F E | D F B | B3/2 c/ A | B2 d | c2 c | d2 c/ B/ | A2 G | F3 |\nw: Give to our God _ im- mor- _ tal praise; Mer- cy and truth are _ all His ways:\nw: Give to the Lord _ of lords _ re- nown, The King of kings with _ glo- ry crown:\nw: He built the earth, _ He spread _ the sky, And fixed the star- ry _ lights on high:\nw: He fills the sun _ with morn- _ ing light; He bids the moon di- _ rect the night:\nw: The Jews He freed _ from Pha- _ raoh’s hand, And brought them to the _ pro- mised land:\nw: He saw the Gen- _ tiles dead _ in sin, And felt His pi- ty _ work with- in:\nB B F | G2 B | e3/2 d/ c/ B/ | B A G | F2 E | D2 B | B3/2 c/ A | B3 |]\nw: Won- ders of grace to God _ be- _ long, _ Re- peat His mer- _ cies in your song.\nw: His mer- cies ev- er shall _ en- _ dure, _ When lords and kings _ are known no more.\nw: Won- ders of grace to God _ be- _ long, _ Re- peat His mer- _ cies in your song.\nw: His mer- cies e- ver shall _ en- _ dure, _ When suns and moons _ shall shine no more.\nw: Won- ders of grace to God _ be- _ long, _ Re- peat His mer- _ cies in your song.\nw: His mer- cies ev- er shall _ en- _ dure, _ When death and sin _ shall reign no more.\n",
+  "parts": {
+   "src": "hymnary.org MusicXML score (hog14_0.xml)",
+   "sig": "39-ps6yks",
+   "alto": "0:1:62 1:1:62 2:1:60 3:1:62 4:1:60 5:1:62 6:2:63 8:1:60 9:2:62 10:1:65 11:2:65 12:1:65 13:1:65 13+1:1:63 14:0.5:65 15:0.5:67 16:2:65 17:1:64 18:3:65 19:1:62 20:1:65 21:1:62 22:2:63 23:1:65 24:1.5:63 25:0.5:65 26:1:67 28:2:65 30:1:63 31:2:62 32:1:60 33:2:62 34:0.5:62 34+0.5:0.5:63 35:1:65 36:1:67 38:3:65",
+   "tenor": "0:1:58 1:1:58 2:1:57 3:1:58 4:1:60 5:1:58 6:2:55 8:1:53 9:2:53 10:1:58 11:1:58 11+1:1:57 12:1:57 13:2:58 14:0.5:60 15:0.5:62 16:2:60 17:0.5:58 17+0.5:0.5:58 18:3:57 19:1:58 20:1:58 21:1:58 22:2:58 23:1:58 24:1:60 25:1:55 28:1:62 29:1:60 30:0.5:58 30+0.5:0.5:60 31:1:62 31+1:1:58 32:1:57 33:2:58 34:0.5:58 34+0.5:0.5:60 35:1:62 35+1:1:63 37:1:60 38:3:62",
+   "bass": "0:1:46 1:1:50 2:1:53 3:1:58 4:1:57 5:1:55 6:1:51 6+1:1:48 8:1:53 9:2:46 10:1:46 11:2:53 12:1:53 13:1:46 13+1:1:43 14:0.5:45 15:0.5:46 16:2:48 17:1:48 18:3:53 19:1:46 20:1:50 21:1:46 22:2:51 23:1:50 24:1.5:48 25:0.5:50 26:1:51 28:2:53 30:0.5:55 30+0.5:0.5:57 31:1:58 31+1:1:50 32:1:53 33:1:46 33+1:1:50 34:1:55 35:1:53 35+1:1:51 37:1:53 38:3:46"
+  }
+ },
+ {
+  "id": "hog24",
+  "section": "Hymnology",
+  "title": "O My Soul, Bless God the Father",
+  "psalm": "",
+  "tune": "STUTTGART",
+  "meter": "87.87",
+  "credit": "Music: Christian Friedrich Witt, Psalmodia Sacra, 1715 · Words: From the United Presbyterian Book of Psalms, 1871",
+  "source": "Music: public-domain MusicXML score of STUTTGART from hymnary.org (hymnary.org/media/fetch/129638; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/o/m/y/s/omysoulb.htm), its syllable breaks laid under the melody note for note.",
+  "abc": "X:1\nT:O My Soul, Bless God the Father\nM:4/4\nL:1/4\nQ:1/4=88\nK:G\nD D G G | A A B G | d d e c | A d B2 |\nw: O my soul, bless God the Fa- ther; All with- in me bless His name;\nw: Who for- gives all thy trans- gress- ions, Thy dis- eas- es all who heals;\nw: Far as east from west is dist- ant, He has put a- way our sin;\nw: As it was with- out be- gin- ning, So it lasts with- out an end;\nw: Unto such as keep His co- ve- nant And are stead- fast in His way;\nw: Bless the Fa- ther, all His crea- tures, E- ver un- der His con- trol,\nB B A B | G A G F | G E D G | G F G2 |]\nw: Bless the Fa- ther, and for- get not All His mer- cies to pro- claim.\nw: Who re- deems you from de- struct- ion, Who with you so kind- ly deals.\nw: Like the pi- ty of a fa- ther Has the Lord’s com- pas- sion been.\nw: To their child- ren’s child- ren ev- er Shall His right- eous- ness ex- tend.\nw: Un- to those who still re- mem- ber His com- mand- ments, and ob- ey.\nw: All through- out His vast do- min- ion; Bless the Fa- ther, O my soul.\n",
+  "parts": {
+   "src": "hymnary.org MusicXML score (hog24_3.xml)",
+   "sig": "30-1y0719o",
+   "alto": "0:1:62 1:1:62 2:1:59 3:1:59 4:1:64 5:1:62 6:1:62 7:1:62 8:1:62 9:1:67 10:1:67 11:1:67 12:1:67 13:1:66 14:2:67 15:1:67 16:1:67 17:1:66 18:1:66 19:1:59 20:1:64 21:1:62 22:1:62 23:1:62 24:1:60 25:1:59 26:1:62 27:1:62 28:1:62 29:2:62",
+   "tenor": "0:1:59 1:1:57 2:1:55 3:1:55 4:1:55 5:1:54 6:1:55 7:1:59 8:1:55 9:1:59 10:1:60 11:1:64 12:1:62 13:1:62 14:2:62 15:1:64 16:1:59 17:1:60 18:1:59 19:1:59 20:1:57 21:1:57 22:1:57 23:1:55 24:1:55 25:1:62 26:1:59 27:0.5:57 27+0.5:0.5:59 28:1:60 29:2:59",
+   "bass": "0:1:55 1:1:54 2:1:52 3:1:50 4:1:48 5:1:50 6:1:55 7:1:43 8:1:47 9:1:43 10:1:48 11:1:45 12:1:50 13:1:50 14:2:55 15:1:52 16:1:52 17:1:52 18:1:51 19:1:52 20:1:49 21:1:50 22:1:48 23:1:47 24:1:48 25:1:43 26:0.5:47 26+0.5:0.5:48 27:1:50 28:1:50 29:2:43"
+  }
+ },
+ {
+  "id": "hog63",
+  "section": "Hymnology",
+  "title": "I Asked the Lord That I Might Grow",
+  "psalm": "",
+  "tune": "ABENDS",
+  "meter": "LM",
+  "credit": "Music: Herbert Stanley Oakeley, 1874 · Words: John Newton, Olney Hymns ( London : W. Oliver, 1779 ), Book 3, number 36. Prayer answered by crosses",
+  "source": "Music: public-domain MusicXML score of ABENDS from hymnary.org (hymnary.org/media/fetch/131055; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/i/a/s/k/iaskedtl.htm), its syllable breaks laid under the melody note for note; stanzas 4 left out (they do not fit the tune line for line).",
+  "abc": "X:1\nT:I Asked the Lord That I Might Grow\nM:3/4\nL:1/4\nQ:1/4=88\nK:Ab\nE A G | F2 F | d2 c | B3 | B c d | e2 A | G2 F | E3 |\nw: I asked the Lord that I might grow In faith, and love, and ev- ery grace;\nw: ’Twas He who taught me thus to pray, And He, I trust, has ans- wered prayer!\nw: I hoped that in some fa- vored hour, At once He’d an- swer my re- quest;\nw: Yea more, with His own hand He seemed In- tent to ag- gra- vate my woe;\nw: Lord, why is this, I trem- bling cried, Wilt thou pur- sue Thy worm to death?\nw: These in- ward tri- als I em- ploy, From self, and pride, to set thee free;\nG A B | d2 c | B2 A | G3 | A B c | e2 d | c2 B | A3 |]\nw: Might more of His sal- va- tion know, And seek, more ear- nest- ly, His face.\nw: But it has been in such a way, As al- most drove me to des- pair.\nw: And by His love’s con- strain- ing pow’r, Sub- due my sins, and give me rest.\nw: Crossed all the fair de- signs I schemed, Blas- ted my gourds, and laid me low.\nw: ’Tis in this way, the Lord re- plied, I ans- wer prayer for grace and faith.\nw: And break thy schemes of earth- ly joy, That thou may’st find thy all in Me.\n",
+  "parts": {
+   "src": "hymnary.org MusicXML score (hog63_0.xml)",
+   "sig": "32-1p7nn",
+   "alto": "0:1:60 1:1:61 2:1:63 3:1:63 3+1:1:61 4:1:65 5:1:65 5+1:1:67 6:1:68 7:3:63 8:1:63 9:1:68 10:1:67 11:2:63 12:1:63 13:2:63 14:1:62 15:3:63 16:1:63 17:1:63 18:1:63 19:2:65 20:1:63 21:1:65 21+1:1:67 22:0.5:60 22+0.5:0.5:62 23:3:63 24:1:63 25:1:63 26:1:63 27:1:63 27+1:1:66 28:1:65 29:1:63 29+1:1:68 30:1:67 31:3:68",
+   "tenor": "0:1:56 1:1:56 2:1:56 3:2:56 4:1:57 5:1:53 5+1:1:58 6:1:56 7:3:55 8:1:55 9:1:56 10:1:58 11:2:60 12:0.5:51 12+0.5:0.5:53 13:1:55 13+1:1:58 14:1:56 15:3:55 16:1:61 17:1:60 18:1:58 19:2:56 20:1:60 21:2:61 22:1:56 23:3:58 24:1:56 25:1:55 26:1:56 27:2:56 28:0.5:56 28+0.5:0.5:58 29:1:60 29+1:1:63 30:1:61 31:3:60",
+   "bass": "0:1:44 1:1:46 2:1:48 3:2:49 4:1:48 5:2:46 6:0.5:48 6+0.5:0.5:49 7:3:51 8:1:49 9:1:48 10:1:48 11:2:44 12:1:48 13:2:46 14:1:46 15:3:51 16:1:58 17:1:56 18:1:55 19:2:56 20:1:56 21:1:49 21+1:1:51 22:1:53 23:2:51 23+2:1:49 24:1:48 25:1:46 26:1:44 27:2:48 28:1:49 29:2:51 30:1:51 31:3:56"
+  }
+ },
+ {
+  "id": "hog85",
+  "section": "Hymnology",
+  "title": "My Song Forever Shall Record",
+  "psalm": "",
+  "tune": "MARYTON",
+  "meter": "LM",
+  "credit": "Music: Henry Percy Smith, 1874 · Words: From The Psalter ( Pittsburgh, Pennsylvania: United Presbyterian Board of Publication, 1912 ), number 241",
+  "source": "Music: public-domain MusicXML score of MARYTON from hymnary.org (hymnary.org/media/fetch/132695; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/m/s/o/n/msongfsr.htm), its syllable breaks laid under the melody note for note; stanzas 3, 4, 7, 10 left out (they do not fit the tune line for line).",
+  "abc": "X:1\nT:My Song Forever Shall Record\nM:3/4\nL:1/4\nQ:1/4=88\nK:Eb\nG G G | A2 G | F2 F | F3 | B B A | G2 e | e d c | B3 |\nw: My song for- ev- er shall re- cord The ten- der mer- cies of _ the Lord;\nw: I sing of mer- cies that en- dure, Fo- re- ver buil- ded firm _ and sure,\nw: The heav’ns shall join in glad ac- cord To praise Thy won- drous works, _ O Lord;\nw: Who in the heav’n- ly dwel- lings fair Can with the Lord Him- self _ com- pare?\nw: O Thou Je- ho- vah, God of hosts, What migh- ty one Thy like- _ ness boasts?\nw: The swell- ing sea ob- eys Thy will, Its ang- ry waves Thy voice _ can still;\nB c B | e2 d | d c B | A2 G | F2 E | A2 G | F C D | E3 |]\nw: Thy faith- ful- ness will I _ pro- claim, And ev- ery age shall know _ Thy name.\nw: Of faith- ful- ness that nev- _ er dies, Es- ta- blished change- less in _ the skies.\nw: Thy faith- ful- ness shall praise _ comm- and Where ho- ly ones as- sem- _ bled stand.\nw: Or who a- mong the migh- _ ty shares The like- ness that Je- ho- _ vah bears?\nw: In all Thy works and vast _ de- signs Thy faith- ful- ness for- ev- _ er shines.\nw: Thy migh- ty e- ne- mies _ are slain, Thy foes re- sist Thy pow’r _ in vain.\n",
+  "parts": {
+   "src": "hymnary.org MusicXML score (hog85_0.xml)",
+   "sig": "35-19lij0r",
+   "alto": "0:1:63 1:1:63 2:1:63 3:2:63 4:1:63 5:2:60 6:1:60 7:3:65 8:1:62 9:1:63 10:1:65 11:2:63 12:1:67 13:1:67 14:1:65 15:1:63 16:3:62 17:1:65 18:1:65 19:1:65 20:2:63 21:1:63 22:2:63 24:1:63 25:1:63 25+1:1:62 26:1:63 27:2:62 28:1:60 29:2:65 30:1:63 31:2:60 33:1:58 34:3:58",
+   "tenor": "0:1:58 1:1:58 2:1:58 3:2:60 4:1:58 5:2:60 6:1:53 7:3:58 8:1:58 9:1:58 10:1:58 11:2:58 12:1:58 13:2:57 15:1:57 16:3:58 17:1:62 18:1:60 19:1:62 20:2:58 21:1:58 22:2:56 24:1:58 25:2:58 26:1:58 27:2:56 28:1:55 29:2:58 30:1:58 31:2:56 33:1:53 34:3:55",
+   "bass": "0:1:51 1:1:51 2:1:51 3:2:51 4:1:51 5:2:44 6:1:45 7:3:46 8:1:46 9:1:48 10:1:50 11:2:51 12:1:48 13:2:53 15:1:53 16:3:46 17:1:56 18:1:56 19:1:56 20:2:55 21:1:55 22:2:56 24:1:55 25:2:53 26:1:51 27:2:46 28:1:48 29:2:50 30:1:51 31:1:44 32:1:41 33:1:46 34:3:51"
+  }
+ },
+ {
+  "id": "hog103",
+  "section": "Hymnology",
+  "title": "I Greet Thee, Who My Sure Redeemer Art",
+  "psalm": "",
+  "tune": "TOULON",
+  "meter": "10.10.10.10",
+  "credit": "Music: Genevan Psalter, 1551 · Words: Attributed to John Calvin, 1545 ( Je Te Salue Mon Certain Rédempteur ). Translated from French to English by Elizabeth L. Smith in Schaff ’s Christ in Song, 1870",
+  "source": "Music: public-domain MusicXML score of TOULON from hymnary.org (hymnary.org/media/fetch/131128; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/i/g/r/e/igreet.htm), its syllable breaks laid under the melody note for note.",
+  "abc": "X:1\nT:I Greet Thee, Who My Sure Redeemer Art\nM:4/4\nL:1/4\nQ:1/4=88\nK:F\nF2 G A | B2 A2 | G F F E | F4 | A2 B c | d2 c2 | B A G F | G4 |\nw: I greet Thee, who my sure Re- deem- er art, My on- ly trust and Sa- vior of my heart,\nw: Thou art the King of mer- cy and of grace, Reig- ning om- ni- po- tent in ev- ery place;\nw: Thou art the life, by which a- lone we live, And all our sub- stance and our strength re- ceive;\nw: Thou hast the true and per- fect gen- tle- ness, No harsh- ness hast Thou and no bit- ter- ness;\nw: Our hope is in no oth- er save in Thee; Our faith is built up- on Thy pro- mise free;\nc2 c B | A2 G2 | A c c =B | c4 | A2 G F | E F G B | A2 G2 | F4 |]\nw: Who pain didst un- der- go for my poor sake; I pray Thee from our hearts all cares to take.\nw: So come, O King, and our whole be- ing sway; Shine on us with the light of Thy pure day.\nw: Sustain us by Thy faith and by Thy pow- er, And give us strength in ev- ery try- ing hour.\nw: O grant to us the grace we find in Thee, That we may dwell in per- fect u- ni- ty.\nw: Lord, give us peace, and make us calm and sure, That in Thy strength we ev- er- more en- dure.\n",
+  "parts": {
+   "src": "hymnary.org MusicXML score (hog103_0.xml)",
+   "sig": "40-1nbxav6",
+   "alto": "0:2:60 1:1:64 2:1:65 3:2:65 4:2:65 5:1:64 6:1:62 7:1:62 8:1:60 9:4:60 10:2:65 11:1:65 12:1:65 13:2:65 14:2:65 15:1:64 16:1:65 17:1:62 18:1:62 19:4:64 20:2:60 21:1:60 22:1:64 23:2:65 24:2:67 25:1:65 26:1:67 27:1:67 28:1:67 29:4:64 30:2:65 31:1:64 32:1:62 33:1:61 34:1:62 35:1:62 36:1:67 37:2:65 38:2:64 39:4:65",
+   "tenor": "0:2:57 1:1:60 2:1:60 3:2:62 4:2:60 5:1:60 6:1:57 7:1:58 8:1:55 9:4:57 10:2:60 11:1:58 12:1:57 13:2:58 14:2:57 15:1:58 16:1:60 17:1:58 18:1:57 19:4:60 20:2:53 21:1:53 22:1:55 23:2:57 24:2:60 25:1:60 26:1:60 27:1:62 28:1:62 29:4:60 30:2:53 31:1:60 32:1:57 33:1:57 34:1:57 35:1:58 36:1:62 37:3:60 38+1:1:58 39+1:4:57",
+   "bass": "0:2:53 1:1:48 2:1:53 3:2:46 4:2:53 5:1:48 6:1:50 7:1:46 8:1:48 9:4:41 10:2:53 11:1:50 12:1:48 13:2:46 14:2:53 15:1:55 16:1:53 17:1:46 18:1:50 19:4:48 20:2:45 21:1:45 22:1:48 23:2:53 24:2:52 25:1:53 26:1:52 27:1:55 28:1:43 29:4:48 30:2:53 31:1:48 32:1:50 33:1:45 34:1:50 35:1:46 36:1:43 37:2:48 38+1:2:48 39+1:4:41"
+  }
+ },
+ {
+  "id": "hog106",
+  "section": "Hymnology",
+  "title": "Let Us Love and Sing and Wonder",
+  "psalm": "",
+  "tune": "ALL SAINTS OLD",
+  "meter": "87.87.77",
+  "credit": "Music: Gesangbuch (Darmstadt, German · Words: John Newton, Twenty Six Letters on Religious Subjects, by Omicron 1774, alt",
+  "source": "Music: public-domain MusicXML score of ALL SAINTS OLD from hymnary.org (hymnary.org/media/fetch/132000; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/l/e/t/u/letuslov.htm), its syllable breaks laid under the melody note for note; stanzas 3 left out (they do not fit the tune line for line).",
+  "abc": "X:1\nT:Let Us Love and Sing and Wonder\nM:4/4\nL:1/4\nQ:1/4=88\nK:C\nc G A A | G3/2 F/ E C | G A/ B/ c B | A A G2 |\nw: Let us love and sing and won- der, Let us _ praise the Sav- ior’s name!\nw: Let us love the Lord who bought us, Pi- tied _ us when e- ne- mies,\nw: Let us won- der, grace and jus- tice Join and _ point to mer- cy’s store;\nw: Let us praise, and join the chor- us Of the _ saints en- throned on high;\nw: Hark! the name of Je- sus, sound- ed Loud, from _ gold- en harps ab- ove!\nc G A A | G3/2 F/ E C | G A/ B/ c B | A A G2 |\nw: He has hushed the law’s loud thun- der, He has _ quenched Mount Si- nai’s flame.\nw: Called us by His grace, and taught us, Gave us _ ears and gave us eyes:\nw: When through grace in Christ our trust is, Jus- tice _ smiles and asks no more:\nw: Here they trust- ed Him be- fore us, Now their _ prais- es fill the sky:\nw: Lord, we blush, and are con- found- ed, Faint our _ prais- es, cold our love!\nd d d c/ d/ | e d/ c/ d2 | c G A/ B/ c | d d c2 |]\nw: He has washed us _ with His _ blood, He has brought _ us nigh to God.\nw: He has washed us _ with His _ blood, He pre- sents _ our souls to God.\nw: He who washed us _ with His _ blood Has se- cured _ our way to God.\nw: Thou hast washed us _ with Thy _ blood; Thou art wor- _ thy, Lamb of God!\nw: Wash our souls and _ songs with _ blood, For by Thee _ we come to God.\n",
+  "parts": {
+   "src": "hymnary.org MusicXML score (hog106_0.xml)",
+   "sig": "49-uljaqq",
+   "alto": "0:1:64 1:1:67 2:1:65 3:1:65 4:1:62 5:1:59 7:1:60 8:1:62 9:1:62 11:1:60 12:1:62 13:1:64 14:0.5:62 14+0.5:0.5:60 15:2:59 16:1:60 17:1:64 18:1:65 19:1:65 20:1:62 21:1:62 23:1:60 24:1:62 25:1:62 27:1:60 28:1:62 29:1:64 30:0.5:62 30+0.5:0.5:60 31:2:59 32:1:67 33:1:69 34:1:67 35:1:67 37:1:67 38:1:67 40:2:67 41:1:64 42:1:67 43:1:65 45:1:64 46:1:69 47:0.5:67 47+0.5:0.5:65 48:2:64",
+   "tenor": "0:1:55 1:1:60 2:1:60 3:1:62 4:1:55 4+1:1:55 6:1:55 7:1:52 8:1:55 9:0.5:54 10:0.5:55 11:1:55 12:1:55 13:1:55 14:1:54 15:2:55 16:1:55 17:1:60 18:1:60 19:1:62 20:1:55 20+1:1:55 22:1:55 23:1:52 24:1:55 25:0.5:54 26:0.5:55 27:1:55 28:1:55 29:1:55 30:1:54 31:2:55 32:1:59 33:0.5:62 33+0.5:0.5:60 34:1:59 35:0.5:60 36:0.5:59 37:1:60 38:0.5:59 39:0.5:60 40:2:59 41:1:60 42:1:60 43:1:60 45:1:60 46:1:60 47:1:59 48:2:60",
+   "bass": "0:1:48 1:1:52 2:1:53 3:0.5:50 3+0.5:0.5:48 4:1:47 4+1:1:43 6:1:48 7:1:48 8:1:47 9:0.5:50 10:0.5:55 11:1:52 12:1:50 13:1:48 14:1:50 15:2:55 16:1:52 17:1:48 18:1:53 19:0.5:50 19+0.5:0.5:48 20:1:47 20+1:1:43 22:1:48 23:1:48 24:1:47 25:0.5:50 26:0.5:55 27:1:52 28:1:50 29:1:48 30:1:50 31:2:43 32:1:55 33:1:54 34:0.5:55 34+0.5:0.5:53 35:0.5:52 36:0.5:50 37:1:48 38:0.5:55 39:0.5:52 40:2:55 41:1:57 42:1:52 43:1:53 45:1:57 46:1:53 47:1:55 48:2:48"
+  }
+ },
+ {
+  "id": "hog113",
+  "section": "Hymnology",
+  "title": "Join All the Glorious Names",
+  "psalm": "",
+  "tune": "DARWALL’S 148TH",
+  "meter": "66.66.88",
+  "credit": "Music: John Darwall, 1770 · Words: Isaac Watts, Hymns and Sacred Songs 1709",
+  "source": "Music: public-domain MusicXML score of DARWALL’S 148TH from hymnary.org (hymnary.org/media/fetch/131714; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/j/o/i/n/joinatgn.htm), its syllable breaks laid under the melody note for note; stanzas 10, 12 left out (they do not fit the tune line for line).",
+  "abc": "X:1\nT:Join All the Glorious Names\nM:4/4\nL:1/4\nQ:1/4=88\nK:D\nD | F D A F | d3 c | B A G F | E3 E |\nw: Join all the glo- rious names Of wis- dom, love, and pow’r, That\nw: But O what gen- tle terms, What con- des- cend- ing ways, Doth\nw: Ar- rayed in mor- tal flesh, He like an an- gel stands, And\nw: Great Pro- phet of my God, My tongue would bless Thy name, By\nw: Be Thou my coun- se- lor, My pat- tern, and my guide, And\nw: I love my shep- herd’s voice, His watch- ful eyes shall keep My\nF D B A | ^G E e d | c2 B2 | A3 A |\nw: ev- er mor- tals knew, That an- gels ev- er bore: All\nw: our Re- deem- er use To teach His heav'n- ly grace! Mine\nw: holds the pro- mis- es And par- dons in His hands; Com-\nw: Thee the joy- ful news Of our sal- va- tion came, The\nw: through this de- sert land Still keep me near thy side: Nor\nw: wand- 'ring soul a- mong The thou- sands of His sheep: He\nB2 c2 | d3 D | E F G A | B c d e | d2 c2 | d3 |]\nw: are too mean to speak His worth, Too mean to set my Sav- ior forth.\nw: eyes with joy and won- der see What forms of love He bears for me.\nw: mis- sioned from His Fa- ther's throne To make His grace to mor- tals known.\nw: joy- ful news of sin for- giv’n Of hell sub- dued, and peace with Heav’n.\nw: let my feet e’er run as- tray Nor rove nor seek the crook- ed way.\nw: feeds His flock, He calls their names, His bo- som bears the ten- der lambs.\n",
+  "parts": {
+   "src": "Open Hymnal Project (openhymnal.org, public domain), SATB setting of “On What Has Now Been Sown”",
+   "sig": "40-z938ob",
+   "alto": "0:1:57 1:1:62 2:1:62 3:1:64 4:1:66 5:3:66 6:1:66 7:1:67 8:1:62 9:1:61 10:1:62 11:3:61 12:1:61 13:1:62 14:1:62 15:1:66 16:1:64 17:1:64 18:1:64 19:1:64 20:1:66 21:3:64 22+1:1:62 23:3:61 24:1:62 25:2:62 26:2:67 27:3:66 28:1:62 29:1:61 30:1:62 31:1:62 32:1:62 33:1:62 34:1:67 35:1:66 36:1:64 37:2:66 38:2:67 39:3:66",
+   "tenor": "0:1:54 1:1:57 2:1:54 3:1:57 4:1:57 5:3:62 6:1:62 7:1:62 8:1:57 9:1:57 10:1:57 11:3:57 12:1:57 13:1:57 14:1:54 15:1:62 16:1:61 17:1:59 18:1:56 19:1:57 20:1:57 21:2:57 22:2:56 23:3:57 24:1:54 25:2:55 26:2:55 27:3:57 28:1:57 29:1:55 30:1:57 31:1:55 32:1:54 33:1:55 34:1:55 35:1:57 36:1:59 37:2:57 38:2:57 39:3:57",
+   "bass": "0:1:50 1:1:50 2:1:50 3:1:49 4:1:50 5:3:59 6:1:57 7:1:55 8:1:54 9:1:52 10:1:50 11:3:45 12:1:45 13:1:50 14:1:50 15:1:47 16:0.5:49 16+0.5:0.5:50 17:1:52 18:1:50 19:1:49 20:1:50 21:2:52 22:2:52 23:3:45 24:1:50 25:2:55 26:2:52 27:3:50 28:1:54 29:1:52 30:1:50 31:1:47 32:1:50 33:1:55 34:1:52 35:1:54 36:1:55 37:2:57 38:2:45 39:3:50"
+  }
+ },
+ {
+  "id": "hog134",
+  "section": "Hymnology",
+  "title": "Begin, My Tongue, Some Heavenly Theme",
+  "psalm": "",
+  "tune": "MANOAH",
+  "meter": "CM",
+  "credit": "Music: Arranged from Giocchino Antonio Rossini, 1851 · Words: Isaac Watts, Hymns and Sacred Songs 1707–09, Book 2, number 69. The faithfulness of God in the promises",
+  "source": "Music: public-domain MusicXML score of MANOAH from hymnary.org (hymnary.org/media/fetch/128767; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/b/e/g/i/beginmyt.htm), its syllable breaks laid under the melody note for note; stanzas 4, 9 left out (they do not fit the tune line for line).",
+  "abc": "X:1\nT:Begin, My Tongue, Some Heavenly Theme\nM:3/4\nL:1/4\nQ:1/4=88\nK:G\nG/ A/ | B2 A | G2 F | F2 E | E2 A/ B/ | c2 B | A2 G | G3 | F2 D |\nw: Be- _ gin, my tongue, some heav'n- ly theme And _ speak some bound- less thing; _ The\nw: Tell _ of His won- drous faith- ful- ness And _ sound His pow- er abroad; _ Sing\nw: Pro- _ claim sal- va- tion from the Lord For _ wretch- ed, dy- ing men; _ His\nw: He _ that can dash whole worlds to death, And _ make them when He please, _ He\nw: His _ ve- ry word of grace is strong As _ that which built the skies; _ The\nw: He _ said, Let the wide heav’n be spread, And _ heav'n was stretched a- broad: _ A-\nB2 A | c2 B | e2 B | d c A | G2 D | B2 A | G2 |]\nw: migh- ty works, or migh- tier name _ Of our e- ter- nal king.\nw: the sweet pro- mise of His grace, _ And the per- form- ing God.\nw: hand has writ the sac- red word _ With an im- mor- tal pen.\nw: speaks, and that al- migh- ty breath _ Ful- fills His great de- crees.\nw: voice that rolls the stars a- long _ Speaks all the pro- mis- es.\nw: bram, I'll be thy God, He said, _ And He was Ab- ram’s God.\n",
+  "parts": {
+   "src": "hymnary.org MusicXML score (hog134_0.xml)",
+   "sig": "32-1ocb39m",
+   "alto": "0:1:67 2:2:67 3:1:66 4:2:64 5:1:62 6:2:60 7:1:60 8:2:60 9:1:64 11:2:64 12:1:64 13:2:64 14:1:64 15:5:62 17:1:60 18:1:59 18+1:1:62 19:1:60 20:2:64 21:1:62 22:2:64 23:1:64 24:2:64 26:1:64 27:2:62 28:1:62 29:2:67 30:1:62 31:2:62",
+   "tenor": "0:0.5:59 1:0.5:60 2:2:62 3:1:60 4:2:59 5:1:55 6:2:55 7:1:55 8:2:55 9:0.5:52 10:0.5:56 11:2:57 12:1:56 13:2:57 14:1:58 15:3:59 16:2:57 17:1:54 18:2:55 19:1:55 20:2:55 21:1:55 22:2:55 23:1:56 24:2:57 26:1:57 27:2:59 28:1:59 29:2:62 30:1:60 31:2:59",
+   "bass": "0:1:55 2:2:55 3:1:55 4:2:52 5:1:47 6:2:48 7:1:48 8:2:48 9:0.5:48 10:0.5:47 11:2:45 12:1:47 13:2:48 14:1:49 15:5:50 17:1:50 18:2:43 19:1:43 20:2:43 21:1:43 22:2:48 23:1:52 24:2:45 26:1:48 27:2:50 28:1:50 29:2:50 30:1:50 31:2:43"
+  }
+ },
+ {
+  "id": "hog173",
+  "section": "Hymnology",
+  "title": "O Thou, in Whose Presence",
+  "psalm": "",
+  "tune": "O THOU IN WHOSE PRESENCE",
+  "meter": "",
+  "credit": "Music: traditional · Words: Joseph Swain, Redemption, a Poem in Five Books ( London : 1791 ). Also see His Voice, as the Sound of the Dulcimer Sweet",
+  "source": "Music: public-domain MusicXML score of O THOU IN WHOSE PRESENCE from hymnary.org (hymnary.org/media/fetch/87762; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/o/t/h/o/othouwho.htm), its syllable breaks laid under the melody note for note; stanzas 6, 11 left out (they do not fit the tune line for line).",
+  "abc": "X:1\nT:O Thou, in Whose Presence\nM:4/4\nL:1/4\nQ:1/4=88\nK:Db\nD | D3/2 E/ F G | A3/2 B/ A G | F2 E E | D3 A | d2 d e | d2 B B |\nw: O Thou _ in whose pre- _ sence my soul takes de- light, On whom in af- flict- ion I\nw: Where dost _ Thou at noon- _ tide re- sort with Thy sheep, To feed on the pas- tures of\nw: O, why _ should I wan- _ der an ali- en from Thee, And cry in the des- ert for\nw: Ye daugh- _ ters of Zi- _ on de- clare, have ye seen The star that on Is- ra- el\nw: This is _ my Be- lov- _ èd; His form is di- vine; His vest- ments shed o- dors a-\nw: His voice, _ as the sound _ of the dul- ci- mer sweet, Is heard through the sha- dows of\nA3 |\nw: call,\nw: love?\nw: bread?\nw: shone?\nw: round:\nw: death;\nA | d2 d B | A2 F A | B2 A F | E2 D F | A3/2 B/ A D | F2 E E | D3 |]\nw: My com- fort by day, and my song in the night, My _ hope, _ my sal- va- tion, my all.\nw: Say, why in the val- ley of death should I weep, Or _ alone _ in the wil- der- ness rove?\nw: Thy foes will re- joice when my sor- rows they see, And _ smile _ at the tears I have shed.\nw: Say, if in your tents my Be- lov- èd has been, And _ where, _ with His flocks, He is gone.\nw: The locks of His head are as grapes on the vine, When _ au- _ tumn with plen- ty is crowned.\nw: The ce- dars of Le- ba- non bow at His feet, The _ air _ is per- fumed with His breath.\n",
+  "parts": {
+   "src": "hymnary.org MusicXML score (hog173_0.xml)",
+   "sig": "42-1r8iuow",
+   "alto": "0:1:61 1:2:61 3:1:61 4:1:63 5:1.5:65 6:0.5:66 7:1:65 8:1:63 9:2:61 10:1:60 11:1:60 12:3:61 13:1:65 14:2:65 15:1:65 16:1:66 17:2:65 18:1:63 19:1:61 20:3:60 21:1:65 22:2:65 23:1:65 24:1:66 25:2:65 26:1:61 27:1:61 28:2:61 29:1:61 30:1:61 31:2:60 32:1:61 33:1:61 34:1.5:65 35:0.5:66 36:1:65 37:1:61 38:2:61 39:1:60 40:1:60 41:3:56",
+   "tenor": "0:1:53 1:1.5:53 2:0.5:54 3:1:56 4:1:56 5:2:61 7:1:61 8:1:58 9:2:56 10:1:56 11:1:54 12:3:53 13:1:61 14:2:56 15:1:56 16:1:56 17:2:56 18:1:56 19:1:55 20:3:56 21:1:56 22:2:56 23:1:56 24:1:61 25:2:61 26:1:56 27:1:61 28:2:61 29:1:61 30:1:56 31:2:56 32:1:53 33:1:56 34:2:61 36:1:61 37:1:56 38:2:56 39:1:56 40:1:54 41:3:53",
+   "bass": "0:1:49 1:2:49 3:1:49 4:1:49 5:2:49 7:1:49 8:1:42 9:2:44 10:1:44 11:1:44 12:3:49 13:1:49 14:2:49 15:1:49 16:1:49 17:2:49 18:1:51 19:1:51 20:3:44 21:1:49 22:2:49 23:1:49 24:1:49 25:2:49 26:1:49 27:1:53 28:2:54 29:1:53 30:1:49 31:2:44 32:1:49 33:1:49 34:2:49 36:1:49 37:1:53 38:2:56 39:1:44 40:1:44 41:3:49"
+  }
+ },
+ {
+  "id": "hog183",
+  "section": "Hymnology",
+  "title": "Ah, Holy Jesus, How Hast Thou Offended",
+  "psalm": "",
+  "tune": "HERZLIEBSTER JESU",
+  "meter": "",
+  "credit": "Music: traditional · Words: Johann Heermann, Devoti Musica Cordis, 1630 ( Herzliebster Jesu ). Translated from German to English by Robert S. Bridges, 1899",
+  "source": "Music: public-domain MusicXML score of AH, HOLY JESUS, HOW HAVE YOU OFFENDED? from hymnary.org (hymnary.org/media/fetch/99189; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/a/h/h/o/ahholyje.htm), its syllable breaks laid under the melody note for note.",
+  "abc": "X:1\nT:Ah, Holy Jesus, How Hast Thou Offended\nM:4/4\nL:1/4\nQ:1/4=88\nK:Ab\nF2 F F | E2 C2 | F G A A | B2 G2 | G2 A B | c2 A2 | d d c c | B2 A2 |\nw: Ah, ho- ly Je- sus, how hast Thou of- fend- ed, That man to judge Thee hath in hate pre- tend- ed?\nw: Who was the guil- ty? Who brought this up- on Thee? A- las, my trea- son, Je- sus, hath un- done Thee.\nw: Lo, the Good Shep- herd for the sheep is of- fered; The slave hath sinned, and the Son hath suf- fer- ed;\nw: For me, kind Je- sus, was Thy in- car- na- tion, Thy mor- tal sor- row, and Thy life's o- bla- tion;\nw: There- fore, kind Je- sus, since I can- not pay Thee, I do ad- ore Thee, and will ev- er pray Thee,\nA2 G F | E2 C2 | E E F E | D2 C2 | c2 B A | G2 F2 |]\nw: By foes de- rid- ed, by Thine own re- ject- ed, O most af- flict- ed.\nw: ’Twas I, Lord, Je- sus, I it was de- nied Thee! I cru- ci- fied Thee.\nw: For man's a- tone- ment, while he no- thing hee- deth, God in- ter- ced- eth.\nw: Thy death of ang- uish and Thy bit- ter pas- sion, For my sal- va- tion.\nw: Think on Thy pi- ty and Thy love un- swerv- ing, Not my de- serv- ing.\n",
+  "parts": {
+   "src": "hymnary.org MusicXML score (hog183_0.xml)",
+   "sig": "38-si8cwd",
+   "alto": "0:2:60 1:1:61 2:1:61 3:2:58 4:2:60 5:1:60 6:1:60 7:1:65 8:1:63 9:2:61 10:2:60 11:2:60 12:1:60 13:1:63 14:2:63 15:2:65 16:1:65 17:1:65 18:1:63 19:1:63 20:2:63 21:2:60 22:2:65 23:1:63 24:1:61 25:2:60 26:2:56 27:1:60 28:1:58 29:1:60 30:1:60 31:2:58 32:2:56 33:2:60 34:1:63 35:1:60 36:1.5:60 36+1.5:0.5:58 37:2:56",
+   "tenor": "0:2:56 1:1:56 2:1:58 3:2:55 4:2:51 5:1:56 6:1:55 7:1:53 8:1:56 9:2:53 10:2:52 11:2:52 12:1:53 13:1:55 14:2:56 15:2:53 16:1:58 17:0.5:53 17+0.5:0.5:55 18:1:56 19:1:56 20:1:56 20+1:1:55 21:2:56 22:2:60 23:1:60 24:1:56 25:2:56 26:2:51 27:1:51 28:1:55 29:1:56 30:1:56 31:2:53 32:2:53 33:1:51 33+1:1:56 34:1:53 35:1:53 36:1:53 36+1:1:52 37:2:53",
+   "bass": "0:2:53 1:1:49 2:1:46 3:2:51 4:2:44 5:1:53 6:1:51 7:1:49 8:1:48 9:2:46 10:2:48 11:2:48 12:1:53 13:1:51 14:2:44 15:2:49 16:1:46 17:1:46 18:1.5:48 19+0.5:0.5:49 20:2:51 21:2:44 22:2:41 23:1:48 24:1:49 25:2:44 26:2:44 27:1:44 28:1:43 29:1:41 30:1:44 31:2:46 32:2:41 33:2:44 34:1:46 35:1:41 36:2:48 37:2:41"
+  }
+ },
+ {
+  "id": "hog339",
+  "section": "Hymnology",
+  "title": "Rise Up, O Men of God!",
+  "psalm": "",
+  "tune": "FESTAL SONG",
+  "meter": "SM",
+  "credit": "Music: William Howard Walter, 1872 · Words: William P. Merrill, 1911. First published in the Presbyterian newspaper The Continent",
+  "source": "Music: public-domain MusicXML score of FESTAL SONG from hymnary.org (hymnary.org/media/fetch/134130; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/r/i/s/e/u/riseupom.htm), its syllable breaks laid under the melody note for note.",
+  "abc": "X:1\nT:Rise Up, O Men of God!\nM:4/4\nL:1/4\nQ:1/4=88\nK:Bb\nF | B F D F | G3 F | G/ A/ B A G | F3 c |\nw: Rise up, O men of God! Have done _ with less- er things. Give\nw: Rise up, O men of God! The king- _ dom tar- ries long. Bring\nw: Rise up, O men of God! The church _ for you doth wait, Her\nw: Lift high the cross of Christ! Tread where _ His feet have trod. As\nd c/ d/ e d | c B A F | G/ A/ B B A | B3 |]\nw: heart and _ mind and soul and strength To serve _ the King of kings.\nw: in the _ day of bro- ther- hood And end _ the night of wrong.\nw: strength un- _ equ- al to her task; Rise up _ and make her great!\nw: bro- thers _ of the Son of Man, Rise up, _ O men of God!\n",
+  "parts": {
+   "src": "hymnary.org MusicXML score (hog339_0.xml)",
+   "sig": "29-q5u3mr",
+   "alto": "0:1:65 1:1:70 2:1:65 3:1:62 4:1:62 5:3:63 6:1:62 7:1:64 9:1:65 10:1:65 11:1:64 12:3:65 13:1:65 14:1:65 15:1:65 17:1:63 18:1:65 19:1:67 20:1:67 21:1:65 22:1:65 23:1:63 25:1:65 26:1:65 27:1:63 28:3:62",
+   "tenor": "0:1:53 1:1:58 2:1:53 3:1:50 4:1:58 5:3:58 6:1:58 7:0.5:58 8:0.5:60 9:1:62 10:1:60 11:1:58 12:3:57 13:1:57 14:1:58 15:1:60 17:1:58 18:1:58 19:1:63 20:1:62 21:1:60 22:1:58 23:0.5:58 24:0.5:60 25:1:62 26:1:60 27:1:60 28:3:58",
+   "bass": "0:1:53 1:1:58 2:1:53 3:1:50 4:1:46 5:3:51 6:1:46 7:1:51 9:1:46 10:1:48 11:1:48 12:3:53 13:1:53 14:1:58 15:1:57 17:1:55 18:1:53 19:1:51 20:1:52 21:1:53 22:1:50 23:1:51 25:0.5:50 25+0.5:0.5:51 26:1:53 27:1:53 28:3:46"
+  }
+ },
+ {
+  "id": "hog358",
+  "section": "Hymnology",
+  "title": "Ye Servants of God",
+  "psalm": "",
+  "tune": "LYONS",
+  "meter": "10.10.11.11",
+  "credit": "Music: Attributed to Johann Michael Haydn (1737-1806) · Words: Charles Wesley, Hymns for Times of Trouble and Persecution ( London : Strahan, 1744 ), page 43, alt",
+  "source": "Music: public-domain MusicXML score of LYONS from hymnary.org (hymnary.org/media/fetch/136093; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/y/s/e/r/yservofg.htm), its syllable breaks laid under the melody note for note.",
+  "abc": "X:1\nT:Ye Servants of God\nM:3/4\nL:1/4\nQ:1/4=88\nK:G\nD | G G A | B2 G | c c B | A2 D/ C/ | G G A | B2 c | d/ c/ B A | G2 D |\nw: Ye serv- ants of God, your mas- ter pro- claim, And _ pu- blish a- broad His won- _ der- ful name; The\nw: The waves of the sea have lift- ed their voice, Sore _ trou- bled that we in Je- _ sus re- joice; The\nw: Men, de- vils en- gage, the bil- lows a- rise, And _ hor- ri- bly rage, and threat- _ en the skies: Their\nw: God rul- eth on high, al- migh- ty to save, And _ still He is nigh, His pre- _ sence we have; The\nw: Sal- va- tion to God, who sits on the throne, Let _ all cry a- loud and ho- _ nor the Son! The\nw: Then let us a- dore, and give Him His right, All _ glo- ry and pow’r, and wis- _ dom and might; All\nD D E | F F G | A A B | c2 D/ C/ | G G A | B B c | d/ c/ B A | G2 |]\nw: name all vic- tor- ious of Je- sus ex- tol, His _ king- dom is glo- rious and rules _ o- ver all.\nw: floods they are roar- ing, but Je- sus is here; While _ we are ad- or- ing, He al- _ ways is near.\nw: fu- ry shall nev- er our stead- fast- ness shock, The _ weak- est be- liev- er is built _ on a rock.\nw: great con- gre- ga- tion His tri- umph shall sing, As- _ cri- bing sal- va- tion to Je- _ sus our king.\nw: prais- es of Je- sus the an- gels pro- claim, Fall _ down on their fa- ces and wor- _ ship the Lamb.\nw: ho- nor and bles- sing, with an- gels a- bove, And _ thanks nev- er ceas- ing, and in- _ fi- nite love.\n",
+  "parts": {
+   "src": "hymnary.org MusicXML score (hog358_0.xml)",
+   "sig": "46-1gmkvwi",
+   "alto": "0:1:59 1:1:62 2:1:62 3:1:62 4:2:62 5:1:62 6:1:60 7:1:62 8:1:62 9:2:62 10:0.5:62 11:0.5:60 12:1:59 13:1:62 14:1:62 15:2:62 16:1:64 17:0.5:62 18:0.5:64 19:1:62 20:1:60 21:2:59 22:1:62 23:1:62 24:1:62 25:1:61 26:1:60 27:1:60 28:1:59 29:1:57 30:1:62 31:1:67 32:2:66 33:0.5:62 34:0.5:60 35:1:59 36:1:62 37:1:62 38:1:62 39:1:62 40:1:64 41:0.5:62 42:0.5:64 43:1:62 44:1:60 45:2:59",
+   "tenor": "0:1:55 1:1:59 2:1:55 3:1:54 4:2:55 5:1:55 6:1:55 7:1:57 8:1:55 9:2:54 10:1:54 12:1:55 13:1:55 14:1:54 15:2:55 16:1:55 17:1:55 19:1:55 20:1:54 21:2:55 22:1:54 23:1:54 24:1:54 25:1:55 26:1:57 27:1:57 28:1:55 29:1:54 30:1:54 31:1:55 32:2:57 33:1:54 35:1:55 36:1:55 37:1:54 38:1:55 39:1:55 40:1:55 41:1:55 43:1:55 44:1:54 45:2:55",
+   "bass": "0:1:43 1:1:43 2:1:47 3:1:50 4:2:55 5:1:47 6:1:52 7:1:54 8:1:55 9:2:50 10:1:50 12:1:43 13:1:47 14:1:50 15:2:55 16:1:52 17:0.5:47 18:0.5:48 19:1:50 20:1:50 21:2:43 22:1:50 23:1:50 24:1:50 25:1:50 26:1:50 27:1:50 28:1:50 29:1:50 30:1:50 31:1:50 32:2:50 33:1:50 35:1:43 36:1:47 37:1:50 38:1:55 39:1:55 40:1:52 41:0.5:47 42:0.5:48 43:1:50 44:1:50 45:2:43"
+  }
+ },
+ {
+  "id": "hog377",
+  "section": "Hymnology",
+  "title": "May the Mind of Christ, My Savior",
+  "psalm": "",
+  "tune": "ST. LEONARDS",
+  "meter": "87.85",
+  "credit": "Music: Arthur Cyril Barham-Gould, 1925 · Words: Kate B. Wilkinson, before 1913. Appeared in Golden Bells ( London : Children’s Special Service Mission, 1925)",
+  "source": "Music: public-domain MusicXML score of ST. LEONARDS from hymnary.org (hymnary.org/media/fetch/132507; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/m/a/y/t/maytmind.htm), its syllable breaks laid under the melody note for note.",
+  "abc": "X:1\nT:May the Mind of Christ, My Savior\nM:4/4\nL:1/4\nQ:1/4=88\nK:Eb\nG B A G | F E E D | E E F G | G =A B2 |\nw: May the mind of Christ, my Sav- ior, Live in me from day to day,\nw: May the Word of God dwell rich- ly In my heart from hour to hour,\nw: May the peace of God my Fa- ther Rule my life in ev- ery- thing,\nw: May the love of Je- sus fill me As the wa- ters fill the sea;\nw: May I run the race be- fore me, Strong and brave to face the foe,\nw: May His beau- ty rest up- on me, As I seek the lost to win,\ne B c B | A G F E | E/ F/ G F/ C/ D | E4 |]\nw: By His love and pow’r con- trol- ling All _ I do _ and say.\nw: So that all may see I tri- umph Only _ through His _ pow- er.\nw: That I may be calm to com- fort Sick _ and sor- _ row- ing.\nw: Him e- xal- ting, self a- ba- sing, This _ is vic- _ to- ry.\nw: Loo- king on- ly un- to Je- sus As _ I on- _ ward go.\nw: And may they for- get the chan- nel, See- _ ing on- _ ly Him.\n",
+  "parts": {
+   "src": "hymnary.org MusicXML score (hog377_0.xml)",
+   "sig": "30-j36yej",
+   "alto": "0:1:63 1:1:63 2:0.5:63 2+0.5:0.5:60 3:1:63 4:1:60 5:1:60 6:1:58 7:1:58 8:1:58 9:1:60 10:1:58 11:1:58 12:1:63 13:1:63 14:2:62 15:1:63 16:1:63 17:1:63 18:1:63 19:0.5:63 19+0.5:0.5:62 20:1:63 21:1:60 22:1:60 23:1:58 25:0.5:63 25+0.5:0.5:62 26:1:60 28:1:58 29:4:58",
+   "tenor": "0:1:58 1:1:58 2:1:58 3:1:58 4:1:56 5:1:56 6:1:55 7:1:53 8:1:55 9:1:55 10:1:53 11:1:51 12:1:55 13:1:53 14:2:53 15:1:58 16:1:58 17:1:56 18:1:58 19:1:58 20:1:58 21:1:56 22:1:56 23:1:55 25:1:58 26:1:56 28:1:56 29:1:56 29+1:3:55",
+   "bass": "0:1:51 1:1:55 2:1:53 3:1:51 4:1:44 5:1:41 6:1:46 7:1:46 8:1:51 9:1:48 10:1:50 11:1:51 12:1:48 13:1:41 14:2:46 15:1:43 16:1:55 17:1:56 18:1:55 19:1:53 20:1:51 21:1:44 22:1:41 23:1:46 25:1:43 26:1:44 28:1:46 29:4:39"
+  }
+ },
+ {
+  "id": "hog390",
+  "section": "Hymnology",
+  "title": "God, Be Merciful to Me",
+  "psalm": "",
+  "tune": "REDHEAD",
+  "meter": "77.77.77",
+  "credit": "Music: Richard Redhead, 1853 · Words: From The Psalter ( Pittsburgh, Pennsylvania: United Presbyterian Board of Publication, 1912 ), number 140",
+  "source": "Music: public-domain MusicXML score of REDHEAD from hymnary.org (hymnary.org/media/fetch/130038; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/g/b/e/m/gbemtome.htm), its syllable breaks laid under the melody note for note.",
+  "abc": "X:1\nT:God, Be Merciful to Me\nM:4/4\nL:1/4\nQ:1/4=88\nK:Eb\nE E F G | A3/2 A/ G2 | E E F G | F F E2 |\nw: God, be mer- ci- ful to me, On Thy grace I rest my plea;\nw: My trans- gress- ions I con- fess, Grief and guilt my soul op- press;\nw: I am ev- il, born in sin; Thou de- sir- est truth with- in.\nw: Bro- ken, humbl- ed to the dust By Thy wrath and judg- ment just,\nw: Gra- cious God, my heart re- new, Make my spir- it right and true;\nw: Sin- ners then shall learn from me And re- turn, O God, to Thee;\nE G B B | c c B2 | E G B B | c3/2 c/ B2 |\nw: Plen- teous in com- pas- sion Thou, Blot out my trans- gress- ions now;\nw: I have sinned a- gainst Thy grace And pro- voked Thee to Thy face;\nw: Thou a- lone my Sa- vior art, Teach Thy wis- dom to my heart;\nw: Let my con- trite heart re- joice And in glad- ness hear Thy voice;\nw: Cast me not a- way from Thee, Let Thy Spir- it dwell in me;\nw: Sa- vior, all my guilt re- move, And my tongue shall sing Thy love;\nE E F G | A3/2 A/ G2 | E F G F | E D E2 |]\nw: Wash me, make me pure with- in, Cleanse, O cleanse me from my sin.\nw: I con- fess Thy judg- ment just, Speech- less, I Thy mer- cy trust.\nw: Make me pure, Thy grace be- stow, Wash me whit- er than the snow.\nw: From my sins O hide Thy face, Blot them out in bound- less grace.\nw: Thy salv- at- ion’s joy im- part, Stead- fast make my wil- ling heart.\nw: Touch my si- lent lips, O Lord, And my mouth shall praise ac- cord.\n",
+  "parts": {
+   "src": "hymnary.org MusicXML score (gethsemane_2.xml)",
+   "sig": "42-tll2df",
+   "alto": "0:1:58 1:1:58 2:1:62 3:1:63 4:1.5:63 5:0.5:63 6:2:63 7:1:58 8:1:60 9:1:62 10:1:63 11:1:63 12:1:62 13:2:63 14:1:63 15:1:63 16:1:65 17:1:67 18:1:63 19:1:65 20:2:67 21:1:63 22:1:63 23:1:65 24:1:62 25:1:67 25+1:0.5:65 26:0.5:63 27:2:62 28:1:63 29:1:63 30:1:62 31:1:63 32:1.5:63 33:0.5:63 34:2:63 35:1:63 36:1:62 37:1:63 38:1:60 39:1:58 40:1:58 41:2:58",
+   "tenor": "0:1:55 1:1:55 2:1:58 3:1:58 4:1.5:60 5:0.5:60 6:2:58 7:1:55 8:1:55 9:1:58 10:1:58 11:1:60 12:1:58 13:2:55 14:1:55 15:1:60 16:1:62 17:1:63 18:1:60 19:1:62 20:2:63 21:1:58 22:1:58 23:1:58 24:1:58 25:1:58 25+1:1:57 27:2:58 28:1:58 29:1:58 30:1:56 31:1:58 32:1.5:60 33:0.5:60 34:2:58 35:1:58 36:1:56 37:1:58 38:1:56 39:1:55 40:1:53 41:2:55",
+   "bass": "0:1:51 1:1:51 2:1:46 3:1:51 4:1.5:44 5:0.5:44 6:2:51 7:1:51 8:1:48 9:1:46 10:1:51 11:1:44 12:1:46 13:2:51 14:1:51 15:1:48 16:1:46 17:1:51 18:1:56 19:1:56 20:2:51 21:1:55 22:1:51 23:1:50 24:1:55 25:1:51 25+1:1:53 27:2:46 28:1:55 29:1:55 30:1:53 31:1:51 32:1.5:44 33:0.5:44 34:2:51 35:1:55 36:1:53 37:1:51 38:1:44 39:1:46 40:1:46 41:2:51"
+  }
+ },
+ {
+  "id": "hog436",
+  "section": "Hymnology",
+  "title": "Come, Ye Thankful People, Come",
+  "psalm": "",
+  "tune": "ST. GEORGE’S WINDSOR",
+  "meter": "77.77 D",
+  "credit": "Music: George Job Elvey, 1858 · Words: Henry Alford, Psalms and Hymns Adapted to the Sundays and Holydays Throughout the Year ( London : Francis & John Rivington, 1844 ), number 116",
+  "source": "Music: public-domain MusicXML score of ST. GEORGE’S WINDSOR from hymnary.org (hymnary.org/media/fetch/129373; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/c/o/m/e/y/comeytpc.htm), its syllable breaks laid under the melody note for note; stanzas 2 left out (they do not fit the tune line for line).",
+  "abc": "X:1\nT:Come, Ye Thankful People, Come\nM:4/4\nL:1/4\nQ:1/4=88\nK:F\nA3/2 A/ c A | F G A2 | A3/2 A/ c A | F G A2 |\nw: Come, ye thank- ful peo- ple, come, Raise the song of har- vest\\-- home!\nw: For the Lord our God shall come, And shall take His har- vest home;\nw: Then, thou Church tri- umph- ant, come, Bring the song of har- vest\\-- home;\nA3/2 A/ B B | G3/2 G/ A2 | A =B c F | E D C2 |\nw: All is safe- ly ga- thered in, Ere the win- ter storms be- gin:\nw: From His field shall purge a- way All that doth of- fend that day:\nw: All are safe- ly ga- thered in, Free from sor- row, free from sin,\nE3/2 E/ G E | F G A2 | A3/2 A/ c A | B c d2 |\nw: God our Mak- er doth pro- vide For our wants to be sup- plied;\nw: Give His an- gels charge at last In the fire the tares to cast;\nw: There, for ev- er pu- ri- fied, In God's gar- ner to a- bide;\nd3/2 d/ B G | c3/2 c/ A2 | B d c F | A G F2 |]\nw: Come to God’s own tem- ple, come, Raise the song of har- vest\\-- home!\nw: But the fruit- ful ears to store In His gar- ner ev- er- more.\nw: Come, ten thou- sand an- gels, come, Raise the glo- ri- ous har- vest\\-home!\n",
+  "parts": {
+   "src": "Open Hymnal Project (openhymnal.org, public domain), SATB setting of “Songs of Thankfulness and Praise”",
+   "sig": "56-1iixdnq",
+   "alto": "0:1.5:60 1:0.5:60 2:1:60 3:1:60 4:1:62 5:1:64 6:2:65 7:1.5:60 8:0.5:60 9:1:60 10:1:60 11:1:62 12:1:62 13:2:61 14:1.5:62 15:0.5:62 16:1:62 17:1:62 18:1:60 18+1:1:60 20:2:60 21:1:60 22:1:62 23:1:60 24:1:62 25:1:60 26:1:59 27:2:60 28:1.5:60 29:0.5:60 30:1:60 31:1:60 32:1:60 33:1:58 34:2:60 35:1.5:60 36:0.5:60 37:1:65 38:1:65 39:1:65 40:1:63 41:2:62 42:1:62 42+1:1:66 44:1:67 45:1:62 46:1:60 46+1:1:64 48:2:65 49:1:65 50:1:65 51:1:65 52:1:65 53:1:65 54:1:64 55:2:65",
+   "tenor": "0:1.5:53 1:0.5:53 2:1:55 3:1:57 4:1:57 5:1:60 6:2:60 7:1.5:53 8:0.5:53 9:1:55 10:1:53 11:1:57 12:1:58 13:2:52 14:1.5:53 15:0.5:53 16:1:55 17:1:55 18:1:52 18+1:1:52 20:2:53 21:1:53 22:1:53 23:1:55 24:1:57 25:1.5:55 26+0.5:0.5:53 27:2:52 28:1:55 28+1:1:55 30:1:52 31:1:55 32:1.5:53 33+0.5:0.5:52 34:2:53 35:1.5:53 36:0.5:53 37:1:57 38:1:60 39:1.5:58 40+0.5:0.5:57 41:2:58 42:1:57 42+1:1:62 44:1:62 45:1:58 46:1:55 46+1:1:60 48:2:60 49:1:58 50:1:58 51:1:60 52:1:57 53:1.5:60 54+0.5:0.5:58 55:2:57",
+   "bass": "0:1.5:53 1:0.5:53 2:1:52 3:1:53 4:1:50 5:1:48 6:2:53 7:1.5:53 8:0.5:53 9:1:52 10:1:53 11:1:50 12:1:46 13:2:45 14:1.5:50 15:0.5:50 16:1:43 17:1:43 18:1:48 18+1:1:48 20:2:41 21:1:53 22:1:50 23:1:52 24:1:53 25:1:55 26:1:43 27:2:48 28:1.5:48 29:0.5:48 30:1:48 31:1:46 32:1:45 33:1:43 34:2:41 35:1.5:41 36:0.5:41 37:1:53 38:1:51 39:1:50 40:1:48 41:2:46 42:1:54 42+1:1:50 44:1.5:55 45+0.5:0.5:55 46:1:52 46+1:1:48 48:2:53 49:1:50 50:1:46 51:1:45 52:1:50 53:1:48 54:1:48 55:2:41"
+  }
+ },
+ {
   "id": "iheardvoice",
   "section": "Hymnology",
   "title": "I Heard the Voice of Jesus Say",
@@ -6848,7 +7622,7 @@ window.HYMN_SONGS = [
   "meter": "",
   "credit": "Music: English traditional melody, arr. Ralph Vaughan Williams, The English Hymnal 1906 · Words: Horatius Bonar, Hymns Original and Selected 1846",
   "source": "Music: public-domain MusicXML score of KINGSFOLD from hymnary.org (hymnary.org/media/fetch/97842; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/i/h/e/a/iheardvj.htm), its syllable breaks laid under the melody note for note. From the Hymns of Grace “Hymnology” playlist (public-domain words and tune).",
-  "abc": "X:1\nT:I Heard the Voice of Jesus Say\nM:4/4\nL:1/4\nQ:1/4=88\nK:G\nG/ F/ | E E E D | G G A G/ A/ | B B A/ G/ E | D2 z |\nw: I _ heard the voice of Je- sus say, Come _ un- to Me _ and rest;\nw: I _ heard the voice of Je- sus say, Be- _ hold, I free- _ ly give\nw: I _ heard the voice of Je- sus say, I _ am this dark _ world’s light;\nG/ F/ | E E E D | G G A G/ A/ | B B A/ G/ E | E2 z |\nw: Lay _ down, thou wea- ry one, lay down Thy _ head up- on _ My breast.\nw: The _ liv- ing wa- ter; thirs- ty one, Stoop _ down, and drink, _ and live.\nw: Look _ un- to Me, thy morn shall rise, And _ all thy day _ be bright.\nB/ c/ | d B B/ A/ G | A A B2 | B B/ A/ G E | D2 z |\nw: I _ came to Je- _ sus as I was, Wea- ry and worn and sad;\nw: I _ came to Je- _ sus, and I drank Of that life- giv- ing stream;\nw: I _ looked to Je- _ sus, and I found In Him my star, my sun;\nG/ F/ | E E E/ D/ E/ F/ | G G A G/ A/ | B B A/ G/ E | E2 |]\nw: I _ found in Him _ a _ rest- ing place, And _ He has made _ me glad.\nw: My _ thirst was quenched, _ my _ soul re- vived, And _ now I live _ in Him.\nw: And _ in that light _ of _ life I’ll walk, Till _ trav’- ling days _ are done.\n",
+  "abc": "X:1\nT:I Heard the Voice of Jesus Say\nM:4/4\nL:1/4\nQ:1/4=88\nK:G\nG/ F/ | E E E D | G G A G/ A/ | B B A/ G/ E |\nw: I _ heard the voice of Je- sus say, Come _ un- to Me _ and\nw: I _ heard the voice of Je- sus say, Be- _ hold, I free- _ ly\nw: I _ heard the voice of Je- sus say, I _ am this dark _ world’s\nD2 z |\nw: rest;\nw: give\nw: light;\nG/ F/ | E E E D | G G A G/ A/ | B B A/ G/ E |\nw: Lay _ down, thou wea- ry one, lay down Thy _ head up- on _ My\nw: The _ liv- ing wa- ter; thirs- ty one, Stoop _ down, and drink, _ and\nw: Look _ un- to Me, thy morn shall rise, And _ all thy day _ be\nE2 z |\nw: breast.\nw: live.\nw: bright.\nB/ c/ | d B B/ A/ G | A A B2 | B B/ A/ G E |\nw: I _ came to Je- _ sus as I was, Wea- ry and worn and\nw: I _ came to Je- _ sus, and I drank Of that life- giv- ing\nw: I _ looked to Je- _ sus, and I found In Him my star, my\nD2 z |\nw: sad;\nw: stream;\nw: sun;\nG/ F/ | E E E/ D/ E/ F/ | G G A G/ A/ | B B A/ G/ E | E2 |]\nw: I _ found in Him _ a _ rest- ing place, And _ He has made _ me glad.\nw: My _ thirst was quenched, _ my _ soul re- vived, And _ now I live _ in Him.\nw: And _ in that light _ of _ life I’ll walk, Till _ trav’- ling days _ are done.\n",
   "parts": {
    "src": "hymnary.org MusicXML score (iheardvoice_t0.xml)",
    "sig": "69-enku9t",
@@ -6902,7 +7676,7 @@ window.HYMN_SONGS = [
   "meter": "",
   "credit": "Music: John D. Edwards, 1838 (RHOSYMEDRE; Ireland’s 1919 LOVE UNKNOWN has no public-domain score on hymnary.org) · Words: Samuel Crossman, The Young Man’s Meditation 1664",
   "source": "Music: public-domain MusicXML score of RHOSYMEDRE from hymnary.org (hymnary.org/media/fetch/99390; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/m/y/s/o/mysongis.htm), its syllable breaks laid under the melody note for note. From the Hymns of Grace “Hymnology” playlist (public-domain words and tune).",
-  "abc": "X:1\nT:My Song Is Love Unknown\nM:4/4\nL:1/4\nQ:1/4=88\nK:F\nC | F F G G | A3 F | B B A G | F3 |\nw: My song is love un- known, My Sav- ior’s love to me;\nw: He came from His blest throne Sal- va- tion to be- stow;\nw: Some- times they strew His way, And His sweet prais- es sing;\nw: Why, what hath my Lord done? What makes this rage and spite?\nw: They rise and needs will have My dear Lord made a- way;\nw: In life, no house, no home My Lord on earth might have;\nC | F F G G | A3 F | B B A G | F3 |\nw: Love to the love- less shown, That they might love- ly be.\nw: But men made strange, and none The longed for Christ would know:\nw: Re- sound- ing all the day Ho- san- nas to their king:\nw: He made the lame to run, He gave the blind their sight,\nw: A mur- der- er they saved, The Prince of Life they slay,\nw: In death no friend- ly tomb But what a strang- er gave.\nc | A A A c | B2 A2 | G3 c | B A G | F | E F G E |\nw: O who am I, that for my sake My Lord should take frail flesh and die? My\nw: But O! my friend, my friend in- deed, Who at my need His life did spend. Who\nw: Then Cru- ci- fy! is all their breath, And for His death they thirst and cry. And\nw: Sweet in- ju- ries! Yet they at these Them- selves dis- please, and ’gainst Him rise. Them-\nw: Yet cheer- ful He to suff’- ring goes, That He His foes from thence might free. That\nw: What may I say? Heav’n was His home; But mine the tomb where- in He lay. But\nF G A B | A2 G2 | F3 |]\nw: Lord should take frail flesh and die?\nw: at my need His life did spend.\nw: for His death they thirst and cry.\nw: selves dis- please, and ’gainst Him rise.\nw: He His foes from thence might free.\nw: mine the tomb where- in He lay.\n",
+  "abc": "X:1\nT:My Song Is Love Unknown\nM:4/4\nL:1/4\nQ:1/4=88\nK:F\nC | F F G G | A3 F | B B A G |\nw: My song is love un- known, My Sav- ior’s love to\nw: He came from His blest throne Sal- va- tion to be-\nw: Some- times they strew His way, And His sweet prais- es\nw: Why, what hath my Lord done? What makes this rage and\nw: They rise and needs will have My dear Lord made a-\nw: In life, no house, no home My Lord on earth might\nF3 |\nw: me;\nw: stow;\nw: sing;\nw: spite?\nw: way;\nw: have;\nC | F F G G | A3 F | B B A G |\nw: Love to the love- less shown, That they might love- ly\nw: But men made strange, and none The longed for Christ would\nw: Re- sound- ing all the day Ho- san- nas to their\nw: He made the lame to run, He gave the blind their\nw: A mur- der- er they saved, The Prince of Life they\nw: In death no friend- ly tomb But what a strang- er\nF3 |\nw: be.\nw: know:\nw: king:\nw: sight,\nw: slay,\nw: gave.\nc | A A A c | B2 A2 | G3 c |\nw: O who am I, that for my sake My\nw: But O! my friend, my friend in- deed, Who\nw: Then Cru- ci- fy! is all their breath, And\nw: Sweet in- ju- ries! Yet they at these Them-\nw: Yet cheer- ful He to suff’- ring goes, That\nw: What may I say? Heav’n was His home; But\nB A G |\nw: Lord should take\nw: at my need\nw: for His death\nw: selves dis- please,\nw: He His foes\nw: mine the tomb\nF | E F G E |\nw: frail flesh and die? My\nw: His life did spend. Who\nw: they thirst and cry. And\nw: and ’gainst Him rise. Them-\nw: from thence might free. That\nw: where- in He lay. But\nF G A B | A2 G2 | F3 |]\nw: Lord should take frail flesh and die?\nw: at my need His life did spend.\nw: for His death they thirst and cry.\nw: selves dis- please, and ’gainst Him rise.\nw: He His foes from thence might free.\nw: mine the tomb where- in He lay.\n",
   "parts": {
    "src": "hymnary.org MusicXML score (loveunknown_t0.xml)",
    "sig": "48-121z415",
@@ -7177,7 +7951,7 @@ window.HYMN_SONGS = [
 
   /* =================== LIBRARY =================== */
   function songNum(s) { var m = (s.psalm || '').match(/Psalm (\d+)/); return m ? m[1] : (s.section === 'My Songs' ? '♪' : (s.title || '?')[0]); }
-  var BASE_CATS = ['Reformed & Puritan', 'Psalms', 'Praise', 'Christmas', 'Easter', 'Communion', 'Gospel', 'Presbyterian', 'Baptist', 'Hymnology', 'My Songs'], CATS = BASE_CATS.slice();
+  var BASE_CATS = ['Reformed & Puritan', 'Psalms', 'Praise', 'Christmas', 'Easter', 'Communion', 'Gospel', 'Presbyterian', 'Baptist', 'Methodist', 'Lutheran', 'Anglican / Episcopal', 'Congregational', 'Hymnology', 'My Songs'], CATS = BASE_CATS.slice();
   // sections of songs saved on this device (e.g. a collection restored from a file) become their own categories
   function customCats() { var o = []; mySongs.forEach(function (m) { if (m.section && m.section !== 'My Songs' && BASE_CATS.indexOf(m.section) < 0 && o.indexOf(m.section) < 0) o.push(m.section); }); return o; }
   function refreshCats() { var c = customCats(); CATS = BASE_CATS.slice(0, -1).concat(c, ['My Songs']); return c; }
@@ -7197,7 +7971,7 @@ window.HYMN_SONGS = [
   function norm(x) { x = String(x || '').toLowerCase().replace(/[’‘']/g, "'"); return x.normalize ? x.normalize('NFD').replace(/[\u0300-\u036f]/g, '') : x; }
   // two flat lists: Psalms (every psalm setting, by psalm number) and Hymns (everything else, A-Z)
   function psalmNo(s) { var m = (s.psalm || '').match(/Psalm\s+(\d+)/i) || (s.title || '').match(/^Psalm\s+(\d+)/i); return m ? +m[1] : 0; }
-  var PP_SEC = 'Puritan Psalter', DENOM = ['Presbyterian', 'Baptist', 'Hymnology'], HIDE_EMPTY = ['Presbyterian', 'Baptist', 'Hymnology'], TABS = ['All', 'Psalms', 'Hymns'].concat(DENOM, [PP_SEC]);
+  var PP_SEC = 'Puritan Psalter', DENOM = ['Presbyterian', 'Baptist', 'Methodist', 'Lutheran', 'Anglican / Episcopal', 'Congregational', 'Hymnology'], HIDE_EMPTY = DENOM, TABS = ['All', 'Psalms', 'Hymns'].concat(DENOM, [PP_SEC]);
   // Presbyterian and Baptist hymns have their own buttons (each hymn in one list only); they are also in All, not in Hymns
   // Hymnology (songs from Francisco's playlist) sits after Baptist; its button stays hidden until it has songs
   function tabOf(s) { return s.section === PP_SEC ? PP_SEC : DENOM.indexOf(s.section) >= 0 ? s.section : psalmNo(s) ? 'Psalms' : 'Hymns'; }
@@ -7206,8 +7980,8 @@ window.HYMN_SONGS = [
   function renderLibrary() {
     var q = norm(($('libSearch').value || '').trim()), list = $('libList'), tab = libTab(), cats = $('libCats'), terms = q ? q.split(/\s+/) : [];
     refreshCats();
-    if (cats && cats.dataset.sig !== 'tabs7') {
-      cats.innerHTML = ''; cats.dataset.sig = 'tabs7'; cats.className = 'seg lib-tabs'; cats.setAttribute('aria-label', 'Show all songs, psalms, hymns, Presbyterian, Baptist or Hymnology hymns, or the Puritan Psalter');
+    if (cats && cats.dataset.sig !== 'tabs11') {
+      cats.innerHTML = ''; cats.dataset.sig = 'tabs11'; cats.className = 'seg lib-tabs'; cats.setAttribute('aria-label', 'Show all songs, psalms, hymns, a church tradition’s hymns, the Hymnology list, or the Puritan Psalter');
       TABS.forEach(function (c) {
         var b = document.createElement('button'); b.type = 'button'; b.dataset.c = c; b.innerHTML = c + ' <span class="lib-tc"></span>';
         b.onclick = function () { LS.set('libTab', c); renderLibrary(); list.scrollTop = 0; };
@@ -7980,7 +8754,7 @@ window.HYMN_SONGS = [
   // sync offset: reset to 0 once with this update (old offsets were set against the earlier latency handling)
   if (!LS.get('syncV2', 0)) { LS.set('syncMs', 0); LS.set('syncV2', 1); }
   var syncS = (+LS.get('syncMs', 0) || 0) / 1000;
-  var APP_VERSION = 'v19';
+  var APP_VERSION = 'v20';
   function syncSec() { return syncS; }
   function heardTime(perf) { return clock.heard(perf) - syncSec(); }
   // One clock for sound, cursor and highlight. A frame drawn in the rAF callback at perf reaches the screen at the next
