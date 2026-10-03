@@ -406,6 +406,15 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
 
 .tt-toggle small{display:block;font-size:12px;color:var(--muted);font-weight:400;margin-top:2px;line-height:1.3}
 .clef8{font-weight:700;font-family:Georgia,serif}
+/* song list: two buttons, one flat list */
+.seg.lib-tabs{margin:0 0 8px;min-height:48px}
+.seg.lib-tabs button{min-height:44px;display:flex;align-items:center;justify-content:center;gap:8px;color:var(--text2)}
+.seg.lib-tabs button[aria-pressed="true"]{color:var(--accent)}
+.lib-tc{font-size:12.5px;font-weight:700;min-width:26px;height:22px;padding:0 7px;border-radius:999px;background:var(--line);color:var(--muted);display:inline-grid;place-items:center;font-variant-numeric:tabular-nums}
+.seg.lib-tabs button[aria-pressed="true"] .lib-tc{background:var(--accent);color:var(--accent-text)}
+.lib-other{border:0;background:transparent;color:var(--accent);font:inherit;font-weight:700;padding:0 4px;min-height:32px;cursor:pointer}
+.lib-flat{display:flex;flex-direction:column}
+.lib-impnote{margin:12px 10px;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
 
 </style>
 </head>
@@ -428,9 +437,9 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
     <div class="lib-close"><h2>Choose a song</h2><button class="pill-btn" id="libClose">Done</button></div>
     <label class="sr" for="libSearch">Search songs</label>
     <input class="lib-search" id="libSearch" type="search" placeholder="Search titles, words or tunes" autocomplete="off">
-    <div class="lib-cats" id="libCats" role="group" aria-label="Show a category"></div>
+    <div class="seg lib-tabs" id="libCats" role="group" aria-label="Show psalms or hymns"></div>
     <div class="lib-count" id="libCount" aria-live="polite"></div>
-    <div class="lib-actions"><button class="pill-btn" id="restoreBtn" title="Open a backup or song-collection file (.json), or a tune file">Restore / import</button><button class="pill-btn" id="backupBtn" title="Save your songs and collections to a file">Back up my songs</button></div>
+    <div class="lib-actions"><button class="pill-btn" id="backupBtn" title="Save your songs and collections to a file">Back up my songs</button></div>
     <div id="libList"></div>
   </nav>
 
@@ -578,7 +587,7 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
       <div class="pane" id="pane-parts" role="tabpanel" aria-labelledby="tab-parts" data-pane="parts" hidden>
       <div class="ctrl ctrl-row"><button class="pill-btn satb-btn" id="satbBtn" aria-pressed="false" title="Four-part harmony: soprano (the melody), alto, tenor and bass, all sung"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="6" cy="17" r="2.3"/><circle cx="12" cy="13" r="2.3"/><circle cx="18" cy="9" r="2.3"/><path d="M8.3 17V6M14.3 13V4M20.3 9V3"/></svg>SATB</button>
         <span class="satb-info" id="satbInfo"></span></div>
-      <label class="toggle tt-toggle"><input type="checkbox" id="tenorTuneOn" checked><span>Tune in tenor<small>old psalter style: in four-part harmony the tenors sing the tune (an octave lower) and the sopranos the tenor line an octave higher</small></span></label>
+      <label class="toggle tt-toggle"><input type="checkbox" id="tenorTuneOn" checked><span>Tune in tenor<small>on for every song (remembered): the melody sounds an octave lower at tenor pitch, on a treble-8 staff; in four-part harmony the tenors sing the tune and the sopranos the tenor line an octave higher (old psalter style). Off: the melody as written and the usual hymnal layout</small></span></label>
       <div id="satbOpts" hidden>
         <div class="mixer" id="mixer" role="group" aria-label="Parts: tap a part to learn it alone">
           <div class="mix-row" data-p="mel">
@@ -6375,7 +6384,7 @@ window.HYMN_SONGS = [
   var S = { song: null, res: null, disp: null, verse: 0, transpose: 0, bpm: 90, loop: LS.get('loop', false), allVerses: LS.get('allVerses', false),
             playing: false, events: [], total: 0, idx: 0, anchorTime: 0, anchorBeat: 0, pausedBeat: 0, timer: null, raf: 0, cur: -1, layout: null, edited: false,
             mode: LS.get('mode', 'along') === 'off' ? 'off' : 'along', speed: LS.get('speed', 1), tickOn: LS.get('tick', true), metro: LS.get('metro', false), pipe: false, chords: false, bigWords: false, grid: [], lines: [], gi: 0,
-            satb: LS.get('satb', false), tenorTune: LS.get('tenorTune', true), part: LS.get('part', 'mel'), view: 'tog', // SATB always in the hymnal layout (S+A treble, T+B bass)
+            satb: LS.get('satb', false), tenorTune: LS.get('ttV2', 0) ? LS.get('tenorTune', true) : (LS.set('ttV2', 1), LS.set('tenorTune', true), true), part: LS.get('part', 'mel'), view: 'tog', // SATB always in the hymnal layout (S+A treble, T+B bass)
             mix: Object.assign({ mel: { vol: 1, mute: false, solo: false }, alto: { vol: 1, mute: false, solo: false }, tenor: { vol: 1, mute: false, solo: false }, bass: { vol: 1, mute: false, solo: false } }, LS.get('mix', null) || {}) };
 
   function allSongs() { return builtIn.concat(mySongs.map(function (m) { return Object.assign({ section: 'My Songs' }, m); })); }
@@ -6401,75 +6410,56 @@ window.HYMN_SONGS = [
     wordsCache[s.id + s.abc.length] = r; return r;
   }
   function norm(x) { x = String(x || '').toLowerCase().replace(/[’‘']/g, "'"); return x.normalize ? x.normalize('NFD').replace(/[\u0300-\u036f]/g, '') : x; }
+  // two flat lists: Psalms (every psalm setting, by psalm number) and Hymns (everything else, A-Z)
+  function psalmNo(s) { var m = (s.psalm || '').match(/Psalm\s+(\d+)/i) || (s.title || '').match(/^Psalm\s+(\d+)/i); return m ? +m[1] : 0; }
+  function tabOf(s) { return psalmNo(s) ? 'Psalms' : 'Hymns'; }
+  function sortTitle(t) { return String(t || '').replace(/^['‘’"“]/, ''); }
+  function libTab() { var t = LS.get('libTab', ''); return t === 'Psalms' || t === 'Hymns' ? t : (S.song ? tabOf(S.song) : 'Psalms'); }
   function renderLibrary() {
-    var q = norm(($('libSearch').value || '').trim()), list = $('libList'), groups = {}, cat = LS.get('cat', 'All'), total = 0;
-    var cats = $('libCats'), custom = refreshCats();
-    if (CATS.indexOf(cat) < 0 && cat !== 'All') cat = 'All';
-    if (cats && cats.dataset.sig !== CATS.join('|')) {
-      cats.innerHTML = ''; cats.dataset.sig = CATS.join('|');
-      ['All'].concat(CATS).forEach(function (c) {
-        var b = document.createElement('button'); b.textContent = c; b.dataset.c = c;
-        b.onclick = function () { LS.set('cat', c); renderLibrary(); };
+    var q = norm(($('libSearch').value || '').trim()), list = $('libList'), tab = libTab(), cats = $('libCats'), terms = q ? q.split(/\s+/) : [];
+    refreshCats();
+    if (cats && cats.dataset.sig !== 'tabs') {
+      cats.innerHTML = ''; cats.dataset.sig = 'tabs'; cats.className = 'seg lib-tabs'; cats.setAttribute('aria-label', 'Show psalms or hymns');
+      ['Psalms', 'Hymns'].forEach(function (c) {
+        var b = document.createElement('button'); b.type = 'button'; b.dataset.c = c; b.innerHTML = c + ' <span class="lib-tc"></span>';
+        b.onclick = function () { LS.set('libTab', c); renderLibrary(); list.scrollTop = 0; };
         cats.appendChild(b);
       });
     }
-    if (cats) Array.prototype.forEach.call(cats.childNodes, function (b) { b.setAttribute('aria-pressed', b.dataset.c === cat ? 'true' : 'false'); });
-    var terms = q ? q.split(/\s+/) : [];
+    var counts = { Psalms: 0, Hymns: 0 }, hits = { Psalms: 0, Hymns: 0 }, items = [];
     allSongs().forEach(function (s) {
-      var sec = s.section === 'Psalter' ? 'Psalms' : s.section === 'Hymns' ? 'Praise' : s.section;
-      if (cat !== 'All' && sec !== cat && !q) return;
+      var t = tabOf(s); counts[t]++;
       var w = songWords(s);
       if (terms.length) {
-        var head = norm(s.title + ' ' + s.psalm + ' ' + s.tune + ' ' + s.credit + ' ' + sec), hay = head + ' ' + norm(w.all);
-        if (!terms.every(function (t) { return hay.indexOf(t) >= 0; })) return;
-        s._hitWords = !terms.every(function (t) { return head.indexOf(t) >= 0; });
-        var tt = norm(s.title + ' ' + s.psalm); s._rank = terms.every(function (t) { return tt.indexOf(t) >= 0; }) ? (tt.indexOf(q) >= 0 ? 0 : 1) : s._hitWords ? 3 : 2; s._sec = sec; sec = 'Results';
-      } else s._hitWords = false;
-      (groups[sec] = groups[sec] || []).push(s); total++;
+        var head = norm(s.title + ' ' + s.psalm + ' ' + s.tune + ' ' + s.credit + ' ' + s.section), hay = head + ' ' + norm(w.all);
+        if (!terms.every(function (x) { return hay.indexOf(x) >= 0; })) return;
+        hits[t]++;
+        s._hitWords = !terms.every(function (x) { return head.indexOf(x) >= 0; });
+        var tt = norm(s.title + ' ' + s.psalm); s._rank = terms.every(function (x) { return tt.indexOf(x) >= 0; }) ? (tt.indexOf(q) >= 0 ? 0 : 1) : s._hitWords ? 3 : 2;
+      } else { s._hitWords = false; s._rank = 0; }
+      if (t === tab) items.push(s);
+    });
+    if (cats) Array.prototype.forEach.call(cats.childNodes, function (b) { var c = b.dataset.c, n = q ? hits[c] : counts[c]; b.setAttribute('aria-pressed', c === tab ? 'true' : 'false'); b.querySelector('.lib-tc').textContent = n; b.setAttribute('aria-label', c + ', ' + n + ' songs'); });
+    items.sort(function (a, b) {
+      if (q && a._rank !== b._rank) return a._rank - b._rank;
+      if (tab === 'Psalms') { var d = psalmNo(a) - psalmNo(b); if (d) return d; }
+      return sortTitle(a.title).localeCompare(sortTitle(b.title), undefined, { numeric: true, sensitivity: 'base' }) || (a.order != null && b.order != null ? a.order - b.order : 0);
     });
     list.innerHTML = '';
-    $('libCount').textContent = q ? (total ? total + ' song' + (total === 1 ? '' : 's') + ' found' : 'No songs found — try fewer or different words') : (cat === 'All' ? total + ' songs' : '');
-    CATS.concat(Object.keys(groups).filter(function (k) { return CATS.indexOf(k) < 0; })).forEach(function (g) {
-      if (!groups[g]) { if (g === 'My Songs' && !q && (cat === 'All' || cat === 'My Songs')) { var e = document.createElement('div'); e.className = 'lib-group'; e.innerHTML = '<h2 class="lib-h"><span class="lib-hb"><span class="lib-hn">My Songs</span><span class="lib-hc">0</span></span></h2><p class="lib-note">Songs you import or save appear here.</p>'; list.appendChild(e); } return; }
-      var div = document.createElement('div'); div.className = 'lib-group';
-      var isCustom = custom.indexOf(g) >= 0, closed = LS.get('libClosed', []), shut = !q && cat === 'All' && closed.indexOf(g) >= 0;
-      var note = CAT_NOTE[g] || (isCustom ? 'Imported · saved on this device' : g === 'Results' ? 'Best matches first' : '');
-      div.innerHTML = '<h2 class="lib-h"><button type="button" class="lib-hb" aria-expanded="' + (shut ? 'false' : 'true') + '"><span class="lib-hn">' + (isCustom ? '<span class="lib-imp">Imported</span>' : '') + esc(g) + '</span><span class="lib-hc" aria-label="' + groups[g].length + ' songs">' + groups[g].length + '</span><svg class="lib-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button></h2>' + (note ? '<p class="lib-note">' + esc(note) + '</p>' : '');
-      var body = document.createElement('div'); body.className = 'lib-body'; body.hidden = shut; if (shut) div.classList.add('shut');
-      div.querySelector('.lib-hb').onclick = function () {
-        if (q || cat !== 'All') return;
-        var c = LS.get('libClosed', []), i = c.indexOf(g), open = i >= 0; if (open) c.splice(i, 1); else c.push(g); LS.set('libClosed', c);
-        body.hidden = !open; div.classList.toggle('shut', !open); this.setAttribute('aria-expanded', open ? 'true' : 'false');
-      };
-      if (isCustom && !q) {
-        var rm = document.createElement('button'); rm.className = 'lib-rmall'; rm.textContent = 'Remove all'; rm.title = 'Remove the ' + g + ' songs from this device';
-        rm.onclick = function () { if (!confirm('Remove all ' + groups[g].length + ' “' + g + '” songs from this device? (You can restore them again from your file.)')) return; mySongs = mySongs.filter(function (m) { return m.section !== g; }); LS.set('mySongs', mySongs); if (LS.get('cat', 'All') === g) LS.set('cat', 'All'); if (S.song && S.song.section === g) loadSong(builtIn[0].id); renderLibrary(); toast('Removed the ' + g + ' songs'); };
-        div.querySelector('.lib-note') ? div.querySelector('.lib-note').appendChild(rm) : div.appendChild(rm);
-      }
-      groups[g].sort(function (a, b) {
-        var pa = +((a.psalm || '').match(/\d+/) || [1e4])[0], pb = +((b.psalm || '').match(/\d+/) || [1e4])[0];
-        if (g === 'Results' && a._rank !== b._rank) return a._rank - b._rank;
-        if (g === 'Results' && pa !== pb) return pa - pb;
-        if ((g === 'Results' || isCustom) && (a.order != null || b.order != null) && a.order !== b.order) return (a.order != null ? a.order : 1e9) - (b.order != null ? b.order : 1e9);
-        if (isCustom && (a.order != null || b.order != null)) return (a.order != null ? a.order : 1e9) - (b.order != null ? b.order : 1e9) || a.title.localeCompare(b.title);
-        return (g === 'Psalms' || g === 'Reformed & Puritan' || isCustom) && pa !== pb ? pa - pb : a.title.replace(/^['‘’"]/, '').localeCompare(b.title.replace(/^['‘’"]/, ''));
-      });
-      groups[g].forEach(function (s) {
-        var b = document.createElement('button'); b.className = 'lib-item'; b.setAttribute('aria-current', S.song && S.song.id === s.id ? 'true' : 'false');
-        var w = songWords(s), sub = [g === 'Results' ? s._sec : '', s.psalm, s.tune].filter(Boolean).join(' · ');
-        var fl = w.first && norm(w.first).indexOf(norm(s.title).replace(/[^a-z' ]/g, '').slice(0, 12)) !== 0 ? '<span class="fl">“' + esc(w.first) + '…”</span>' + (sub ? ' · ' : '') : '';
-        if (s._hitWords && terms.length) { var at = w.all.indexOf(terms[0]); if (at >= 0) { var st = Math.max(0, w.all.lastIndexOf(' ', Math.max(0, at - 24)) + 1), snip = w.raw.slice(st, at + terms[0].length + 28); fl = '<span class="fl">…' + esc(snip).replace(new RegExp(terms[0].replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi'), function (m) { return '<mark class="hit">' + m + '</mark>'; }) + '…</span>' + (sub ? ' · ' : ''); } }
-        b.innerHTML = '<span class="num">' + esc(songNum(s)) + '</span><span style="min-width:0"><span class="t">' + esc(s.title) + '</span><span class="s">' + fl + esc(sub || (s.section === 'My Songs' ? 'My song' : '')) + '</span></span>';
-        b.onclick = function () { loadSong(s.id, true); closeLib(); };
-        if (isMine(s)) {
-          var d = document.createElement('span'); d.className = 'del'; d.textContent = 'Remove'; d.setAttribute('role', 'button'); d.tabIndex = 0;
-          d.onclick = function (ev) { ev.stopPropagation(); if (confirm('Remove “' + s.title + '” from ' + (s.section || 'My Songs') + '?')) { mySongs = mySongs.filter(function (m) { return m.id !== s.id; }); LS.set('mySongs', mySongs); if (S.song.id === s.id) loadSong(builtIn[0].id); renderLibrary(); } };
-          b.appendChild(d);
-        }
-        body.appendChild(b);
-      });
-      div.appendChild(body); list.appendChild(div);
+    var other = tab === 'Psalms' ? 'Hymns' : 'Psalms', noun = tab === 'Psalms' ? 'psalm' : 'hymn';
+    $('libCount').textContent = q ? (items.length ? items.length + ' ' + noun + (items.length === 1 ? '' : 's') + ' found' : 'No ' + noun + 's found') : items.length + ' ' + noun + 's';
+    if (q && hits[other]) { var sw = document.createElement('button'); sw.type = 'button'; sw.className = 'lib-other'; sw.textContent = hits[other] + ' in ' + other + ' →'; sw.onclick = function () { LS.set('libTab', other); renderLibrary(); }; $('libCount').appendChild(document.createTextNode(' · ')); $('libCount').appendChild(sw); }
+    var body = document.createElement('div'); body.className = 'lib-flat';
+    items.forEach(function (s) {
+      var b = document.createElement('button'); b.className = 'lib-item'; b.setAttribute('aria-current', S.song && S.song.id === s.id ? 'true' : 'false');
+      var w = songWords(s), imp = s.section && BASE_CATS.indexOf(s.section) < 0 ? s.section : '', sub = [imp, tab === 'Psalms' && /^Psalm\s+\d+/i.test(s.title) ? '' : s.psalm, s.tune].filter(Boolean).join(' · ');
+      var fl = w.first && norm(w.first).indexOf(norm(s.title).replace(/[^a-z' ]/g, '').slice(0, 12)) !== 0 ? '<span class="fl">“' + esc(w.first) + '…”</span>' + (sub ? ' · ' : '') : '';
+      if (s._hitWords && terms.length) { var at = w.all.indexOf(terms[0]); if (at >= 0) { var st = Math.max(0, w.all.lastIndexOf(' ', Math.max(0, at - 24)) + 1), snip = w.raw.slice(st, at + terms[0].length + 28); fl = '<span class="fl">…' + esc(snip).replace(new RegExp(terms[0].replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi'), function (m) { return '<mark class="hit">' + m + '</mark>'; }) + '…</span>' + (sub ? ' · ' : ''); } }
+      b.innerHTML = '<span class="num">' + esc(tab === 'Psalms' ? String(psalmNo(s)) : songNum(s)) + '</span><span style="min-width:0"><span class="t">' + esc(s.title) + '</span><span class="s">' + fl + esc(sub || (s.section === 'My Songs' ? 'My song' : '')) + '</span></span>';
+      b.onclick = function () { loadSong(s.id, true); closeLib(); };
+      body.appendChild(b);
     });
+    list.appendChild(body);
   }
   function openLib() { $('library').classList.add('open'); $('scrim').classList.add('show'); updateRotateTip(); }
   function closeLib() { $('library').classList.remove('open'); $('scrim').classList.remove('show'); updateRotateTip(); }
@@ -6673,7 +6663,7 @@ window.HYMN_SONGS = [
       for (var l = 0; l < 5; l++) el('line', { class: 'st-line', x1: x, x2: endX, y1: y0 + l * sp, y2: y0 + l * sp });
       el('line', { class: 'st-bar', x1: x, x2: x, y1: y0, y2: y0 + staffH });
       drawClef(el, x + 0.5 * sp, y0 + 3 * sp, sp);
-      if (ttOn) { var c8 = el('text', { class: 'clef8 st-ink', x: x + 1.55 * sp, y: y0 + staffH + 3.0 * sp, 'font-size': (1.25 * sp).toFixed(1), 'text-anchor': 'middle' }); c8.textContent = '8'; } // treble-8: sounds an octave lower
+      if (ttOn || (tv === 'one' && S.tenorTune)) { var c8 = el('text', { class: 'clef8 st-ink', x: x + 1.55 * sp, y: y0 + staffH + 3.0 * sp, 'font-size': (1.25 * sp).toFixed(1), 'text-anchor': 'middle' }); c8.textContent = '8'; } // treble-8: sounds an octave lower
       var kx = x + clefW;
       for (var a = 0; a < nAcc; a++) {
         var st = fifths > 0 ? SHARP_STEPS[a] : FLAT_STEPS[a];
@@ -6884,7 +6874,7 @@ window.HYMN_SONGS = [
      tenor line an octave higher. The tracks keep their keys ('mel' is always the tune, 'tenor' always the line from the
      tenor part), so solo, mute, volume and "my part off" follow the line; only who sings it changes. */
   function TT() { return !!(S.satb && S.tenorTune); }
-  function melShift() { return TT() ? -12 : 0; } // the tune sounds an octave lower in the tenor
+  function melShift() { return S.tenorTune ? -12 : 0; } // tune in tenor: the tune sounds an octave lower (melody only and SATB)
   var TT_NAME = { mel: 'Tenor', alto: 'Alto', tenor: 'Soprano', bass: 'Bass' }, TT_ROLE = { mel: 'the tune', alto: 'harmony', tenor: 'tenor line, 8va', bass: 'harmony' };
   function PN(p) { return (TT() ? TT_NAME : PART_NAME)[p]; }
   function rangeOf(p) { return TT() ? PART_RANGE[{ mel: 'tenor', tenor: 'mel' }[p] || p] : PART_RANGE[p]; }
@@ -7579,7 +7569,7 @@ window.HYMN_SONGS = [
       if (added.length) { loadSong(added[0].id, true); toast(added.length === 1 ? 'Added “' + added[0].title + '” to My Songs' : 'Added ' + added.length + ' songs to My Songs'); }
       restored.forEach(function (r) {
         var secs = Object.keys(r.sections), n = r.added + r.updated;
-        if (secs.length === 1 && secs[0] !== 'My Songs') { LS.set('cat', secs[0]); renderLibrary(); }
+        if (secs.length === 1 && secs[0] !== 'My Songs' && r.first) { var fs = allSongs().filter(function (x) { return x.id === r.first; })[0]; if (fs) { LS.set('libTab', tabOf(fs)); renderLibrary(); } }
         if (r.first && !added.length && n) loadSong(r.first, true);
         toast(n ? (r.added ? 'Added ' + r.added : '') + (r.added && r.updated ? ', ' : '') + (r.updated ? 'updated ' + r.updated : '') + ' song' + (n === 1 ? '' : 's') + ' in ' + secs.join(', ') + (r.skipped ? ' (' + r.skipped + ' could not be read)' : '') : r.same ? 'Those songs are already here.' : 'No songs were found in that file.');
       });
@@ -7606,7 +7596,7 @@ window.HYMN_SONGS = [
       ['prefs.pp', 'prefs.gen'].forEach(function (k) { var p = LS.get(k, null); if (p && p.voice && !INST[p.voice]) { p.voice = fix(p.voice); LS.set(k, p); } });
     })();
     // drop stored settings of features that no longer exist (every setting the app uses is listed here)
-    (function () { var keep = 'allVerses aref cat ctlTab libClosed loop metro mix mode mySongs part reverb satb song tenorTune speed syncMs tick voice voiceGen volume vrange'.split(' ');
+    (function () { var keep = 'allVerses aref ctlTab libTab loop metro mix mode mySongs part reverb satb song tenorTune ttV2 speed syncMs tick voice voiceGen volume vrange'.split(' ');
       try { for (var i = localStorage.length - 1; i >= 0; i--) { var k = localStorage.key(i); if (k && k.indexOf('hp.') === 0) { var n = k.slice(3); if (keep.indexOf(n) < 0 && n.indexOf('prefs.') !== 0) localStorage.removeItem(k); } } } catch (e) {} })();
     $('playBtn').onclick = toggle;
     $('stopBtn').onclick = stop;
@@ -7732,7 +7722,7 @@ window.HYMN_SONGS = [
     $('metroOn').checked = !!S.metro;
     $('metroOn').onchange = function () { S.metro = this.checked; LS.set('metro', S.metro); toast(S.metro ? 'Metronome on: a tick on every beat, accent on the first beat of the bar' : 'Metronome off'); };
     ['satbBtn', 'satbBtn2'].forEach(function (id) { if ($(id)) $(id).onclick = function () { setSatb(!S.satb); }; });
-    if ($('tenorTuneOn')) $('tenorTuneOn').onchange = function () { setTenorTune(this.checked); toast(this.checked ? (S.satb ? 'Tune in tenor: tenors sing the tune, sopranos the tenor line' : 'Tune in tenor is used in four-part harmony (SATB)') : 'Tune in soprano: the usual hymnal layout'); };
+    if ($('tenorTuneOn')) $('tenorTuneOn').onchange = function () { setTenorTune(this.checked); toast(this.checked ? (S.satb ? 'Tune in tenor: tenors sing the tune, sopranos the tenor line' : 'Tune in tenor: the melody sounds an octave lower (treble-8 clef)') : 'Tune in soprano: the melody as written, the usual hymnal layout'); };
     PARTS.forEach(function (p) {
       var row = document.querySelector('.mix-row[data-p="' + p + '"]'); if (!row) return;
       row.querySelector('.mix-name').onclick = function () { learnAlone(p); };
