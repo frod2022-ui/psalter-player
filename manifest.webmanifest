@@ -1,7 +1,7 @@
 {
-  "name": "Psalms & Hymns – Melody Player",
-  "short_name": "Psalter",
-  "description": "Play the melody of metrical psalms and hymns, with the words under the notes. Works offline.",
+  "name": "Psalm Singer",
+  "short_name": "Psalm Singer",
+  "description": "Psalm Singer helps you learn to sing psalms and hymns a cappella. Follow the notes and words on four-part music, lock to a steady metronome, and practice the melody in soprano, alto, tenor, or bass.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

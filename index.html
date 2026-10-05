@@ -3,14 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Psalms &amp; Hymns – Melody Player</title>
-<meta name="description" content="Play the melody of psalms and hymns, with the words lined up under the notes. Works offline.">
+<title>Psalm Singer</title>
+<meta name="description" content="Psalm Singer helps you learn to sing psalms and hymns a cappella. Follow the notes and words on four-part music, lock to a steady metronome, and practice the melody in soprano, alto, tenor, or bass.">
 <meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Psalter">
+<meta name="apple-mobile-web-app-title" content="Psalm Singer">
+<meta name="application-name" content="Psalm Singer">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20512%20512%22%3E%20%3Cdefs%3E%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23c8782a%22%2F%3E%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%236b3410%22%2F%3E%20%3C%2FlinearGradient%3E%20%3ClinearGradient%20id%3D%22wood%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23fff7ec%22%2F%3E%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23f3dcc0%22%2F%3E%20%3C%2FlinearGradient%3E%20%3C%2Fdefs%3E%20%3Crect%20width%3D%22512%22%20height%3D%22512%22%20rx%3D%22112%22%20fill%3D%22url(%23bg)%22%2F%3E%20%3Cpath%20d%3D%22M256%2092%20L392%20384%20Q396%20404%20376%20404%20L136%20404%20Q116%20404%20120%20384%20Z%22%20fill%3D%22none%22%20stroke%3D%22url(%23wood)%22%20stroke-width%3D%2226%22%20stroke-linejoin%3D%22round%22%2F%3E%20%3Cg%20stroke%3D%22%23fff3e3%22%20stroke-width%3D%227%22%20stroke-linecap%3D%22round%22%20opacity%3D%22.92%22%3E%20%3Cline%20x1%3D%22256%22%20y1%3D%22150%22%20x2%3D%22256%22%20y2%3D%22384%22%2F%3E%20%3Cline%20x1%3D%22221%22%20y1%3D%22210%22%20x2%3D%22221%22%20y2%3D%22384%22%2F%3E%20%3Cline%20x1%3D%22291%22%20y1%3D%22210%22%20x2%3D%22291%22%20y2%3D%22384%22%2F%3E%20%3Cline%20x1%3D%22186%22%20y1%3D%22282%22%20x2%3D%22186%22%20y2%3D%22384%22%2F%3E%20%3Cline%20x1%3D%22326%22%20y1%3D%22282%22%20x2%3D%22326%22%20y2%3D%22384%22%2F%3E%20%3C%2Fg%3E%20%3Ccircle%20cx%3D%22256%22%20cy%3D%22304%22%20r%3D%2234%22%20fill%3D%22%236b3410%22%20stroke%3D%22%23fff3e3%22%20stroke-width%3D%228%22%2F%3E%20%3C%2Fsvg%3E">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -462,7 +463,7 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
   <div class="topbar-in">
     <div class="brand">
       <img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20512%20512%22%3E%20%3Cdefs%3E%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23c8782a%22%2F%3E%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%236b3410%22%2F%3E%20%3C%2FlinearGradient%3E%20%3ClinearGradient%20id%3D%22wood%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23fff7ec%22%2F%3E%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23f3dcc0%22%2F%3E%20%3C%2FlinearGradient%3E%20%3C%2Fdefs%3E%20%3Crect%20width%3D%22512%22%20height%3D%22512%22%20rx%3D%22112%22%20fill%3D%22url(%23bg)%22%2F%3E%20%3Cpath%20d%3D%22M256%2092%20L392%20384%20Q396%20404%20376%20404%20L136%20404%20Q116%20404%20120%20384%20Z%22%20fill%3D%22none%22%20stroke%3D%22url(%23wood)%22%20stroke-width%3D%2226%22%20stroke-linejoin%3D%22round%22%2F%3E%20%3Cg%20stroke%3D%22%23fff3e3%22%20stroke-width%3D%227%22%20stroke-linecap%3D%22round%22%20opacity%3D%22.92%22%3E%20%3Cline%20x1%3D%22256%22%20y1%3D%22150%22%20x2%3D%22256%22%20y2%3D%22384%22%2F%3E%20%3Cline%20x1%3D%22221%22%20y1%3D%22210%22%20x2%3D%22221%22%20y2%3D%22384%22%2F%3E%20%3Cline%20x1%3D%22291%22%20y1%3D%22210%22%20x2%3D%22291%22%20y2%3D%22384%22%2F%3E%20%3Cline%20x1%3D%22186%22%20y1%3D%22282%22%20x2%3D%22186%22%20y2%3D%22384%22%2F%3E%20%3Cline%20x1%3D%22326%22%20y1%3D%22282%22%20x2%3D%22326%22%20y2%3D%22384%22%2F%3E%20%3C%2Fg%3E%20%3Ccircle%20cx%3D%22256%22%20cy%3D%22304%22%20r%3D%2234%22%20fill%3D%22%236b3410%22%20stroke%3D%22%23fff3e3%22%20stroke-width%3D%228%22%2F%3E%20%3C%2Fsvg%3E" alt="">
-      <h1>Psalms &amp; Hymns<small>Melody player</small></h1>
+      <h1>Psalm Singer<small>Psalms &amp; hymns</small></h1>
     </div>
     <button class="pill-btn" id="installBtn" hidden aria-label="Install app"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0-4.5-4.5M12 15l4.5-4.5M5 21h14"/></svg><span class="lbl">Install</span></button>
     <button class="pill-btn solid" id="importBtn" title="Open a tune file (.abc, MIDI or MusicXML) or a backup (.json)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V9m0 0-4.5 4.5M12 9l4.5 4.5M5 3h14"/></svg><span class="lbl">Import</span></button>
@@ -709,9 +710,9 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
     <div class="ctrl donate-block">
       <div class="cap"><span>Support this app</span></div>
       <button type="button" class="pill-btn wide-btn solid" id="donateBtn" title="Open Messages to send a text">Donate via Messages</button>
-      <p class="hint donate-num">Text <a id="donateNum" href="sms:3074090646&amp;body=I%27d%20like%20to%20support%20the%20Psalter%20Player">307-409-0646</a> — you can also copy the number.</p>
+      <p class="hint donate-num">Text <a id="donateNum" href="sms:3074090646&amp;body=I%27d%20like%20to%20support%20Psalm%20Singer">307-409-0646</a> — you can also copy the number.</p>
     </div>
-    <p class="app-ver" id="appVer">Version <b>v29</b></p>
+    <p class="app-ver" id="appVer">Version <b>v30</b></p>
     <p class="app-ver donate-foot"><button type="button" class="link-btn" id="donateLink">Support / Donate</button></p>
   </div>
 </div>
@@ -741,7 +742,7 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
 
 <script id="hp-timing">
 /* ===== Shared playback timing: lookahead ticker, audio-locked clock, audio unlock, smooth roll =====
-   Used by the Latin Fake Book and the Psalter Player.
+   Used by the Latin Fake Book and the Psalm Singer.
    - Ticker: fires every 25 ms from a Web Worker, so background or occluded windows (Safari and Chrome slow main-thread
      timers to about 1 s there) do not starve the scheduler. Falls back to setInterval.
    - Clock: the AudioContext time the listener is hearing right now (getOutputTimestamp, or currentTime minus the
@@ -11905,7 +11906,7 @@ window.HYMN_SONGS = [
   function updateHeader() {
     var s = S.song, r = S.res;
     var title = (S.edited && r.title) ? r.title : s.title || r.title || 'Untitled';
-    $('songTitle').textContent = title; document.title = title + ' – Psalms & Hymns';
+    $('songTitle').textContent = title; document.title = title + ' – Psalm Singer';
     $('songSub').textContent = [s.psalm, s.tune, s.meter].filter(Boolean).join(' · ') || (r.subtitles[0] || '');
     $('songCredit').textContent = s.credit || r.composer.join(' · ');
     $('nowTitle').textContent = title;
@@ -12610,7 +12611,7 @@ window.HYMN_SONGS = [
   // sync offset: reset to 0 once with this update (old offsets were set against the earlier latency handling)
   if (!LS.get('syncV3', 0)) { LS.set('syncMs', 0); LS.set('syncV2', 1); LS.set('syncV3', 1); } // v25: Safari now allows for its reported output delay, so older offsets are reset once
   var syncS = (+LS.get('syncMs', 0) || 0) / 1000;
-  var APP_VERSION = 'v29';
+  var APP_VERSION = 'v30';
   function syncSec() { return syncS; }
   function heardTime(perf) { return clock.heard(perf) - syncSec(); }
   // One clock for sound, cursor and highlight. A frame drawn in the rAF callback at perf reaches the screen at the next
@@ -12951,7 +12952,7 @@ window.HYMN_SONGS = [
   function restoreJSON(t, fname) {
     var d; try { d = JSON.parse(t); } catch (e) { throw new Error('this file is not valid JSON'); }
     var list = d && (Array.isArray(d.songs) ? d.songs : Array.isArray(d) ? d : null);
-    if (!list) throw new Error('this is not a Psalter Player backup or song collection');
+    if (!list) throw new Error('this is not a Psalm Singer backup or song collection');
     var res = { restored: true, added: 0, updated: 0, same: 0, skipped: 0, sections: {}, first: null, name: d.name || '' };
     var next = mySongs.slice();
     list.forEach(function (s, i) {
@@ -13212,7 +13213,7 @@ window.HYMN_SONGS = [
     $('settingsBtn').onclick = function () { openSheet('setSheet'); };
     $('creditsBtn').onclick = function () { openSheet('credSheet'); };
     (function () {
-      var SMS = 'sms:3074090646&body=' + encodeURIComponent("I'd like to support the Psalter Player");
+      var SMS = 'sms:3074090646&body=' + encodeURIComponent("I'd like to support Psalm Singer");
       function openDonate() {
         try { window.location.href = SMS; } catch (e) {}
         try { toast('Messages: 307-409-0646'); } catch (e2) {}

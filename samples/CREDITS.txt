@@ -1,4 +1,4 @@
-Instrument samples used by the Psalms & Hymns melody player
+Instrument samples used by the Psalm Singer
 (trimmed, level-matched, tuned and re-encoded as 128 kbit/s MP3; one file per sampled note, named by MIDI note number)
 
 psaltery/  Plucked psaltery - Versilian Community Sample Library (VCSL), "Chordophones/Zithers/Psaltery, Bowed and Plucked/Pluck"
