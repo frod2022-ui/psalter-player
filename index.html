@@ -748,7 +748,7 @@ a.pill-btn{text-decoration:none;box-sizing:border-box}
       <button type="button" class="pill-btn wide-btn solid" id="donateBtn" title="Open Messages for donations, comments or requests">Donations, comments or requests</button>
       <p class="hint donate-num">Donations, comments or requests: text <a id="donateNum" href="sms:3074090646&amp;body=I%27d%20like%20to%20support%20Psalm%20Singer%20/%20comment%20or%20request%3A">307-409-0646</a>.</p>
     </div>
-    <p class="app-ver" id="appVer">Version <b>v37</b></p>
+    <p class="app-ver" id="appVer">Version <b>v38</b></p>
     <p class="app-ver donate-foot"><button type="button" class="link-btn" id="donateLink">Donations, comments or requests</button></p>
   </div>
 </div>
@@ -798,6 +798,10 @@ a.pill-btn{text-decoration:none;box-sizing:border-box}
     var gd = graphDelay == null ? 0.006 : graphDelay;
     var lastPerf = 0, lastT = 0, have = false;
     var env = null, envPerf = 0; // upper envelope of currentTime - performance time (currentTime advances in chunks)
+    // Smoothed speaker delay. Bluetooth/AirPlay and WebKit (0 until audio plays, then a real value) make
+    // outputLatency jump; using the raw value (or refusing to move the clock backwards) puts the cursor
+    // ahead then behind. Track a smoothed delay and snap only on a real route change.
+    var smoothOL = null, lastRawOL = null, ASSUMED_OL = 0.015;
     function ctNow(ctx, perf) {
       var pn = performance.now(), d = ctx.currentTime - pn / 1000;
       if (env === null || Math.abs(d - env) > 0.25) env = d; // first reading or a discontinuity (resume, device change)
@@ -805,36 +809,57 @@ a.pill-btn{text-decoration:none;box-sizing:border-box}
       envPerf = pn;
       return perf / 1000 + env;
     }
+    // Instantaneous best guess of "how far ahead of the speaker is currentTime?"
+    function rawOutLat(ctx) {
+      var bl = ctx.baseLatency || 0, has = 'outputLatency' in ctx, ol = has ? ctx.outputLatency : null;
+      if (ol != null && !(ol >= 0 && ol < 0.3)) ol = null; // absurd reading
+      if (opts.renderClock) {
+        // WebKit: outputLatency already includes device buffer + hardware. A positive reading is trusted and
+        // smoothed by outLat() so Bluetooth/AirPlay ramps do not yank the cursor. A reported 0 after audio has
+        // started is often truthful on Mac/iPhone built-in speakers (using ASSUMED_OL here put the cursor ~15 ms
+        // BEHIND the click). Only before the graph has produced audio do we fall back to a typical delay.
+        if (ol != null && ol > 0) return ol;
+        if (ctx.currentTime < 0.05) return Math.max(bl, ASSUMED_OL);
+        return bl;
+      }
+      // Chromium et al.: outputLatency + baseLatency when OTS is unavailable
+      if (ol != null && ol > 0) return ol + bl;
+      // 0 / missing often means "not ready yet" — assume a typical total delay once
+      return Math.max(bl + ASSUMED_OL, ASSUMED_OL);
+    }
+    function outLat(ctx, perfDt) {
+      var raw = rawOutLat(ctx);
+      lastRawOL = raw;
+      if (smoothOL == null || Math.abs(raw - smoothOL) > 0.08) {
+        // first sample, or a real route change (Bluetooth connect/disconnect, AirPlay) ≥ 80 ms
+        smoothOL = raw;
+      } else {
+        // ~120 ms time-constant: follow variable buffering without swinging the cursor
+        var a = 1 - Math.exp(-(Math.max(0.001, perfDt || 0.016)) / 0.12);
+        smoothOL += (raw - smoothOL) * a;
+      }
+      return smoothOL;
+    }
     function raw(ctx, perf) {
       var ct = ctNow(ctx, perf);
-      // Safari / WebKit (macOS and iOS): no added output delay. Its reported latencies and output timestamps have been
-      // seen to put the cursor BEHIND the sound on real Macs, so the visuals follow the render clock (currentTime) and
-      // any real speaker delay (Bluetooth, AirPlay) is set once by tapping along (Sync check).
-      // WebKit: currentTime is the end of the block just rendered; the speaker plays it outputLatency later (WebKit's
-      // outputLatency already covers the device buffer and hardware delay, so baseLatency is not added on top). Until
-      // audio has played WebKit reports 0; a value outside 0-300 ms is not trusted. Older Safari without the property
-      // gets a typical built-in-speaker delay.
-      if (opts.renderClock) { okOts = false; var wl = 'outputLatency' in ctx ? (ctx.outputLatency || 0) : ASSUMED_OL; if (!(wl >= 0 && wl < 0.3)) wl = ASSUMED_OL; return ct - wl - gd; }
+      var dt = have ? Math.max(0, (perf - lastPerf) / 1000) : 0.016;
+      // Prefer getOutputTimestamp when it advances in real time and agrees with currentTime − latency.
+      // WebKit's renderClock path still tries OTS first: when it is trustworthy it tracks Bluetooth
+      // without a manual sync offset; otherwise fall through to smoothed outputLatency.
       if (ctx.getOutputTimestamp) {
         var ts = ctx.getOutputTimestamp();
-        // contextTime is what is reaching the speakers at performanceTime. Some engines (WebKit builds) report a
-        // performanceTime on another time base or at another rate, so use it only after it has been seen to advance
-        // at the real rate (1 s per s, checked every 250 ms) and while it agrees with currentTime.
         if (ts && ts.performanceTime > 0 && ts.contextTime > 0) {
           var e = ts.contextTime + (perf - ts.performanceTime) / 1000;
           if (otsP0 === null || perf < otsP0) { otsP0 = perf; otsE0 = e; }
           else if (perf - otsP0 >= 250) { var rate = (e - otsE0) / ((perf - otsP0) / 1000); otsGood = Math.abs(rate - 1) < 0.03; otsP0 = perf; otsE0 = e; }
-          if (otsGood && e <= ct + 0.02 && e >= ct - Math.min(0.5, ('outputLatency' in ctx ? (ctx.outputLatency || 0) : ASSUMED_OL) + (ctx.baseLatency || 0) + 0.05)) { okOts = true; return e - gd; } // an output timestamp far behind the reported latency is not trusted
+          var latCap = Math.min(0.5, rawOutLat(ctx) + 0.05);
+          if (otsGood && e <= ct + 0.02 && e >= ct - latCap) { okOts = true; return e - gd; }
         }
       }
       okOts = false;
-      // no output timestamp to trust and a browser that cannot report the output latency at all (Safari before 18.4):
-      // assume a typical hardware delay (built-in speakers or wired output) instead of none. A reported 0 is used as is
-      // (WebKit reports 0 until audio plays). Bluetooth/AirPlay add far more; the Sync check measures it by tapping.
-      var ol = 'outputLatency' in ctx ? (ctx.outputLatency || 0) : ASSUMED_OL;
-      return ct - ol - (ctx.baseLatency || 0) - gd;
+      return ct - outLat(ctx, dt) - gd;
     }
-    var okOts = false, otsGood = false, otsP0 = null, otsE0 = 0, ASSUMED_OL = 0.015;
+    var okOts = false, otsGood = false, otsP0 = null, otsE0 = 0;
     return {
       // audio-context time being heard now, steady for animation; perf = rAF timestamp (ms) if you have it
       heard: function (perf) {
@@ -843,18 +868,21 @@ a.pill-btn{text-decoration:none;box-sizing:border-box}
         var r = raw(ctx, perf);
         if (ctx.state !== 'running') { have = false; return r; }
         if (!have) { have = true; lastPerf = perf; lastT = r; return r; }
-        var pred = lastT + Math.max(0, perf - lastPerf) / 1000, err = r - pred;
-        // follow the audio clock gently; snap only on a real discontinuity (device change, resume)
-        var t = Math.abs(err) > 0.06 ? r : pred + err * 0.06;
-        if (t < lastT) t = lastT;
+        var dt = Math.max(0, perf - lastPerf) / 1000, pred = lastT + dt, err = r - pred;
+        // follow the audio clock; snap on a real discontinuity (device change, resume, big latency jump)
+        var t = Math.abs(err) > 0.05 ? r : pred + err * 0.12;
+        // Allow gentle backward correction (latency rose / OTS caught up). Hard freeze made the cursor stay
+        // AHEAD of the sound after Bluetooth or WebKit's 0→real outputLatency transition.
+        if (t < lastT) t = Math.max(r, lastT - Math.min(0.008, dt + 0.002));
         lastPerf = perf; lastT = t;
         return t;
       },
-      reset: function () { have = false; env = null; otsP0 = null; otsGood = false; },
+      reset: function () { have = false; env = null; otsP0 = null; otsGood = false; smoothOL = null; lastRawOL = null; },
       get usesOutputTimestamp() { return okOts; },
-      get assumedOutputLatency() { var ctx = getCtx(); return ctx && !okOts && !('outputLatency' in ctx) ? ASSUMED_OL : 0; },
+      get assumedOutputLatency() { return (!okOts && lastRawOL != null && lastRawOL <= ASSUMED_OL + 1e-6) ? ASSUMED_OL : 0; },
       get renderClock() { return !!opts.renderClock; },
       get otsRateOk() { return otsGood; },
+      get smoothedLatency() { return smoothOL; },
       latency: function () { var ctx = getCtx(); if (!ctx) return 0; return Math.max(0, ctx.currentTime - raw(ctx, performance.now())); }
     };
   }
@@ -12636,13 +12664,13 @@ window.HYMN_SONGS = [
   // Sync offset control removed: always 0. Clear any saved offset from older installs.
   try { LS.set('syncMs', 0); } catch (e0) {}
   var syncS = 0;
-  var APP_VERSION = 'v37';
+  var APP_VERSION = 'v38';
   function syncSec() { return syncS; }
   function heardTime(perf) { return clock.heard(perf) - syncSec(); }
   // One clock for sound, cursor and highlight. A frame drawn in the rAF callback at perf reaches the screen at the next
   // refresh and stays there for one refresh interval, so we draw the audio time heard in the middle of that interval.
   var fdt = 1 / 60;
-  function shownTime(perf) { return heardTime(perf) + 1.5 * fdt; }
+  function shownTime(perf) { var fr = Math.max(1 / 120, Math.min(1 / 30, fdt || 1 / 60)); return heardTime(perf) + 1.5 * fr; }
   function heardRound(perf, h) {
     h = h != null ? h : heardTime(perf);
     var rs = S.rounds || [], r = rs[0];
@@ -12713,7 +12741,15 @@ window.HYMN_SONGS = [
       if (S.gi < S.grid.length && S.grid[S.gi].b < P.to - 1e-6 && S.grid[S.gi].b >= P.from - 1e-6) nxt = Math.min(nxt, S.grid[S.gi].b);
       if (nxt < Infinity) { // the next note or click not yet planned: if the timer came late, shift the song later (never play it late)
         var t0 = timeOf(nxt);
-        if (t0 < now + 0.09) { var sh = now + 0.1 - t0; /* room for the earliest-speaking sample (80 ms) */ S.anchorTime += sh; var lr = S.rounds[S.rounds.length - 1]; if (lr) { lr.at += sh; var ls = lr.segs[lr.segs.length - 1]; ls.at += sh; } S.stats.shifts++; }
+        if (t0 < now + 0.09) {
+          var sh = now + 0.1 - t0; /* room for the earliest-speaking sample (80 ms) */
+          S.anchorTime += sh; var lr = S.rounds[S.rounds.length - 1]; if (lr) { lr.at += sh; var ls = lr.segs[lr.segs.length - 1]; ls.at += sh; } S.stats.shifts++;
+          // Drop already-queued notes/clicks (still at the OLD times). Otherwise the cursor — which follows the
+          // new anchor — sits BEHIND the sound until that buffer drains (main-thread jank, sample load, tab throttle).
+          Audio.silence();
+          while (S.idx > P.i0 && timeOf(S.events[S.idx - 1].start) >= now - 0.02) S.idx--;
+          while (S.gi > 0 && timeOf(S.grid[S.gi - 1].b) >= now - 0.02) S.gi--;
+        }
       }
       while (S.idx < P.i1 && timeOf(S.events[S.idx].start) < horizon) {
         var e = S.events[S.idx];
@@ -13089,7 +13125,16 @@ window.HYMN_SONGS = [
     $('allVerses').onchange = function () { S.allVerses = this.checked; LS.set('allVerses', S.allVerses); render(); };
     wireRoll();
     TM.unlock(function () { try { Audio.ensure(); } catch (e) {} });
-    Audio.onState(function (st) { if (S.playing && st !== 'running') { pause(); toast('Sound was interrupted — tap play to go on'); } });
+    Audio.onState(function (st) {
+      if (st === 'running') clock.reset();
+      if (S.playing && st !== 'running') { pause(); toast('Sound was interrupted — tap play to go on'); }
+    });
+    // Bluetooth / speaker route changes alter outputLatency; re-lock the visual clock so it does not stay ahead/behind.
+    try {
+      if (navigator.mediaDevices && navigator.mediaDevices.addEventListener) {
+        navigator.mediaDevices.addEventListener('devicechange', function () { clock.reset(); });
+      }
+    } catch (eDev) {}
     window.HP_TEST = { S: S, Audio: Audio, clock: clock, get roll() { return S.roll; }, setProbe: function (on) { probe = on ? TM.FrameProbe() : null; return probe; }, get probe() { return probe; }, tick: tick, heardTime: heardTime, setSpeed: setSpeed, pitchPipe: pitchPipe, get schedPart() { return S.schedPart; }, nextPass: nextPass, chordList: chordList, syncSingUI: syncSingUI, satbParts: satbParts, setSatb: setSatb, setTenorTune: setTenorTune, setMelVoice: setMelVoice, melOct: function (v) { return melOct(v); }, TT: TT, setPart: setPart, partGain: partGain, setView: setView, learnAlone: learnAlone, saveMix: saveMix, get lines() { return S.lines; }, shownTime: shownTime, get fdt() { return fdt; }, play: play, pause: pause, stop: stop, render: render, velOf: velOf, loadSong: loadSong, songs: allSongs, renderLibrary: renderLibrary };
     try { localStorage.removeItem('hp.syncAsked'); } catch (e) {}
     // singing practice controls
