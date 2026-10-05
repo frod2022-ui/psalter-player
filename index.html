@@ -748,7 +748,7 @@ a.pill-btn{text-decoration:none;box-sizing:border-box}
       <button type="button" class="pill-btn wide-btn solid" id="donateBtn" title="Open Messages for donations, comments or requests">Donations, comments or requests</button>
       <p class="hint donate-num">Donations, comments or requests: text <a id="donateNum" href="sms:3074090646&amp;body=I%27d%20like%20to%20support%20Psalm%20Singer%20/%20comment%20or%20request%3A">307-409-0646</a>.</p>
     </div>
-    <p class="app-ver" id="appVer">Version <b>v38</b></p>
+    <p class="app-ver" id="appVer">Version <b>v39</b></p>
     <p class="app-ver donate-foot"><button type="button" class="link-btn" id="donateLink">Donations, comments or requests</button></p>
   </div>
 </div>
@@ -12664,7 +12664,7 @@ window.HYMN_SONGS = [
   // Sync offset control removed: always 0. Clear any saved offset from older installs.
   try { LS.set('syncMs', 0); } catch (e0) {}
   var syncS = 0;
-  var APP_VERSION = 'v38';
+  var APP_VERSION = 'v39';
   function syncSec() { return syncS; }
   function heardTime(perf) { return clock.heard(perf) - syncSec(); }
   // One clock for sound, cursor and highlight. A frame drawn in the rAF callback at perf reaches the screen at the next
