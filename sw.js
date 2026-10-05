@@ -1,7 +1,7 @@
 /* Offline support. The app shell (index.html, manifest) is NETWORK-FIRST, fetched past the HTTP cache, so a new version
    shows up at the next launch even in an iPhone home-screen app; the cached copy is only used offline (or when the
    network is too slow). The instrument samples are cache-first and kept for good. */
-const CACHE = 'psalter-v34';
+const CACHE = 'psalter-v35';
 const SAMPLES = 'psalter-samples-v1'; // bump only when the sample files themselves change
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icon.svg', './icon-192.png', './icon-512.png', './apple-touch-icon.png', './my-songs.js'];
 self.addEventListener('install', e => {
