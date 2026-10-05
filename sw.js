@@ -1,9 +1,9 @@
 /* Offline support. The app shell (index.html, manifest) is NETWORK-FIRST, fetched past the HTTP cache, so a new version
    shows up at the next launch even in an iPhone home-screen app; the cached copy is only used offline (or when the
    network is too slow). The instrument samples are cache-first and kept for good. */
-const CACHE = 'psalter-v35';
+const CACHE = 'psalter-v36';
 const SAMPLES = 'psalter-samples-v1'; // bump only when the sample files themselves change
-const SHELL = ['./', './index.html', './manifest.webmanifest', './icon.svg', './icon-192.png', './icon-512.png', './apple-touch-icon.png', './my-songs.js'];
+const SHELL = ['./', './index.html', './share.html', './psalm-singer-qr.png', './manifest.webmanifest', './icon.svg', './icon-192.png', './icon-512.png', './apple-touch-icon.png', './my-songs.js'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => Promise.all(SHELL.map(u => fetch(new Request(u, { cache: 'reload' })).then(r => r.ok ? c.put(u, r) : null).catch(() => null)))).then(() => self.skipWaiting()));
 });
@@ -45,7 +45,7 @@ self.addEventListener('fetch', e => {
     }));
     return;
   }
-  const shell = req.mode === 'navigate' || /\/(index\.html|manifest\.webmanifest)?$/.test(url.pathname);
+  const shell = req.mode === 'navigate' || /\/(index\.html|share\.html|manifest\.webmanifest)?$/.test(url.pathname);
   if (shell) {
     // network first (no HTTP cache), the cached copy after 4 s or offline
     e.respondWith(caches.open(CACHE).then(async cache => {
