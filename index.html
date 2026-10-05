@@ -47,8 +47,34 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent}
 .topbar-in{max-width:1280px;margin:0 auto;display:flex;align-items:center;gap:14px}
 .brand{display:flex;align-items:center;gap:12px;min-width:0;flex:1}
 .brand img{width:44px;height:44px;border-radius:11px;box-shadow:0 2px 8px rgba(0,0,0,.18);flex:none}
-.brand h1{font-size:24px;line-height:1.1;margin:0;font-weight:700;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand h1{font-size:24px;line-height:1.15;margin:0;font-weight:700;letter-spacing:-.02em;min-width:0;overflow:hidden}
 .brand small{display:block;font-size:14px;color:var(--muted);font-weight:500;letter-spacing:0}
+.brand-blurb{display:block;font-size:12.5px;line-height:1.3;font-weight:500;max-width:54ch;white-space:normal;margin-top:3px;overflow:visible;text-overflow:unset}
+.brand-blurb .blurb-short{display:none}
+.brand h1{white-space:normal}
+.brand h1 > .brand-blurb{/* title line stays one line via first text node; blurb wraps */}
+@media (min-width:701px){
+  .brand h1{display:flex;flex-direction:column;align-items:flex-start;min-width:0}
+}
+@media (max-width:900px){
+  .brand-blurb{font-size:12px;max-width:40ch}
+}
+@media (max-width:700px){
+  .brand-blurb .blurb-full{display:none}
+  .brand-blurb .blurb-short{display:block;white-space:normal}
+  .brand-blurb{max-width:min(34ch, calc(100vw - 180px));font-size:12px;line-height:1.25}
+}
+@media (max-width:560px){
+  .brand-blurb{max-width:min(32ch, calc(100vw - 170px));font-size:11.5px}
+}
+@media (max-width:360px){
+  .brand-blurb{max-width:calc(100vw - 160px);font-size:11px}
+}
+@media (orientation:landscape) and (max-height:480px){
+  .brand-blurb{font-size:11px;max-width:min(40ch, calc(100vw - 200px))}
+  .brand-blurb .blurb-full{display:none}
+  .brand-blurb .blurb-short{display:block;white-space:normal}
+}
 .pill-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 18px;border-radius:999px;border:0;
   background:var(--accent-soft);color:var(--accent);font-weight:600;font-size:17px;transition:transform .15s ease,background .2s ease;white-space:nowrap}
 .pill-btn:active{transform:scale(.96)}
@@ -307,7 +333,10 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
 @media (orientation:landscape) and (max-height:500px){
   .topbar{position:relative;padding-top:max(6px,env(safe-area-inset-top));padding-bottom:6px}
   .brand img{width:34px;height:34px;border-radius:9px}
-  .brand h1{font-size:19px}.brand small{display:none}
+  .brand h1{font-size:19px}
+  .brand-blurb .blurb-full{display:none}
+  .brand-blurb .blurb-short{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .brand-blurb{display:block;font-size:11px;max-width:min(42ch, calc(100vw - 200px));margin-top:1px;line-height:1.2}
   .topbar .pill-btn{min-height:40px}
   .wrap{padding:10px max(14px,env(safe-area-inset-left)) 10px max(14px,env(safe-area-inset-right));gap:10px}
   .card{padding:12px 16px}
@@ -470,11 +499,11 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
   <div class="topbar-in">
     <div class="brand">
       <img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20512%20512%22%3E%20%3Cdefs%3E%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23c8782a%22%2F%3E%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%236b3410%22%2F%3E%20%3C%2FlinearGradient%3E%20%3ClinearGradient%20id%3D%22wood%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23fff7ec%22%2F%3E%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23f3dcc0%22%2F%3E%20%3C%2FlinearGradient%3E%20%3C%2Fdefs%3E%20%3Crect%20width%3D%22512%22%20height%3D%22512%22%20rx%3D%22112%22%20fill%3D%22url(%23bg)%22%2F%3E%20%3Cpath%20d%3D%22M256%2092%20L392%20384%20Q396%20404%20376%20404%20L136%20404%20Q116%20404%20120%20384%20Z%22%20fill%3D%22none%22%20stroke%3D%22url(%23wood)%22%20stroke-width%3D%2226%22%20stroke-linejoin%3D%22round%22%2F%3E%20%3Cg%20stroke%3D%22%23fff3e3%22%20stroke-width%3D%227%22%20stroke-linecap%3D%22round%22%20opacity%3D%22.92%22%3E%20%3Cline%20x1%3D%22256%22%20y1%3D%22150%22%20x2%3D%22256%22%20y2%3D%22384%22%2F%3E%20%3Cline%20x1%3D%22221%22%20y1%3D%22210%22%20x2%3D%22221%22%20y2%3D%22384%22%2F%3E%20%3Cline%20x1%3D%22291%22%20y1%3D%22210%22%20x2%3D%22291%22%20y2%3D%22384%22%2F%3E%20%3Cline%20x1%3D%22186%22%20y1%3D%22282%22%20x2%3D%22186%22%20y2%3D%22384%22%2F%3E%20%3Cline%20x1%3D%22326%22%20y1%3D%22282%22%20x2%3D%22326%22%20y2%3D%22384%22%2F%3E%20%3C%2Fg%3E%20%3Ccircle%20cx%3D%22256%22%20cy%3D%22304%22%20r%3D%2234%22%20fill%3D%22%236b3410%22%20stroke%3D%22%23fff3e3%22%20stroke-width%3D%228%22%2F%3E%20%3C%2Fsvg%3E" alt="">
-      <h1>Psalm Singer<small>Psalms &amp; hymns</small></h1>
+      <h1>Psalm Singer<small class="brand-blurb"><span class="blurb-full">Learn to sing psalms and hymns a cappella. Follow the notes and words on four-part music, lock to a steady metronome, and practice the melody in soprano, alto, tenor, or bass.</span><span class="blurb-short">Learn to sing psalms &amp; hymns a cappella</span></small></h1>
     </div>
     <button class="pill-btn" id="installBtn" hidden aria-label="Install app"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0-4.5-4.5M12 15l4.5-4.5M5 21h14"/></svg><span class="lbl">Install</span></button>
     <button class="pill-btn solid" id="importBtn" title="Open a tune file (.abc, MIDI or MusicXML) or a backup (.json)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V9m0 0-4.5 4.5M12 9l4.5 4.5M5 3h14"/></svg><span class="lbl">Import</span></button>
-    <button type="button" class="pill-btn solid" id="donateBtn2" title="Open Messages to support Psalm Singer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5S4.5 15.2 4.5 9.8A4.3 4.3 0 0 1 12 7.1 4.3 4.3 0 0 1 19.5 9.8C19.5 15.2 12 20.5 12 20.5z"/></svg><span class="lbl">Donate</span></button>
+    <button type="button" class="pill-btn solid" id="donateBtn2" title="Open Messages to donate or request a song"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5S4.5 15.2 4.5 9.8A4.3 4.3 0 0 1 12 7.1 4.3 4.3 0 0 1 19.5 9.8C19.5 15.2 12 20.5 12 20.5z"/></svg><span class="lbl">Donate</span></button>
     <input type="file" id="fileInput" accept=".abc,.txt,.mid,.midi,.xml,.musicxml,.mxl,.json,audio/midi,application/xml,text/xml,application/json" multiple hidden>
   </div>
 </header>
@@ -567,7 +596,7 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
           <button data-v="psaltery" aria-pressed="true">Psaltery</button><button data-v="harp" aria-pressed="false">Harp</button><button data-v="piano" aria-pressed="false">Piano</button><button data-v="flute" aria-pressed="false">Flute</button><button data-v="vibes" aria-pressed="false">Vibraphone</button>
         </div>
       </div>
-      <button class="pill-btn set-btn" id="settingsBtn" aria-haspopup="dialog" title="Tuning, reverb and credits"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2.2"/><circle cx="10" cy="17" r="2.2"/></svg><span>Tuning, reverb &amp; sync · <span id="tuneSummary">A = 440 Hz</span></span></button>
+      <button class="pill-btn set-btn" id="settingsBtn" aria-haspopup="dialog" title="Tuning, reverb and credits"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2.2"/><circle cx="10" cy="17" r="2.2"/></svg><span>Tuning &amp; reverb · <span id="tuneSummary">A = 440 Hz</span></span></button>
       </div>
       <div class="pane" id="pane-key" role="tabpanel" aria-labelledby="tab-key" data-pane="key" hidden>
       <div class="ctrl">
@@ -689,7 +718,7 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
 
 <div class="modal" id="setSheet" role="dialog" aria-modal="true" aria-labelledby="setTitle" hidden>
   <div class="sheet card">
-    <div class="sheet-head"><h2 id="setTitle">Tuning, reverb &amp; sync</h2><button class="pill-btn" data-close>Done</button></div>
+    <div class="sheet-head"><h2 id="setTitle">Tuning &amp; reverb</h2><button class="pill-btn" data-close>Done</button></div>
     <div class="ctrl">
       <div class="cap"><span>Instrument</span></div>
       <div class="seg" id="voiceSeg2" role="group" aria-label="Instrument">
@@ -708,31 +737,14 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
       <div class="cap"><span>Reverb (church echo)</span><output id="revOut">35%</output></div>
       <div class="stepper" style="padding:0 14px"><input type="range" id="reverb" min="0" max="100" step="1" value="35" aria-label="Reverb amount"></div>
     </div>
-    <div class="ctrl">
-      <div class="cap"><span>Sync offset</span><output id="syncOut">0 ms</output></div>
-      <div class="stepper"><button id="syncDown" aria-label="Show the cursor 10 milliseconds earlier">−</button><input type="range" id="sync" min="-300" max="300" step="5" value="0" aria-label="Sync offset in milliseconds" style="flex:1;min-width:0"><button id="syncUp" aria-label="Show the cursor 10 milliseconds later">+</button></div>
-      <p class="hint">If the cursor and highlight run ahead of the sound you hear (for example with Bluetooth speakers), move this to the right; if they lag behind, move it left. Double-click to reset.</p>
-    </div>
     <button class="pill-btn wide-btn" id="creditsBtn" aria-haspopup="dialog">Credits &amp; licenses</button>
-    <button class="link-btn" id="syncCheckBtn" aria-haspopup="dialog">Sync check…</button>
     <div class="ctrl donate-block">
       <div class="cap"><span>Support this app</span></div>
-      <button type="button" class="pill-btn wide-btn solid" id="donateBtn" title="Open Messages to send a text">Donate via Messages</button>
-      <p class="hint donate-num">Text <a id="donateNum" href="sms:3074090646&amp;body=I%27d%20like%20to%20support%20Psalm%20Singer">307-409-0646</a> — you can also copy the number.</p>
+      <button type="button" class="pill-btn wide-btn solid" id="donateBtn" title="Open Messages to donate or request a song">Donate or request a song</button>
+      <p class="hint donate-num">Donations and song requests: text <a id="donateNum" href="sms:3074090646&amp;body=I%27d%20like%20to%20support%20Psalm%20Singer%20/%20request%20a%20song%3A">307-409-0646</a> — you can also copy the number.</p>
     </div>
-    <p class="app-ver" id="appVer">Version <b>v32</b></p>
-    <p class="app-ver donate-foot"><button type="button" class="link-btn" id="donateLink">Support / Donate</button></p>
-  </div>
-</div>
-
-<div class="modal" id="syncSheet" role="dialog" aria-modal="true" aria-labelledby="syncTitle" hidden>
-  <div class="sheet card">
-    <div class="sheet-head"><h2 id="syncTitle">Sync check</h2><button class="pill-btn" data-close>Done</button></div>
-    <p class="hint">A beep sounds every beat. The box flashes and the dot crosses the line when the app thinks you hear it. Tap <b>Tap</b> (or the space bar) exactly with each beep you hear: after 8 taps the sync offset is set for you.</p>
-    <div class="sc-row"><div id="scFlash" class="sc-flash"></div><div class="sc-track"><i class="sc-mark"></i><b id="scDot" class="sc-dot"></b></div></div>
-    <div class="sc-btns"><button class="pill-btn" id="scStart">Start beeps</button><button class="pill-btn sc-tap" id="scTap" disabled>Tap</button><output id="scTaps">0 / 8 taps</output></div>
-    <p id="scResult" class="hint"></p>
-    <pre id="scInfo" class="sc-info"></pre>
+    <p class="app-ver" id="appVer">Version <b>v33</b></p>
+    <p class="app-ver donate-foot"><button type="button" class="link-btn" id="donateLink">Donate or request a song</button></p>
   </div>
 </div>
 
@@ -11760,7 +11772,7 @@ window.HYMN_SONGS = [
       useContext: function (c) { ctx = c; master = c.createGain(); master.gain.value = volume * volume; dry = c.createGain(); wet = c.createGain(); master.connect(c.destination); },
       latency: function () { return ctx ? (ctx.outputLatency || ctx.baseLatency || 0) : 0; },
       setVolume: function (v) { volume = v; LS.set('volume', Math.round(v * 100)); if (master) master.gain.setTargetAtTime(v * v, ctx.currentTime, 0.04); },
-      setVoice: function (v) { if (!INST[v]) return; voice = v; LS.set('voice', v); setMix(); emit(); return load(v); },
+      setVoice: function (v) { if (!INST[v]) return Promise.reject(new Error('unknown instrument')); voice = v; LS.set('voice', v); setMix(); emit(); return load(v); },
       setReverb: function (r) { reverb = Math.max(0, Math.min(1, r)); LS.set('reverb', Math.round(reverb * 100)); setMix(); },
       setTuning: function (hz) { aRef = Math.max(415, Math.min(466, Math.round(hz))); LS.set('aref', aRef); return aRef; },
       get voice() { return voice; }, get volume() { return volume; }, get reverb() { return reverb; }, get tuning() { return aRef; }
@@ -12615,11 +12627,11 @@ window.HYMN_SONGS = [
     clock = TM.Clock(function () { return Audio.ctx; }, 0.006, { renderClock: IS_WEBKIT }), ticker = TM.Ticker(tick, 25), probe = null;
   // the round (verse pass) being heard now, and the beat within it
   // the beat being heard now. Each round (verse pass) keeps its tempo segments, so a tempo change while playing maps
-  // exactly: notes already scheduled at the old tempo are shown at the old tempo. syncMs: user offset (+ = later).
-  // sync offset: reset to 0 once with this update (old offsets were set against the earlier latency handling)
-  if (!LS.get('syncV3', 0)) { LS.set('syncMs', 0); LS.set('syncV2', 1); LS.set('syncV3', 1); } // v25: Safari now allows for its reported output delay, so older offsets are reset once
-  var syncS = (+LS.get('syncMs', 0) || 0) / 1000;
-  var APP_VERSION = 'v32';
+  // exactly: notes already scheduled at the old tempo are shown at the old tempo. sync offset removed (always 0).
+  // Sync offset control removed: always 0. Clear any saved offset from older installs.
+  try { LS.set('syncMs', 0); } catch (e0) {}
+  var syncS = 0;
+  var APP_VERSION = 'v33';
   function syncSec() { return syncS; }
   function heardTime(perf) { return clock.heard(perf) - syncSec(); }
   // One clock for sound, cursor and highlight. A frame drawn in the rAF callback at perf reaches the screen at the next
@@ -13074,82 +13086,7 @@ window.HYMN_SONGS = [
     TM.unlock(function () { try { Audio.ensure(); } catch (e) {} });
     Audio.onState(function (st) { if (S.playing && st !== 'running') { pause(); toast('Sound was interrupted — tap play to go on'); } });
     window.HP_TEST = { S: S, Audio: Audio, clock: clock, get roll() { return S.roll; }, setProbe: function (on) { probe = on ? TM.FrameProbe() : null; return probe; }, get probe() { return probe; }, tick: tick, heardTime: heardTime, setSpeed: setSpeed, pitchPipe: pitchPipe, get schedPart() { return S.schedPart; }, nextPass: nextPass, chordList: chordList, syncSingUI: syncSingUI, satbParts: satbParts, setSatb: setSatb, setTenorTune: setTenorTune, setMelVoice: setMelVoice, melOct: function (v) { return melOct(v); }, TT: TT, setPart: setPart, partGain: partGain, setView: setView, learnAlone: learnAlone, saveMix: saveMix, get lines() { return S.lines; }, shownTime: shownTime, get fdt() { return fdt; }, play: play, pause: pause, stop: stop, render: render, velOf: velOf, loadSong: loadSong, songs: allSongs, renderLibrary: renderLibrary };
-    (function () { // sync offset: + shows the cursor later (for output paths whose delay the browser does not report)
-      var r = $('sync'); function show(v) { v = Math.max(-300, Math.min(300, Math.round(v / 5) * 5)); r.value = v; LS.set('syncMs', v); syncS = v / 1000; $('syncOut').textContent = (v > 0 ? '+' : '') + v + ' ms'; fill(r); }
-      show(+LS.get('syncMs', 0) || 0);
-      r.oninput = function () { show(+r.value); }; r.ondblclick = function () { show(0); };
-      $('syncDown').onclick = function () { show(+r.value - 10); }; $('syncUp').onclick = function () { show(+r.value + 10); };
-    })();
-    /* Sync check (diagnostic): beeps on the audio clock, a flash and a moving dot drawn with the same clock as the
-       cursor, the latencies the browser reports, and tap-along calibration of the sync offset (8 taps). */
-    var syncCheck = (function () {
-      var on = false, per = 0.6, nb = 0, t0 = 0, k = 0, iv = null, raf = 0, taps = [], beeps = [], cacheVer = '…', d0 = null, d0t = 0;
-      fetch('sw.js', { cache: 'no-store' }).then(function (r) { return r.text(); }).then(function (t) { var m = t.match(/CACHE = '([^']+)'/); cacheVer = m ? m[1] : '?'; }).catch(function () { cacheVer = 'offline'; });
-      function browser() { var ua = navigator.userAgent, b = /Edg\//.test(ua) ? 'Edge' : /Chrome\//.test(ua) ? 'Chrome' : /Firefox\//.test(ua) ? 'Firefox' : /Safari\//.test(ua) ? 'Safari' : 'Other', v = (ua.match(/(?:Edg|Chrome|Firefox|Version)\/([\d.]+)/) || [])[1] || ''; return b + ' ' + v + (/Mac OS X/.test(ua) ? ' · macOS' : /iPhone|iPad/.test(ua) ? ' · iOS' : /Android/.test(ua) ? ' · Android' : /Windows/.test(ua) ? ' · Windows' : /Linux/.test(ua) ? ' · Linux' : ''); }
-      function ms(x) { return (x * 1000).toFixed(1) + ' ms'; }
-      function info() {
-        var c = Audio.ctx, L = [];
-        L.push('Browser: ' + browser());
-        L.push('App version (cache): ' + cacheVer + (navigator.serviceWorker && navigator.serviceWorker.controller ? ' · offline copy active' : ''));
-        if (!c) { L.push('Audio: not started yet'); return L.join('\n'); }
-        L.push('Sample rate: ' + c.sampleRate + ' Hz · state: ' + c.state);
-        L.push('baseLatency: ' + (c.baseLatency != null ? ms(c.baseLatency) : 'not reported'));
-        L.push('outputLatency: ' + (c.outputLatency > 0 ? ms(c.outputLatency) : (c.outputLatency === 0 ? '0 (not reported)' : 'not reported')) + (clock.assumedOutputLatency ? ' → assuming ' + ms(clock.assumedOutputLatency) : ''));
-        var ts = c.getOutputTimestamp ? c.getOutputTimestamp() : null, pn = performance.now();
-        if (ts && ts.performanceTime > 0) {
-          var eO = ts.contextTime + (pn - ts.performanceTime) / 1000, eL = c.currentTime - (c.outputLatency || 0) - (c.baseLatency || 0), d = (eL - eO);
-          if (d0 === null) { d0 = d; d0t = pn; }
-          L.push('getOutputTimestamp: ' + (clock.usesOutputTimestamp ? 'used' : 'ignored (' + (clock.otsRateOk ? 'disagrees with currentTime' : 'wrong rate/time base') + ')') + ' · vs currentTime−latency: ' + ms(d) + ' · drift ' + ms(d - d0) + ' in ' + ((pn - d0t) / 1000).toFixed(0) + ' s');
-        } else L.push('getOutputTimestamp: ' + (c.getOutputTimestamp ? 'no data yet' : 'not supported'));
-        L.push('Total delay the app allows for: ' + ms(clock.latency()) + ' · Sync offset: ' + (+LS.get('syncMs', 0) || 0) + ' ms');
-        L.push('Note: Bluetooth and AirPlay speakers can add 150–250 ms (AirPlay often more) that browsers may not report. Tap along to measure it.');
-        return L.join('\n');
-      }
-      function sched() { var c = Audio.ctx; if (!c) return; while (nb < c.currentTime + 0.35) { Audio.click(nb, k % 4 === 0, 1.6); beeps.push(nb); if (beeps.length > 64) beeps.shift(); nb += per; k++; } }
-      function frame(perf) {
-        if (!on) return;
-        if ($('syncSheet').hidden) { stop(); return; }
-        var h = shownTime(perf), ph = ((h - t0) / per) % 1; if (ph < 0) ph += 1;
-        $('scFlash').classList.toggle('on', h >= t0 && ph < 0.15);
-        var tr = $('scDot').parentNode, W = tr.clientWidth; $('scDot').style.transform = 'translateX(' + (((ph + 0.5) % 1) * W).toFixed(1) + 'px)';
-        if (!(k % 3)) $('scInfo').textContent = info();
-        raf = requestAnimationFrame(frame);
-      }
-      function start() {
-        if (S.playing || S.waiting) pause();
-        var c; try { c = Audio.ensure(); } catch (e) { toast(e.message); return; }
-        Audio.resume().then(function () {
-          c = Audio.ctx; on = true; taps = []; k = 0; d0 = null; t0 = nb = c.currentTime + 0.3; beeps = [];
-          clearInterval(iv); iv = setInterval(sched, 50); sched();
-          $('scStart').textContent = 'Stop beeps'; $('scTap').disabled = false; $('scTaps').textContent = '0 / 8 taps'; $('scResult').textContent = '';
-          cancelAnimationFrame(raf); raf = requestAnimationFrame(frame);
-        });
-      }
-      function stop() { on = false; clearInterval(iv); iv = null; cancelAnimationFrame(raf); $('scStart').textContent = 'Start beeps'; $('scTap').disabled = true; $('scFlash').classList.remove('on'); }
-      function tap(evTime) {
-        if (!on) return;
-        var pn = performance.now(), h = clock.heard(pn) - Math.max(0, pn - (evTime || pn)) / 1000; // audio time heard at the tap (no offset)
-        var b = beeps.reduce(function (a, x) { return Math.abs(x - h) < Math.abs(a - h) ? x : a; }, -1e9), d = h - b;
-        if (Math.abs(d) > per * 0.45) return; // not near a beep
-        taps.push(d); $('scTaps').textContent = taps.length + ' / 8 taps';
-        if (taps.length >= 8) {
-          var srt = taps.slice().sort(function (x, y) { return x - y; }), med = srt[4], keep = taps.filter(function (x) { return Math.abs(x - med) < 0.08; });
-          var mean = keep.reduce(function (s, x) { return s + x; }, 0) / keep.length, sd = Math.sqrt(keep.reduce(function (s, x) { return s + (x - mean) * (x - mean); }, 0) / keep.length);
-          var v = Math.max(-300, Math.min(300, Math.round(mean * 1000 / 5) * 5));
-          $('sync').value = v; $('sync').dispatchEvent(new Event('input'));
-          $('scResult').textContent = 'You heard the beeps ' + Math.abs(Math.round(mean * 1000)) + ' ms ' + (mean >= 0 ? 'after' : 'before') + ' the app expected (spread ±' + Math.round(sd * 1000) + ' ms over ' + keep.length + ' taps). Sync offset set to ' + (v > 0 ? '+' : '') + v + ' ms. Tap 8 more times to check again.';
-          taps = []; $('scTaps').textContent = '0 / 8 taps';
-          S.syncCal = { mean: mean, sd: sd, n: keep.length, set: v };
-        }
-      }
-      $('syncCheckBtn').onclick = function () { $('scInfo').textContent = info(); openSheet('syncSheet'); };
-      $('scStart').onclick = function () { if (on) stop(); else start(); };
-      $('scTap').addEventListener('pointerdown', function (e) { e.preventDefault(); tap(e.timeStamp); });
-      document.addEventListener('keydown', function (e) { if (on && (e.code === 'Space' || e.key === ' ') && !$('syncSheet').hidden) { e.preventDefault(); e.stopPropagation(); tap(e.timeStamp); } }, true);
-      return { start: start, stop: stop, tap: tap, info: info, get on() { return on; }, get beeps() { return beeps; }, get t0() { return t0; } };
-    })();
-    window.HP_TEST.syncCheck = syncCheck;
-    try { localStorage.removeItem('hp.syncAsked'); } catch (e) {} // the one-time tap-along prompt is gone (Sync check stays in Settings)
+    try { localStorage.removeItem('hp.syncAsked'); } catch (e) {}
     // singing practice controls
     $('pipeBtn').onclick = function () { pitchPipe(false); };
     $('pipeBtn2').onclick = function () { pitchPipe(false); };
@@ -13190,16 +13127,22 @@ window.HYMN_SONGS = [
     var vol = $('volume'); vol.value = Math.round(Audio.volume * 100); $('volOut').textContent = vol.value + '%'; fill(vol);
     vol.oninput = function () { Audio.setVolume(this.value / 100); $('volOut').textContent = this.value + '%'; fill(this); };
     function voiceButtons() { return Array.prototype.slice.call(document.querySelectorAll('#voiceSeg button, #voiceSeg2 button')); }
-    function showVoice() { voiceButtons().forEach(function (x) { x.setAttribute('aria-pressed', x.dataset.v === Audio.voice ? 'true' : 'false'); }); }
-    showVoice();
+    showVoiceUI();
     voiceButtons().forEach(function (b) {
       b.onclick = function () {
-        var v = b.dataset.v; try { Audio.ensure(); } catch (e) {}
+        var v = b.dataset.v, was = S.playing || S.waiting; try { Audio.ensure(); } catch (e) {}
+        if (was) pause();
         setPref('voice', v);
+        showVoiceUI(); // chip + pressed state update immediately
         Audio.setVoice(v).then(function () {
-          if (!S.playing && !S.waiting && Audio.voice === v && S.res) { var m = (S.res.notes.filter(function (n) { return !n.rest; })[0] || {}).midi; if (m) { try { Audio.ensure(); Audio.note(m + S.transpose, Audio.now() + 0.03, 0.6, 0.8); } catch (e) {} } }
-        }, function () {});
-        showVoice();
+          if (Audio.voice !== v) return;
+          showVoiceUI();
+          if (was) { play(); return; }
+          if (!S.playing && !S.waiting && S.res) {
+            var m = (S.res.notes.filter(function (n) { return !n.rest; })[0] || {}).midi;
+            if (m != null) { try { Audio.note(m + S.transpose, Audio.now() + 0.03, 0.65, 0.85); } catch (e2) {} }
+          }
+        }, function () { showVoiceUI(); toast('Could not load the ' + (INST[v] && INST[v].label || v) + ' sounds'); });
       };
     });
     // loading progress for the instrument sounds
@@ -13221,7 +13164,7 @@ window.HYMN_SONGS = [
     $('settingsBtn').onclick = function () { openSheet('setSheet'); };
     $('creditsBtn').onclick = function () { openSheet('credSheet'); };
     (function () {
-      var SMS = 'sms:3074090646&body=' + encodeURIComponent("I'd like to support Psalm Singer");
+      var SMS = 'sms:3074090646&body=' + encodeURIComponent("I'd like to support Psalm Singer / request a song:");
       function openDonate() {
         try { window.location.href = SMS; } catch (e) {}
         try { toast('Messages: 307-409-0646'); } catch (e2) {}
