@@ -420,6 +420,10 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
 .seg.lib-tabs .lib-tc{height:18px;font-size:11.5px;min-width:22px}
 .seg.lib-tabs{min-height:60px}
 .app-ver{margin:4px 0 0;text-align:center;color:var(--muted);font-size:13px}
+.app-ver .link-btn{font-size:13px;padding:0 2px;vertical-align:baseline}
+.donate-block{gap:10px}
+.donate-num{user-select:text;-webkit-user-select:text}
+.donate-num a{color:var(--accent);font-weight:700;font-size:16px;text-decoration:underline;text-underline-offset:2px}
 .update-bar{position:fixed;z-index:75;left:50%;top:calc(12px + env(safe-area-inset-top));transform:translateX(-50%);border:0;border-radius:999px;background:var(--accent);color:var(--accent-text);font-weight:700;font-size:15px;min-height:44px;padding:0 20px;box-shadow:0 8px 24px rgba(0,0,0,.25)}
 .update-bar[hidden]{display:none}
 /* four separate staves: each part lights its own sounding note */
@@ -702,7 +706,13 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
     </div>
     <button class="pill-btn wide-btn" id="creditsBtn" aria-haspopup="dialog">Credits &amp; licenses</button>
     <button class="link-btn" id="syncCheckBtn" aria-haspopup="dialog">Sync check…</button>
-    <p class="app-ver" id="appVer">Version <b>v28</b></p>
+    <div class="ctrl donate-block">
+      <div class="cap"><span>Support this app</span></div>
+      <button type="button" class="pill-btn wide-btn solid" id="donateBtn" title="Open Messages to send a text">Donate via Messages</button>
+      <p class="hint donate-num">Text <a id="donateNum" href="sms:3074090646&amp;body=I%27d%20like%20to%20support%20the%20Psalter%20Player">307-409-0646</a> — you can also copy the number.</p>
+    </div>
+    <p class="app-ver" id="appVer">Version <b>v29</b></p>
+    <p class="app-ver donate-foot"><button type="button" class="link-btn" id="donateLink">Support / Donate</button></p>
   </div>
 </div>
 
@@ -12600,7 +12610,7 @@ window.HYMN_SONGS = [
   // sync offset: reset to 0 once with this update (old offsets were set against the earlier latency handling)
   if (!LS.get('syncV3', 0)) { LS.set('syncMs', 0); LS.set('syncV2', 1); LS.set('syncV3', 1); } // v25: Safari now allows for its reported output delay, so older offsets are reset once
   var syncS = (+LS.get('syncMs', 0) || 0) / 1000;
-  var APP_VERSION = 'v28';
+  var APP_VERSION = 'v29';
   function syncSec() { return syncS; }
   function heardTime(perf) { return clock.heard(perf) - syncSec(); }
   // One clock for sound, cursor and highlight. A frame drawn in the rAF callback at perf reaches the screen at the next
@@ -13201,6 +13211,17 @@ window.HYMN_SONGS = [
     });
     $('settingsBtn').onclick = function () { openSheet('setSheet'); };
     $('creditsBtn').onclick = function () { openSheet('credSheet'); };
+    (function () {
+      var SMS = 'sms:3074090646&body=' + encodeURIComponent("I'd like to support the Psalter Player");
+      function openDonate() {
+        try { window.location.href = SMS; } catch (e) {}
+        try { toast('Messages: 307-409-0646'); } catch (e2) {}
+      }
+      var b = $('donateBtn'), l = $('donateLink'), a = $('donateNum');
+      if (b) b.onclick = openDonate;
+      if (l) l.onclick = openDonate;
+      if (a) a.setAttribute('href', SMS);
+    })();
     function showTuning() {
       var hz = Audio.tuning, t = $('tune'); t.value = hz; fill(t);
       $('tuneOut').textContent = 'A = ' + hz + ' Hz'; $('tuneSummary').textContent = 'A = ' + hz + ' Hz';
