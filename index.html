@@ -145,11 +145,18 @@ input[type=range]::-moz-range-thumb{width:30px;height:30px;border-radius:50%;bac
 @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @media (max-width:560px){
   .topbar .pill-btn .lbl{display:none}
-  .topbar .pill-btn{width:50px;padding:0}
+  .topbar .pill-btn{width:50px;padding:0;flex:none}
+  .topbar-in{gap:8px}
   .brand h1{font-size:21px}
   .song-head h2{font-size:28px}
   .card{padding:16px}
   .wrap{padding:12px 10px;gap:12px}
+}
+@media (max-width:360px){
+  .topbar-in{gap:6px}
+  .brand h1{font-size:19px}
+  .brand img{width:38px;height:38px}
+  .topbar .pill-btn{width:46px}
 }
 @media (max-width:380px){.stepper button{width:46px}}
 
@@ -255,17 +262,7 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
 /* chord symbols */
 .chord{font-family:var(--font);font-weight:700;fill:var(--accent)}
 .chord-note{margin:6px 4px 0;color:var(--muted);font-size:13px}
-.staff-acts{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:8px;margin-left:auto}
-.staff-acts-end{display:inline-flex;align-items:center;gap:8px;flex:none}
-.pipe-mini{min-height:34px;padding:0 12px;font-size:14px;margin:0}
-.pipe-mini .lbl-short{display:none}
-.donate-mini{font-weight:700}
-@media (max-width:420px){
-  .pipe-mini{padding:0 10px;font-size:13px;min-height:32px}
-  .pipe-mini .lbl-full{display:none}.pipe-mini .lbl-short{display:inline}
-  .donate-mini{padding:0 10px}
-}
-@media (orientation:landscape) and (max-height:480px){.staff-acts{gap:6px}.pipe-mini{min-height:30px;font-size:13px}}
+.pipe-mini{min-height:34px;padding:0 12px;font-size:14px;margin-left:auto;margin-right:8px}
 
 /* SATB parts */
 .satb-btn[aria-pressed="true"],.satb-mini[aria-pressed="true"]{background:var(--accent);color:#fff}
@@ -477,6 +474,7 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
     </div>
     <button class="pill-btn" id="installBtn" hidden aria-label="Install app"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0-4.5-4.5M12 15l4.5-4.5M5 21h14"/></svg><span class="lbl">Install</span></button>
     <button class="pill-btn solid" id="importBtn" title="Open a tune file (.abc, MIDI or MusicXML) or a backup (.json)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V9m0 0-4.5 4.5M12 9l4.5 4.5M5 3h14"/></svg><span class="lbl">Import</span></button>
+    <button type="button" class="pill-btn solid" id="donateBtn2" title="Open Messages to support Psalm Singer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5S4.5 15.2 4.5 9.8A4.3 4.3 0 0 1 12 7.1 4.3 4.3 0 0 1 19.5 9.8C19.5 15.2 12 20.5 12 20.5z"/></svg><span class="lbl">Donate</span></button>
     <input type="file" id="fileInput" accept=".abc,.txt,.mid,.midi,.xml,.musicxml,.mxl,.json,audio/midi,application/xml,text/xml,application/json" multiple hidden>
   </div>
 </header>
@@ -506,7 +504,7 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
     </section>
 
     <section class="card staff-card" aria-label="Music and words">
-      <div class="staff-top"><span id="keyInfo"></span><div class="staff-acts"><button class="pill-btn pipe-mini" id="pipeBtn2" title="Sound the first note of the tune"><span class="lbl-full">♪ Give me the note</span><span class="lbl-short">♪ Note</span></button><span class="staff-acts-end"><button class="pill-btn pipe-mini satb-mini" id="satbBtn2" aria-pressed="false" title="Four-part harmony: soprano, alto, tenor, bass">SATB</button><button type="button" class="pill-btn pipe-mini solid donate-mini" id="donateBtn2" title="Open Messages to support Psalm Singer">Donate</button></span></div></div>
+      <div class="staff-top"><span id="keyInfo"></span><button class="pill-btn pipe-mini" id="pipeBtn2" title="Sound the first note of the tune">♪ Give me the note</button><button class="pill-btn pipe-mini satb-mini" id="satbBtn2" aria-pressed="false" title="Four-part harmony: soprano, alto, tenor, bass">SATB</button></div>
       <div id="staff"></div>
       <p class="chord-note" id="chordNote" hidden></p>
     </section>
@@ -722,7 +720,7 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
       <button type="button" class="pill-btn wide-btn solid" id="donateBtn" title="Open Messages to send a text">Donate via Messages</button>
       <p class="hint donate-num">Text <a id="donateNum" href="sms:3074090646&amp;body=I%27d%20like%20to%20support%20Psalm%20Singer">307-409-0646</a> — you can also copy the number.</p>
     </div>
-    <p class="app-ver" id="appVer">Version <b>v31</b></p>
+    <p class="app-ver" id="appVer">Version <b>v32</b></p>
     <p class="app-ver donate-foot"><button type="button" class="link-btn" id="donateLink">Support / Donate</button></p>
   </div>
 </div>
@@ -12621,7 +12619,7 @@ window.HYMN_SONGS = [
   // sync offset: reset to 0 once with this update (old offsets were set against the earlier latency handling)
   if (!LS.get('syncV3', 0)) { LS.set('syncMs', 0); LS.set('syncV2', 1); LS.set('syncV3', 1); } // v25: Safari now allows for its reported output delay, so older offsets are reset once
   var syncS = (+LS.get('syncMs', 0) || 0) / 1000;
-  var APP_VERSION = 'v31';
+  var APP_VERSION = 'v32';
   function syncSec() { return syncS; }
   function heardTime(perf) { return clock.heard(perf) - syncSec(); }
   // One clock for sound, cursor and highlight. A frame drawn in the rAF callback at perf reaches the screen at the next
