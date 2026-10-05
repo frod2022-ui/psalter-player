@@ -1,7 +1,7 @@
 /* Offline support. The app shell (index.html, manifest) is NETWORK-FIRST, fetched past the HTTP cache, so a new version
    shows up at the next launch even in an iPhone home-screen app; the cached copy is only used offline (or when the
    network is too slow). The instrument samples are cache-first and kept for good. */
-const CACHE = 'psalter-v36';
+const CACHE = 'psalter-v37';
 const SAMPLES = 'psalter-samples-v1'; // bump only when the sample files themselves change
 const SHELL = ['./', './index.html', './share.html', './psalm-singer-qr.png', './manifest.webmanifest', './icon.svg', './icon-192.png', './icon-512.png', './apple-touch-icon.png', './my-songs.js'];
 self.addEventListener('install', e => {
@@ -49,8 +49,14 @@ self.addEventListener('fetch', e => {
   if (shell) {
     // network first (no HTTP cache), the cached copy after 4 s or offline
     e.respondWith(caches.open(CACHE).then(async cache => {
-      const key = req.mode === 'navigate' ? './index.html' : req;
-      const net = fetch(req.mode === 'navigate' ? new Request('./index.html', { cache: 'no-store' }) : new Request(req, { cache: 'no-store' }))
+      // Keep the app shell on index.html for app navigations, but serve share.html when that path is requested.
+      const path = url.pathname.replace(/\/+$/, '') || '/';
+      const isShare = /\/share\.html$/.test(path) || path.endsWith('/share');
+      const key = isShare ? './share.html' : (req.mode === 'navigate' ? './index.html' : req);
+      const netReq = isShare
+        ? new Request('./share.html', { cache: 'no-store' })
+        : (req.mode === 'navigate' ? new Request('./index.html', { cache: 'no-store' }) : new Request(req, { cache: 'no-store' }));
+      const net = fetch(netReq)
         .then(res => { if (res && res.ok) cache.put(key, res.clone()); return res; }).catch(() => null);
       const slow = new Promise(r => setTimeout(r, 4000, null));
       const res = await Promise.race([net, slow]);
