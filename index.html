@@ -90,7 +90,6 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent}
 /* library */
 .library{padding:12px}
 .lib-search{width:100%;min-height:50px;border-radius:14px;border:0;background:var(--card2);padding:0 16px;font-size:18px;margin:4px 0 8px}
-.lib-group h2{font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:16px 10px 6px;font-weight:700}
 .lib-item{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border:0;background:transparent;border-radius:14px;padding:12px;min-height:64px;transition:background .15s}
 .lib-item:hover{background:var(--card2)}
 .lib-item[aria-current="true"]{background:var(--accent-soft)}
@@ -258,9 +257,6 @@ textarea#abc:focus{border-color:var(--accent-2);outline:none}
 #staff.roll-x .st-hl{display:none}
 
 /* library categories */
-.lib-cats{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 6px}
-.lib-cats button{border:0;background:var(--card2);border-radius:999px;padding:0 14px;min-height:40px;font-size:15.5px;font-weight:600;color:var(--text2)}
-.lib-cats button[aria-pressed="true"]{background:var(--accent);color:var(--accent-text)}
 .lib-count{font-size:14px;color:var(--muted);margin:2px 10px 0}
 .lib-actions{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 4px}
 .lib-actions .pill-btn{min-height:44px;padding:0 14px;font-size:15px}
@@ -416,46 +412,15 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
 }
 @media (orientation:landscape) and (max-height:500px){:root{--dock:62px}}
 
-/* library: divided, collapsible sections with a song count */
-.lib-group{border-top:1px solid var(--line);margin-top:8px;padding-top:4px}
-.lib-group:first-child{border-top:0;margin-top:0}
-.lib-group h2.lib-h{margin:6px 0 0;font-size:inherit;text-transform:none;letter-spacing:0}
-.lib-hb{width:100%;display:flex;align-items:center;gap:10px;border:0;background:transparent;border-radius:12px;min-height:48px;padding:6px 10px;text-align:left;color:var(--text)}
-.lib-hb:hover{background:var(--card2)}
-.lib-hn{flex:1;min-width:0;font-size:15px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--text2);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.lib-imp{font-size:11px;letter-spacing:.06em;background:var(--accent-soft);color:var(--accent);border-radius:6px;padding:2px 6px}
-.lib-hc{flex:none;min-width:30px;height:24px;border-radius:999px;background:var(--card2);color:var(--muted);font-size:13px;font-weight:700;display:grid;place-items:center;padding:0 8px;font-variant-numeric:tabular-nums}
-.lib-chev{width:18px;height:18px;flex:none;color:var(--muted);transition:transform .2s}
-.lib-group.shut .lib-chev{transform:rotate(-90deg)}
-.lib-note{margin:-4px 10px 4px;font-size:13.5px;color:var(--muted);line-height:1.3}
-.lib-body[hidden]{display:none}
 
 .tt-toggle small{display:block;font-size:12px;color:var(--muted);font-weight:400;margin-top:2px;line-height:1.3}
 .clef8{font-weight:700;font-family:Georgia,serif}
-/* song list: two buttons, one flat list */
-.seg.lib-tabs{margin:0 0 8px;min-height:48px}
-.seg.lib-tabs button{min-height:44px;display:flex;align-items:center;justify-content:center;gap:8px;color:var(--text2)}
-.seg.lib-tabs button[aria-pressed="true"]{color:var(--accent)}
-.lib-tc{font-size:12.5px;font-weight:700;min-width:26px;height:22px;padding:0 7px;border-radius:999px;background:var(--line);color:var(--muted);display:inline-grid;place-items:center;font-variant-numeric:tabular-nums}
-.seg.lib-tabs button[aria-pressed="true"] .lib-tc{background:var(--accent);color:var(--accent-text)}
-.lib-other{border:0;background:transparent;color:var(--accent);font:inherit;font-weight:700;padding:0 4px;min-height:32px;cursor:pointer}
 .lib-flat{display:flex;flex-direction:column}
 .lib-impnote{margin:12px 10px;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
-.seg.lib-tabs button{font-size:15px;padding:0 6px;gap:6px;white-space:normal;line-height:1.1;text-align:center}
-.lib-empty{margin:18px 8px;padding:18px;border-radius:16px;background:var(--card2);text-align:center;color:var(--text2)}
-.lib-empty p{margin:0 0 10px}
-.lib-empty .pill-btn{min-height:44px;padding:0 22px}
-.seg.lib-tabs{overflow:hidden}
-.seg.lib-tabs button{flex:1 1 0;min-width:0}
-@media (max-width:400px){.seg.lib-tabs button{flex-direction:column;gap:2px;font-size:14px;padding:4px 2px}.seg.lib-tabs .lib-tc{height:18px;font-size:11.5px;min-width:22px}}
 
 /* playing: nothing on the score animates by CSS; the roll is moved by transform from the audio clock */
 #staff .roll-strip,#staff .playhead{transition:none!important}
 #staff .st-hl.show{opacity:1}
-/* four buttons: label over count everywhere (fits a phone and the narrow desktop sidebar) */
-.seg.lib-tabs button{flex-direction:column;gap:2px;font-size:14px;padding:4px 2px;min-height:52px}
-.seg.lib-tabs .lib-tc{height:18px;font-size:11.5px;min-width:22px}
-.seg.lib-tabs{min-height:60px}
 .app-ver{margin:4px 0 0;text-align:center;color:var(--muted);font-size:13px}
 .app-ver .link-btn{font-size:13px;padding:0 2px;vertical-align:baseline}
 .donate-block{gap:10px}
@@ -467,27 +432,12 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
 .part-note.on .head{fill:var(--hl)}
 .part-note.on .head.hollow{fill:none;stroke:var(--hl)}
 .part-note.on .stem,.part-note.on .ledger{stroke:var(--hl)}
-/* six buttons: they share the width when it fits, otherwise the row scrolls sideways (no scroll bar) */
-.seg.lib-tabs{overflow-x:auto;overflow-y:hidden;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:none;overscroll-behavior-x:contain}
-.seg.lib-tabs::-webkit-scrollbar{display:none}
-.seg.lib-tabs button{flex:1 0 auto;min-width:74px;padding:4px 8px}
-.seg.lib-tabs button[hidden]{display:none}
 /* note editing lives in the Controls sheet only (one tucked-away item) */
 .ctl-notes{margin:14px 0 4px;border-top:1px solid var(--line);padding-top:10px}
 .ctl-notes>summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-weight:600;color:var(--text2)}
 .ctl-notes .ctl-sub{margin:8px 0}
 .ctl-notes .ctl-sub>summary{min-height:44px}
 .ctl-sheet .tr-ctrls{overflow-y:auto;overscroll-behavior:contain}
-/* song-list buttons: a steady, symmetric block of equal buttons (no sideways scrolling, every category visible).
-   Columns follow the panel width: 3 in a phone-portrait or sidebar-sized panel, 6 in a wide one; a short last row is centered. */
-#libCats{container-type:inline-size}
-.seg.lib-tabs{--gap:6px;display:flex;flex-wrap:wrap;justify-content:center;align-content:flex-start;gap:var(--gap);padding:6px;overflow:visible;min-height:0;scroll-snap-type:none;white-space:normal}
-.seg.lib-tabs button{--cols:3}
-@container (min-width:560px){.seg.lib-tabs button{--cols:6}}
-.seg.lib-tabs button{flex:0 0 calc((100% - (var(--cols) - 1) * var(--gap)) / var(--cols));box-sizing:border-box;min-width:0;max-width:none;height:62px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:4px 3px;font-size:14px;line-height:1.12;text-align:center;white-space:normal;overflow:hidden;hyphens:manual;-webkit-hyphens:manual}
-.seg.lib-tabs .lib-tl{display:block;max-width:100%}
-.seg.lib-tabs .lib-tc{height:17px;font-size:11px;min-width:22px;flex:none}
-.seg.lib-tabs button[hidden]{display:none}
 /* Melody in S / A / T / B: four big, equal, steady buttons */
 .seg.mv-seg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));min-height:56px}
 .seg.mv-seg button{min-height:48px;font-size:20px;font-weight:700;padding:0}
@@ -506,6 +456,20 @@ a.pill-btn{text-decoration:none;box-sizing:border-box}
   .topbar #donateBtn2 .lbl{display:inline-flex;flex-direction:column;align-items:flex-start;line-height:1.05}
   .topbar #donateBtn2 .lbl-sub{display:block;font-size:9.5px;font-weight:600;opacity:.85}
 }
+
+/* song list: one A-Z list; pinned search; big A-Z jump strip on the right (tap or slide a finger down it) */
+.lib-top{position:sticky;top:0;z-index:3;background:var(--card);margin:0 -2px;padding:0 2px 4px}
+.lib-pp{display:flex;align-items:center;justify-content:center;width:100%;min-height:52px;margin:2px 0 6px;border:2px solid var(--accent);border-radius:14px;background:var(--accent-soft);color:var(--accent);font-size:18px;font-weight:700}
+.lib-pp[hidden]{display:none}
+.lib-main{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:2px}
+.lib-letter{position:relative;margin:14px 6px 2px;padding:2px 8px;font-size:24px;font-weight:800;color:var(--accent);border-bottom:1px solid var(--line);line-height:1.3}
+.lib-flat .lib-letter:first-child{margin-top:4px}
+.lib-az{position:sticky;display:flex;flex-direction:column;width:46px;padding:2px 0;border-radius:14px;background:var(--card2);touch-action:none;user-select:none;-webkit-user-select:none}
+.lib-az[hidden]{display:none}
+.lib-az button{flex:1 1 0;min-height:0;border:0;background:transparent;color:var(--accent);font-size:clamp(13px,2.4vh,19px);font-weight:800;line-height:1;padding:0;border-radius:8px}
+.lib-az button.on{background:var(--accent);color:var(--accent-text)}
+.lib-bubble{position:fixed;left:50%;top:42%;transform:translate(-50%,-50%);width:110px;height:110px;border-radius:28px;background:var(--accent);color:var(--accent-text);font-size:64px;font-weight:800;display:grid;place-items:center;opacity:0;pointer-events:none;transition:opacity .2s;z-index:80;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.lib-bubble.show{opacity:1}
 
 </style>
 </head>
@@ -526,12 +490,15 @@ a.pill-btn{text-decoration:none;box-sizing:border-box}
 <div class="scrim" id="scrim"></div>
 <div class="wrap">
   <nav class="card library" id="library" aria-label="Song library">
-    <div class="lib-close"><h2>Choose a song</h2><button class="pill-btn" id="libClose">Done</button></div>
-    <label class="sr" for="libSearch">Search songs</label>
-    <input class="lib-search" id="libSearch" type="search" placeholder="Search titles, words or tunes" autocomplete="off">
-    <div class="seg lib-tabs" id="libCats" role="group" aria-label="Show psalms or hymns"></div>
-    <div class="lib-count" id="libCount" aria-live="polite"></div>
-    <div id="libList"></div>
+    <div class="lib-top" id="libTop">
+      <div class="lib-close"><h2>Choose a song</h2><button class="pill-btn" id="libClose">Done</button></div>
+      <label class="sr" for="libSearch">Search songs</label>
+      <input class="lib-search" id="libSearch" type="search" placeholder="Search titles, words or tunes" autocomplete="off">
+      <button type="button" class="lib-pp" id="libPP" hidden></button>
+      <div class="lib-count" id="libCount" aria-live="polite"></div>
+    </div>
+    <div class="lib-main"><div id="libList"></div><div class="lib-az" id="libAZ" role="navigation" aria-label="Jump to a letter" hidden></div></div>
+    <div class="lib-bubble" id="libBubble" aria-hidden="true"></div>
   </nav>
 
   <main class="main">
@@ -760,7 +727,7 @@ a.pill-btn{text-decoration:none;box-sizing:border-box}
       <p class="donate-cap-set">Apple Pay</p>
       <p class="hint donate-num">Donations, comments or requests: text <a id="donateNum" href="sms:3074090646&amp;body=Donations%20%2A%20Comments%20%2A%20Requests">307-409-0646</a>.</p>
     </div>
-    <p class="app-ver" id="appVer">Version <b>v48</b></p>
+    <p class="app-ver" id="appVer">Version <b>v49</b></p>
     <p class="app-ver timing-info" id="timingInfo" hidden></p>
     <p class="app-ver donate-foot"><button type="button" class="link-btn" id="donateLink">Donations, comments or requests</button></p>
   </div>
@@ -7040,7 +7007,7 @@ window.HYMN_SONGS = [
   "section": "Presbyterian",
   "title": "Lead, Kindly Light",
   "psalm": "",
-  "tune": "LEAD",
+  "tune": "LUX BENIGNA",
   "meter": "Kindly Light",
   "credit": "Music: John Bacchus Dykes, 1865 · Words: John H. Newman, 1833 (verses 1–3); Edward H. Bickersteth, Jr., Hymnal Companion verse 4",
   "source": "Music: public-domain MusicXML score of LEAD from hymnary.org (hymnary.org/media/fetch/131929; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/l/e/a/d/k/leadkind.htm), its syllable breaks laid under the melody note for note; stanzas 3 left out (they do not fit the tune line for line). In The Hymnal (Presbyterian Church USA, 1895, rev. 1911) and The Church Hymnary (Presbyterian, 1893) (hymnary.org index).",
@@ -7204,7 +7171,7 @@ window.HYMN_SONGS = [
   "psalm": "",
   "tune": "ST. PETER",
   "meter": "",
-  "credit": "Music: traditional · Words: John Newton, Olney Hymns ( London : W. Oliver, 1779 ), Book 1, number 57. The name of Jesus",
+  "credit": "Music: Alexander R. Reinagle, 1836 · Words: John Newton, Olney Hymns ( London : W. Oliver, 1779 ), Book 1, number 57. The name of Jesus",
   "source": "Music: public-domain MusicXML score of ST. PETER from hymnary.org (hymnary.org/media/fetch/99474; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/h/s/w/e/hsweetnj.htm), its syllable breaks laid under the melody note for note; stanzas 3 left out (they do not fit the tune line for line). In The Baptist Hymnal (1883) and The Sacred Harp (1860 ed.) (hymnary.org index).",
   "abc": "X:1\nT:How Sweet the Name of Jesus Sounds\nM:4/4\nL:1/4\nQ:1/4=88\nK:D\nA | d c B A | A G F F | E D G F |\nw: How sweet the name of Je- sus sounds In a be- liev- er’s\nw: It makes the wound- ed spir- it whole, And calms the trou- bled\nw: By Thee my prayers ac- cep- tance gain, Al- though with sin de-\nw: Je- sus! my she- pherd, hus- band, friend, O pro- phet, priest and\nw: Weak is the ef- fort of my heart, And cold my warm- est\nw: Till then I would Thy love pro- claim With ev- ery fleet- ing\nE3 |\nw: ear!\nw: breast;\nw: filed;\nw: king,\nw: thought;\nw: breath,\nF | G F B A | A G F D | F E D C | D3 |]\nw: It soothes his sor- rows, heals his wounds, And drives a- way his fear.\nw: ’Tis man- na to the hun- gry soul, And to the wea- ry rest.\nw: Sa- tan ac- cu- ses me in vain, And I am owned a child.\nw: My Lord, my life, my way, my end, Ac- cept the praise I bring.\nw: But when I see Thee as Thou art, I’ll praise Thee as I ought.\nw: And may the mu- sic of Thy name Re- fresh my soul in death!\n",
   "parts": {
@@ -7238,7 +7205,7 @@ window.HYMN_SONGS = [
   "section": "Baptist",
   "title": "Tell Me the Old, Old Story",
   "psalm": "",
-  "tune": "TELL ME THE OLD",
+  "tune": "EVANGEL",
   "meter": "Old Story",
   "credit": "Music: William Howard Doane, 1867 · Words: A. Katherine Hankey, 1866. The lyrics are similar to those of I Love to Tell the Story. Both come from Hankey’s poem The Old, Old Story",
   "source": "Music: public-domain MusicXML score of TELL ME THE OLD from hymnary.org (hymnary.org/media/fetch/134828; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/t/e/l/l/tellmoos.htm), its syllable breaks laid under the melody note for note. In The Baptist Hymnal (1883) (hymnary.org index).",
@@ -7528,7 +7495,7 @@ window.HYMN_SONGS = [
   "psalm": "",
   "tune": "RATHBUN",
   "meter": "",
-  "credit": "Music: traditional · Words: John Bowring, Hymns ( London : Rowland Hunter, 1825 ), number 63",
+  "credit": "Music: Ithamar Conkey, 1849 · Words: John Bowring, Hymns ( London : Rowland Hunter, 1825 ), number 63",
   "source": "Music: public-domain MusicXML score of RATHBUN from hymnary.org (hymnary.org/media/fetch/98481; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/i/n/t/c/intcross.htm), its syllable breaks laid under the melody note for note; stanzas 2, 3 left out (they do not fit the tune line for line). In The Baptist Hymnal (1883) (hymnary.org index).",
   "abc": "X:1\nT:In the Cross of Christ I Glory\nM:3/4\nL:1/4\nQ:1/4=88\nK:Bb\nF2 B | d2 B | A G F | B F2 | F2 G | D2 C | D2 =E | F2 z | F2 B |\nw: In the cross of Christ _ I glo- ry, To- we- ring o'er the wrecks of time; All\nw: Bane and bless- ing, pain _ and plea- sure, By the cross are sanc- ti- fi- ed; Peace\nw: In the cross of Christ _ I glo- ry, To- we- ring o'er the wrecks of time; All\nd2 B | c B/ A/ G/ F/ | B F2 | F2 G | F2 B | D2 C | B,3 |]\nw: the light of _ _ sac- red sto- ry Ga- thers round its head su- blime.\nw: is there that _ _ knows no mea- sure, Joys that through all time a- bide.\nw: the light of _ _ sac- red sto- ry Ga- thers round its head su- blime.\n",
   "parts": {
@@ -7546,7 +7513,7 @@ window.HYMN_SONGS = [
   "psalm": "",
   "tune": "MORECAMBE",
   "meter": "",
-  "credit": "Music: traditional · Words: George Croly, Psalms and Hymns for Public Worship ( London : 1854 )",
+  "credit": "Music: Frederick C. Atkinson, 1870 · Words: George Croly, Psalms and Hymns for Public Worship ( London : 1854 )",
   "source": "Music: public-domain MusicXML score of MORECAMBE from hymnary.org (hymnary.org/media/fetch/99288; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/s/o/g/d/sogdumyh.htm), its syllable breaks laid under the melody note for note; stanzas 2 left out (they do not fit the tune line for line). In The Hymnal (Presbyterian Church USA, 1895, rev. 1911) and The Church Hymnary (Presbyterian, 1893) (hymnary.org index).",
   "abc": "X:1\nT:Spirit of God, Descend upon My Heart\nM:4/4\nL:1/4\nQ:1/4=88\nK:Bb\nD2 D D | E2 D2 | G F E E | D4 | B2 A G | F2 G2 | A F G G | F4 |\nw: Spi- rit of God, des- cend u- pon my heart; Wean it from earth; through all its puls- es move;\nw: Teach me to feel that Thou art al- ways nigh; Teach me the strug- gles of the soul to bear.\nw: Hast Thou not bid me love Thee, God and King? All, all Thine own, soul, heart and strength and mind.\nw: Teach me to love Thee as Thine an- gels love, One ho- ly pas- sion fill- ing all my frame;\nF2 F F | A2 G2 | F G A B | c4 | d2 c B | A G F B | F2 F2 | F4 |]\nw: Stoop to my weak- ness, migh- ty as Thou art; And make me love Thee as I ought to love.\nw: To check the ris- ing doubt, the re- bel sigh, Teach me the pa- tience of u- nans- wered prayer.\nw: I see Thy cross; there teach my heart to cling: O let me seek Thee, and O let me find!\nw: The kind- ling of the heav’n des- cen- ded Dove, My heart an al- tar, and Thy love the flame.\n",
   "parts": {
@@ -7562,7 +7529,7 @@ window.HYMN_SONGS = [
   "section": "Presbyterian",
   "title": "O Zion, Haste",
   "psalm": "",
-  "tune": "O ZION",
+  "tune": "TIDINGS",
   "meter": "Haste",
   "credit": "Music: James Walch, 1875 · Words: Mary A. Thomson, 1868, 1871",
   "source": "Music: public-domain MusicXML score of O ZION from hymnary.org (hymnary.org/media/fetch/133865; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/o/z/i/o/ozionhas.htm), its syllable breaks laid under the melody note for note. In The Hymnal (Presbyterian Church USA, 1895, rev. 1911) (hymnary.org index).",
@@ -7618,7 +7585,7 @@ window.HYMN_SONGS = [
   "psalm": "",
   "tune": "O PERFECT LOVE",
   "meter": "",
-  "credit": "Music:  Josesph Barnby, 1890 · Words: Dorothy F. Gurney, 1883",
+  "credit": "Music:  Joseph Barnby, 1890 · Words: Dorothy F. Gurney, 1883",
   "source": "Music: public-domain MusicXML score of O PERFECT LOVE from hymnary.org (hymnary.org/media/fetch/133588; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/o/p/e/r/operflov.htm), its syllable breaks laid under the melody note for note; stanzas 4 left out (they do not fit the tune line for line). In The Hymnal (Presbyterian Church USA, 1895, rev. 1911) (hymnary.org index).",
   "abc": "X:1\nT:O Perfect Love\nM:4/4\nL:1/4\nQ:1/4=88\nK:Eb\nE2 G B | B2 B2 | B B e d | d2 c2 | F2 G A | B2 G2 | E E G F | D4 |\nw: O per- fect Love, all hu- man thought trans- cend- ing, Lowly we kneel in pray- er be- fore Thy throne,\nw: O per- fect Life, be Thou their full as- sur- ance, Of ten- der cha- ri- ty and stead- fast faith,\nw: Grant them the joy which bright- ens earth- ly sor- row; Grant them the peace which calms all earth- ly strife,\nE2 G B | B2 B2 | B B e d | d2 c2 | c2 B A | G B A F | C2 D2 | E4 |]\nw: That theirs may be the love which knows no end- ing, Whom Thou for- ev- er- more dost join in one.\nw: Of pa- tient hope and qui- et, brave en- du- rance, With child- like trust that fears nor pain nor death.\nw: And to life's day the glo- rious unk- nown mor- row That dawns u- pon e- ter- nal love and life.\n",
   "parts": {
@@ -9416,7 +9383,7 @@ window.HYMN_SONGS = [
   "section": "Lutheran",
   "title": "To Thee, O Comforter Divine",
   "psalm": "",
-  "tune": "ST. ROTOLF",
+  "tune": "ST. BOTOLF",
   "meter": "886",
   "credit": "Music: John Henry Gower, 1890 · Words: Frances R. Havergal, 1872",
   "source": "Music: public-domain MusicXML score of ST. ROTOLF from hymnary.org (hymnary.org/media/fetch/135248; based on a Cyber Hymnal score), soprano, alto, tenor and bass as written. Words: the public-domain text from The Cyber Hymnal (www.hymntime.com/tch/htm/t/t/h/e/ttheeocd.htm), its syllable breaks laid under the melody note for note; stanzas 2, 3, 4 left out (they do not fit the tune line for line). In Common Service Book of the Lutheran Church (1918) (hymnary.org index).",
@@ -10876,7 +10843,7 @@ window.HYMN_SONGS = [
   "psalm": "",
   "tune": "RATHBUN",
   "meter": "",
-  "credit": "Música: traditional · Letra: Juan Bautista Cabrera, en El Himnario Evangélico, Nueva York 1893 #20; texto: hymnary.org (dominio público)",
+  "credit": "Música: Ithamar Conkey, 1849 · Letra: Juan Bautista Cabrera, en El Himnario Evangélico, Nueva York 1893 #20; texto: hymnary.org (dominio público)",
   "source": "https://hymnary.org/text/gloria_a_dios_porque_su_gracia (texto); armonía: hymnary.org MusicXML score (crossofchrist_2.xml)",
   "abc": "X:1\nT:Gloria a Dios\nM:3/4\nL:1/4\nQ:1/4=88\nK:Bb\nF2 B | d2 B | A G F | B F2 | F2 G | D2 C | D2 =E | F2 z | F2 B |\nw: ¡Glo- ria~a Dios! por- que _ su gra- cia En no- so- tros a- bun- dó, Y su\nw: ¡Glo- ria~a Dios! pues Él _ no mi- ra Nues- tra vie- ja i- ni- qui- dad; Bon-\nw: ¡Glo- ria~a Dios! que de _ fe pu- ra Lle- na nues- tro co- ra- zón, Y del\nw: ¡Glo- ria~a Dios! que~a- quí _ nos u- ne En per- fec- ta y dul- ce paz, Por\nw: ¡Glo- ria~a Dios! a quien _ com- pla- ce Re- ci- bir nues- tra~o- ra- ción, Nues- tros\nw: ¡Glo- ria~a Dios! que~en a- _ bun- dan- cia Ben- di- cio- nes hoy nos da; Si~es- to~Él\nd2 B | c B/ A/ G/ F/ | B F2 | F2 G | F2 B | D2 C | B,3 |]\nw: fi- el mi- _ _ se- ri- cor- dia En no- so- tros se mos- tró.\nw: da- do- so _ _ nos re- vis- te De jus- ti- cia~y san- ti- dad.\nw: Hi- jo que _ _ a- ma tan- to Nos con- ce- de~el su- mo don.\nw: su dies- tra _ _ pro- te- gi- dos A- lum- bra- dos por su faz.\nw: can- tos de _ _ a- la- ban- za, Nues- tra pu- ra~a- do- ra- ción.\nw: ha- ce a- _ _ quí~en la tie- rra, En los cie- los ¿qué no~ha- rá?\n",
   "parts": {
@@ -11358,13 +11325,13 @@ window.HYMN_SONGS = [
  {
   "id": "es_despertadatodosllama",
   "section": "Español",
-  "title": "¡Despertad! A todos llama",
+  "title": "Despertad A todos llama",
   "psalm": "",
   "tune": "WACHET AUF",
   "meter": "8.9.8.8.9.8.6.6.4.8.8",
   "credit": "Música: Phillip Nicolai, 1599 · Letra: Federico Fliedner (adapt.) (†1910); texto según Culto Cristiano #4: hymnary.org (dominio público)",
   "source": "https://hymnary.org/text/despertad_a_todos_llama (texto); armonía: Open Hymnal Project (openhymnal.org, public domain), SATB setting of “Wake, Awake, for Night Is Flying”",
-  "abc": "X:1\nT:¡Despertad! A todos llama\nM:none\nL:1/4\nQ:1/4=150\nK:C\nC2 E2 G3 G G G (A G A2) G2 | z/ G c G c e d e d2 G2 |\nw: ¡Des- per- tad! A to- dos lla- * * ma Del guar- da fiel la gran pro- cla- ma:\nw: Es- cu- chan- do~el dul- ce can- * * to, Je- ru- sa- lén con go- zo san- to\nw: ¡Glo- ria~a Él! can- tad, que- ru- * * bes Por so- bre las más al- tas nu- bes\nz/ G c G A E F D C4 | C2 E2 G3 G G G (A G A2) G2 |\nw: ¡Des- pier- ta, pue- blo de Da- vid! Ya la me- dia no- che sue- * * na,\nw: Des- pier- ta,~a- le- gre, pron- ta~es- tá. El es- po- so que des- cien- * * de\nw: Con ar- pas de so- no- ra voz. ¡Do- ce per- las los por- ta- * * les\nz/ G c G c e d e d2 G2 | z/ G c G A E F D C2 |\nw: Ve- nid a la ce- les- te ce- na; Pru- den- tes vir- ge- nes, sa- lid.\nw: Del cie- lo, los es- pa- cios hien- de, Su blan- ca~au- ro- ra bri- lla ya.\nw: De las mo- ra- das ce- les- tia- les Que~al fiel cre- yen- te~a- bier- tos son!\nz/ G G3 F E D C2 | z/ G G3 F E D C2 | D E F2 E2 |\nw: Al re- gio~es- po- so ved, La lám- pa- ra~en- cen- ded. ¡A- le- lu- ya!\nw: ¡Ben- di- to Sal- va- dor! Cla- me- mos con fer- vor El ho- san- na.\nw: Ja- más se con- tem- pló, Ni~o- í- do~hu- ma- no~o- yó Tan- to go- zo.\nG2 A B c3 c e d c2 | G2 c G A E F D C4 |]\nw: Pres- to~a- cu- did al a- da- lid; Con jú- bi- lo~a sus bo- das id.\nw: Luz ce- les- tial, guí- a~al mor- tal A a- que- lla fies- ta triun- fal.\nw: A dis- fru- tar id y~a can- tar El a- le- lu- ya sin ce- sar.\n",
+  "abc": "X:1\nT:Despertad A todos llama\nM:none\nL:1/4\nQ:1/4=150\nK:C\nC2 E2 G3 G G G (A G A2) G2 | z/ G c G c e d e d2 G2 |\nw: Des- per- tad A to- dos lla- * * ma Del guar- da fiel la gran pro- cla- ma:\nw: Es- cu- chan- do~el dul- ce can- * * to, Je- ru- sa- lén con go- zo san- to\nw: Glo- ria~a Él can- tad, que- ru- * * bes Por so- bre las más al- tas nu- bes\nz/ G c G A E F D C4 | C2 E2 G3 G G G (A G A2) G2 |\nw: Des- pier- ta, pue- blo de Da- vid Ya la me- dia no- che sue- * * na,\nw: Des- pier- ta,~a- le- gre, pron- ta~es- tá. El es- po- so que des- cien- * * de\nw: Con ar- pas de so- no- ra voz. Do- ce per- las los por- ta- * * les\nz/ G c G c e d e d2 G2 | z/ G c G A E F D C2 |\nw: Ve- nid a la ce- les- te ce- na; Pru- den- tes vir- ge- nes, sa- lid.\nw: Del cie- lo, los es- pa- cios hien- de, Su blan- ca~au- ro- ra bri- lla ya.\nw: De las mo- ra- das ce- les- tia- les Que~al fiel cre- yen- te~a- bier- tos son\nz/ G G3 F E D C2 | z/ G G3 F E D C2 | D E F2 E2 |\nw: Al re- gio~es- po- so ved, La lám- pa- ra~en- cen- ded. A- le- lu- ya\nw: Ben- di- to Sal- va- dor Cla- me- mos con fer- vor El ho- san- na.\nw: Ja- más se con- tem- pló, Ni~o- í- do~hu- ma- no~o- yó Tan- to go- zo.\nG2 A B c3 c e d c2 | G2 c G A E F D C4 |]\nw: Pres- to~a- cu- did al a- da- lid; Con jú- bi- lo~a sus bo- das id.\nw: Luz ce- les- tial, guí- a~al mor- tal A a- que- lla fies- ta triun- fal.\nw: A dis- fru- tar id y~a can- tar El a- le- lu- ya sin ce- sar.\n",
   "parts": {
    "src": "Open Hymnal Project (openhymnal.org, public domain), SATB setting of “Wake, Awake, for Night Is Flying”",
    "sig": "86-1ep4tmu",
@@ -11416,7 +11383,7 @@ window.HYMN_SONGS = [
   "psalm": "",
   "tune": "O PERFECT LOVE",
   "meter": "",
-  "credit": "Música: Josesph Barnby, 1890 · Letra: Jose M. de Mora, en Himnario de la Iglesia Metodista Episcopal, México 1881 #198; texto según Culto Cristiano #52: hymnary.org (dominio público)",
+  "credit": "Música: Joseph Barnby, 1890 · Letra: Jose M. de Mora, en Himnario de la Iglesia Metodista Episcopal, México 1881 #198; texto según Culto Cristiano #52: hymnary.org (dominio público)",
   "source": "https://hymnary.org/text/jesus_mi_salvador_sera_posible (texto); armonía: hymnary.org MusicXML score (perfectlove_0.xml)",
   "abc": "X:1\nT:Jesús mi Salvador, será posible\nM:4/4\nL:1/4\nQ:1/4=88\nK:Eb\nE2 G B | B2 B2 | B B e d | d2 c2 | F2 G A | B2 G2 | E E G F | D4 |\nw: Je- sús, mi Sal- va- dor, ¿se- rá po- si- ble Que se~a- ver- güen- ce~al- gún mor- tal de Ti?\nw: ¿A- ver- gon- zar- me de Je- sús? Más pron- to Re- pu- dia- rí- a~el fir- ma- men- to~el sol;\nw: ¿A- ver- gon- zar- me del que- ri- do~a- mi- go, Mi~a- po- yo, mi~es- pe- ran- za, mi sos- tén?\nw: ¿A- ver- gon- zar- me de Je- sus? Sí, cuan- do No ten- ga cul- pa~al- gu- na por la- var,\nw: Has- ta e- se dí- a~he de con- fe- sar- te; Pa- ra sal- var- me~es- pe- ro só- lo~en Ti;\nE2 G B | B2 B2 | B B e d | d2 c2 | c2 B A | G B A F | C2 D2 | E4 |]\nw: ¿Y que~ol- vi- dan- do tus su- bli- mes he- chos, Nie- gue lo que por él su- fris- te~a- quí?\nw: An- tes se~a- ver- gon- za- ra la ma- ña- na Del fres- co, pu- ro~y ní- ti- do~a- rre- bol.\nw: No! mi ver- güen- za~es que,~aun- que le~a- mo tan- to, No le~a- mo siem- pre co- mo~al su- mo bien.\nw: Ni bie- nes por pe- dir, ni mie- do~o- cul- to, Ni lá- gri- mas, ni~aún al- ma por sal- var.\nw: Y mi glo- ria se- rá que Je- su- cris- to No se~a- ver- güen- ce, no, ja- más de mí.\n",
   "parts": {
@@ -11596,7 +11563,7 @@ window.HYMN_SONGS = [
   "psalm": "",
   "tune": "O PERFECT LOVE",
   "meter": "",
-  "credit": "Música: Josesph Barnby, 1890 · Letra: Juan Bautista Cabrera, en Himnario para uso de la Iglesia Cristiana Española, Madrid 1878 #272; texto según Culto Cristiano #136: hymnary.org (dominio público) · estrofas 1, 2, 3, 4, 5",
+  "credit": "Música: Joseph Barnby, 1890 · Letra: Juan Bautista Cabrera, en Himnario para uso de la Iglesia Cristiana Española, Madrid 1878 #272; texto según Culto Cristiano #136: hymnary.org (dominio público) · estrofas 1, 2, 3, 4, 5",
   "source": "https://hymnary.org/text/tu_de_los_fieles_eternal_cabeza (texto); armonía: hymnary.org MusicXML score (perfectlove_0.xml)",
   "abc": "X:1\nT:Tú, de los fieles eternal cabeza\nM:4/4\nL:1/4\nQ:1/4=88\nK:Eb\nE2 G B | B2 B2 | B B e d | d2 c2 | F2 G A | B2 G2 | E E G F | D4 |\nw: Tú de los fie- les e- ter- nal ca- be- za, De tie- rra~y cie- los di- vi- nal Se- ñor,\nw: E- llos al mun- do tus pre- cia- dos do- nes En- se- ña- rán; pro- cla- ma- rán sa- lud:\nw: Cuan- do~a los hom- bres con a- mo- re~en- se- ñen De tu~E- van- ge- lio ce- les- tial ver- dad,\nw: Sa- bi- du- rí- a man- se- dum- bre~y ce- lo De Ti re- ci- ban, y sa- gra- da~un- ción,\nw: Al pe- ca- dor con ca- ri- dad co- rri- jan, Del fla- co se- an e- fi- caz sos- tén,\nE2 G B | B2 B2 | B B e d | d2 c2 | c2 B A | G B A F | C2 D2 | E4 |]\nw: So- bre tus sier- vos a- bre con lar- gue- za Rau- da- les pros de tu~i- men- so a- mor.\nw: Da- les tu gra- cia, da~a sus co- ra- zo- nes Por or- na- men- to, san- ta rec- ti- tud.\nw: Su mi- nis- te- rio san- to de- sem- pe- ñen Ar- dien- do~el pe- co~en fér- vi- da pie- dad.\nw: De sal- var al- mas in- can- sa- ble~an- he- lo Y~el es- ti- ma- ble don de la~o- ra- ción.\nw: A los can- sa- dos con a- mor di- ri- jan Por los ca- mi- nos de ver- dad y bien.\n",
   "parts": {
@@ -11858,13 +11825,10 @@ window.HYMN_SONGS = [
   function findSong(id) { var a = allSongs(); for (var i = 0; i < a.length; i++) if (a[i].id === id) return a[i]; return a[0]; }
 
   /* =================== LIBRARY =================== */
-  function songNum(s) { var m = (s.psalm || '').match(/Psalm (\d+)/); return m ? m[1] : (s.section === 'My Songs' ? '♪' : (s.title || '?')[0]); }
-  var BASE_CATS = ['Reformed & Puritan', 'Psalms', 'Praise', 'Christmas', 'Easter', 'Communion', 'Gospel', 'Presbyterian', 'Baptist', 'Methodist', 'Lutheran', 'Anglican / Episcopal', 'Congregational', 'Hymnology', 'Español', 'My Songs'], CATS = BASE_CATS.slice();
-  // sections of songs saved on this device (e.g. a collection restored from a file) become their own categories
-  function customCats() { var o = []; mySongs.forEach(function (m) { if (m.section && m.section !== 'My Songs' && BASE_CATS.indexOf(m.section) < 0 && o.indexOf(m.section) < 0) o.push(m.section); }); return o; }
-  function refreshCats() { var c = customCats(); CATS = BASE_CATS.slice(0, -1).concat(c, ['My Songs']); return c; }
+  // ONE list: every song (built in + My Songs) strictly A to Z by title, with big letter headers and an A-Z jump strip.
+  // The private imported Puritan Psalter never joins that list: it has its own button (shown only once imported).
+  var BASE_CATS = ['Reformed & Puritan', 'Psalms', 'Praise', 'Christmas', 'Easter', 'Communion', 'Gospel', 'Presbyterian', 'Baptist', 'Methodist', 'Lutheran', 'Anglican / Episcopal', 'Congregational', 'Hymnology', 'Español', 'My Songs'];
   function isMine(s) { return mySongs.some(function (m) { return m.id === s.id; }); }
-  var CAT_NOTE = { 'Reformed & Puritan': 'Metrical psalms of the Reformed and Puritan churches', Praise: 'Hymns of praise and worship', Christmas: 'Advent, Christmas and Epiphany', Easter: 'Lent, Holy Week, Easter and Ascension', Psalms: 'Metrical psalms and psalm hymns', Gospel: 'Gospel songs and hymns of faith', Communion: "The Lord's Supper and fellowship" };
   var wordsCache = {};
   // all the sung words of a song (from its w: lines), for searching, plus its first line
   function songWords(s) {
@@ -11877,66 +11841,86 @@ window.HYMN_SONGS = [
     wordsCache[s.id + s.abc.length] = r; return r;
   }
   function norm(x) { x = String(x || '').toLowerCase().replace(/[’‘']/g, "'"); return x.normalize ? x.normalize('NFD').replace(/[\u0300-\u036f]/g, '') : x; }
-  // two flat lists: Psalms (every psalm setting, by psalm number) and Hymns (everything else, A-Z)
   function psalmNo(s) { var m = (s.psalm || '').match(/Psalm\s+(\d+)/i) || (s.title || '').match(/^Psalm\s+(\d+)/i); return m ? +m[1] : 0; }
-  var PP_SEC = 'Puritan Psalter', DENOM = ['Presbyterian', 'Baptist', 'Methodist', 'Lutheran', 'Anglican / Episcopal', 'Congregational', 'Hymnology', 'Español'], HIDE_EMPTY = DENOM, TABS = ['All', 'Psalms', 'Hymns'].concat(DENOM, [PP_SEC]);
-  // Presbyterian and Baptist hymns have their own buttons (each hymn in one list only); they are also in All, not in Hymns
-  // Hymnology (songs from Francisco's playlist) sits after Baptist; its button stays hidden until it has songs
-  function tabOf(s) { return s.section === PP_SEC ? PP_SEC : DENOM.indexOf(s.section) >= 0 ? s.section : psalmNo(s) ? 'Psalms' : 'Hymns'; }
-  function sortTitle(t) { return String(t || '').replace(/^['‘’"“]/, ''); }
-  function libTab() { var t = LS.get('libTab', ''); return TABS.indexOf(t) >= 0 ? t : 'All'; }
+  var PP_SEC = 'Puritan Psalter';
+  function isPP(s) { return s.section === PP_SEC; }
+  // the title as it is alphabetized: no leading quote marks or Spanish ¡ ¿, no accents
+  function sortTitle(t) { return norm(t).replace(/^[^a-z0-9]+/, ''); }
+  function letterOf(s) { var c = sortTitle(s.title).charAt(0).toUpperCase(); return c >= 'A' && c <= 'Z' ? c : '#'; }
+  function byTitle(a, b) { return sortTitle(a.title).localeCompare(sortTitle(b.title), undefined, { numeric: true, sensitivity: 'base' }) || String(a.id).localeCompare(String(b.id)); }
+  function songNum(s) { var p = psalmNo(s); return p ? String(p) : s.section === 'My Songs' ? '♪' : letterOf(s); }
+  function libView() { return LS.get('libTab', '') === PP_SEC && allSongs().some(isPP) ? PP_SEC : 'All'; }
   function renderLibrary() {
-    var q = norm(($('libSearch').value || '').trim()), list = $('libList'), tab = libTab(), cats = $('libCats'), terms = q ? q.split(/\s+/) : [];
-    refreshCats();
-    if (cats && cats.dataset.sig !== 'tabs11') {
-      cats.innerHTML = ''; cats.dataset.sig = 'tabs11'; cats.className = 'seg lib-tabs'; cats.setAttribute('aria-label', 'Show all songs, psalms, hymns, a church tradition’s hymns, the Hymnology list, or the Puritan Psalter');
-      TABS.forEach(function (c) {
-        var b = document.createElement('button'); b.type = 'button'; b.dataset.c = c; b.innerHTML = '<span class="lib-tl">' + c.replace('Congregational', 'Congre\u00ADgational').replace('Presbyterian', 'Presby\u00ADterian').replace(' / ', ' /\u200B ') + '</span><span class="lib-tc"></span>';
-        b.onclick = function () { LS.set('libTab', c); renderLibrary(); list.scrollTop = 0; };
-        cats.appendChild(b);
-      });
-    }
-    var counts = {}, hits = {}, items = []; TABS.forEach(function (c) { counts[c] = 0; hits[c] = 0; });
+    var q = norm(($('libSearch').value || '').trim()), list = $('libList'), pp = libView() === PP_SEC, terms = q ? q.split(/\s+/) : [], items = [], nPP = 0;
     allSongs().forEach(function (s) {
-      var t = tabOf(s); counts[t]++; counts.All++;
+      var inPP = isPP(s); if (inPP) nPP++;
+      if (inPP !== pp) return;
       var w = songWords(s);
       if (terms.length) {
         var head = norm(s.title + ' ' + s.psalm + ' ' + s.tune + ' ' + s.credit + ' ' + s.section), hay = head + ' ' + norm(w.all);
         if (!terms.every(function (x) { return hay.indexOf(x) >= 0; })) return;
-        hits[t]++; hits.All++;
         s._hitWords = !terms.every(function (x) { return head.indexOf(x) >= 0; });
-        var tt = norm(s.title + ' ' + s.psalm); s._rank = terms.every(function (x) { return tt.indexOf(x) >= 0; }) ? (tt.indexOf(q) >= 0 ? 0 : 1) : s._hitWords ? 3 : 2;
-      } else { s._hitWords = false; s._rank = 0; }
-      if (t === tab || tab === 'All') items.push(s);
+      } else s._hitWords = false;
+      items.push(s);
     });
-    if (HIDE_EMPTY.indexOf(tab) >= 0 && !counts[tab]) { LS.set('libTab', 'All'); return renderLibrary(); }
-    if (cats) Array.prototype.forEach.call(cats.childNodes, function (b) { var c = b.dataset.c, n = q ? hits[c] : counts[c]; b.hidden = HIDE_EMPTY.indexOf(c) >= 0 && !counts[c]; b.setAttribute('aria-pressed', c === tab ? 'true' : 'false'); b.querySelector('.lib-tc').textContent = n; b.setAttribute('aria-label', c + ', ' + n + ' songs'); });
-    if (cats && cats.scrollWidth > cats.clientWidth + 1) { var on = cats.querySelector('[aria-pressed="true"]'); if (on) { var cr = cats.getBoundingClientRect(), br = on.getBoundingClientRect(); if (br.left < cr.left) cats.scrollLeft -= cr.left - br.left + 12; else if (br.right > cr.right) cats.scrollLeft += br.right - cr.right + 12; } }
-    items.sort(function (a, b) {
-      if (q && tab !== 'All' && tab !== 'Psalms' && DENOM.indexOf(tab) < 0 && a._rank !== b._rank) return a._rank - b._rank;
-      if (tab === PP_SEC && (a.order != null || b.order != null) && a.order !== b.order) return (a.order != null ? a.order : 1e9) - (b.order != null ? b.order : 1e9); // psalter order
-      if (tab === 'All' || tab === 'Psalms' || DENOM.indexOf(tab) >= 0) return sortTitle(a.title).localeCompare(sortTitle(b.title), undefined, { numeric: true, sensitivity: 'base' }) || String(a.id).localeCompare(String(b.id)); // All: strict A-Z by title (search results too)
-      else if (tab !== 'Hymns') { var d = psalmNo(a) - psalmNo(b); if (d) return d; }
-      return sortTitle(a.title).localeCompare(sortTitle(b.title), undefined, { numeric: true, sensitivity: 'base' }) || (a.order != null && b.order != null ? a.order - b.order : 0);
-    });
+    items.sort(pp ? function (a, b) { return (a.order != null ? a.order : 1e9) - (b.order != null ? b.order : 1e9) || psalmNo(a) - psalmNo(b) || byTitle(a, b); } : byTitle);
+    var ppb = $('libPP');
+    ppb.hidden = !nPP;
+    ppb.textContent = pp ? '‹ Back to all songs' : 'Puritan Psalter (' + nPP + ') ›';
+    ppb.setAttribute('aria-label', pp ? 'Back to all songs' : 'Open my Puritan Psalter, ' + nPP + ' psalms, kept on this device');
+    var noun = pp ? 'psalm' : 'song';
+    $('libCount').textContent = (pp ? 'Puritan Psalter (on this device only) · ' : '') + (q ? (items.length ? items.length + ' ' + noun + (items.length === 1 ? '' : 's') + ' found' : 'No ' + noun + 's found') : items.length + ' ' + noun + 's' + (pp ? ', in psalter order' : ', A to Z'));
     list.innerHTML = '';
-    var noun = tab === 'Hymns' || DENOM.indexOf(tab) >= 0 ? 'hymn' : tab === 'All' ? 'song' : 'psalm';
-    $('libCount').textContent = q ? (items.length ? items.length + ' ' + noun + (items.length === 1 ? '' : 's') + ' found' : 'No ' + noun + 's found') : items.length + ' ' + noun + 's';
-    if (q && tab !== 'All') TABS.forEach(function (other) { if (other === tab || other === 'All' || !hits[other]) return; var sw = document.createElement('button'); sw.type = 'button'; sw.className = 'lib-other'; sw.dataset.c = other; sw.textContent = hits[other] + ' in ' + other + ' →'; sw.onclick = function () { LS.set('libTab', other); renderLibrary(); }; $('libCount').appendChild(document.createTextNode(' · ')); $('libCount').appendChild(sw); });
-    if (tab === PP_SEC && !counts[PP_SEC]) { $('libCount').textContent = ''; var em = document.createElement('div'); em.className = 'lib-empty'; em.innerHTML = '<p><b>No Puritan Psalter songs yet.</b></p><p>Import your Puritan Psalter file (.json) and its psalms will appear here, in psalter order. It stays on this device.</p>'; var ib = document.createElement('button'); ib.type = 'button'; ib.className = 'pill-btn solid'; ib.id = 'libEmptyImport'; ib.textContent = 'Import'; ib.onclick = function () { $('fileInput').click(); }; em.appendChild(ib); list.innerHTML = ''; list.appendChild(em); return; }
     var body = document.createElement('div'); body.className = 'lib-flat';
+    var letters = [], cur = null;
     items.forEach(function (s) {
+      if (!pp) { var L = letterOf(s); if (L !== cur) { cur = L; letters.push(L); var h = document.createElement('h3'); h.className = 'lib-letter'; h.id = 'lib-az-' + (L === '#' ? 'num' : L); h.textContent = L; body.appendChild(h); } }
       var b = document.createElement('button'); b.className = 'lib-item'; b.setAttribute('aria-current', S.song && S.song.id === s.id ? 'true' : 'false');
-      var w = songWords(s), imp = s.section && BASE_CATS.indexOf(s.section) < 0 ? s.section : '', sub = [tab === PP_SEC ? '' : imp === PP_SEC ? 'Puritan Psalter' : imp, tab !== 'Hymns' && /^Psalm\s+\d+/i.test(s.title) ? '' : s.psalm, s.tune].filter(Boolean).join(' · ');
+      var w = songWords(s), imp = s.section && BASE_CATS.indexOf(s.section) < 0 && !pp ? s.section : '', sub = [imp, /^Psalm\s+\d+/i.test(s.title) ? '' : s.psalm, s.tune].filter(Boolean).join(' · ');
       var fl = w.first && norm(w.first).indexOf(norm(s.title).replace(/[^a-z' ]/g, '').slice(0, 12)) !== 0 ? '<span class="fl">“' + esc(w.first) + '…”</span>' + (sub ? ' · ' : '') : '';
       if (s._hitWords && terms.length) { var at = w.all.indexOf(terms[0]); if (at >= 0) { var st = Math.max(0, w.all.lastIndexOf(' ', Math.max(0, at - 24)) + 1), snip = w.raw.slice(st, at + terms[0].length + 28); fl = '<span class="fl">…' + esc(snip).replace(new RegExp(terms[0].replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi'), function (m) { return '<mark class="hit">' + m + '</mark>'; }) + '…</span>' + (sub ? ' · ' : ''); } }
-      b.innerHTML = '<span class="num">' + esc(tab !== 'Hymns' && psalmNo(s) ? String(psalmNo(s)) : songNum(s)) + '</span><span style="min-width:0"><span class="t">' + esc(s.title) + '</span><span class="s">' + fl + esc(sub || (s.section === 'My Songs' ? 'My song' : '')) + '</span></span>';
+      b.innerHTML = '<span class="num">' + esc(songNum(s)) + '</span><span style="min-width:0"><span class="t">' + esc(s.title) + '</span><span class="s">' + fl + esc(sub || (s.section === 'My Songs' ? 'My song' : '')) + '</span></span>';
       b.onclick = function () { loadSong(s.id, true); closeLib(); };
       body.appendChild(b);
     });
     list.appendChild(body);
+    // the A-Z strip: one big target per letter that has songs (hidden for the psalter and for short search results)
+    var az = $('libAZ'), sig = letters.join('');
+    az.hidden = pp || items.length < 40;
+    if (!az.hidden && az.dataset.sig !== sig) {
+      az.dataset.sig = sig; az.innerHTML = '';
+      letters.forEach(function (L) { var x = document.createElement('button'); x.type = 'button'; x.dataset.l = L; x.textContent = L; x.setAttribute('aria-label', 'Jump to ' + (L === '#' ? 'songs starting with a number' : L)); az.appendChild(x); });
+    }
+    sizeAZ();
   }
-  function openLib() { $('library').classList.add('open'); $('scrim').classList.add('show'); }
+  // keep the strip as tall as the visible list (below the pinned search bar)
+  function sizeAZ() {
+    var az = $('libAZ'), lib = $('library'), lt = $('libTop'); if (!lt) return;
+    // the pinned search bar covers the list's top padding too, so no song peeks out above it
+    var pad = parseFloat(getComputedStyle(lib).paddingTop) || 0; lt.style.top = -pad + 'px'; lt.style.marginTop = -pad + 'px'; lt.style.paddingTop = pad + 'px';
+    if (!az || az.hidden) return;
+    var top = lt.offsetHeight - pad;
+    az.style.top = top + 'px';
+    az.style.height = Math.max(220, Math.min(lib.clientHeight, innerHeight) - top - 16) + 'px';
+  }
+  function jumpTo(L) {
+    var h = document.getElementById('lib-az-' + (L === '#' ? 'num' : L)), lib = $('library'); if (!h) return;
+    for (var k = 0; k < 2; k++) lib.scrollTop += h.getBoundingClientRect().top - $('libTop').getBoundingClientRect().bottom - 2;
+    var bb = $('libBubble'); bb.textContent = L; bb.classList.add('show'); clearTimeout(jumpTo.t); jumpTo.t = setTimeout(function () { bb.classList.remove('show'); }, 700);
+    Array.prototype.forEach.call($('libAZ').childNodes, function (x) { x.classList.toggle('on', x.dataset.l === L); });
+  }
+  function initAZ() {
+    var az = $('libAZ'), down = false, last = '';
+    function at(y) { var bs = az.childNodes, best = null; for (var i = 0; i < bs.length; i++) { var r = bs[i].getBoundingClientRect(); if (y >= r.top && y < r.bottom) return bs[i].dataset.l; if (!best || Math.abs(y - (r.top + r.bottom) / 2) < best[0]) best = [Math.abs(y - (r.top + r.bottom) / 2), bs[i].dataset.l]; } return best && best[1]; }
+    function go(e) { var L = at(e.clientY); if (L && L !== last) { last = L; jumpTo(L); } }
+    az.addEventListener('pointerdown', function (e) { down = true; last = ''; try { az.setPointerCapture(e.pointerId); } catch (x) {} go(e); e.preventDefault(); });
+    az.addEventListener('pointermove', function (e) { if (down) go(e); });
+    ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(function (t) { az.addEventListener(t, function () { down = false; }); });
+    az.addEventListener('click', function (e) { var L = e.target && e.target.dataset && e.target.dataset.l; if (L && e.detail === 0) jumpTo(L); }); // keyboard
+    $('libPP').onclick = function () { LS.set('libTab', libView() === PP_SEC ? 'All' : PP_SEC); $('library').scrollTop = 0; renderLibrary(); };
+    addEventListener('resize', sizeAZ);
+  }
+  function openLib() { $('library').classList.add('open'); $('scrim').classList.add('show'); sizeAZ(); }
   function closeLib() { $('library').classList.remove('open'); $('scrim').classList.remove('show'); }
 
   /* =================== LOAD / PARSE =================== */
@@ -12696,7 +12680,7 @@ window.HYMN_SONGS = [
   // Sync offset control removed: always 0. Clear any saved offset from older installs.
   try { LS.set('syncMs', 0); } catch (e0) {}
   var syncS = 0;
-  var APP_VERSION = 'v48';
+  var APP_VERSION = 'v49';
   function syncSec() { return syncS; }
   function heardTime(perf) { return clock.heard(perf) - syncSec(); }
   // One clock for sound, cursor and highlight. A frame drawn in the rAF callback at perf reaches the screen at the next
@@ -13109,7 +13093,7 @@ window.HYMN_SONGS = [
       if (added.length) { loadSong(added[0].id, true); toast(added.length === 1 ? 'Added “' + added[0].title + '” to My Songs' : 'Added ' + added.length + ' songs to My Songs'); }
       restored.forEach(function (r) {
         var secs = Object.keys(r.sections), n = r.added + r.updated;
-        if (secs.length === 1 && secs[0] !== 'My Songs' && r.first) { var fs = allSongs().filter(function (x) { return x.id === r.first; })[0]; if (fs) { LS.set('libTab', tabOf(fs)); renderLibrary(); } }
+        if (secs.length === 1 && secs[0] !== 'My Songs' && r.first) { var fs = allSongs().filter(function (x) { return x.id === r.first; })[0]; if (fs) { LS.set('libTab', isPP(fs) ? PP_SEC : 'All'); renderLibrary(); } }
         if (r.first && !added.length && n) loadSong(r.first, true);
         toast(n ? (r.added ? 'Added ' + r.added : '') + (r.added && r.updated ? ', ' : '') + (r.updated ? 'updated ' + r.updated : '') + ' song' + (n === 1 ? '' : 's') + ' in ' + secs.join(', ') + (r.skipped ? ' (' + r.skipped + ' could not be read)' : '') : r.same ? 'Those songs are already here.' : 'No songs were found in that file.');
       });
@@ -13302,7 +13286,7 @@ window.HYMN_SONGS = [
     document.addEventListener('dragover', function (e) { e.preventDefault(); });
     document.addEventListener('drop', function (e) { e.preventDefault(); if (e.dataTransfer.files.length) importFiles(e.dataTransfer.files); });
     $('chooseBtn').onclick = openLib; $('libClose').onclick = closeLib; $('scrim').onclick = closeLib;
-    $('libSearch').oninput = renderLibrary;
+    $('libSearch').oninput = renderLibrary; initAZ();
     document.addEventListener('keydown', function (e) {
       if (/^(TEXTAREA|INPUT|SELECT)$/.test(e.target.tagName) && e.target.type !== 'range' && e.target.type !== 'checkbox') return;
       if (e.code === 'Space') { e.preventDefault(); toggle(); }
