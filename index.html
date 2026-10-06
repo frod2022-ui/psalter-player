@@ -496,6 +496,17 @@ mark.hit{background:var(--hl-soft);color:inherit;border-radius:3px;padding:0 1px
 a.pill-btn{text-decoration:none;box-sizing:border-box}
 #sharePageBtn{color:var(--accent)}
 
+/* "Apple Pay" line under the Donate buttons */
+.donate-wrap{position:relative;display:flex;flex:none}
+.donate-cap{position:absolute;top:calc(100% + 3px);left:50%;transform:translateX(-50%);display:block;font-size:10.5px;line-height:1;pointer-events:none;color:var(--muted);font-weight:600;letter-spacing:.01em;white-space:nowrap}
+.lbl-sub{display:none}
+.donate-cap-set{margin:-6px 0 0;text-align:center;font-size:12px;line-height:1.2;color:var(--muted);font-weight:600}
+@media (orientation:landscape) and (max-height:500px){
+  .donate-cap{display:none}
+  .topbar #donateBtn2 .lbl{display:inline-flex;flex-direction:column;align-items:flex-start;line-height:1.05}
+  .topbar #donateBtn2 .lbl-sub{display:block;font-size:9.5px;font-weight:600;opacity:.85}
+}
+
 </style>
 </head>
 <body>
@@ -507,7 +518,7 @@ a.pill-btn{text-decoration:none;box-sizing:border-box}
     </div>
     <button class="pill-btn" id="installBtn" hidden aria-label="Install app"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0-4.5-4.5M12 15l4.5-4.5M5 21h14"/></svg><span class="lbl">Install</span></button>
     <button class="pill-btn solid" id="importBtn" title="Open a tune file (.abc, MIDI or MusicXML) or a backup (.json)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V9m0 0-4.5 4.5M12 9l4.5 4.5M5 3h14"/></svg><span class="lbl">Import</span></button>
-    <button type="button" class="pill-btn solid" id="donateBtn2" title="Open Messages for donations, comments or requests"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5S4.5 15.2 4.5 9.8A4.3 4.3 0 0 1 12 7.1 4.3 4.3 0 0 1 19.5 9.8C19.5 15.2 12 20.5 12 20.5z"/></svg><span class="lbl">Donate</span></button>
+    <span class="donate-wrap"><button type="button" class="pill-btn solid" id="donateBtn2" title="Open Messages for donations, comments or requests"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5S4.5 15.2 4.5 9.8A4.3 4.3 0 0 1 12 7.1 4.3 4.3 0 0 1 19.5 9.8C19.5 15.2 12 20.5 12 20.5z"/></svg><span class="lbl">Donate<small class="lbl-sub">Apple Pay</small></span></button><small class="donate-cap">Apple Pay</small></span>
     <input type="file" id="fileInput" accept=".abc,.txt,.mid,.midi,.xml,.musicxml,.mxl,.json,audio/midi,application/xml,text/xml,application/json" multiple hidden>
   </div>
 </header>
@@ -746,9 +757,10 @@ a.pill-btn{text-decoration:none;box-sizing:border-box}
     <div class="ctrl donate-block">
       <div class="cap"><span>Support this app</span></div>
       <button type="button" class="pill-btn wide-btn solid" id="donateBtn" title="Open Messages for donations, comments or requests">Donations, comments or requests</button>
+      <p class="donate-cap-set">Apple Pay</p>
       <p class="hint donate-num">Donations, comments or requests: text <a id="donateNum" href="sms:3074090646&amp;body=Donations%20%2A%20Comments%20%2A%20Requests">307-409-0646</a>.</p>
     </div>
-    <p class="app-ver" id="appVer">Version <b>v43</b></p>
+    <p class="app-ver" id="appVer">Version <b>v44</b></p>
     <p class="app-ver donate-foot"><button type="button" class="link-btn" id="donateLink">Donations, comments or requests</button></p>
   </div>
 </div>
@@ -4623,10 +4635,10 @@ window.HYMN_SONGS = [
   "meter": "8.8.8.8.8.8.8.8",
   "credit": "Music: William B. Bradbury, 1864 · Words: Joseph H. Gilmore, 1862",
   "source": "Open Hymnal Project ABC (openhymnal.org; marked public domain), melody line with every stanza as printed there; their source: \"The Golden Censer\", 1864 Hymn 105. Ed. William B. Bradbury. Melody cross-checked against the hymnary.org score (hymnary.org/tune/he_leadeth_me_bradbury): 99% of pitches and 100% of note lengths agree.",
-  "abc": "X:1\nT:He Leadeth Me\nT:HE LEADETH ME\nC:Music: William B. Bradbury, 1864 · Words: Joseph H. Gilmore, 1862\nS:Open Hymnal Project ABC (openhymnal.org; marked public domain), melody line with every stanza as printed there; their source: \"The Golden Censer\", 1864 Hymn 105. Ed. William B. Bradbury. Melody cross-checked against the hymnary.org score (hymnary.org/tune/he_leadeth_me_bradbury): 99% of pitches and 100% of note lengths agree.\nM:4/4\nL:1/4\nQ:1/4=100\nK:D\nA | F3/2 E/ D A | B G G B | A3/2 F/ F E/D/ | F F E\nw: He lead- eth me, O bless- èd thought! O words with heav'n- ly * com- fort fraught!\nw: Some- times mid scenes of deep- est gloom, Some- times where E- den's * bow- ers bloom,\nw: Lord, I would place my hand in Thine, Nor e- ver mur- mur * nor re- pine;\nw: And when my task on earth is done, When by Thy grace the * vic- t'ry's won,\nA | F3/2 E/ D A | B G d c/B/ | A F F/E/ D/E/ | F3/2 E/ D\nw: What- e'er I do, wher- e'er I be Still * 'tis God's hand * that * lead- eth me.\nw: By wa- ters still, ov'r troub- led sea, Still * 'tis His hand * that * lead- eth me.\nw: Con- tent, what- e- ver lot I see, Since * 'tis my God * that * lead- eth me.\nw: E'en death's cold wave I will not flee, Since * God through Jor- * dan * lead- eth me.\nA | A d c d | d c/B/ A B | A F F/E/ D/E/ | F F E\nw: He lead- eth me, He lead- eth * me, By His own hand * He * lead- eth me;\nw: He lead- eth me, He lead- eth * me, By His own hand * He * lead- eth me;\nw: He lead- eth me, He lead- eth * me, By His own hand * He * lead- eth me;\nw: He lead- eth me, He lead- eth * me, By His own hand * He * lead- eth me;\nA | A d c e | d c/B/ A B | A F F/E/ D/E/ | F3/2 E/ D |]\nw: His faith- ful fol- low'r I would * be, For by His hand * He * lead- eth me.\nw: His faith- ful fol- low'r I would * be, For by His hand * He * lead- eth me.\nw: His faith- ful fol- low'r I would * be, For by His hand * He * lead- eth me.\nw: His faith- ful fol- low'r I would * be, For by His hand * He * lead- eth me.",
+  "abc": "X:1\nT:He Leadeth Me\nT:HE LEADETH ME\nC:Music: William B. Bradbury, 1864 · Words: Joseph H. Gilmore, 1862\nS:Open Hymnal Project ABC (openhymnal.org; marked public domain), melody line with every stanza as printed there; their source: \"The Golden Censer\", 1864 Hymn 105. Ed. William B. Bradbury. Melody cross-checked against the hymnary.org score (hymnary.org/tune/he_leadeth_me_bradbury): 99% of pitches and 100% of note lengths agree.\nM:4/4\nL:1/4\nQ:1/4=100\nK:D\nA | F3/2 E/ D A | B G G B | A3/2 F/ F E/D/ | F F E\nw: He lead- eth me, O bless- èd thought! O words with heav'n- ly * com- fort fraught!\nw: Some- times mid scenes of deep- est gloom, Some- times where E- den's * bow- ers bloom,\nw: Lord, I would place my hand in Thine, Nor e- ver mur- mur * nor re- pine;\nw: And when my task on earth is done, When by Thy grace the * vic- t'ry's won,\nA | F3/2 E/ D A | B G d c/B/ | A F F/E/ D/E/ | F3/2 E/ D\nw: What- e'er I do, wher- e'er I be Still * 'tis God's hand * that * lead- eth me.\nw: By wa- ters still, ov'r troub- led sea, Still * 'tis His hand * that * lead- eth me.\nw: Con- tent, what- e- ver lot I see, Since * 'tis my God * that * lead- eth me.\nw: E'en death's cold wave I will not flee, Since * God through Jor- * dan * lead- eth me.\nA | A d c e | d c/B/ A B | A F F/E/ D/E/ | F F E\nw: He lead- eth me, He lead- eth * me, By His own hand * He * lead- eth me;\nw: He lead- eth me, He lead- eth * me, By His own hand * He * lead- eth me;\nw: He lead- eth me, He lead- eth * me, By His own hand * He * lead- eth me;\nw: He lead- eth me, He lead- eth * me, By His own hand * He * lead- eth me;\nA | A d c e | d c/B/ A B | A F F/E/ D/E/ | F3/2 E/ D |]\nw: His faith- ful fol- low'r I would * be, For by His hand * He * lead- eth me.\nw: His faith- ful fol- low'r I would * be, For by His hand * He * lead- eth me.\nw: His faith- ful fol- low'r I would * be, For by His hand * He * lead- eth me.\nw: His faith- ful fol- low'r I would * be, For by His hand * He * lead- eth me.",
   "parts": {
    "src": "Open Hymnal Project (openhymnal.org, public domain), SATB setting of “He Leadeth Me”",
-   "sig": "74-1jzeezm",
+   "sig": "74-fp600",
    "alto": "0:1:66 1:1.5:62 2:0.5:57 3:1:57 4:1:62 5:1:62 6:1:62 7:1:62 8:1:67 9:1.5:66 10:0.5:62 11:1:62 12:1:62 14:1:62 15:1:62 16:1:61 17:1:61 18:1.5:62 19:0.5:57 20:1:57 21:1:62 22:1:62 23:1:67 24:1:67 25:1:67 27:1:66 28:1:62 29:0.5:62 30:0.5:61 31:0.5:59 32:0.5:61 33:1.5:62 34:0.5:61 35:1:62 36:1:66 37:1:66 38:1:66 39:1:64 40:1:69 41:1:69 42:1:67 44:1:66 45:1:67 46:1:66 47:1:62 48:0.5:62 49:0.5:61 50:0.5:59 51:0.5:61 52:1:62 53:1:62 54:1:61 55:1:61 56:1:62 57:1:62 58:1:64 59:1:69 60:1:69 61:1:67 63:1:66 64:1:67 65:1:66 66:1:62 67:0.5:62 68:0.5:61 69:0.5:59 70:0.5:61 71:1.5:62 72:0.5:61 73:1:62",
    "tenor": "0:1:57 1:1.5:57 2:0.5:55 3:1:54 4:1:54 5:1:55 6:1:59 7:1:59 8:1:62 9:1.5:62 10:0.5:57 11:1:57 12:0.5:55 13:0.5:54 14:1:57 15:1:57 16:1:57 17:1:57 18:1.5:57 19:0.5:55 20:1:54 21:1:54 22:1:55 23:1:59 24:1:59 25:1:62 27:1:62 28:1:57 29:1:59 31:1:54 33:1.5:57 34:0.5:55 35:1:54 36:1:57 37:1:62 38:1:57 39:1:57 40:1:61 41:1:62 42:1:62 44:1:62 45:1:62 46:1:62 47:1:57 48:1:59 50:1:54 52:1:57 53:1:57 54:1:57 55:1:55 56:1:54 57:1:57 58:1:57 59:1:61 60:1:62 61:1:62 63:1:62 64:1:62 65:1:62 66:1:57 67:1:59 69:1:54 71:1.5:57 72:0.5:55 73:1:54",
    "bass": "0:1:50 1:1.5:50 2:0.5:50 3:1:50 4:1:50 5:1:55 6:1:55 7:1:55 8:1:55 9:1.5:50 10:0.5:50 11:1:50 12:1:50 14:1:45 15:1:45 16:1:45 17:1:45 18:1.5:50 19:0.5:50 20:1:50 21:1:50 22:1:55 23:1:55 24:1:55 25:1:55 27:1:50 28:1:50 29:1:47 31:1:47 33:1.5:45 34:0.5:45 35:1:50 36:1:50 37:1:50 38:1:54 39:1:57 40:1:55 41:1:54 42:1:55 44:1:50 45:1:50 46:1:50 47:1:50 48:1:47 50:1:47 52:1:45 53:1:45 54:1:45 55:1:45 56:1:50 57:1:54 58:1:57 59:1:55 60:1:54 61:1:55 63:1:50 64:1:50 65:1:50 66:1:50 67:1:47 69:1:47 71:1.5:45 72:0.5:45 73:1:50"
@@ -12666,7 +12678,7 @@ window.HYMN_SONGS = [
   // Sync offset control removed: always 0. Clear any saved offset from older installs.
   try { LS.set('syncMs', 0); } catch (e0) {}
   var syncS = 0;
-  var APP_VERSION = 'v43';
+  var APP_VERSION = 'v44';
   function syncSec() { return syncS; }
   function heardTime(perf) { return clock.heard(perf) - syncSec(); }
   // One clock for sound, cursor and highlight. A frame drawn in the rAF callback at perf reaches the screen at the next
