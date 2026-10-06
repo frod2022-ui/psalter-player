@@ -746,9 +746,9 @@ a.pill-btn{text-decoration:none;box-sizing:border-box}
     <div class="ctrl donate-block">
       <div class="cap"><span>Support this app</span></div>
       <button type="button" class="pill-btn wide-btn solid" id="donateBtn" title="Open Messages for donations, comments or requests">Donations, comments or requests</button>
-      <p class="hint donate-num">Donations, comments or requests: text <a id="donateNum" href="sms:3074090646&amp;body=I%27d%20like%20to%20support%20Psalm%20Singer%20/%20comment%20or%20request%3A">307-409-0646</a>.</p>
+      <p class="hint donate-num">Donations, comments or requests: text <a id="donateNum" href="sms:3074090646&amp;body=Donations%20%2A%20Comments%20%2A%20Requests">307-409-0646</a>.</p>
     </div>
-    <p class="app-ver" id="appVer">Version <b>v41</b></p>
+    <p class="app-ver" id="appVer">Version <b>v42</b></p>
     <p class="app-ver donate-foot"><button type="button" class="link-btn" id="donateLink">Donations, comments or requests</button></p>
   </div>
 </div>
@@ -12666,7 +12666,7 @@ window.HYMN_SONGS = [
   // Sync offset control removed: always 0. Clear any saved offset from older installs.
   try { LS.set('syncMs', 0); } catch (e0) {}
   var syncS = 0;
-  var APP_VERSION = 'v41';
+  var APP_VERSION = 'v42';
   function syncSec() { return syncS; }
   function heardTime(perf) { return clock.heard(perf) - syncSec(); }
   // One clock for sound, cursor and highlight. A frame drawn in the rAF callback at perf reaches the screen at the next
@@ -13216,7 +13216,7 @@ window.HYMN_SONGS = [
     $('settingsBtn').onclick = function () { openSheet('setSheet'); };
     $('creditsBtn').onclick = function () { openSheet('credSheet'); };
     (function () {
-      var SMS = 'sms:3074090646&body=' + encodeURIComponent("I'd like to support Psalm Singer / comment or request:");
+      var SMS = 'sms:3074090646&body=' + encodeURIComponent('Donations * Comments * Requests').replace(/\*/g, '%2A');
       function openDonate() {
         try { window.location.href = SMS; } catch (e) {}
         try { toast('Messages: 307-409-0646'); } catch (e2) {}
