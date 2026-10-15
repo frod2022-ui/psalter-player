@@ -450,6 +450,9 @@ a.pill-btn{text-decoration:none;box-sizing:border-box}
 .donate-wrap{position:relative;display:flex;flex:none}
 .donate-cap{position:absolute;top:calc(100% + 3px);left:50%;transform:translateX(-50%);display:block;font-size:10.5px;line-height:1;pointer-events:none;color:var(--muted);font-weight:600;letter-spacing:.01em;white-space:nowrap}
 .lbl-sub{display:none}
+#donateBtn2{white-space:nowrap}
+#donateBtn2 .coffee-ico{font-size:17px;line-height:1;margin-right:2px}
+@media (max-width:430px){.topbar #donateBtn2{padding:0 8px 0 7px;gap:4px;width:auto;border-radius:24px}.topbar #donateBtn2 .coffee-ico{font-size:18px;margin:0}.topbar #donateBtn2 .lbl{display:inline-block;white-space:normal;width:44px;font-size:11px;line-height:1.1;font-weight:700;text-align:left}}
 .donate-cap-set{margin:-6px 0 0;text-align:center;font-size:12px;line-height:1.2;color:var(--muted);font-weight:600}
 @media (orientation:landscape) and (max-height:500px){
   .donate-cap{display:none}
@@ -482,7 +485,7 @@ a.pill-btn{text-decoration:none;box-sizing:border-box}
     </div>
     <button class="pill-btn" id="installBtn" hidden aria-label="Install app"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0-4.5-4.5M12 15l4.5-4.5M5 21h14"/></svg><span class="lbl">Install</span></button>
     <button class="pill-btn solid" id="importBtn" title="Open a tune file (.abc, MIDI or MusicXML) or a backup (.json)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V9m0 0-4.5 4.5M12 9l4.5 4.5M5 3h14"/></svg><span class="lbl">Import</span></button>
-    <span class="donate-wrap"><button type="button" class="pill-btn solid" id="donateBtn2" title="Open Messages for donations, comments or requests"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5S4.5 15.2 4.5 9.8A4.3 4.3 0 0 1 12 7.1 4.3 4.3 0 0 1 19.5 9.8C19.5 15.2 12 20.5 12 20.5z"/></svg><span class="lbl">Donate<small class="lbl-sub">Apple Pay</small></span></button><small class="donate-cap">Apple Pay</small></span>
+    <span class="donate-wrap"><button type="button" class="pill-btn solid" id="donateBtn2" title="Buy me a coffee: opens Messages for donations, comments or requests"><span class="coffee-ico" aria-hidden="true">☕</span><span class="lbl">Buy me a coffee<small class="lbl-sub">Apple Pay</small></span></button><small class="donate-cap">Apple Pay</small></span>
     <input type="file" id="fileInput" accept=".abc,.txt,.mid,.midi,.xml,.musicxml,.mxl,.json,audio/midi,application/xml,text/xml,application/json" multiple hidden>
   </div>
 </header>
@@ -727,7 +730,7 @@ a.pill-btn{text-decoration:none;box-sizing:border-box}
       <p class="donate-cap-set">Apple Pay</p>
       <p class="hint donate-num">Donations, comments or requests: text <a id="donateNum" href="sms:3074090646&amp;body=Donations%20%2A%20Comments%20%2A%20Requests">307-409-0646</a>.</p>
     </div>
-    <p class="app-ver" id="appVer">Version <b>v51</b></p>
+    <p class="app-ver" id="appVer">Version <b>v52</b></p>
     <p class="app-ver timing-info" id="timingInfo" hidden></p>
     <p class="app-ver donate-foot"><button type="button" class="link-btn" id="donateLink">Donations, comments or requests</button></p>
   </div>
@@ -16029,7 +16032,7 @@ window.HYMN_SONGS = [
   // Sync offset control removed: always 0. Clear any saved offset from older installs.
   try { LS.set('syncMs', 0); } catch (e0) {}
   var syncS = 0;
-  var APP_VERSION = 'v51';
+  var APP_VERSION = 'v52';
   function syncSec() { return syncS; }
   function heardTime(perf) { return clock.heard(perf) - syncSec(); }
   // One clock for sound, cursor and highlight. A frame drawn in the rAF callback at perf reaches the screen at the next
