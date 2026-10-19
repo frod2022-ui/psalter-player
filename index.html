@@ -475,6 +475,18 @@ a.pill-btn{text-decoration:none;box-sizing:border-box}
 .lib-bubble{position:fixed;left:50%;top:42%;transform:translate(-50%,-50%);width:110px;height:110px;border-radius:28px;background:var(--accent);color:var(--accent-text);font-size:64px;font-weight:800;display:grid;place-items:center;opacity:0;pointer-events:none;transition:opacity .2s;z-index:80;box-shadow:0 10px 30px rgba(0,0,0,.25)}
 .lib-bubble.show{opacity:1}
 
+/* v53: no moving play line on the music; highlights + auto-scroll stay */
+#staff .playhead{display:none!important}
+/* v53: small coffee button, "Apple Pay" label above */
+.donate-wrap{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;flex:none;gap:1px}
+.donate-cap{position:static;transform:none;display:block;font-size:9.5px;line-height:1;pointer-events:none;color:var(--muted);font-weight:600;letter-spacing:.01em;white-space:nowrap}
+.topbar #donateBtn2,#donateBtn2{white-space:nowrap;font-size:12px;padding:0 9px;height:28px;min-height:28px;gap:3px;border-radius:14px;width:auto}
+#donateBtn2 .coffee-ico,.topbar #donateBtn2 .coffee-ico{font-size:13px;line-height:1;margin:0}
+.topbar #donateBtn2 .lbl{display:inline;width:auto;font-size:12px;line-height:1;white-space:nowrap;font-weight:700}
+@media (max-width:430px){.topbar #donateBtn2{font-size:10.5px;padding:0 7px;height:26px;min-height:26px}.topbar #donateBtn2 .lbl{font-size:10.5px}.topbar #donateBtn2 .coffee-ico{font-size:12px}}
+.donate-cap-set{margin:0 0 -4px;text-align:center;font-size:11px;line-height:1.2;color:var(--muted);font-weight:600}
+#donateBtn{align-self:center;font-size:13px;padding:0 14px;height:32px;min-height:32px;border-radius:16px;width:auto}
+@media (orientation:landscape) and (max-height:500px){.donate-cap{display:block}}
 </style>
 </head>
 <body>
@@ -486,8 +498,8 @@ a.pill-btn{text-decoration:none;box-sizing:border-box}
     </div>
     <button class="pill-btn" id="installBtn" hidden aria-label="Install app"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0-4.5-4.5M12 15l4.5-4.5M5 21h14"/></svg><span class="lbl">Install</span></button>
     <button class="pill-btn solid" id="importBtn" title="Open a tune file (.abc, MIDI or MusicXML) or a backup (.json)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V9m0 0-4.5 4.5M12 9l4.5 4.5M5 3h14"/></svg><span class="lbl">Import</span></button>
-    <span class="donate-wrap"><button type="button" class="pill-btn solid" id="donateBtn2" title="Buy me a coffee: opens Messages for donations, comments or requests"><span class="coffee-ico" aria-hidden="true">☕</span><span class="lbl">Buy me a coffee<small class="lbl-sub">Apple Pay</small></span></button><small class="donate-cap">Apple Pay</small></span>
-    <input type="file" id="fileInput" accept=".abc,.txt,.mid,.midi,.xml,.musicxml,.mxl,.json,audio/midi,application/xml,text/xml,application/json" multiple hidden>
+    <span class="donate-wrap"><small class="donate-cap">Apple Pay</small><button type="button" class="pill-btn solid" id="donateBtn2" title="Buy me a coffee: opens Messages for donations, comments or requests"><span class="coffee-ico" aria-hidden="true">☕</span><span class="lbl">Buy me a coffee</span></button></span>
+    <input type="file" id="fileInput" accept=".abc,.txt,.mid,.midi,.xml,.musicxml,.mxl,.kar,.json,audio/midi,application/xml,text/xml,application/json" multiple hidden>
   </div>
 </header>
 
@@ -727,11 +739,11 @@ a.pill-btn{text-decoration:none;box-sizing:border-box}
     <a class="pill-btn wide-btn" id="sharePageBtn" href="share.html" target="_blank" rel="noopener">Share Psalm Singer</a>
     <div class="ctrl donate-block">
       <div class="cap"><span>Support this app</span></div>
-      <button type="button" class="pill-btn wide-btn solid" id="donateBtn" title="Buy me a coffee: opens Messages for donations, comments or requests"><span aria-hidden="true">☕</span> Buy me a coffee</button>
       <p class="donate-cap-set">Apple Pay</p>
+      <button type="button" class="pill-btn solid" id="donateBtn" title="Buy me a coffee: opens Messages for donations, comments or requests"><span aria-hidden="true">☕</span> Buy me a coffee</button>
       <p class="hint donate-num">Donations, comments or requests: text <a id="donateNum" href="sms:3074090646&amp;body=Donations%20%2A%20Comments%20%2A%20Requests">307-409-0646</a>.</p>
     </div>
-    <p class="app-ver" id="appVer">Version <b>v52</b></p>
+    <p class="app-ver" id="appVer">Version <b>v53</b></p>
     <p class="app-ver timing-info" id="timingInfo" hidden></p>
     <p class="app-ver donate-foot"><button type="button" class="link-btn" id="donateLink">Donations, comments or requests</button></p>
   </div>
@@ -16033,7 +16045,7 @@ window.HYMN_SONGS = [
   // Sync offset control removed: always 0. Clear any saved offset from older installs.
   try { LS.set('syncMs', 0); } catch (e0) {}
   var syncS = 0;
-  var APP_VERSION = 'v52';
+  var APP_VERSION = 'v53';
   function syncSec() { return syncS; }
   function heardTime(perf) { return clock.heard(perf) - syncSec(); }
   // One clock for sound, cursor and highlight. A frame drawn in the rAF callback at perf reaches the screen at the next
@@ -16394,7 +16406,7 @@ window.HYMN_SONGS = [
   // Songs are kept in this browser's local storage only. A song whose id is already here is updated in place.
   function restoreJSON(t, fname) {
     var d; try { d = JSON.parse(t); } catch (e) { throw new Error('this file is not valid JSON'); }
-    var list = d && (Array.isArray(d.songs) ? d.songs : Array.isArray(d) ? d : null);
+    var list = d && (Array.isArray(d.songs) ? d.songs : Array.isArray(d) ? d : (typeof d.abc === 'string' ? [d] : null));
     if (!list) throw new Error('this is not a Psalm Singer backup or song collection');
     var res = { restored: true, added: 0, updated: 0, same: 0, skipped: 0, sections: {}, first: null, name: d.name || '' };
     var next = mySongs.slice();
@@ -16430,7 +16442,7 @@ window.HYMN_SONGS = [
       var name = f.name.replace(/\.[^.]+$/, '').replace(/[_-]+/g, ' ').trim();
       var ext = (f.name.match(/\.([^.]+)$/) || [])[1]; ext = (ext || '').toLowerCase();
       var p;
-      if (ext === 'mid' || ext === 'midi') p = readAsBuf(f).then(function (b) { return [C.midiToABC(b, name).abc]; });
+      if (ext === 'mid' || ext === 'midi' || ext === 'kar') p = readAsBuf(f).then(function (b) { return [C.midiToABC(b, name).abc]; });
       else if (ext === 'mxl') p = readAsBuf(f).then(unzipFirstXML).then(function (t) { return [C.musicXMLToABC(t)]; });
       else if (ext === 'xml' || ext === 'musicxml') p = readAsText(f).then(function (t) { return [C.musicXMLToABC(t)]; });
       else if (ext === 'json') p = readAsText(f).then(function (t) { return restoreJSON(t, f.name); });
@@ -16438,7 +16450,10 @@ window.HYMN_SONGS = [
         if (/^\s*\{/.test(t)) return restoreJSON(t, f.name);
         if (/<score-partwise|<score-timewise/.test(t)) return [C.musicXMLToABC(t)];
         var parts = t.split(/\n(?=X:)/).filter(function (x) { return /[A-Ga-g]/.test(x) && /K:/.test(x); });
-        if (!parts.length) parts = [t];
+        if (!parts.length) {
+          if (!/^\s*[A-Za-z]:/m.test(t)) throw new Error('this text has words but no music notes, so it cannot be played in 4 parts. Import it as ABC, MIDI or MusicXML.');
+          parts = [t];
+        }
         return parts.map(function (x) { return /^\s*X:/m.test(x) ? x.trim() : 'X:1\nT:' + name + '\n' + x.trim(); });
       });
       return p.then(function (abcs) {
