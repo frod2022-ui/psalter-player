@@ -51,7 +51,7 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent}
 .brand small{display:block;font-size:14px;color:var(--muted);font-weight:500;letter-spacing:0}
 .brand-blurb{display:block;font-size:12.5px;line-height:1.3;font-weight:500;max-width:54ch;white-space:normal;margin-top:3px;overflow:visible;text-overflow:unset}
 .brand-blurb .blurb-short{display:none}
-ul.dots{list-style:disc;margin:4px 0 6px;padding-left:1.3em}ul.dots li{margin:1px 0}ul.dots li::marker{color:var(--accent)}.brand-blurb ul.dots{margin:2px 0 0;padding-left:1.1em}
+ul.dots{list-style:disc;margin:4px 0 6px;padding-left:1.3em}ul.dots li{margin:1px 0}ul.dots li::marker{color:var(--accent);font-size:.65em}.brand-blurb ul.dots{margin:2px 0 0;padding-left:1.1em}
 .brand h1{white-space:normal}
 .brand h1 > .brand-blurb{/* title line stays one line via first text node; blurb wraps */}
 @media (min-width:701px){
@@ -748,7 +748,7 @@ a.pill-btn{text-decoration:none;box-sizing:border-box}
       <button type="button" class="pill-btn solid" id="donateBtn" title="Buy me a coffee: opens Messages for donations, comments or requests"><span aria-hidden="true">☕</span> Buy me a coffee</button>
       <p class="hint donate-num">Donations, comments or requests: text <a id="donateNum" href="sms:3074090646&amp;body=Donations%20%2A%20Comments%20%2A%20Requests">307-409-0646</a>.</p>
     </div>
-    <p class="app-ver" id="appVer">Version <b>v56</b></p>
+    <p class="app-ver" id="appVer">Version <b>v57</b></p>
     <p class="app-ver timing-info" id="timingInfo" hidden></p>
     <p class="app-ver donate-foot"><button type="button" class="link-btn" id="donateLink">Donations, comments or requests</button></p>
   </div>
@@ -16050,7 +16050,7 @@ window.HYMN_SONGS = [
   // Sync offset control removed: always 0. Clear any saved offset from older installs.
   try { LS.set('syncMs', 0); } catch (e0) {}
   var syncS = 0;
-  var APP_VERSION = 'v56';
+  var APP_VERSION = 'v57';
   function syncSec() { return syncS; }
   function heardTime(perf) { return clock.heard(perf) - syncSec(); }
   // One clock for sound, cursor and highlight. A frame drawn in the rAF callback at perf reaches the screen at the next
