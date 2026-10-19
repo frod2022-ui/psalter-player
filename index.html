@@ -475,8 +475,6 @@ a.pill-btn{text-decoration:none;box-sizing:border-box}
 .lib-bubble{position:fixed;left:50%;top:42%;transform:translate(-50%,-50%);width:110px;height:110px;border-radius:28px;background:var(--accent);color:var(--accent-text);font-size:64px;font-weight:800;display:grid;place-items:center;opacity:0;pointer-events:none;transition:opacity .2s;z-index:80;box-shadow:0 10px 30px rgba(0,0,0,.25)}
 .lib-bubble.show{opacity:1}
 
-/* v53: no moving play line on the music; highlights + auto-scroll stay */
-#staff .playhead{display:none!important}
 /* v53: small coffee button, "Apple Pay" label above */
 .donate-wrap{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;flex:none;gap:1px}
 .donate-cap{position:static;transform:none;display:block;font-size:9.5px;line-height:1;pointer-events:none;color:var(--muted);font-weight:600;letter-spacing:.01em;white-space:nowrap}
@@ -750,7 +748,7 @@ a.pill-btn{text-decoration:none;box-sizing:border-box}
       <button type="button" class="pill-btn solid" id="donateBtn" title="Buy me a coffee: opens Messages for donations, comments or requests"><span aria-hidden="true">☕</span> Buy me a coffee</button>
       <p class="hint donate-num">Donations, comments or requests: text <a id="donateNum" href="sms:3074090646&amp;body=Donations%20%2A%20Comments%20%2A%20Requests">307-409-0646</a>.</p>
     </div>
-    <p class="app-ver" id="appVer">Version <b>v55</b></p>
+    <p class="app-ver" id="appVer">Version <b>v56</b></p>
     <p class="app-ver timing-info" id="timingInfo" hidden></p>
     <p class="app-ver donate-foot"><button type="button" class="link-btn" id="donateLink">Donations, comments or requests</button></p>
   </div>
@@ -16052,7 +16050,7 @@ window.HYMN_SONGS = [
   // Sync offset control removed: always 0. Clear any saved offset from older installs.
   try { LS.set('syncMs', 0); } catch (e0) {}
   var syncS = 0;
-  var APP_VERSION = 'v55';
+  var APP_VERSION = 'v56';
   function syncSec() { return syncS; }
   function heardTime(perf) { return clock.heard(perf) - syncSec(); }
   // One clock for sound, cursor and highlight. A frame drawn in the rAF callback at perf reaches the screen at the next
