@@ -548,7 +548,8 @@ body{padding-bottom:16px!important;background:#fff}
 .topbar-in{max-width:none}
 .ez-ham{display:none;width:44px;height:44px;border:1px solid #c4c8ce;border-radius:10px;background:#fff;font-size:22px;line-height:1;color:#111;flex:none}
 .brand h1{display:flex!important;flex-direction:column;align-items:flex-start;font-size:22px!important;font-weight:800;line-height:1.15;text-shadow:none}
-.ez-tagline{margin:14px 0 2px;text-align:center;font-size:14px;color:#3d4148}
+.topbar-in{flex-wrap:wrap}
+.ez-tagline{flex:0 0 100%;order:99;margin:2px 0 0;text-align:center;font-size:13px;line-height:1.3;color:#3d4148;font-weight:500}
 .ez-sub{display:block;font-size:13px;font-weight:500;color:#3d4148;letter-spacing:0;margin-top:2px}
 .ez-spacer{flex:1}
 .brand img{width:40px!important;height:40px!important;border-radius:10px}
@@ -636,6 +637,7 @@ body{padding-bottom:16px!important;background:#fff}
     </div>
     <span class="ez-spacer"></span>
     <span class="donate-wrap"><small class="donate-cap">Apple Pay</small><button type="button" class="pill-btn solid" id="donateBtn2" title="Buy me a coffee: opens Messages for donations, comments or requests"><span class="coffee-ico" aria-hidden="true">☕</span><span class="lbl">Buy me a coffee</span></button></span>
+    <p class="ez-tagline">Learn to sing psalms and hymns a cappella.</p>
     <input type="file" id="fileInput" accept=".abc,.txt,.mid,.midi,.xml,.musicxml,.mxl,.kar,.json,audio/midi,application/xml,text/xml,application/json" multiple hidden>
   </div>
 </header>
@@ -690,7 +692,6 @@ body{padding-bottom:16px!important;background:#fff}
       <div class="staff-top"><span id="keyInfo"></span><button class="pill-btn pipe-mini" id="pipeBtn2" title="Sound the first note of the tune">♪ Give me the note</button><button class="pill-btn pipe-mini satb-mini" id="satbBtn2" aria-pressed="false" title="Four-part harmony: soprano, alto, tenor, bass">SATB</button></div>
       <div id="staff"></div>
       <p class="chord-note" id="chordNote" hidden></p>
-      <p class="ez-tagline">Learn to sing psalms and hymns a cappella.</p>
     </section>
 
 
