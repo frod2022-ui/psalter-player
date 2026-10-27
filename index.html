@@ -508,6 +508,39 @@ html,body{background:#fff;color:#111}
 .donate-cap{color:#333}
 #moreAppsLink{display:inline-block;color:#0b57d0!important;font-size:19px;font-weight:700;padding:8px 16px;border:2px solid #0b57d0;border-radius:999px;text-decoration:none}
 #libAZ,.lib-az,#libBubble{display:none!important}
+/* v69: EZ Score Player look (visual only) */
+:root,:root:root{--font:"Inter","Segoe UI",system-ui,-apple-system,sans-serif;
+  --bg:#ffffff; --bg2:#fafafa; --card:#ffffff; --card2:#f3f4f5; --text:#111111; --text2:#222; --muted:#3d4148;
+  --line:#d5d8dd; --accent:#1f7a5a; --accent-2:#2e9e76; --accent-soft:#e6f5ee; --accent-text:#ffffff;
+  --hl:#d4500f; --shadow:0 2px 10px rgba(0,0,0,.08); --shadow-lg:0 8px 30px rgba(0,0,0,.14); --r:14px; --r-sm:10px}
+.topbar{background:#fff;border-bottom:1px solid #d5d8dd;backdrop-filter:none;-webkit-backdrop-filter:none}
+.brand h1{font-weight:800;letter-spacing:-.01em}
+.brand small,.brand-blurb{color:#3d4148}
+.brand img{border-radius:10px;box-shadow:none}
+.card{border:1px solid #d5d8dd;box-shadow:0 2px 10px rgba(0,0,0,.06);border-radius:14px}
+.library{background:#fafafa}
+.lib-top{background:#fafafa}
+.library input[type=search],.library input{background:#fff;border:1px solid #d5d8dd;border-radius:10px}
+.lib-item{border-radius:8px;padding:10px 12px;min-height:0;border-bottom:1px solid #eceef0}
+.lib-item:hover{background:#eef5f1}
+.lib-item[aria-current="true"],.lib-item.active,.lib-item[aria-selected="true"]{background:#e6f5ee;box-shadow:inset 3px 0 0 #1f7a5a}
+.lib-item .num{display:none}
+.lib-item .t{font-weight:700;font-size:17px;color:#111}
+.lib-item .s{font-size:14px;color:#3d4148}
+.staff-card h2,#songTitle,section.card h2{font-family:Georgia,"Times New Roman",serif;font-weight:700;color:#000}
+.pill-btn{border:1px solid #c4c8ce;background:#fff;color:#111;border-radius:10px;box-shadow:none}
+.pill-btn.solid{background:#1f7a5a;color:#fff;border-color:#1f7a5a}
+.chip,.verses button{border:1px solid #c4c8ce;background:#fff;color:#111}
+.chip[aria-pressed="true"],.verses button[aria-pressed="true"],.verses button.on{background:#1f7a5a;color:#fff;border-color:#1f7a5a}
+.transport{background:#fafafa;border-top:1px solid #d5d8dd}
+.tbtn{border:1px solid #c4c8ce;background:#fff;border-radius:10px;color:#111}
+.tbtn:hover{background:#eef5f1}
+.tbtn[aria-pressed="true"]{background:#e6f5ee;border-color:#1f7a5a;color:#1f7a5a}
+.play{background:#1f7a5a!important;color:#fff!important;border-radius:50%!important;box-shadow:0 2px 8px rgba(31,122,90,.35)!important}
+input[type=range]{accent-color:#1f7a5a}
+#donateBtn2,.topbar #donateBtn2{background:#ffdd00;color:#111;border:1px solid #c9ad00;box-shadow:0 1px 4px rgba(0,0,0,.15)}
+.donate-cap{color:#3d4148}
+a{color:#1f7a5a}
 </style>
 </head>
 <body>
@@ -764,7 +797,7 @@ html,body{background:#fff;color:#111}
       <button type="button" class="pill-btn solid" id="donateBtn" title="Buy me a coffee: opens Messages for donations, comments or requests"><span aria-hidden="true">☕</span> Buy me a coffee</button>
       <p class="hint donate-num">Donations, comments or requests: text <a id="donateNum" href="sms:3074090646&amp;body=Donations%20%2A%20Comments%20%2A%20Requests">307-409-0646</a>.</p>
     </div>
-    <p class="app-ver" id="appVer">Version <b>v68</b></p>
+    <p class="app-ver" id="appVer">Version <b>v69</b></p>
     <p class="app-ver timing-info" id="timingInfo" hidden></p>
     <p class="app-ver donate-foot"><button type="button" class="link-btn" id="donateLink">Donations, comments or requests</button></p>
   </div>
@@ -16066,7 +16099,7 @@ window.HYMN_SONGS = [
   // Sync offset control removed: always 0. Clear any saved offset from older installs.
   try { LS.set('syncMs', 0); } catch (e0) {}
   var syncS = 0;
-  var APP_VERSION = 'v68';
+  var APP_VERSION = 'v69';
   function syncSec() { return syncS; }
   function heardTime(perf) { return clock.heard(perf) - syncSec(); }
   // One clock for sound, cursor and highlight. A frame drawn in the rAF callback at perf reaches the screen at the next
