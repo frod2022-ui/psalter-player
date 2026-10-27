@@ -542,17 +542,98 @@ input[type=range]{accent-color:#1f7a5a}
 .donate-cap{color:#3d4148}
 a{color:#1f7a5a}
 @media (max-width:430px){.topbar .pill-btn:not(#donateBtn2){padding:0 10px;min-width:0}.brand h1{font-size:18px!important}.brand{gap:8px}.brand img{width:38px;height:38px}}
+/* v72: EZ Score Player layout clone (visual/layout only) */
+body{padding-bottom:16px!important;background:#fff}
+.topbar{padding:10px 18px}
+.topbar-in{max-width:none}
+.ez-ham{display:none;width:44px;height:44px;border:1px solid #c4c8ce;border-radius:10px;background:#fff;font-size:22px;line-height:1;color:#111;flex:none}
+.brand h1{display:flex!important;flex-direction:column;align-items:flex-start;font-size:22px!important;font-weight:800;line-height:1.15;text-shadow:none}
+.ez-sub{display:block;font-size:13px;font-weight:500;color:#3d4148;letter-spacing:0;margin-top:2px}
+.ez-spacer{flex:1}
+.brand img{width:40px!important;height:40px!important;border-radius:10px}
+.wrap{max-width:none;padding:0;gap:0;grid-template-columns:1fr}
+@media (min-width:1000px){
+  .wrap{grid-template-columns:300px minmax(0,1fr);align-items:stretch}
+  .library{position:sticky!important;top:var(--ez-top,66px);height:calc(100vh - var(--ez-top,66px));max-height:none!important;border-radius:0!important;border:0!important;border-right:1px solid #d5d8dd!important;box-shadow:none!important;padding:12px!important}
+}
+@media (max-width:999px){.ez-ham{display:grid;place-items:center}}
+.library{background:#fafafa!important}
+.lib-top{background:#fafafa!important;padding-bottom:6px}
+.lib-search{width:100%;height:44px;border:1px solid #c4c8ce!important;border-radius:10px!important;background:#fff!important;font-size:16px;padding:0 12px}
+.ez-upl-row{display:flex;gap:8px;margin:10px 0 4px}
+.ez-upl-row .pill-btn{min-height:44px}
+.ez-upload{flex:1;border:2px dashed #1f7a5a!important;background:#fff!important;color:#111!important;font-weight:700;border-radius:10px!important}
+.ez-upl-row #installBtn{border-radius:10px}
+.lib-count{font-size:13px;color:#3d4148}
+.lib-item{border-bottom:0!important;padding:9px 10px!important}
+.lib-item .t{font-size:16px!important;font-weight:700}
+.lib-item .s{font-size:13.5px!important}
+.main{padding:16px 20px;gap:14px}
+@media (max-width:999px){.main{padding:10px}}
+/* toolbar */
+.transport.ez-bar{position:static!important;inset:auto!important;z-index:auto;padding:10px 12px!important;background:#f7f8f9!important;border:1px solid #d5d8dd!important;border-radius:14px;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
+.ez-bar .tr-in{max-width:none;gap:6px}
+.ez-tools{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.ez-tools .play{width:54px!important;height:54px!important;min-height:0;flex:none}
+.ez-tools .play svg{width:24px;height:24px}
+.ez-tools .tbtn{width:auto;min-width:44px;height:44px;min-height:44px;flex-direction:row;gap:6px;padding:0 10px;border:1px solid #c4c8ce;border-radius:10px;background:#fff}
+.ez-tools .tbtn svg{width:20px;height:20px}
+.ez-tools #stopBtn .tl,.ez-tools #loopBtn .tl{display:none}
+.ez-tools #moreBtn .tl{font-size:14px;font-weight:600}
+.ez-tempo{display:flex;align-items:center;gap:8px;min-width:0}
+.ez-lbl{font-size:14px;color:#111}
+.ez-tempo .stepper{background:transparent!important;padding:0!important;min-height:0;gap:6px;display:flex;align-items:center;border:0}
+.ez-tempo .stepper button{width:32px;height:32px;min-height:0;border:1px solid #c4c8ce;border-radius:8px;background:#fff;font-size:18px;padding:0}
+.ez-tempo #tempo{width:130px;flex:none!important;accent-color:#1f7a5a}
+#tempoOut{font-size:14px;font-weight:700;white-space:nowrap;color:#111}
+.ez-prog{flex:1;min-width:100px;display:flex;align-items:center}
+.ez-bar .progress{flex:1;height:6px!important;margin:0!important;border-radius:3px;background:#e3e6ea}
+.ez-bar .progress i{background:#1f7a5a}
+.ez-tools .chip-btn{min-height:44px;height:44px;border:1px solid #c4c8ce;border-radius:999px;background:#fff;padding:0 12px;flex-direction:row;gap:5px;align-items:center;display:inline-flex}
+.ez-tools .chip-btn small{font-size:12px}.ez-tools .chip-btn b{font-size:14px}
+#ezMetro[aria-pressed="true"]{background:#e6f5ee;border-color:#1f7a5a;color:#1f7a5a}
+.ez-status{display:flex;align-items:center;gap:14px;flex-wrap:wrap;min-height:0}
+.ez-status .now{display:block!important;font-size:14px;color:#3d4148;flex:1;min-width:0}
+.ez-status .now b{font-size:14px;color:#111;margin-right:8px}
+.ez-status .loadrow{flex:1;min-width:200px}
+/* score card */
+.main>section.card{border-radius:14px 14px 0 0;border-bottom:0;box-shadow:none;margin:0}
+.main>section.staff-card{border-radius:0 0 14px 14px;border-top:0;margin-top:-14px}
+.song-head{justify-content:center;text-align:center}
+#chooseBtn{display:none!important}
+#songTitle{font-family:Georgia,"Times New Roman",serif!important;font-size:1.7em!important;font-weight:700;color:#000;text-align:center;margin:0 0 6px}
+.song-sub,.song-credit{text-align:center}
+.verses{justify-content:center}
+@media (max-width:999px){
+  .ez-tempo{order:10;flex:1 1 100%}
+  .ez-tempo #tempo{flex:1!important;width:auto}
+  .ez-prog{order:11;flex:1 1 100%}
+  .ez-tools{gap:8px}
+  #songTitle{font-size:1.45em!important}
+  .topbar{padding:8px 10px}
+}
+.ez-about ul{margin:4px 0 0}
+.topbar{padding-top:16px!important}
+@media (min-width:1000px){.ez-prog{min-width:60px}.ez-tempo #tempo{width:110px}.ez-tools{gap:8px}.ez-tools .chip-btn small{display:none}}
+.ez-tempo .stepper{width:auto!important;flex:none}
+@media (max-width:600px){.brand img{display:none!important}.brand{gap:6px}.brand h1{font-size:20px!important}.ez-sub{font-size:12px;line-height:1.25}.topbar-in{gap:8px}}
+@media (min-width:1000px){.ez-tempo #tempoDown,.ez-tempo #tempoUp{display:none}.ez-prog{min-width:40px}.ez-tools .chip-btn small{display:inline}}
+.topbar .donate-wrap{margin-top:12px}
+@media (max-width:999px){.ez-tempo .stepper{flex:1!important;min-width:0}.ez-tempo #tempo{min-width:0!important;width:0!important;flex:1 1 auto!important}}
+@media (min-width:1000px){.ez-tempo #tempo{width:120px!important;flex:none!important}.ez-tempo .stepper{width:auto!important;flex:none!important}.ez-prog{flex:1 1 30px;min-width:30px}.ez-tools{flex-wrap:nowrap}}
+.ez-tempo #tempo{height:6px;background:#d5d8dd;border-radius:3px}
+@media (min-width:1000px){.ez-tools #soundChip small{display:none}}
 </style>
 </head>
 <body>
 <header class="topbar">
   <div class="topbar-in">
+    <button type="button" class="ez-ham" id="ezHam" aria-label="Songs" title="Songs">☰</button>
     <div class="brand">
       <img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20512%20512%22%3E%20%3Cdefs%3E%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23c8782a%22%2F%3E%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%236b3410%22%2F%3E%20%3C%2FlinearGradient%3E%20%3ClinearGradient%20id%3D%22wood%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23fff7ec%22%2F%3E%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23f3dcc0%22%2F%3E%20%3C%2FlinearGradient%3E%20%3C%2Fdefs%3E%20%3Crect%20width%3D%22512%22%20height%3D%22512%22%20rx%3D%22112%22%20fill%3D%22url(%23bg)%22%2F%3E%20%3Cpath%20d%3D%22M256%2092%20L392%20384%20Q396%20404%20376%20404%20L136%20404%20Q116%20404%20120%20384%20Z%22%20fill%3D%22none%22%20stroke%3D%22url(%23wood)%22%20stroke-width%3D%2226%22%20stroke-linejoin%3D%22round%22%2F%3E%20%3Cg%20stroke%3D%22%23fff3e3%22%20stroke-width%3D%227%22%20stroke-linecap%3D%22round%22%20opacity%3D%22.92%22%3E%20%3Cline%20x1%3D%22256%22%20y1%3D%22150%22%20x2%3D%22256%22%20y2%3D%22384%22%2F%3E%20%3Cline%20x1%3D%22221%22%20y1%3D%22210%22%20x2%3D%22221%22%20y2%3D%22384%22%2F%3E%20%3Cline%20x1%3D%22291%22%20y1%3D%22210%22%20x2%3D%22291%22%20y2%3D%22384%22%2F%3E%20%3Cline%20x1%3D%22186%22%20y1%3D%22282%22%20x2%3D%22186%22%20y2%3D%22384%22%2F%3E%20%3Cline%20x1%3D%22326%22%20y1%3D%22282%22%20x2%3D%22326%22%20y2%3D%22384%22%2F%3E%20%3C%2Fg%3E%20%3Ccircle%20cx%3D%22256%22%20cy%3D%22304%22%20r%3D%2234%22%20fill%3D%22%236b3410%22%20stroke%3D%22%23fff3e3%22%20stroke-width%3D%228%22%2F%3E%20%3C%2Fsvg%3E" alt="">
-      <h1>Psalm Singer<small class="brand-blurb"><span class="blurb-full"><ul class="dots"><li>Learn to sing psalms and hymns a cappella.</li><li>Follow the notes and words on four-part music, lock to a steady metronome.</li><li>Practice the melody in soprano, alto, tenor, or bass.</li></ul></span><span class="blurb-short">Learn to sing psalms &amp; hymns a cappella</span></small></h1>
+      <h1>Psalm Singer<span class="ez-sub">Learn to sing psalms and hymns a cappella</span></h1>
     </div>
-    <button class="pill-btn" id="installBtn" hidden aria-label="Install app"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0-4.5-4.5M12 15l4.5-4.5M5 21h14"/></svg><span class="lbl">Install</span></button>
-    <button class="pill-btn solid" id="importBtn" title="Open a tune file (.abc, MIDI or MusicXML) or a backup (.json)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V9m0 0-4.5 4.5M12 9l4.5 4.5M5 3h14"/></svg><span class="lbl">Import</span></button>
+    <span class="ez-spacer"></span>
     <span class="donate-wrap"><small class="donate-cap">Apple Pay</small><button type="button" class="pill-btn solid" id="donateBtn2" title="Buy me a coffee: opens Messages for donations, comments or requests"><span class="coffee-ico" aria-hidden="true">☕</span><span class="lbl">Buy me a coffee</span></button></span>
     <input type="file" id="fileInput" accept=".abc,.txt,.mid,.midi,.xml,.musicxml,.mxl,.kar,.json,audio/midi,application/xml,text/xml,application/json" multiple hidden>
   </div>
@@ -565,6 +646,7 @@ a{color:#1f7a5a}
       <div class="lib-close"><h2>Choose a song</h2><button class="pill-btn" id="libClose">Done</button></div>
       <label class="sr" for="libSearch">Search songs</label>
       <input class="lib-search" id="libSearch" type="search" placeholder="Search titles, words or tunes" autocomplete="off">
+      <div class="ez-upl-row"><button class="pill-btn ez-upload" id="importBtn" title="Open a tune file (.abc, MIDI or MusicXML) or a backup (.json)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V9m0 0-4.5 4.5M12 9l4.5 4.5M5 3h14"/></svg><span class="lbl">Import</span></button><button class="pill-btn" id="installBtn" hidden aria-label="Install app"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0-4.5-4.5M12 15l4.5-4.5M5 21h14"/></svg><span class="lbl">Install</span></button></div>
       <button type="button" class="lib-pp" id="libPP" hidden></button>
       <div class="lib-count" id="libCount" aria-live="polite"></div>
     </div>
@@ -573,6 +655,24 @@ a{color:#1f7a5a}
   </nav>
 
   <main class="main">
+<div class="transport ez-bar" id="transport">
+  <div class="tr-in">
+    <div class="ez-tools">
+      <button class="play" id="playBtn" aria-label="Play"><svg id="playIco" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg></button>
+      <button class="tbtn" id="stopBtn" aria-label="Restart: stop and go back to the start" title="Restart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1"/><path d="M3.5 3.5v5h5"/></svg><span class="tl">Restart</span></button>
+      <button class="tbtn" id="loopBtn" aria-pressed="false" aria-label="Repeat the song" title="Repeat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 2l3 3-3 3"/><path d="M4 11V9a4 4 0 0 1 4-4h12"/><path d="M7 22l-3-3 3-3"/><path d="M20 13v2a4 4 0 0 1-4 4H4"/></svg><span class="tl">Repeat</span></button>
+      <button type="button" class="tbtn ez-ico" id="ezMetro" aria-pressed="false" title="Metronome" aria-label="Metronome"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6l4 18H5z"/><path d="M12 15l5-8"/><path d="M7 17h10"/></svg></button>
+      <div class="ez-tempo"><span class="ez-lbl">Tempo</span><div class="stepper"><button id="tempoDown" aria-label="Slower">−</button><input type="range" id="tempo" min="40" max="180" step="1" value="90" aria-label="Speed in beats per minute" style="flex:1;min-width:0"><button id="tempoUp" aria-label="Faster">+</button></div><output id="tempoOut"></output></div>
+      <div class="ez-prog"><div class="progress" id="progress" title="Position in the tune"><i id="progressBar"></i></div></div>
+      <button type="button" class="tbtn ez-ico" id="ezFull" title="Full screen" aria-label="Full screen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+      <button class="chip-btn" id="soundChip" aria-haspopup="dialog" title="Sound"><small>Sound</small><b id="soundChipVal">Piano</b></button>
+      <button class="chip-btn" id="keyChip" aria-haspopup="dialog" title="Key and voice range"><small>Key</small><b id="keyChipVal">G</b></button>
+      <button class="tbtn" id="moreBtn" aria-haspopup="dialog" aria-expanded="false" aria-label="Controls: sound, key, parts and practice" title="Controls"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2.2"/><circle cx="10" cy="17" r="2.2"/></svg><span class="tl">Controls</span></button>
+    </div>
+    <div class="ez-status"><div class="now" id="nowPlaying"><b id="nowTitle"></b><span id="nowState">Ready</span><span id="beatCount" class="beat-count" aria-live="off" hidden></span></div><div class="loadrow" id="loadRow" hidden role="status" aria-live="polite"><span id="loadTxt">Loading sounds…</span><div class="lbar" role="progressbar" aria-label="Loading instrument sounds" aria-valuemin="0" aria-valuemax="100" id="loadBar"><i id="loadFill"></i></div></div><button class="tbtn" hidden id="tempoBtn" aria-haspopup="dialog" aria-label="Tempo" title="Tempo"><span class="tv" id="tempoBadge">90</span><span class="tl">Tempo</span></button></div>
+</div>
+</div>
+
     <section class="card" aria-live="polite">
       <div class="song-head">
         <div style="min-width:0;flex:1">
@@ -595,27 +695,6 @@ a{color:#1f7a5a}
   </main>
 </div>
 
-<div class="transport" id="transport">
-  <div class="tr-in">
-    <div class="loadrow" id="loadRow" hidden role="status" aria-live="polite"><span id="loadTxt">Loading sounds…</span><div class="lbar" role="progressbar" aria-label="Loading instrument sounds" aria-valuemin="0" aria-valuemax="100" id="loadBar"><i id="loadFill"></i></div></div>
-    <div class="progress" id="progress" title="Position in the tune"><i id="progressBar"></i></div>
-    <div class="tr-main">
-      <div class="now" id="nowPlaying"><b id="nowTitle"></b><span id="nowState">Ready</span><span id="beatCount" class="beat-count" aria-live="off" hidden></span></div>
-      <div class="tr-center">
-        <button class="tbtn" id="stopBtn" aria-label="Restart: stop and go back to the start" title="Restart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1"/><path d="M3.5 3.5v5h5"/></svg><span class="tl">Restart</span></button>
-        <button class="tbtn" id="loopBtn" aria-pressed="false" aria-label="Repeat the song" title="Repeat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 2l3 3-3 3"/><path d="M4 11V9a4 4 0 0 1 4-4h12"/><path d="M7 22l-3-3 3-3"/><path d="M20 13v2a4 4 0 0 1-4 4H4"/></svg><span class="tl">Repeat</span></button>
-        <button class="play" id="playBtn" aria-label="Play"><svg id="playIco" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg></button>
-        <button class="tbtn" id="tempoBtn" aria-haspopup="dialog" aria-label="Tempo" title="Tempo"><span class="tv" id="tempoBadge">90</span><span class="tl">Tempo</span></button>
-        <button class="tbtn" id="moreBtn" aria-haspopup="dialog" aria-expanded="false" aria-label="Controls: sound, key, parts and practice" title="Controls"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2.2"/><circle cx="10" cy="17" r="2.2"/></svg><span class="tl">Controls</span></button>
-      </div>
-      <div class="tr-side">
-        <button class="chip-btn" id="keyChip" aria-haspopup="dialog" title="Key and voice range"><small>Key</small><b id="keyChipVal">G</b></button>
-        <button class="chip-btn" id="soundChip" aria-haspopup="dialog" title="Sound"><small>Sound</small><b id="soundChipVal">Piano</b></button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <div class="modal" id="ctlSheet" role="dialog" aria-modal="true" aria-labelledby="ctlTitle" hidden>
   <div class="sheet card ctl-sheet">
     <div class="sheet-head"><h2 id="ctlTitle">Controls</h2><button class="pill-btn" data-close>Done</button></div>
@@ -625,8 +704,8 @@ a{color:#1f7a5a}
     <div class="tr-ctrls">
       <div class="pane" id="pane-play" role="tabpanel" aria-labelledby="tab-play" data-pane="play">
       <div class="ctrl">
-        <div class="cap"><span>Tempo</span><output id="tempoOut"></output></div>
-        <div class="stepper"><button id="tempoDown" aria-label="Slower">−</button><input type="range" id="tempo" min="40" max="180" step="1" value="90" aria-label="Speed in beats per minute" style="flex:1;min-width:0"><button id="tempoUp" aria-label="Faster">+</button></div>
+        <div class="cap"><span>Tempo</span></div>
+        
       </div>
       <div class="ctrl">
         <div class="cap"><span>Practice speed</span></div>
@@ -798,7 +877,8 @@ a{color:#1f7a5a}
       <button type="button" class="pill-btn solid" id="donateBtn" title="Buy me a coffee: opens Messages for donations, comments or requests"><span aria-hidden="true">☕</span> Buy me a coffee</button>
       <p class="hint donate-num">Donations, comments or requests: text <a id="donateNum" href="sms:3074090646&amp;body=Donations%20%2A%20Comments%20%2A%20Requests">307-409-0646</a>.</p>
     </div>
-    <p class="app-ver" id="appVer">Version <b>v71</b></p>
+    <div class="ctrl ez-about"><div class="cap"><span>About</span></div><ul class="dots"><li>Learn to sing psalms and hymns a cappella.</li><li>Follow the notes and words on four-part music, lock to a steady metronome.</li><li>Practice the melody in soprano, alto, tenor, or bass.</li></ul></div>
+    <p class="app-ver" id="appVer">Version <b>v72</b></p>
     <p class="app-ver timing-info" id="timingInfo" hidden></p>
     <p class="app-ver donate-foot"><button type="button" class="link-btn" id="donateLink">Donations, comments or requests</button></p>
   </div>
@@ -16100,7 +16180,7 @@ window.HYMN_SONGS = [
   // Sync offset control removed: always 0. Clear any saved offset from older installs.
   try { LS.set('syncMs', 0); } catch (e0) {}
   var syncS = 0;
-  var APP_VERSION = 'v71';
+  var APP_VERSION = 'v72';
   function syncSec() { return syncS; }
   function heardTime(perf) { return clock.heard(perf) - syncSec(); }
   // One clock for sound, cursor and highlight. A frame drawn in the rAF callback at perf reaches the screen at the next
@@ -16786,6 +16866,14 @@ window.HYMN_SONGS = [
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
 
+</script>
+<script id="ez-layout">
+(function(){function $(i){return document.getElementById(i)}
+$('ezHam').onclick=function(){$('chooseBtn').click()};
+var m=$('metroOn'),b=$('ezMetro');function sy(){b.setAttribute('aria-pressed',m.checked?'true':'false')}
+b.onclick=function(){m.click();sy()};m.addEventListener('change',sy);setTimeout(sy,500);
+$('ezFull').onclick=function(){var d=document;if(d.fullscreenElement)d.exitFullscreen();else if(d.documentElement.requestFullscreen)d.documentElement.requestFullscreen().catch(function(){})};
+})();
 </script>
 </body>
 </html>
