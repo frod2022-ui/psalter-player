@@ -508,6 +508,14 @@ html,body{background:#fff;color:#111}
 .donate-cap{color:#333}
 #moreAppsLink{display:inline-block;color:#0b57d0!important;font-size:19px;font-weight:700;padding:8px 16px;border:2px solid #0b57d0;border-radius:999px;text-decoration:none}
 #libAZ,.lib-az,#libBubble{display:none!important}
+/* v67: white + neon blue (visual only) */
+:root,:root:root{--accent:#0066ff; --accent-2:#00a2ff; --accent-soft:rgba(0,102,255,.10)}
+.pill-btn.solid,.verse button[aria-pressed="true"],.play-btn,#playBtn,.lib-item .num,.seg button[aria-pressed="true"]{box-shadow:0 0 10px rgba(0,140,255,.55),0 0 22px rgba(0,140,255,.25)}
+.pill-btn.solid:not(#donateBtn2):not(#donateBtn){background:#0066ff;color:#fff;border-color:#00a2ff}
+.card{border-color:rgba(0,120,255,.35)!important;box-shadow:0 0 0 1px rgba(0,140,255,.10),0 0 14px rgba(0,140,255,.18)}
+h1{text-shadow:0 0 10px rgba(0,140,255,.30)}
+.topbar ul,.topbar li,.topbar p,.topbar small{text-shadow:none!important}
+#donateBtn2,.topbar #donateBtn2{box-shadow:0 0 12px rgba(245,158,11,.55)}
 </style>
 </head>
 <body>
@@ -764,7 +772,7 @@ html,body{background:#fff;color:#111}
       <button type="button" class="pill-btn solid" id="donateBtn" title="Buy me a coffee: opens Messages for donations, comments or requests"><span aria-hidden="true">☕</span> Buy me a coffee</button>
       <p class="hint donate-num">Donations, comments or requests: text <a id="donateNum" href="sms:3074090646&amp;body=Donations%20%2A%20Comments%20%2A%20Requests">307-409-0646</a>.</p>
     </div>
-    <p class="app-ver" id="appVer">Version <b>v66</b></p>
+    <p class="app-ver" id="appVer">Version <b>v67</b></p>
     <p class="app-ver timing-info" id="timingInfo" hidden></p>
     <p class="app-ver donate-foot"><button type="button" class="link-btn" id="donateLink">Donations, comments or requests</button></p>
   </div>
@@ -16066,7 +16074,7 @@ window.HYMN_SONGS = [
   // Sync offset control removed: always 0. Clear any saved offset from older installs.
   try { LS.set('syncMs', 0); } catch (e0) {}
   var syncS = 0;
-  var APP_VERSION = 'v66';
+  var APP_VERSION = 'v67';
   function syncSec() { return syncS; }
   function heardTime(perf) { return clock.heard(perf) - syncSec(); }
   // One clock for sound, cursor and highlight. A frame drawn in the rAF callback at perf reaches the screen at the next
