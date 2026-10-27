@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Psalm Singer</title>
 <meta name="description" content="Psalm Singer helps you learn to sing psalms and hymns a cappella. Follow the notes and words on four-part music, lock to a steady metronome, and practice the melody in soprano, alto, tenor, or bass.">
-<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#3a2114" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#3a2114" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -492,6 +492,29 @@ a.pill-btn{text-decoration:none;box-sizing:border-box}
 .topbar #donateBtn2{height:48px;min-height:48px;font-size:17px;padding:0 18px;border-radius:999px;gap:6px}
 .topbar #donateBtn2 .lbl{font-size:17px}.topbar #donateBtn2 .coffee-ico{font-size:17px}
 @media (max-width:430px){.topbar #donateBtn2{height:48px;min-height:48px;font-size:17px;padding:0 12px;border-radius:999px;gap:4px}.topbar #donateBtn2 .lbl{font-size:13px;white-space:normal;line-height:1.05;width:auto;max-width:60px}.topbar #donateBtn2 .coffee-ico{font-size:17px}}
+/* v62: neon espresso theme (visual only) */
+:root,:root:root{color-scheme:dark;
+  --bg:#1e110a; --bg2:#2a170d; --card:rgba(58,33,20,.62); --card2:rgba(80,46,26,.55); --text:#fff4e6; --text2:#f3e3cf; --muted:#d9b996;
+  --line:rgba(200,121,58,.38); --accent:#2de2e6; --accent-2:#ffb347; --accent-soft:rgba(45,226,230,.16); --accent-text:#0b1a1b;
+  --ink:#fff4e6; --staff:#d9a878; --hl:#ffb347; --hl-soft:rgba(255,179,71,.28); --danger:#ff6b5e; --ok:#6be38a;
+  --shadow:0 0 0 1px rgba(200,121,58,.35),0 8px 30px rgba(0,0,0,.55),0 0 18px rgba(200,121,58,.12);
+  --shadow-lg:0 0 0 1px rgba(200,121,58,.4),0 12px 44px rgba(0,0,0,.7),0 0 26px rgba(45,226,230,.12)}
+html{background:#120a06}
+body{background:linear-gradient(180deg,#3a2114 0%,#120a06 100%) fixed;background-color:#120a06;min-height:100vh}
+.topbar{background:rgba(30,17,10,.7);border-bottom:1px solid rgba(200,121,58,.45);box-shadow:0 0 18px rgba(200,121,58,.18)}
+.card{background:var(--card);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(200,121,58,.4)}
+.lib-top{background:rgba(42,23,13,.92)}
+.sheet.card{background:rgba(36,20,12,.94)}
+h1,h2,.brand h1{text-shadow:0 0 10px rgba(255,179,71,.55),0 0 22px rgba(200,121,58,.35)}
+h2{color:#ffcf8a}
+.pill-btn{box-shadow:0 0 0 1px rgba(45,226,230,.35),0 0 12px rgba(45,226,230,.18)}
+.pill-btn.solid{background:#2de2e6;color:#0b1a1b;box-shadow:0 0 14px rgba(45,226,230,.55)}
+#donateBtn2,.topbar #donateBtn2{background:linear-gradient(180deg,#ffb347,#c8793a);color:#1a0d05;box-shadow:0 0 14px rgba(255,179,71,.6)}
+.donate-cap{color:#ffcf8a;text-shadow:0 0 6px rgba(255,179,71,.5)}
+.seg button[aria-pressed="true"],.tabs button[aria-selected="true"]{background:rgba(45,226,230,.18);color:#2de2e6;box-shadow:0 0 10px rgba(45,226,230,.35)}
+input,select,textarea{background:rgba(18,10,6,.7);border-color:rgba(200,121,58,.5);color:#fff4e6}
+input:focus,select:focus,textarea:focus{box-shadow:0 0 0 2px #2de2e6,0 0 14px rgba(45,226,230,.4)}
+#moreAppsLink{display:inline-block;color:#2de2e6!important;font-size:19px;padding:8px 16px;border:1px solid rgba(45,226,230,.6);border-radius:999px;text-decoration:none;text-shadow:0 0 8px rgba(45,226,230,.6);box-shadow:0 0 12px rgba(45,226,230,.3)}
 </style>
 </head>
 <body>
@@ -749,7 +772,7 @@ a.pill-btn{text-decoration:none;box-sizing:border-box}
       <p class="hint donate-num">Donations, comments or requests: text <a id="donateNum" href="sms:3074090646&amp;body=Donations%20%2A%20Comments%20%2A%20Requests">307-409-0646</a>.</p>
     </div>
     <p class="app-ver more-apps"><a href="https://the-link.frodriguez-ezplay.workers.dev" target="_blank" rel="noopener" id="moreAppsLink" style="color:var(--accent);font-weight:600">More Apps ›</a></p>
-    <p class="app-ver" id="appVer">Version <b>v61</b></p>
+    <p class="app-ver" id="appVer">Version <b>v62</b></p>
     <p class="app-ver timing-info" id="timingInfo" hidden></p>
     <p class="app-ver donate-foot"><button type="button" class="link-btn" id="donateLink">Donations, comments or requests</button></p>
   </div>
@@ -16051,7 +16074,7 @@ window.HYMN_SONGS = [
   // Sync offset control removed: always 0. Clear any saved offset from older installs.
   try { LS.set('syncMs', 0); } catch (e0) {}
   var syncS = 0;
-  var APP_VERSION = 'v61';
+  var APP_VERSION = 'v62';
   function syncSec() { return syncS; }
   function heardTime(perf) { return clock.heard(perf) - syncSec(); }
   // One clock for sound, cursor and highlight. A frame drawn in the rAF callback at perf reaches the screen at the next
