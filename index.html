@@ -634,7 +634,9 @@ body{padding-bottom:16px!important;background:#fff}
 #donateBtn2 .lbl,.topbar #donateBtn2 .lbl{font-size:14px!important;font-weight:700!important;white-space:nowrap!important;width:auto!important;max-width:none!important;display:inline!important;color:#fff!important}
 #donateBtn2 .coffee-ico,.topbar #donateBtn2 .coffee-ico{font-size:14px!important;margin:0!important}
 .donate-cap,.donate-cap-set{font-size:12px!important;color:#666!important;font-weight:600!important}
-@media (max-width:430px){#donateBtn2,.topbar #donateBtn2{padding:0 10px!important;font-size:12px!important;gap:4px!important}#donateBtn2 .lbl,.topbar #donateBtn2 .lbl{font-size:12px!important}#donateBtn2 .coffee-ico,.topbar #donateBtn2 .coffee-ico{font-size:12px!important}}
+.topbar .donate-wrap{gap:4px!important}
+.topbar .donate-cap{bottom:calc(100% + 4px)!important}
+@media (max-width:600px){.brand h1{font-size:18px!important}.topbar-in{gap:6px}.ez-ham{width:42px;flex:none}}
 /* v77 pastel green (colors only) */
 :root,:root:root{--bg:#EAF6EC;--bg2:#EAF6EC;--card:#F7FCF8;--card2:#F7FCF8;--text:#14331F;--text2:#14331F;--muted:#3f6650;--line:#BFE3C6;--accent:#8FD19E;--accent-2:#7BC58C;--accent-soft:#dff1e3;--accent-text:#14331F;--ink:#14331F;--shadow:0 1px 3px rgba(20,51,31,.08),0 4px 14px rgba(20,51,31,.06)}
 html,body{background:#EAF6EC!important;color:#14331F!important}
@@ -915,7 +917,7 @@ a{color:#14331F}
       <p class="hint donate-num">Donations, comments or requests: text <a id="donateNum" href="sms:3074090646&amp;body=Donations%20%2A%20Comments%20%2A%20Requests">307-409-0646</a>.</p>
     </div>
     <div class="ctrl ez-about"><div class="cap"><span>About</span></div><ul class="dots"><li>Learn to sing psalms and hymns a cappella.</li><li>Follow the notes and words on four-part music, lock to a steady metronome.</li><li>Practice the melody in soprano, alto, tenor, or bass.</li></ul></div>
-    <p class="app-ver" id="appVer">Version <b>v77</b></p>
+    <p class="app-ver" id="appVer">Version <b>v78</b></p>
     <p class="app-ver timing-info" id="timingInfo" hidden></p>
     <p class="app-ver donate-foot"><button type="button" class="link-btn" id="donateLink">Donations, comments or requests</button></p>
   </div>
@@ -16217,7 +16219,7 @@ window.HYMN_SONGS = [
   // Sync offset control removed: always 0. Clear any saved offset from older installs.
   try { LS.set('syncMs', 0); } catch (e0) {}
   var syncS = 0;
-  var APP_VERSION = 'v77';
+  var APP_VERSION = 'v78';
   function syncSec() { return syncS; }
   function heardTime(perf) { return clock.heard(perf) - syncSec(); }
   // One clock for sound, cursor and highlight. A frame drawn in the rAF callback at perf reaches the screen at the next
