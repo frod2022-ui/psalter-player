@@ -671,6 +671,17 @@ body{padding-left:env(safe-area-inset-left)!important;padding-right:env(safe-are
 .topbar{padding-top:calc(env(safe-area-inset-top) + 8px)!important}
 .topbar::before{content:"";position:absolute;top:0;left:0;right:0;height:env(safe-area-inset-top);background:#1f7a5a;pointer-events:none}
 }
+
+/* v81 coffee button animation */
+#donateBtn2,#donateBtn{position:relative;overflow:hidden;animation:cfPulse 2.6s ease-in-out infinite;will-change:transform,box-shadow}
+.cfi{position:relative;display:inline-block;animation:cfBob 2s ease-in-out infinite}
+.cfi .stm{position:absolute;left:50%;bottom:70%;width:3px;height:7px;margin-left:-1.5px;border-radius:3px;background:rgba(255,255,255,.85);filter:blur(.6px);opacity:0;pointer-events:none;animation:cfSteam 2.4s ease-out infinite}
+.cfi .stm.s2{margin-left:-5px;animation-delay:.8s}.cfi .stm.s3{margin-left:2px;animation-delay:1.6s}
+@keyframes cfPulse{0%,100%{transform:scale(1);box-shadow:0 1px 4px rgba(0,0,0,.2),0 0 0 0 rgba(255,180,90,.55)}50%{transform:scale(1.05);box-shadow:0 1px 4px rgba(0,0,0,.2),0 0 14px 4px rgba(255,180,90,.45)}}
+@keyframes cfBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes cfSteam{0%{opacity:0;transform:translateY(2px) scaleX(1)}30%{opacity:.8}100%{opacity:0;transform:translateY(-9px) scaleX(1.6)}}
+@media (max-width:480px){.cfi .stm{width:2px;height:5px}@keyframes cfSteam{0%{opacity:0;transform:translateY(1px)}30%{opacity:.8}100%{opacity:0;transform:translateY(-6px) scaleX(1.5)}}}
+@media (prefers-reduced-motion:reduce){#donateBtn2,#donateBtn,.cfi,.cfi .stm{animation:none!important}.cfi .stm{display:none}}
 </style>
 </head>
 <body>
@@ -682,7 +693,7 @@ body{padding-left:env(safe-area-inset-left)!important;padding-right:env(safe-are
       <h1>Psalm Singer</h1>
     </div>
     <span class="ez-spacer"></span>
-    <span class="donate-wrap"><small class="donate-cap">Apple Pay</small><button type="button" class="pill-btn solid" id="donateBtn2" title="Buy me a coffee: opens Messages for donations, comments or requests"><span class="coffee-ico" aria-hidden="true">☕</span><span class="lbl">Buy me a coffee</span></button></span>
+    <span class="donate-wrap"><small class="donate-cap">Apple Pay</small><button type="button" class="pill-btn solid" id="donateBtn2" title="Buy me a coffee: opens Messages for donations, comments or requests"><span class="coffee-ico cfi" aria-hidden="true">☕<span class="stm"></span><span class="stm s2"></span><span class="stm s3"></span></span><span class="lbl">Buy me a coffee</span></button></span>
     <p class="ez-tagline">Learn to sing psalms and hymns a cappella.</p>
     <input type="file" id="fileInput" accept=".abc,.txt,.mid,.midi,.xml,.musicxml,.mxl,.kar,.json,audio/midi,application/xml,text/xml,application/json" multiple hidden>
   </div>
@@ -923,11 +934,11 @@ body{padding-left:env(safe-area-inset-left)!important;padding-right:env(safe-are
     <div class="ctrl donate-block">
       <div class="cap"><span>Support this app</span></div>
       <p class="donate-cap-set">Apple Pay</p>
-      <button type="button" class="pill-btn solid" id="donateBtn" title="Buy me a coffee: opens Messages for donations, comments or requests"><span aria-hidden="true">☕</span> Buy me a coffee</button>
+      <button type="button" class="pill-btn solid" id="donateBtn" title="Buy me a coffee: opens Messages for donations, comments or requests"><span class="cfi" aria-hidden="true">☕<span class="stm"></span><span class="stm s2"></span><span class="stm s3"></span></span> Buy me a coffee</button>
       <p class="hint donate-num">Donations, comments or requests: text <a id="donateNum" href="sms:3074090646&amp;body=Donations%20%2A%20Comments%20%2A%20Requests">307-409-0646</a>.</p>
     </div>
     <div class="ctrl ez-about"><div class="cap"><span>About</span></div><ul class="dots"><li>Learn to sing psalms and hymns a cappella.</li><li>Follow the notes and words on four-part music, lock to a steady metronome.</li><li>Practice the melody in soprano, alto, tenor, or bass.</li></ul></div>
-    <p class="app-ver" id="appVer">Version <b>v80</b></p>
+    <p class="app-ver" id="appVer">Version <b>v81</b></p>
     <p class="app-ver timing-info" id="timingInfo" hidden></p>
     <p class="app-ver donate-foot"><button type="button" class="link-btn" id="donateLink">Donations, comments or requests</button></p>
   </div>
@@ -16229,7 +16240,7 @@ window.HYMN_SONGS = [
   // Sync offset control removed: always 0. Clear any saved offset from older installs.
   try { LS.set('syncMs', 0); } catch (e0) {}
   var syncS = 0;
-  var APP_VERSION = 'v80';
+  var APP_VERSION = 'v81';
   function syncSec() { return syncS; }
   function heardTime(perf) { return clock.heard(perf) - syncSec(); }
   // One clock for sound, cursor and highlight. A frame drawn in the rAF callback at perf reaches the screen at the next
