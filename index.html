@@ -2,11 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob: data:; connect-src 'self' blob: data:; font-src 'self' data:; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Psalm Singer</title>
 <meta name="description" content="Psalm Singer helps you learn to sing psalms and hymns a cappella. Follow the notes and words on four-part music, lock to a steady metronome, and practice the melody in soprano, alto, tenor, or bass.">
-<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F7FCF8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#F7FCF8" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -633,6 +635,30 @@ body{padding-bottom:16px!important;background:#fff}
 #donateBtn2 .coffee-ico,.topbar #donateBtn2 .coffee-ico{font-size:14px!important;margin:0!important}
 .donate-cap,.donate-cap-set{font-size:12px!important;color:#666!important;font-weight:600!important}
 @media (max-width:430px){#donateBtn2,.topbar #donateBtn2{padding:0 10px!important;font-size:12px!important;gap:4px!important}#donateBtn2 .lbl,.topbar #donateBtn2 .lbl{font-size:12px!important}#donateBtn2 .coffee-ico,.topbar #donateBtn2 .coffee-ico{font-size:12px!important}}
+/* v77 pastel green (colors only) */
+:root,:root:root{--bg:#EAF6EC;--bg2:#EAF6EC;--card:#F7FCF8;--card2:#F7FCF8;--text:#14331F;--text2:#14331F;--muted:#3f6650;--line:#BFE3C6;--accent:#8FD19E;--accent-2:#7BC58C;--accent-soft:#dff1e3;--accent-text:#14331F;--ink:#14331F;--shadow:0 1px 3px rgba(20,51,31,.08),0 4px 14px rgba(20,51,31,.06)}
+html,body{background:#EAF6EC!important;color:#14331F!important}
+.topbar{background:#F7FCF8!important;border-bottom:1px solid #BFE3C6!important}
+.card,.lib-top,.library,.sheet{background:#F7FCF8!important;border-color:#BFE3C6!important}
+.card{border-radius:16px!important}
+.library,.lib-top{background:#F1FAF3!important}
+.ez-bar,.ez-tools,.toolbar{background:#F7FCF8!important;border-color:#BFE3C6!important}
+.pill-btn,.tbtn,.chip,.lib-search{border-color:#BFE3C6!important;color:#14331F!important}
+.pill-btn.solid:not(#donateBtn2):not(#donateBtn),.verses button[aria-pressed="true"],.verses button.on,.chip[aria-pressed="true"]{background:#8FD19E!important;color:#14331F!important;border-color:#7BC58C!important}
+.pill-btn.solid:not(#donateBtn2):not(#donateBtn):hover{background:#7BC58C!important}
+.play{background:#8FD19E!important;color:#14331F!important;box-shadow:0 2px 8px rgba(20,51,31,.2)!important}
+.tbtn[aria-pressed="true"],#ezMetro[aria-pressed="true"]{background:#8FD19E!important;border-color:#7BC58C!important;color:#14331F!important}
+.lib-item[aria-current="true"],.lib-item.active,.lib-item[aria-selected="true"]{background:#dff1e3!important;box-shadow:inset 3px 0 0 #8FD19E!important}
+.ez-upload{border-color:#8FD19E!important;background:#F7FCF8!important;color:#14331F!important}
+.ez-bar .progress i{background:#8FD19E!important}
+input[type=range],.ez-tempo #tempo{accent-color:#8FD19E}
+a{color:#14331F}
+.donate-cap,.donate-cap-set{color:#3f6650!important}
+.ez-tagline,.ez-sub{color:#14331F!important}
+.song-sub,.lib-letter,.lib-item .num,.credits a,.donate-num a,#sharePageBtn,.stepper button,.seg button[aria-pressed="true"],.tabs button[aria-selected="true"],.mix-name[aria-pressed="true"] b,.tbtn[aria-pressed="true"] .tl,.tbtn[aria-expanded="true"],.tbtn[aria-expanded="true"] .tl{color:#1f6b3e!important}
+.chord,.part-label{fill:#1f6b3e!important}
+.part-staff .head:not(.hollow),.part-staff.overlay .head:not(.hollow){fill:#1f6b3e!important}
+.part-staff .stem,.part-staff .flag{stroke:#1f6b3e!important;fill:#1f6b3e!important}
 </style>
 </head>
 <body>
@@ -881,7 +907,7 @@ body{padding-bottom:16px!important;background:#fff}
       <div class="stepper" style="padding:0 14px"><input type="range" id="reverb" min="0" max="100" step="1" value="35" aria-label="Reverb amount"></div>
     </div>
     <button class="pill-btn wide-btn" id="creditsBtn" aria-haspopup="dialog">Credits &amp; licenses</button>
-    <a class="pill-btn wide-btn" id="sharePageBtn" href="share.html" target="_blank" rel="noopener">Share Psalm Singer</a>
+    <a class="pill-btn wide-btn" id="sharePageBtn" href="share.html" target="_blank" rel="noopener noreferrer">Share Psalm Singer</a>
     <div class="ctrl donate-block">
       <div class="cap"><span>Support this app</span></div>
       <p class="donate-cap-set">Apple Pay</p>
@@ -889,7 +915,7 @@ body{padding-bottom:16px!important;background:#fff}
       <p class="hint donate-num">Donations, comments or requests: text <a id="donateNum" href="sms:3074090646&amp;body=Donations%20%2A%20Comments%20%2A%20Requests">307-409-0646</a>.</p>
     </div>
     <div class="ctrl ez-about"><div class="cap"><span>About</span></div><ul class="dots"><li>Learn to sing psalms and hymns a cappella.</li><li>Follow the notes and words on four-part music, lock to a steady metronome.</li><li>Practice the melody in soprano, alto, tenor, or bass.</li></ul></div>
-    <p class="app-ver" id="appVer">Version <b>v76</b></p>
+    <p class="app-ver" id="appVer">Version <b>v77</b></p>
     <p class="app-ver timing-info" id="timingInfo" hidden></p>
     <p class="app-ver donate-foot"><button type="button" class="link-btn" id="donateLink">Donations, comments or requests</button></p>
   </div>
@@ -16191,7 +16217,7 @@ window.HYMN_SONGS = [
   // Sync offset control removed: always 0. Clear any saved offset from older installs.
   try { LS.set('syncMs', 0); } catch (e0) {}
   var syncS = 0;
-  var APP_VERSION = 'v76';
+  var APP_VERSION = 'v77';
   function syncSec() { return syncS; }
   function heardTime(perf) { return clock.heard(perf) - syncSec(); }
   // One clock for sound, cursor and highlight. A frame drawn in the rAF callback at perf reaches the screen at the next
