@@ -627,6 +627,12 @@ body{padding-bottom:16px!important;background:#fff}
 @media (min-width:1000px){.ez-tempo #tempo{width:120px!important;flex:none!important}.ez-tempo .stepper{width:auto!important;flex:none!important}.ez-prog{flex:1 1 30px;min-width:30px}.ez-tools{flex-wrap:nowrap}}
 .ez-tempo #tempo{height:6px;background:#d5d8dd;border-radius:3px}
 @media (min-width:1000px){.ez-tools #soundChip small{display:none}}
+/* v75 brown coffee pill */
+#donateBtn2,.topbar #donateBtn2,#donateBtn{background:#8b4513!important;color:#fff!important;border:1px solid #5c2e0a!important;box-shadow:0 2px 6px rgba(0,0,0,.2)!important;height:38px!important;min-height:38px!important;padding:0 14px!important;border-radius:999px!important;font-size:14px!important;font-weight:700!important;gap:6px!important;width:auto!important;white-space:nowrap!important}
+#donateBtn2 .lbl,.topbar #donateBtn2 .lbl{font-size:14px!important;font-weight:700!important;white-space:nowrap!important;width:auto!important;max-width:none!important;display:inline!important;color:#fff!important}
+#donateBtn2 .coffee-ico,.topbar #donateBtn2 .coffee-ico{font-size:14px!important;margin:0!important}
+.donate-cap,.donate-cap-set{font-size:12px!important;color:#666!important;font-weight:600!important}
+@media (max-width:430px){#donateBtn2,.topbar #donateBtn2{padding:0 10px!important;font-size:12px!important;gap:4px!important}#donateBtn2 .lbl,.topbar #donateBtn2 .lbl{font-size:12px!important}#donateBtn2 .coffee-ico,.topbar #donateBtn2 .coffee-ico{font-size:12px!important}}
 </style>
 </head>
 <body>
@@ -883,7 +889,7 @@ body{padding-bottom:16px!important;background:#fff}
       <p class="hint donate-num">Donations, comments or requests: text <a id="donateNum" href="sms:3074090646&amp;body=Donations%20%2A%20Comments%20%2A%20Requests">307-409-0646</a>.</p>
     </div>
     <div class="ctrl ez-about"><div class="cap"><span>About</span></div><ul class="dots"><li>Learn to sing psalms and hymns a cappella.</li><li>Follow the notes and words on four-part music, lock to a steady metronome.</li><li>Practice the melody in soprano, alto, tenor, or bass.</li></ul></div>
-    <p class="app-ver" id="appVer">Version <b>v74</b></p>
+    <p class="app-ver" id="appVer">Version <b>v75</b></p>
     <p class="app-ver timing-info" id="timingInfo" hidden></p>
     <p class="app-ver donate-foot"><button type="button" class="link-btn" id="donateLink">Donations, comments or requests</button></p>
   </div>
@@ -16185,7 +16191,7 @@ window.HYMN_SONGS = [
   // Sync offset control removed: always 0. Clear any saved offset from older installs.
   try { LS.set('syncMs', 0); } catch (e0) {}
   var syncS = 0;
-  var APP_VERSION = 'v74';
+  var APP_VERSION = 'v75';
   function syncSec() { return syncS; }
   function heardTime(perf) { return clock.heard(perf) - syncSec(); }
   // One clock for sound, cursor and highlight. A frame drawn in the rAF callback at perf reaches the screen at the next
