@@ -682,6 +682,14 @@ body{padding-left:env(safe-area-inset-left)!important;padding-right:env(safe-are
 @keyframes cfSteam{0%{opacity:0;transform:translateY(2px) scaleX(1)}30%{opacity:.8}100%{opacity:0;transform:translateY(-9px) scaleX(1.6)}}
 @media (max-width:480px){.cfi .stm{width:2px;height:5px}@keyframes cfSteam{0%{opacity:0;transform:translateY(1px)}30%{opacity:.8}100%{opacity:0;transform:translateY(-6px) scaleX(1.5)}}}
 @media (prefers-reduced-motion:reduce){#donateBtn2,#donateBtn,.cfi,.cfi .stm{animation:none!important}.cfi .stm{display:none}}
+
+/* v82 match EZ Score Player controls and header */
+.topbar{background:#EAF6EC!important;box-shadow:none!important}
+.ez-ham,.tbtn,.chip-btn,.stepper button{background:#8FD19E!important;border:1px solid #7BC58C!important;color:#14331F!important;box-shadow:none!important}
+.ez-ham,.tbtn{border-radius:10px!important}
+.ez-ham:hover,.tbtn:hover,.chip-btn:hover,.stepper button:hover{background:#7BC58C!important}
+.tbtn[aria-pressed="true"],.tbtn[aria-expanded="true"],.chip-btn[aria-expanded="true"]{background:#7BC58C!important;box-shadow:inset 0 0 0 2px #14331F!important}
+.ez-upload{background:#8FD19E!important;border:2px dashed #7BC58C!important;color:#14331F!important}.ez-upload:hover{background:#7BC58C!important}
 </style>
 </head>
 <body>
@@ -938,7 +946,7 @@ body{padding-left:env(safe-area-inset-left)!important;padding-right:env(safe-are
       <p class="hint donate-num">Donations, comments or requests: text <a id="donateNum" href="sms:3074090646&amp;body=Donations%20%2A%20Comments%20%2A%20Requests">307-409-0646</a>.</p>
     </div>
     <div class="ctrl ez-about"><div class="cap"><span>About</span></div><ul class="dots"><li>Learn to sing psalms and hymns a cappella.</li><li>Follow the notes and words on four-part music, lock to a steady metronome.</li><li>Practice the melody in soprano, alto, tenor, or bass.</li></ul></div>
-    <p class="app-ver" id="appVer">Version <b>v81</b></p>
+    <p class="app-ver" id="appVer">Version <b>v82</b></p>
     <p class="app-ver timing-info" id="timingInfo" hidden></p>
     <p class="app-ver donate-foot"><button type="button" class="link-btn" id="donateLink">Donations, comments or requests</button></p>
   </div>
@@ -16240,7 +16248,7 @@ window.HYMN_SONGS = [
   // Sync offset control removed: always 0. Clear any saved offset from older installs.
   try { LS.set('syncMs', 0); } catch (e0) {}
   var syncS = 0;
-  var APP_VERSION = 'v81';
+  var APP_VERSION = 'v82';
   function syncSec() { return syncS; }
   function heardTime(perf) { return clock.heard(perf) - syncSec(); }
   // One clock for sound, cursor and highlight. A frame drawn in the rAF callback at perf reaches the screen at the next
