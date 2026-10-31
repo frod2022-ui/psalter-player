@@ -11,7 +11,7 @@
 <meta name="theme-color" content="#F7FCF8" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Psalm Singer">
 <meta name="application-name" content="Psalm Singer">
 <link rel="manifest" href="manifest.webmanifest">
@@ -663,6 +663,14 @@ a{color:#14331F}
 .part-staff .stem,.part-staff .flag{stroke:#1f6b3e!important;fill:#1f6b3e!important}
 @media (max-width:480px){#donateBtn2,.topbar #donateBtn2{height:30px!important;min-height:30px!important;padding:0 10px!important;font-size:12px!important;gap:4px!important}#donateBtn2 .lbl,.topbar #donateBtn2 .lbl{font-size:12px!important}#donateBtn2 .coffee-ico,.topbar #donateBtn2 .coffee-ico{font-size:12px!important}.topbar .donate-wrap{gap:3px!important}.topbar .donate-cap{font-size:10px!important;bottom:calc(100% + 3px)!important}.brand h1{font-size:19px!important}}
 @media (max-width:340px){.brand h1{font-size:16px!important}.ez-ham{width:38px!important}.topbar-in{gap:4px!important}.topbar #donateBtn2{padding:0 8px!important}}
+
+/* v80 full-screen standalone */
+html,body{min-height:100vh;min-height:100dvh}
+body{padding-left:env(safe-area-inset-left)!important;padding-right:env(safe-area-inset-right)!important;padding-bottom:calc(16px + env(safe-area-inset-bottom))!important}
+@media (display-mode: fullscreen),(display-mode: standalone){
+.topbar{padding-top:calc(env(safe-area-inset-top) + 8px)!important}
+.topbar::before{content:"";position:absolute;top:0;left:0;right:0;height:env(safe-area-inset-top);background:#1f7a5a;pointer-events:none}
+}
 </style>
 </head>
 <body>
@@ -919,7 +927,7 @@ a{color:#14331F}
       <p class="hint donate-num">Donations, comments or requests: text <a id="donateNum" href="sms:3074090646&amp;body=Donations%20%2A%20Comments%20%2A%20Requests">307-409-0646</a>.</p>
     </div>
     <div class="ctrl ez-about"><div class="cap"><span>About</span></div><ul class="dots"><li>Learn to sing psalms and hymns a cappella.</li><li>Follow the notes and words on four-part music, lock to a steady metronome.</li><li>Practice the melody in soprano, alto, tenor, or bass.</li></ul></div>
-    <p class="app-ver" id="appVer">Version <b>v79</b></p>
+    <p class="app-ver" id="appVer">Version <b>v80</b></p>
     <p class="app-ver timing-info" id="timingInfo" hidden></p>
     <p class="app-ver donate-foot"><button type="button" class="link-btn" id="donateLink">Donations, comments or requests</button></p>
   </div>
@@ -16221,7 +16229,7 @@ window.HYMN_SONGS = [
   // Sync offset control removed: always 0. Clear any saved offset from older installs.
   try { LS.set('syncMs', 0); } catch (e0) {}
   var syncS = 0;
-  var APP_VERSION = 'v79';
+  var APP_VERSION = 'v80';
   function syncSec() { return syncS; }
   function heardTime(perf) { return clock.heard(perf) - syncSec(); }
   // One clock for sound, cursor and highlight. A frame drawn in the rAF callback at perf reaches the screen at the next

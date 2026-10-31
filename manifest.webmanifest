@@ -2,15 +2,35 @@
   "name": "Psalm Singer",
   "short_name": "Psalm Singer",
   "description": "Psalm Singer helps you learn to sing psalms and hymns a cappella. Follow the notes and words on four-part music, lock to a steady metronome, and practice the melody in soprano, alto, tenor, or bass.",
-  "start_url": "./index.html",
-  "scope": "./",
-  "display": "standalone",
+  "start_url": "/",
+  "scope": "/",
+  "display": "fullscreen",
   "orientation": "any",
-  "background_color": "#f2f2f7",
-  "theme_color": "#8a4b16",
+  "background_color": "#EAF6EC",
+  "theme_color": "#1f7a5a",
   "icons": [
-    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
-    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
-    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "id": "/",
+  "display_override": [
+    "fullscreen",
+    "standalone"
   ]
 }
