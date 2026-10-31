@@ -661,6 +661,8 @@ a{color:#14331F}
 .chord,.part-label{fill:#1f6b3e!important}
 .part-staff .head:not(.hollow),.part-staff.overlay .head:not(.hollow){fill:#1f6b3e!important}
 .part-staff .stem,.part-staff .flag{stroke:#1f6b3e!important;fill:#1f6b3e!important}
+@media (max-width:480px){#donateBtn2,.topbar #donateBtn2{height:30px!important;min-height:30px!important;padding:0 10px!important;font-size:12px!important;gap:4px!important}#donateBtn2 .lbl,.topbar #donateBtn2 .lbl{font-size:12px!important}#donateBtn2 .coffee-ico,.topbar #donateBtn2 .coffee-ico{font-size:12px!important}.topbar .donate-wrap{gap:3px!important}.topbar .donate-cap{font-size:10px!important;bottom:calc(100% + 3px)!important}.brand h1{font-size:19px!important}}
+@media (max-width:340px){.brand h1{font-size:16px!important}.ez-ham{width:38px!important}.topbar-in{gap:4px!important}.topbar #donateBtn2{padding:0 8px!important}}
 </style>
 </head>
 <body>
@@ -917,7 +919,7 @@ a{color:#14331F}
       <p class="hint donate-num">Donations, comments or requests: text <a id="donateNum" href="sms:3074090646&amp;body=Donations%20%2A%20Comments%20%2A%20Requests">307-409-0646</a>.</p>
     </div>
     <div class="ctrl ez-about"><div class="cap"><span>About</span></div><ul class="dots"><li>Learn to sing psalms and hymns a cappella.</li><li>Follow the notes and words on four-part music, lock to a steady metronome.</li><li>Practice the melody in soprano, alto, tenor, or bass.</li></ul></div>
-    <p class="app-ver" id="appVer">Version <b>v78</b></p>
+    <p class="app-ver" id="appVer">Version <b>v79</b></p>
     <p class="app-ver timing-info" id="timingInfo" hidden></p>
     <p class="app-ver donate-foot"><button type="button" class="link-btn" id="donateLink">Donations, comments or requests</button></p>
   </div>
@@ -16219,7 +16221,7 @@ window.HYMN_SONGS = [
   // Sync offset control removed: always 0. Clear any saved offset from older installs.
   try { LS.set('syncMs', 0); } catch (e0) {}
   var syncS = 0;
-  var APP_VERSION = 'v78';
+  var APP_VERSION = 'v79';
   function syncSec() { return syncS; }
   function heardTime(perf) { return clock.heard(perf) - syncSec(); }
   // One clock for sound, cursor and highlight. A frame drawn in the rAF callback at perf reaches the screen at the next
