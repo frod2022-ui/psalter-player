@@ -695,6 +695,16 @@ body{padding-left:env(safe-area-inset-left)!important;padding-right:env(safe-are
 #donateBtn2,#donateBtn,.cfi,.cfi .stm{animation:none!important;transform:none!important;will-change:auto!important}
 .cfi .stm{display:none!important}
 #donateBtn2,#donateBtn{box-shadow:0 1px 4px rgba(0,0,0,.2)!important}
+
+/* v84 coffee button final spec: pill fixed, only steam animates */
+#donateBtn2,#donateBtn{overflow:visible!important;animation:none!important;transition:none!important;transform:none!important;box-shadow:0 1px 4px rgba(0,0,0,.2)!important;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif!important;font-size:14px!important;line-height:1!important;font-weight:700!important;letter-spacing:0!important;gap:6px!important;height:38px!important;min-height:38px!important;padding:0 14px!important;border-radius:999px!important;background:#8b4513!important;color:#fff!important;border:1px solid #5c2e0a!important}
+#donateBtn2 .lbl{font-size:14px!important;line-height:1!important;font-weight:700!important}
+.cfi,#donateBtn2 .coffee-ico,#donateBtn2 .cfi{animation:none!important;transform:none!important;position:relative!important;display:inline-block!important;font-size:14px!important;line-height:1!important;margin:0!important}
+.cfi .stm{display:block!important;position:absolute;left:50%;bottom:70%;width:3px;height:7px;margin-left:-1.5px;border-radius:3px;background:rgba(255,255,255,.85);filter:blur(.6px);opacity:0;pointer-events:none;animation:cfSteam 2.4s ease-out infinite!important}
+.cfi .stm.s2{margin-left:-5px;animation-delay:.8s!important}.cfi .stm.s3{margin-left:2px;animation-delay:1.6s!important}
+.donate-cap,.donate-cap-set{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif!important;font-size:12px!important;line-height:1!important;font-weight:600!important;color:#666!important}
+@media (max-width:480px){#donateBtn2,#donateBtn{height:30px!important;min-height:30px!important;padding:0 10px!important;font-size:12px!important}#donateBtn2 .lbl{font-size:12px!important}.cfi,#donateBtn2 .coffee-ico,#donateBtn2 .cfi{font-size:12px!important}.cfi .stm{width:2px;height:5px}.donate-cap,.topbar .donate-cap{font-size:10px!important}.topbar .donate-wrap{gap:3px!important}}
+@media (prefers-reduced-motion:reduce){.cfi .stm{animation:none!important;display:none!important}}
 </style>
 </head>
 <body>
@@ -951,7 +961,7 @@ body{padding-left:env(safe-area-inset-left)!important;padding-right:env(safe-are
       <p class="hint donate-num">Donations, comments or requests: text <a id="donateNum" href="sms:3074090646&amp;body=Donations%20%2A%20Comments%20%2A%20Requests">307-409-0646</a>.</p>
     </div>
     <div class="ctrl ez-about"><div class="cap"><span>About</span></div><ul class="dots"><li>Learn to sing psalms and hymns a cappella.</li><li>Follow the notes and words on four-part music, lock to a steady metronome.</li><li>Practice the melody in soprano, alto, tenor, or bass.</li></ul></div>
-    <p class="app-ver" id="appVer">Version <b>v83</b></p>
+    <p class="app-ver" id="appVer">Version <b>v84</b></p>
     <p class="app-ver timing-info" id="timingInfo" hidden></p>
     <p class="app-ver donate-foot"><button type="button" class="link-btn" id="donateLink">Donations, comments or requests</button></p>
   </div>
@@ -16253,7 +16263,7 @@ window.HYMN_SONGS = [
   // Sync offset control removed: always 0. Clear any saved offset from older installs.
   try { LS.set('syncMs', 0); } catch (e0) {}
   var syncS = 0;
-  var APP_VERSION = 'v83';
+  var APP_VERSION = 'v84';
   function syncSec() { return syncS; }
   function heardTime(perf) { return clock.heard(perf) - syncSec(); }
   // One clock for sound, cursor and highlight. A frame drawn in the rAF callback at perf reaches the screen at the next
