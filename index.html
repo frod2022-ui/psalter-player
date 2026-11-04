@@ -724,7 +724,6 @@ body{padding-left:env(safe-area-inset-left)!important;padding-right:env(safe-are
       <h1>Psalm Singer</h1>
     </div>
     <span class="ez-spacer"></span>
-    <span class="donate-wrap"><small class="donate-cap">Apple Pay</small><button type="button" class="pill-btn solid" id="donateBtn2" title="Buy me a coffee: opens Messages for donations, comments or requests"><span class="coffee-ico cfi" aria-hidden="true">☕<span class="stm"></span><span class="stm s2"></span><span class="stm s3"></span></span><span class="lbl">Buy me a coffee</span></button></span>
     <p class="ez-tagline">Learn to sing psalms and hymns a cappella.</p>
     <input type="file" id="fileInput" accept=".abc,.txt,.mid,.midi,.xml,.musicxml,.mxl,.kar,.json,audio/midi,application/xml,text/xml,application/json" multiple hidden>
   </div>
@@ -962,16 +961,9 @@ body{padding-left:env(safe-area-inset-left)!important;padding-right:env(safe-are
     </div>
     <button class="pill-btn wide-btn" id="creditsBtn" aria-haspopup="dialog">Credits &amp; licenses</button>
     <a class="pill-btn wide-btn" id="sharePageBtn" href="share.html" target="_blank" rel="noopener noreferrer">Share Psalm Singer</a>
-    <div class="ctrl donate-block">
-      <div class="cap"><span>Support this app</span></div>
-      <p class="donate-cap-set">Apple Pay</p>
-      <button type="button" class="pill-btn solid" id="donateBtn" title="Buy me a coffee: opens Messages for donations, comments or requests"><span class="cfi" aria-hidden="true">☕<span class="stm"></span><span class="stm s2"></span><span class="stm s3"></span></span> Buy me a coffee</button>
-      <p class="hint donate-num">Donations, comments or requests: text <a id="donateNum" href="sms:3074090646&amp;body=Donations%20%2A%20Comments%20%2A%20Requests">307-409-0646</a>.</p>
-    </div>
     <div class="ctrl ez-about"><div class="cap"><span>About</span></div><ul class="dots"><li>Learn to sing psalms and hymns a cappella.</li><li>Follow the notes and words on four-part music, lock to a steady metronome.</li><li>Practice the melody in soprano, alto, tenor, or bass.</li></ul></div>
-    <p class="app-ver" id="appVer">Version <b>v86</b></p>
+    <p class="app-ver" id="appVer">Version <b>v87</b></p>
     <p class="app-ver timing-info" id="timingInfo" hidden></p>
-    <p class="app-ver donate-foot"><button type="button" class="link-btn" id="donateLink">Donations, comments or requests</button></p>
   </div>
 </div>
 
@@ -16271,7 +16263,7 @@ window.HYMN_SONGS = [
   // Sync offset control removed: always 0. Clear any saved offset from older installs.
   try { LS.set('syncMs', 0); } catch (e0) {}
   var syncS = 0;
-  var APP_VERSION = 'v86';
+  var APP_VERSION = 'v87';
   function syncSec() { return syncS; }
   function heardTime(perf) { return clock.heard(perf) - syncSec(); }
   // One clock for sound, cursor and highlight. A frame drawn in the rAF callback at perf reaches the screen at the next
